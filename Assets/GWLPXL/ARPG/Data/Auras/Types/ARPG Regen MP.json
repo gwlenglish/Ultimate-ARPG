@@ -1,0 +1,47 @@
+{
+    "config": {
+        "instanceID": 18140
+    },
+    "auraID": {
+        "Name": "",
+        "ID": 3,
+        "Aura": {
+            "instanceID": 18116
+        }
+    },
+    "AuraData": {
+        "AutoName": true,
+        "AutoAssignID": false,
+        "AuraName": "ARPG Regen MP",
+        "AuraDescription": "Regen MP ",
+        "AuraPrefab": {
+            "instanceID": 18142
+        },
+        "auraCategory": 0,
+        "uniqueID": 0,
+        "AuraLogics": [
+            {
+                "instanceID": 18144
+            }
+        ],
+        "AuraGroups": [
+            1
+        ],
+        "Pulses": true,
+        "PulseRate": 1.0,
+        "AOE": true,
+        "LayersToCheck": [
+            {
+                "serializedVersion": "2",
+                "m_Bits": 1
+            },
+            {
+                "serializedVersion": "2",
+                "m_Bits": 2048
+            }
+        ],
+        "ColliderType": 0,
+        "AreaRadius": 1.0,
+        "CheckAreaRate": 0.5
+    }
+}

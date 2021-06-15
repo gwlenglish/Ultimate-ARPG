@@ -1,0 +1,26 @@
+{
+    "config": {
+        "instanceID": 18340
+    },
+    "AutoName": true,
+    "traitID": {
+        "Name": "Vitality",
+        "ID": 10,
+        "Trait": {
+            "instanceID": 18082
+        }
+    },
+    "traitName": "Vitality",
+    "TraitPrefixes": [
+        "Healthy",
+        "Vital",
+        "Invigorating"
+    ],
+    "TraitSuffixes": [
+        "of Vitality",
+        "of Health"
+    ],
+    "myLevelMulti": 60,
+    "weight": 7,
+    "Type": 3
+}

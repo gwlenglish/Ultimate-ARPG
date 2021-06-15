@@ -1,0 +1,81 @@
+{
+    "config": {
+        "instanceID": 17240
+    },
+    "ID": {
+        "Name": "Kill repeat",
+        "ID": 4,
+        "Quest": {
+            "instanceID": 16694
+        }
+    },
+    "questName": "Kill Repeat",
+    "startType": 0,
+    "questStartTemplates": [],
+    "questStates": [
+        {
+            "StateName": "InProgress",
+            "QuestTemplate": {
+                "instanceID": 16694
+            },
+            "State": 1,
+            "Lines": [
+                {
+                    "DescriptiveName": "Quest Giver 1",
+                    "Actor": {
+                        "instanceID": 16524
+                    },
+                    "QuestGiverText": "More."
+                }
+            ],
+            "QuestLogEntry": "Objective: Find a Unicorn."
+        },
+        {
+            "StateName": "Completed",
+            "QuestTemplate": {
+                "instanceID": 16694
+            },
+            "State": 10,
+            "Lines": [
+                {
+                    "DescriptiveName": "Quest Giver 1",
+                    "Actor": {
+                        "instanceID": 16524
+                    },
+                    "QuestGiverText": "That'll do for now. "
+                }
+            ],
+            "QuestLogEntry": "Objective: Find a Unicorn."
+        },
+        {
+            "StateName": "RewardsCollected",
+            "QuestTemplate": {
+                "instanceID": 16694
+            },
+            "State": 20,
+            "Lines": [
+                {
+                    "DescriptiveName": "Quest Giver 1",
+                    "Actor": {
+                        "instanceID": 16524
+                    },
+                    "QuestGiverText": "Hmmm?"
+                }
+            ],
+            "QuestLogEntry": "Objective Completed: Killed 3 Enemies"
+        }
+    ],
+    "QuestRewards": [
+        {
+            "instanceID": 17222
+        },
+        {
+            "instanceID": 17224
+        }
+    ],
+    "rewardType": 1,
+    "rewardGiverTemplate": [],
+    "logic": {
+        "instanceID": 17238
+    }
+}

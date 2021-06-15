@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e645030a195a7ac4cb2758768c9e15cb, type: 3}
+  m_Name: Cold Resist_ElementResistTrait_100%
+  m_EditorClassIdentifier: 
+  config: {fileID: 4900000, guid: f645643776f5b5a468bb8002c3a522ea, type: 3}
+  AutoName: 1
+  traitID:
+    Name: Cold Resist
+    ID: 14
+    Trait: {fileID: 11400000}
+  traitName: Cold Resist
+  TraitPrefixes:
+  - Icey
+  - Frozen
+  - Chilling
+  TraitSuffixes:
+  - of Iciness
+  - of Ice
+  - of the Tundra
+  myLevelMulti: 100
+  weight: 5
+  Type: 2

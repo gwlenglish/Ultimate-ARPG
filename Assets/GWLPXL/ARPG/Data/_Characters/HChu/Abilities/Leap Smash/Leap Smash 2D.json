@@ -1,0 +1,54 @@
+{
+    "config": {
+        "instanceID": 23756
+    },
+    "id": {
+        "Name": "",
+        "ID": 18,
+        "Ability": {
+            "instanceID": 24400
+        }
+    },
+    "autoName": false,
+    "Data": {
+        "Name": "Leap Smash",
+        "Description": "Leaps then smashes",
+        "DamageMultiplier": 1.0,
+        "Range": 10.0,
+        "ResourceCost": 0.0,
+        "ResourceType": 20,
+        "AnimationTrigger": "BasicMelee",
+        "AnimationIndex": 1,
+        "Logics": [
+            {
+                "instanceID": 23758
+            },
+            {
+                "instanceID": 23724
+            },
+            {
+                "instanceID": 23760
+            }
+        ],
+        "UniqueID": 7,
+        "Sprite": {
+            "instanceID": 0
+        }
+    },
+    "category": 1,
+    "AddCooldown": true,
+    "CoolDownRate": 1.0,
+    "Duration": 1.0,
+    "CanLoop": false,
+    "AddDelay": true,
+    "Delay": 0.0,
+    "ForwardSightAngle": 180.0,
+    "interruptOptions": {
+        "CollisionLayers": [],
+        "PhysicsType": 0,
+        "OnCasterDamaged": false,
+        "OnCasterDied": true,
+        "InterruptEffects": [],
+        "Abilities": []
+    }
+}

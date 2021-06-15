@@ -1,0 +1,51 @@
+{
+    "config": {
+        "instanceID": 25976
+    },
+    "id": {
+        "Name": "",
+        "ID": 5,
+        "Ability": {
+            "instanceID": 25316
+        }
+    },
+    "autoName": true,
+    "Data": {
+        "Name": "AoE blastssss",
+        "Description": "",
+        "DamageMultiplier": 1.0,
+        "Range": 3.0,
+        "ResourceCost": 5.0,
+        "ResourceType": 1,
+        "AnimationTrigger": "Ability",
+        "AnimationIndex": 2,
+        "Logics": [
+            {
+                "instanceID": 25978
+            },
+            {
+                "instanceID": 25980
+            }
+        ],
+        "UniqueID": 4,
+        "Sprite": {
+            "instanceID": 0
+        }
+    },
+    "category": 1,
+    "AddCooldown": true,
+    "CoolDownRate": 1.0,
+    "Duration": 1.0,
+    "CanLoop": false,
+    "AddDelay": true,
+    "Delay": 0.25,
+    "ForwardSightAngle": 180.0,
+    "interruptOptions": {
+        "CollisionLayers": [],
+        "PhysicsType": 0,
+        "OnCasterDamaged": false,
+        "OnCasterDied": true,
+        "InterruptEffects": [],
+        "Abilities": []
+    }
+}

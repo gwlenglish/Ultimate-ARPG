@@ -1,0 +1,57 @@
+{
+    "config": {
+        "instanceID": 25856
+    },
+    "id": {
+        "Name": "Flamethrower",
+        "ID": 5,
+        "Instance": {
+            "instanceID": 25136
+        }
+    },
+    "DamageVar": {
+        "combatHandler": {
+            "instanceID": 18650
+        },
+        "descriptiveName": "Darkness Fall",
+        "damageOptions": {
+            "physdmg": false,
+            "elemdg": true,
+            "sotmod": true
+        },
+        "damageMultipliers": {
+            "physicalMultipler": {
+                "baseDamageAmount": 0,
+                "percentOfCasterAttack": 0.0
+            },
+            "elementMultipliers": [
+                {
+                    "editorDescription": "Fire",
+                    "damageType": 2,
+                    "baseElementDamageAmount": 1,
+                    "percentOfCasterElement": 0.10000000149011612
+                }
+            ]
+        },
+        "statusOverTimeOptions": {
+            "applySOTAtEnter": true,
+            "applySOTAtExit": false,
+            "additionalSOTs": [
+                {
+                    "Type": 0,
+                    "ElementDamage": 2,
+                    "StatusEffects": [],
+                    "AmountPerTick": -1,
+                    "Duration": 3.0,
+                    "TickRate": 1.0,
+                    "StackAmount": 3
+                }
+            ],
+            "damageRate": 1.0,
+            "friendlyFire": false
+        },
+        "statusOverTimeMultiplers": {
+            "elementalMultipliers": []
+        }
+    }
+}

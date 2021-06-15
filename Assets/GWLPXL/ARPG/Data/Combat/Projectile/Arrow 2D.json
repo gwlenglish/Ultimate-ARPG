@@ -1,0 +1,20 @@
+{
+    "config": {
+        "instanceID": 18992
+    },
+    "id": {
+        "Name": "",
+        "ID": 0,
+        "Instance": {
+            "instanceID": 32326
+        }
+    },
+    "ProjectileVars": {
+        "descriptiveName": "Arrow",
+        "description": "Normal arrow. ",
+        "speed": 35.0,
+        "disableOnTouch": true,
+        "friendlyFire": false,
+        "lifetime": 10.0
+    }
+}

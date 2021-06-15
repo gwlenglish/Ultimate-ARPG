@@ -1,0 +1,40 @@
+{
+    "config": {
+        "instanceID": 19012
+    },
+    "id": {
+        "Name": "Pistol",
+        "ID": 7,
+        "Instance": {
+            "instanceID": 32310
+        }
+    },
+    "DamageVar": {
+        "combatHandler": {
+            "instanceID": 18650
+        },
+        "descriptiveName": "Pistol",
+        "damageOptions": {
+            "physdmg": true,
+            "elemdg": false,
+            "sotmod": false
+        },
+        "damageMultipliers": {
+            "physicalMultipler": {
+                "baseDamageAmount": 2,
+                "percentOfCasterAttack": 0.0
+            },
+            "elementMultipliers": []
+        },
+        "statusOverTimeOptions": {
+            "applySOTAtEnter": true,
+            "applySOTAtExit": false,
+            "additionalSOTs": [],
+            "damageRate": 1.0,
+            "friendlyFire": false
+        },
+        "statusOverTimeMultiplers": {
+            "elementalMultipliers": []
+        }
+    }
+}

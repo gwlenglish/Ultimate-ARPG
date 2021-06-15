@@ -1,0 +1,103 @@
+{
+    "config": {
+        "instanceID": 17228
+    },
+    "ID": {
+        "Name": "Test Chain 2",
+        "ID": 3,
+        "Questchain": {
+            "instanceID": 16686
+        }
+    },
+    "questChainName": "Test Chain 2",
+    "isRepeatable": false,
+    "StartType": 1,
+    "questStartTemplates": [
+        {
+            "instanceID": 16524
+        }
+    ],
+    "requirements": [
+        {
+            "instanceID": 17220
+        }
+    ],
+    "states": [
+        {
+            "StateName": "Available",
+            "QuestTemplate": {
+                "instanceID": 0
+            },
+            "State": 0,
+            "Lines": [
+                {
+                    "DescriptiveName": "Quest Giver 1",
+                    "Actor": {
+                        "instanceID": 16524
+                    },
+                    "QuestGiverText": "Test Chain 2 Status Available. This is an example chain with two quests to complete and you return the quests in to a different quest giver."
+                }
+            ],
+            "QuestLogEntry": "Objective: Find a Unicorn."
+        },
+        {
+            "StateName": "Completed",
+            "QuestTemplate": {
+                "instanceID": 0
+            },
+            "State": 10,
+            "Lines": [
+                {
+                    "DescriptiveName": "Quest Giver 1",
+                    "Actor": {
+                        "instanceID": 16524
+                    },
+                    "QuestGiverText": "Test Chain 2 Status Complete. "
+                }
+            ],
+            "QuestLogEntry": "Objective: Return the key and oil to quest giver 2."
+        },
+        {
+            "StateName": "RewardsCollected",
+            "QuestTemplate": {
+                "instanceID": 0
+            },
+            "State": 20,
+            "Lines": [
+                {
+                    "DescriptiveName": "Quest Giver 1",
+                    "Actor": {
+                        "instanceID": 16524
+                    },
+                    "QuestGiverText": "Test Chain 2 Status Rewards Collected."
+                }
+            ],
+            "QuestLogEntry": ""
+        }
+    ],
+    "quests": [
+        {
+            "instanceID": 16692
+        },
+        {
+            "instanceID": 16696
+        }
+    ],
+    "rewardType": 0,
+    "questGiverTemplates": [
+        {
+            "instanceID": 16524
+        }
+    ],
+    "chainRewards": [
+        {
+            "instanceID": 17222
+        },
+        {
+            "instanceID": 17224
+        },
+        {
+            "instanceID": 17226
+        }
+    ]
+}

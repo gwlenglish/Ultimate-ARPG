@@ -1,0 +1,28 @@
+{
+    "config": {
+        "instanceID": 18062
+    },
+    "AuraControllerData": {
+        "AutoName": false,
+        "AutoAssignUniqueID": false,
+        "Name": "Player 1",
+        "Description": "Demo player 1",
+        "ID": 0,
+        "ControllerRef": {
+            "instanceID": 17994
+        }
+    },
+    "startingAuras": [
+        {
+            "instanceID": 18064
+        },
+        {
+            "instanceID": 18066
+        },
+        {
+            "instanceID": 18068
+        }
+    ],
+    "equippedcap": 3,
+    "learnedCap": 100
+}

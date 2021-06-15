@@ -1,0 +1,48 @@
+{
+    "config": {
+        "instanceID": 18006
+    },
+    "itemID": {
+        "Name": "",
+        "ID": 30,
+        "Item": {
+            "instanceID": 17872
+        }
+    },
+    "autoName": true,
+    "rarity": {
+        "instanceID": 17898
+    },
+    "meshPrefab": {
+        "instanceID": 18008
+    },
+    "sprite": {
+        "instanceID": 18010
+    },
+    "purchaseCost": 10,
+    "sellCost": 5,
+    "classRestriction": 0,
+    "slots": [
+        35
+    ],
+    "traitTiers": [
+        {
+            "ILevelMulti": 1.0,
+            "MaxNumberOfTraitsPerTier": 4,
+            "PossibleTierDrops": {
+                "instanceID": 17902
+            }
+        }
+    ],
+    "stats": {
+        "baseName": "Pistol",
+        "baseType": 1,
+        "baseStatMinValue": 1,
+        "baseStateILevelMulti": 1.0,
+        "nativeTraits": []
+    },
+    "wearablePefab": {
+        "instanceID": 18012
+    },
+    "weaponType": 101
+}

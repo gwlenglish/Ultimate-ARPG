@@ -1,0 +1,40 @@
+{
+    "config": {
+        "instanceID": 25988
+    },
+    "id": {
+        "Name": "",
+        "ID": 2,
+        "AbilityController": {
+            "instanceID": 25324
+        }
+    },
+    "Data": {
+        "AutoName": true,
+        "AutoAssignUniqueID": false,
+        "Name": "Demo",
+        "Description": "For the Demo Scene",
+        "UniqueID": 2
+    },
+    "BasicAttacks": [
+        {
+            "instanceID": 24432
+        }
+    ],
+    "StartingAbilities": [
+        {
+            "instanceID": 25316
+        },
+        {
+            "instanceID": 25010
+        },
+        {
+            "instanceID": 25320
+        },
+        {
+            "instanceID": 25322
+        }
+    ],
+    "EquippedCap": 2,
+    "LearnedCap": 100
+}

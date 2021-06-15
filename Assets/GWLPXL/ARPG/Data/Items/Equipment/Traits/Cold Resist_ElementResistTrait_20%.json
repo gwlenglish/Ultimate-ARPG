@@ -1,0 +1,27 @@
+{
+    "config": {
+        "instanceID": 18346
+    },
+    "AutoName": true,
+    "traitID": {
+        "Name": "Cold Resist",
+        "ID": 3,
+        "Trait": {
+            "instanceID": 18088
+        }
+    },
+    "traitName": "Cold Resist",
+    "TraitPrefixes": [
+        "Icey",
+        "Frozen",
+        "Chilling"
+    ],
+    "TraitSuffixes": [
+        "of Iciness",
+        "of Ice",
+        "of the Tundra"
+    ],
+    "myLevelMulti": 20,
+    "weight": 5,
+    "Type": 2
+}

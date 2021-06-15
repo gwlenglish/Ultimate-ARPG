@@ -1,0 +1,211 @@
+{
+    "config": {
+        "instanceID": 18278
+    },
+    "ID": {
+        "Name": "Shop Keeper Demo Loot",
+        "ID": 12,
+        "LootDrops": {
+            "instanceID": 17506
+        }
+    },
+    "LootPrefab": {
+        "instanceID": 17634
+    },
+    "AllPossibleItems": [
+        {
+            "instanceID": 17474
+        },
+        {
+            "instanceID": 17466
+        },
+        {
+            "instanceID": 17464
+        },
+        {
+            "instanceID": 17462
+        },
+        {
+            "instanceID": 17458
+        },
+        {
+            "instanceID": 17456
+        },
+        {
+            "instanceID": 17454
+        },
+        {
+            "instanceID": 17452
+        },
+        {
+            "instanceID": 17448
+        },
+        {
+            "instanceID": 17446
+        },
+        {
+            "instanceID": 17444
+        },
+        {
+            "instanceID": 17442
+        },
+        {
+            "instanceID": 17440
+        },
+        {
+            "instanceID": 17430
+        },
+        {
+            "instanceID": 17424
+        },
+        {
+            "instanceID": 17422
+        }
+    ],
+    "LootTable": [
+        {
+            "Description": "Cutlass_0.7042254",
+            "RelativePercent": 0.7042253613471985,
+            "RangeFrom": 555,
+            "RangeTo": 560,
+            "Item": {
+                "instanceID": 17440
+            }
+        },
+        {
+            "Description": "Epic Chest_2.112676",
+            "RelativePercent": 2.112675905227661,
+            "RangeFrom": 175,
+            "RangeTo": 190,
+            "Item": {
+                "instanceID": 17462
+            }
+        },
+        {
+            "Description": "Cutlass_2.112676",
+            "RelativePercent": 2.112675905227661,
+            "RangeFrom": 540,
+            "RangeTo": 555,
+            "Item": {
+                "instanceID": 17442
+            }
+        },
+        {
+            "Description": "Necklace_7.042254",
+            "RelativePercent": 7.0422539710998539,
+            "RangeFrom": 0,
+            "RangeTo": 50,
+            "Item": {
+                "instanceID": 17474
+            }
+        },
+        {
+            "Description": "Chest_7.042254",
+            "RelativePercent": 7.0422539710998539,
+            "RangeFrom": 125,
+            "RangeTo": 175,
+            "Item": {
+                "instanceID": 17464
+            }
+        },
+        {
+            "Description": "Pants_7.042254",
+            "RelativePercent": 7.0422539710998539,
+            "RangeFrom": 190,
+            "RangeTo": 240,
+            "Item": {
+                "instanceID": 17458
+            }
+        },
+        {
+            "Description": "Shield_7.042254",
+            "RelativePercent": 7.0422539710998539,
+            "RangeFrom": 240,
+            "RangeTo": 290,
+            "Item": {
+                "instanceID": 17456
+            }
+        },
+        {
+            "Description": "Shoulder_7.042254",
+            "RelativePercent": 7.0422539710998539,
+            "RangeFrom": 290,
+            "RangeTo": 340,
+            "Item": {
+                "instanceID": 17454
+            }
+        },
+        {
+            "Description": "Shoulder_7.042254",
+            "RelativePercent": 7.0422539710998539,
+            "RangeFrom": 340,
+            "RangeTo": 390,
+            "Item": {
+                "instanceID": 17452
+            }
+        },
+        {
+            "Description": "Worn Chest_7.042254",
+            "RelativePercent": 7.0422539710998539,
+            "RangeFrom": 390,
+            "RangeTo": 440,
+            "Item": {
+                "instanceID": 17448
+            }
+        },
+        {
+            "Description": "Battle Axe_7.042254",
+            "RelativePercent": 7.0422539710998539,
+            "RangeFrom": 440,
+            "RangeTo": 490,
+            "Item": {
+                "instanceID": 17446
+            }
+        },
+        {
+            "Description": "Cutlass_7.042254",
+            "RelativePercent": 7.0422539710998539,
+            "RangeFrom": 490,
+            "RangeTo": 540,
+            "Item": {
+                "instanceID": 17444
+            }
+        },
+        {
+            "Description": "Starting Axe_7.042254",
+            "RelativePercent": 7.0422539710998539,
+            "RangeFrom": 560,
+            "RangeTo": 610,
+            "Item": {
+                "instanceID": 17430
+            }
+        },
+        {
+            "Description": "Health Potion_7.042254",
+            "RelativePercent": 7.0422539710998539,
+            "RangeFrom": 610,
+            "RangeTo": 660,
+            "Item": {
+                "instanceID": 17424
+            }
+        },
+        {
+            "Description": "Mana Potion_7.042254",
+            "RelativePercent": 7.0422539710998539,
+            "RangeFrom": 660,
+            "RangeTo": 710,
+            "Item": {
+                "instanceID": 17422
+            }
+        },
+        {
+            "Description": "Boots_10.56338",
+            "RelativePercent": 10.563380241394043,
+            "RangeFrom": 50,
+            "RangeTo": 125,
+            "Item": {
+                "instanceID": 17466
+            }
+        }
+    ]
+}

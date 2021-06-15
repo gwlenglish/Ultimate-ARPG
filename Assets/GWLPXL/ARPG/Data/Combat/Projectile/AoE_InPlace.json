@@ -1,0 +1,20 @@
+{
+    "config": {
+        "instanceID": 24600
+    },
+    "id": {
+        "Name": "",
+        "ID": 3,
+        "Instance": {
+            "instanceID": 53062
+        }
+    },
+    "ProjectileVars": {
+        "descriptiveName": "AoE In Place",
+        "description": "Any projectile that stays in place",
+        "speed": 1.0,
+        "disableOnTouch": false,
+        "autoDestructTime": 10.0,
+        "friendlyFire": false
+    }
+}

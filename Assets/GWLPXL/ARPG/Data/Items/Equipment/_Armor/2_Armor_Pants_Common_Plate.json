@@ -1,0 +1,62 @@
+{
+    "config": {
+        "instanceID": 17922
+    },
+    "itemID": {
+        "Name": "",
+        "ID": 19,
+        "Item": {
+            "instanceID": 17836
+        }
+    },
+    "autoName": true,
+    "rarity": {
+        "instanceID": 17898
+    },
+    "meshPrefab": {
+        "instanceID": 0
+    },
+    "sprite": {
+        "instanceID": 17924
+    },
+    "purchaseCost": 10,
+    "sellCost": 5,
+    "classRestriction": 0,
+    "slots": [
+        20
+    ],
+    "traitTiers": [
+        {
+            "ILevelMulti": 1.0,
+            "MaxNumberOfTraitsPerTier": 4,
+            "PossibleTierDrops": {
+                "instanceID": 17910
+            }
+        },
+        {
+            "ILevelMulti": 0.800000011920929,
+            "MaxNumberOfTraitsPerTier": 2,
+            "PossibleTierDrops": {
+                "instanceID": 17910
+            }
+        },
+        {
+            "ILevelMulti": 0.6000000238418579,
+            "MaxNumberOfTraitsPerTier": 1,
+            "PossibleTierDrops": {
+                "instanceID": 17910
+            }
+        }
+    ],
+    "stats": {
+        "baseName": "Pants",
+        "baseType": 2,
+        "baseStatMinValue": 1,
+        "baseStateILevelMulti": 1.0,
+        "nativeTraits": []
+    },
+    "wearablePefab": {
+        "instanceID": 0
+    },
+    "armorMat": 4
+}

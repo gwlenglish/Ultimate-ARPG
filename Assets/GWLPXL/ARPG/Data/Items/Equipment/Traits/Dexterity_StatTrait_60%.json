@@ -1,0 +1,25 @@
+{
+    "config": {
+        "instanceID": 18336
+    },
+    "AutoName": true,
+    "traitID": {
+        "Name": "Dexterity",
+        "ID": 7,
+        "Trait": {
+            "instanceID": 18078
+        }
+    },
+    "traitName": "Dexterity",
+    "TraitPrefixes": [
+        "Agile",
+        "Nimble"
+    ],
+    "TraitSuffixes": [
+        "of Dexterity",
+        "of Nimbleness"
+    ],
+    "myLevelMulti": 60,
+    "weight": 7,
+    "Type": 2
+}

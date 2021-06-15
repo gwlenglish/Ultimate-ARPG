@@ -1,0 +1,48 @@
+{
+    "config": {
+        "instanceID": 17976
+    },
+    "itemID": {
+        "Name": "",
+        "ID": 5,
+        "Item": {
+            "instanceID": 17854
+        }
+    },
+    "autoName": true,
+    "rarity": {
+        "instanceID": 17898
+    },
+    "meshPrefab": {
+        "instanceID": 17944
+    },
+    "sprite": {
+        "instanceID": 17946
+    },
+    "purchaseCost": 10,
+    "sellCost": 5,
+    "classRestriction": 0,
+    "slots": [
+        35
+    ],
+    "traitTiers": [
+        {
+            "ILevelMulti": 1.0,
+            "MaxNumberOfTraitsPerTier": 4,
+            "PossibleTierDrops": {
+                "instanceID": 17902
+            }
+        }
+    ],
+    "stats": {
+        "baseName": "Starting Axe",
+        "baseType": 1,
+        "baseStatMinValue": 25,
+        "baseStateILevelMulti": 0.4390000104904175,
+        "nativeTraits": []
+    },
+    "wearablePefab": {
+        "instanceID": 17948
+    },
+    "weaponType": 2
+}

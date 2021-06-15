@@ -1,0 +1,235 @@
+{
+    "config": {
+        "instanceID": 18292
+    },
+    "ID": {
+        "Name": "Testing Loot",
+        "ID": 14,
+        "LootDrops": {
+            "instanceID": 17510
+        }
+    },
+    "LootPrefab": {
+        "instanceID": 17634
+    },
+    "AllPossibleItems": [
+        {
+            "instanceID": 17474
+        },
+        {
+            "instanceID": 17466
+        },
+        {
+            "instanceID": 17464
+        },
+        {
+            "instanceID": 17462
+        },
+        {
+            "instanceID": 17458
+        },
+        {
+            "instanceID": 17456
+        },
+        {
+            "instanceID": 17454
+        },
+        {
+            "instanceID": 17452
+        },
+        {
+            "instanceID": 17448
+        },
+        {
+            "instanceID": 17446
+        },
+        {
+            "instanceID": 17444
+        },
+        {
+            "instanceID": 17442
+        },
+        {
+            "instanceID": 17440
+        },
+        {
+            "instanceID": 17430
+        },
+        {
+            "instanceID": 17424
+        },
+        {
+            "instanceID": 17422
+        },
+        {
+            "instanceID": 17468
+        },
+        {
+            "instanceID": 17470
+        }
+    ],
+    "LootTable": [
+        {
+            "Description": "Cutlass_0.5494506",
+            "RelativePercent": 0.5494505763053894,
+            "RangeFrom": 555,
+            "RangeTo": 560,
+            "Item": {
+                "instanceID": 17440
+            }
+        },
+        {
+            "Description": "Epic Chest_1.648352",
+            "RelativePercent": 1.648351788520813,
+            "RangeFrom": 175,
+            "RangeTo": 190,
+            "Item": {
+                "instanceID": 17462
+            }
+        },
+        {
+            "Description": "Cutlass_1.648352",
+            "RelativePercent": 1.648351788520813,
+            "RangeFrom": 540,
+            "RangeTo": 555,
+            "Item": {
+                "instanceID": 17442
+            }
+        },
+        {
+            "Description": "Necklace_5.494505",
+            "RelativePercent": 5.494505405426025,
+            "RangeFrom": 0,
+            "RangeTo": 50,
+            "Item": {
+                "instanceID": 17474
+            }
+        },
+        {
+            "Description": "Mana Potion_5.494505",
+            "RelativePercent": 5.494505405426025,
+            "RangeFrom": 660,
+            "RangeTo": 710,
+            "Item": {
+                "instanceID": 17422
+            }
+        },
+        {
+            "Description": "Health Potion_5.494505",
+            "RelativePercent": 5.494505405426025,
+            "RangeFrom": 610,
+            "RangeTo": 660,
+            "Item": {
+                "instanceID": 17424
+            }
+        },
+        {
+            "Description": "Starting Axe_5.494505",
+            "RelativePercent": 5.494505405426025,
+            "RangeFrom": 560,
+            "RangeTo": 610,
+            "Item": {
+                "instanceID": 17430
+            }
+        },
+        {
+            "Description": "Cutlass_5.494505",
+            "RelativePercent": 5.494505405426025,
+            "RangeFrom": 490,
+            "RangeTo": 540,
+            "Item": {
+                "instanceID": 17444
+            }
+        },
+        {
+            "Description": "Battle Axe_5.494505",
+            "RelativePercent": 5.494505405426025,
+            "RangeFrom": 440,
+            "RangeTo": 490,
+            "Item": {
+                "instanceID": 17446
+            }
+        },
+        {
+            "Description": "Worn Chest_5.494505",
+            "RelativePercent": 5.494505405426025,
+            "RangeFrom": 390,
+            "RangeTo": 440,
+            "Item": {
+                "instanceID": 17448
+            }
+        },
+        {
+            "Description": "Shoulder_5.494505",
+            "RelativePercent": 5.494505405426025,
+            "RangeFrom": 340,
+            "RangeTo": 390,
+            "Item": {
+                "instanceID": 17452
+            }
+        },
+        {
+            "Description": "Shoulder_5.494505",
+            "RelativePercent": 5.494505405426025,
+            "RangeFrom": 290,
+            "RangeTo": 340,
+            "Item": {
+                "instanceID": 17454
+            }
+        },
+        {
+            "Description": "Shield_5.494505",
+            "RelativePercent": 5.494505405426025,
+            "RangeFrom": 240,
+            "RangeTo": 290,
+            "Item": {
+                "instanceID": 17456
+            }
+        },
+        {
+            "Description": "Pants_5.494505",
+            "RelativePercent": 5.494505405426025,
+            "RangeFrom": 190,
+            "RangeTo": 240,
+            "Item": {
+                "instanceID": 17458
+            }
+        },
+        {
+            "Description": "Chest_5.494505",
+            "RelativePercent": 5.494505405426025,
+            "RangeFrom": 125,
+            "RangeTo": 175,
+            "Item": {
+                "instanceID": 17464
+            }
+        },
+        {
+            "Description": "Boots_8.241758",
+            "RelativePercent": 8.241758346557618,
+            "RangeFrom": 50,
+            "RangeTo": 125,
+            "Item": {
+                "instanceID": 17466
+            }
+        },
+        {
+            "Description": "Oil Quest Item_10.98901",
+            "RelativePercent": 10.98901081085205,
+            "RangeFrom": 710,
+            "RangeTo": 810,
+            "Item": {
+                "instanceID": 17468
+            }
+        },
+        {
+            "Description": "Skeleton Key_10.98901",
+            "RelativePercent": 10.98901081085205,
+            "RangeFrom": 810,
+            "RangeTo": 910,
+            "Item": {
+                "instanceID": 17470
+            }
+        }
+    ]
+}

@@ -1,0 +1,62 @@
+{
+    "config": {
+        "instanceID": 23114
+    },
+    "itemID": {
+        "Name": "",
+        "ID": 20,
+        "Item": {
+            "instanceID": 22992
+        }
+    },
+    "autoName": true,
+    "rarity": {
+        "instanceID": 17968
+    },
+    "meshPrefab": {
+        "instanceID": 17928
+    },
+    "sprite": {
+        "instanceID": 17930
+    },
+    "purchaseCost": 10,
+    "sellCost": 5,
+    "classRestriction": 0,
+    "slots": [
+        30
+    ],
+    "traitTiers": [
+        {
+            "ILevelMulti": 0.42399999499320986,
+            "MaxNumberOfTraitsPerTier": 4,
+            "PossibleTierDrops": {
+                "instanceID": 17910
+            }
+        },
+        {
+            "ILevelMulti": 0.800000011920929,
+            "MaxNumberOfTraitsPerTier": 2,
+            "PossibleTierDrops": {
+                "instanceID": 17910
+            }
+        },
+        {
+            "ILevelMulti": 0.6000000238418579,
+            "MaxNumberOfTraitsPerTier": 1,
+            "PossibleTierDrops": {
+                "instanceID": 17910
+            }
+        }
+    ],
+    "stats": {
+        "baseName": "Legendary Shield",
+        "baseType": 2,
+        "baseStatMinValue": 1,
+        "baseStateILevelMulti": 1.0,
+        "nativeTraits": []
+    },
+    "wearablePefab": {
+        "instanceID": 17932
+    },
+    "armorMat": 4
+}

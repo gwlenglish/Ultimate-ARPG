@@ -1,0 +1,38 @@
+{
+    "config": {
+        "instanceID": 17014
+    },
+    "EquipEvent": {
+        "instanceID": 0
+    },
+    "UnEquipEvent": {
+        "instanceID": 0
+    },
+    "ID": {
+        "Name": "",
+        "ID": 2,
+        "SOReference": {
+            "instanceID": 0
+        }
+    },
+    "inventoryName": "ShopKeeper 01",
+    "ItemInventorySize": 25,
+    "currentCurrency": 100,
+    "startingEquipment": [
+        {
+            "instanceID": 16602
+        },
+        {
+            "instanceID": 16594
+        }
+    ],
+    "startingItems": [
+        {
+            "instanceID": 16588
+        },
+        {
+            "instanceID": 16586
+        }
+    ],
+    "startingGold": 5000
+}

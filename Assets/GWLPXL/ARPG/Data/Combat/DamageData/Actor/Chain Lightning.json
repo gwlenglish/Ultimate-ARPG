@@ -1,0 +1,40 @@
+{
+    "config": {
+        "instanceID": 25168
+    },
+    "id": {
+        "Name": "",
+        "ID": 9,
+        "Instance": {
+            "instanceID": 24492
+        }
+    },
+    "DamageVar": {
+        "combatHandler": {
+            "instanceID": 18650
+        },
+        "descriptiveName": "Chain Lightning",
+        "damageOptions": {
+            "physdmg": false,
+            "elemdg": true,
+            "sotmod": false
+        },
+        "damageMultipliers": {
+            "physicalMultipler": {
+                "baseDamageAmount": 0,
+                "percentOfCasterAttack": 0.0
+            },
+            "elementMultipliers": []
+        },
+        "statusOverTimeOptions": {
+            "applySOTAtEnter": true,
+            "applySOTAtExit": false,
+            "additionalSOTs": [],
+            "damageRate": 1.0,
+            "friendlyFire": false
+        },
+        "statusOverTimeMultiplers": {
+            "elementalMultipliers": []
+        }
+    }
+}

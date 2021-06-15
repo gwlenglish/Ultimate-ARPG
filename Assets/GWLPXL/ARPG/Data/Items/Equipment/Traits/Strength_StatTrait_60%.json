@@ -1,0 +1,27 @@
+{
+    "config": {
+        "instanceID": 18330
+    },
+    "AutoName": true,
+    "traitID": {
+        "Name": "Strength",
+        "ID": 23,
+        "Trait": {
+            "instanceID": 18072
+        }
+    },
+    "traitName": "Strength",
+    "TraitPrefixes": [
+        "Strong",
+        "Powerful",
+        "Solid"
+    ],
+    "TraitSuffixes": [
+        "of Strength",
+        "of Power",
+        "of The Ox"
+    ],
+    "myLevelMulti": 60,
+    "weight": 7,
+    "Type": 0
+}

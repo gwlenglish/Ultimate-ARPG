@@ -1,0 +1,100 @@
+{
+    "config": {
+        "instanceID": 17230
+    },
+    "ID": {
+        "Name": "Test Repeatable",
+        "ID": 4,
+        "Questchain": {
+            "instanceID": 16688
+        }
+    },
+    "questChainName": "Test Repeatable",
+    "isRepeatable": true,
+    "StartType": 1,
+    "questStartTemplates": [
+        {
+            "instanceID": 16524
+        }
+    ],
+    "requirements": [
+        {
+            "instanceID": 17220
+        }
+    ],
+    "states": [
+        {
+            "StateName": "Available",
+            "QuestTemplate": {
+                "instanceID": 0
+            },
+            "State": 0,
+            "Lines": [
+                {
+                    "DescriptiveName": "Quest Giver 2",
+                    "Actor": {
+                        "instanceID": 16526
+                    },
+                    "QuestGiverText": "Test Repeatable: State Available. This is an example of a quest chain that is repeatable. "
+                }
+            ],
+            "QuestLogEntry": "Objective: Find a Unicorn."
+        },
+        {
+            "StateName": "Completed",
+            "QuestTemplate": {
+                "instanceID": 0
+            },
+            "State": 10,
+            "Lines": [
+                {
+                    "DescriptiveName": "Quest Giver 2",
+                    "Actor": {
+                        "instanceID": 16526
+                    },
+                    "QuestGiverText": "Test Repeatable: State Complete. "
+                }
+            ],
+            "QuestLogEntry": "Objective: Find a Unicorn."
+        },
+        {
+            "StateName": "RewardsCollected",
+            "QuestTemplate": {
+                "instanceID": 0
+            },
+            "State": 20,
+            "Lines": [
+                {
+                    "DescriptiveName": "Quest Giver 2",
+                    "Actor": {
+                        "instanceID": 16526
+                    },
+                    "QuestGiverText": "Test Repeatable: State Rewards Collected. "
+                }
+            ],
+            "QuestLogEntry": "Objective: Find a Unicorn."
+        }
+    ],
+    "quests": [
+        {
+            "instanceID": 16694
+        }
+    ],
+    "rewardType": 0,
+    "questGiverTemplates": [
+        {
+            "instanceID": 16526
+        }
+    ],
+    "chainRewards": [
+        {
+            "instanceID": 17222
+        },
+        {
+            "instanceID": 17224
+        },
+        {
+            "instanceID": 17226
+        }
+    ]
+}

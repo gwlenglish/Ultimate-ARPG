@@ -1,0 +1,68 @@
+{
+    "config": {
+        "instanceID": 17232
+    },
+    "ID": {
+        "Name": "Explore the lands!",
+        "ID": 0,
+        "Quest": {
+            "instanceID": 16690
+        }
+    },
+    "questName": "Explore Demo Scene",
+    "startType": 0,
+    "questStartTemplates": [],
+    "questStates": [
+        {
+            "StateName": "InProgress",
+            "QuestTemplate": {
+                "instanceID": 16690
+            },
+            "State": 1,
+            "Lines": [
+                {
+                    "DescriptiveName": "Quest Giver 1",
+                    "Actor": {
+                        "instanceID": 16524
+                    },
+                    "QuestGiverText": "Done exploring?"
+                }
+            ],
+            "QuestLogEntry": "Objective: Explore the region."
+        },
+        {
+            "StateName": "Completed",
+            "QuestTemplate": {
+                "instanceID": 16690
+            },
+            "State": 10,
+            "Lines": [
+                {
+                    "DescriptiveName": "Quest Giver 1",
+                    "Actor": {
+                        "instanceID": 16524
+                    },
+                    "QuestGiverText": "Nice! I'll be the top of my class now. "
+                }
+            ],
+            "QuestLogEntry": "Objective: Regions explored. Turn in."
+        }
+    ],
+    "QuestRewards": [
+        {
+            "instanceID": 17222
+        },
+        {
+            "instanceID": 17224
+        }
+    ],
+    "rewardType": 0,
+    "rewardGiverTemplate": [
+        {
+            "instanceID": 16524
+        }
+    ],
+    "logic": {
+        "instanceID": 17234
+    }
+}

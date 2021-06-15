@@ -1,0 +1,26 @@
+{
+    "config": {
+        "instanceID": 18338
+    },
+    "AutoName": true,
+    "traitID": {
+        "Name": "Intelligence",
+        "ID": 8,
+        "Trait": {
+            "instanceID": 18080
+        }
+    },
+    "traitName": "Intelligence",
+    "TraitPrefixes": [
+        "Brilliant",
+        "Clever"
+    ],
+    "TraitSuffixes": [
+        "of Intellect",
+        "of Brilliance",
+        "of The Fox"
+    ],
+    "myLevelMulti": 60,
+    "weight": 7,
+    "Type": 1
+}

@@ -1,0 +1,49 @@
+{
+    "config": {
+        "instanceID": 18014
+    },
+    "itemID": {
+        "Name": "",
+        "ID": 28,
+        "Item": {
+            "instanceID": 17874
+        }
+    },
+    "autoName": true,
+    "rarity": {
+        "instanceID": 17898
+    },
+    "meshPrefab": {
+        "instanceID": 18016
+    },
+    "sprite": {
+        "instanceID": 18018
+    },
+    "purchaseCost": 10,
+    "sellCost": 5,
+    "classRestriction": 0,
+    "slots": [
+        35,
+        30
+    ],
+    "traitTiers": [
+        {
+            "ILevelMulti": 1.0,
+            "MaxNumberOfTraitsPerTier": 4,
+            "PossibleTierDrops": {
+                "instanceID": 17902
+            }
+        }
+    ],
+    "stats": {
+        "baseName": "Flamethrower",
+        "baseType": 1,
+        "baseStatMinValue": 1,
+        "baseStateILevelMulti": 1.0,
+        "nativeTraits": []
+    },
+    "wearablePefab": {
+        "instanceID": 18020
+    },
+    "weaponType": 103
+}

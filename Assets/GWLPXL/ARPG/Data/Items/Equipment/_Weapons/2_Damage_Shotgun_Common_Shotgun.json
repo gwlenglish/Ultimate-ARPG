@@ -1,0 +1,49 @@
+{
+    "config": {
+        "instanceID": 17998
+    },
+    "itemID": {
+        "Name": "",
+        "ID": 26,
+        "Item": {
+            "instanceID": 17870
+        }
+    },
+    "autoName": true,
+    "rarity": {
+        "instanceID": 17898
+    },
+    "meshPrefab": {
+        "instanceID": 18000
+    },
+    "sprite": {
+        "instanceID": 18002
+    },
+    "purchaseCost": 10,
+    "sellCost": 5,
+    "classRestriction": 0,
+    "slots": [
+        35,
+        30
+    ],
+    "traitTiers": [
+        {
+            "ILevelMulti": 1.0,
+            "MaxNumberOfTraitsPerTier": 4,
+            "PossibleTierDrops": {
+                "instanceID": 17902
+            }
+        }
+    ],
+    "stats": {
+        "baseName": "Shotgun",
+        "baseType": 1,
+        "baseStatMinValue": 1,
+        "baseStateILevelMulti": 1.0,
+        "nativeTraits": []
+    },
+    "wearablePefab": {
+        "instanceID": 18004
+    },
+    "weaponType": 102
+}

@@ -1,0 +1,12 @@
+{
+    "config": {
+        "instanceID": 23424
+    },
+    "logID": {
+        "Name": "Player 1 Quest Log",
+        "ID": 2,
+        "QuestLog": {
+            "instanceID": 32340
+        }
+    }
+}

@@ -1,0 +1,163 @@
+{
+    "config": {
+        "instanceID": 24656
+    },
+    "lootPrefabOverride": {
+        "instanceID": 0
+    },
+    "ID": {
+        "Name": "2D Drop Table",
+        "ID": 0,
+        "LootDrops": {
+            "instanceID": 24528
+        }
+    },
+    "AllPossibleItems": [
+        {
+            "instanceID": 24658
+        },
+        {
+            "instanceID": 24660
+        },
+        {
+            "instanceID": 24662
+        },
+        {
+            "instanceID": 24664
+        },
+        {
+            "instanceID": 24666
+        },
+        {
+            "instanceID": 24668
+        },
+        {
+            "instanceID": 24660
+        },
+        {
+            "instanceID": 24658
+        },
+        {
+            "instanceID": 24670
+        },
+        {
+            "instanceID": 24672
+        },
+        {
+            "instanceID": 24674
+        },
+        {
+            "instanceID": 24676
+        }
+    ],
+    "LootTable": [
+        {
+            "Description": "Necro Sword 2D_1.086957",
+            "RelativePercent": 1.08695650100708,
+            "RangeFrom": 210,
+            "RangeTo": 215,
+            "Item": {
+                "instanceID": 24666
+            }
+        },
+        {
+            "Description": "Battle Axe 2D_1.086957",
+            "RelativePercent": 1.08695650100708,
+            "RangeFrom": 440,
+            "RangeTo": 445,
+            "Item": {
+                "instanceID": 24674
+            }
+        },
+        {
+            "Description": "Necro Sword 2D_3.26087",
+            "RelativePercent": 3.2608695030212404,
+            "RangeFrom": 215,
+            "RangeTo": 230,
+            "Item": {
+                "instanceID": 24668
+            }
+        },
+        {
+            "Description": "Battle Axe 2D_3.26087",
+            "RelativePercent": 3.2608695030212404,
+            "RangeFrom": 445,
+            "RangeTo": 460,
+            "Item": {
+                "instanceID": 24676
+            }
+        },
+        {
+            "Description": "Necro Sword 2D_7.608696",
+            "RelativePercent": 7.6086955070495609,
+            "RangeFrom": 175,
+            "RangeTo": 210,
+            "Item": {
+                "instanceID": 24664
+            }
+        },
+        {
+            "Description": "Battle Axe 2D_7.608696",
+            "RelativePercent": 7.6086955070495609,
+            "RangeFrom": 405,
+            "RangeTo": 440,
+            "Item": {
+                "instanceID": 24672
+            }
+        },
+        {
+            "Description": "Battle Axe 2D_10.86957",
+            "RelativePercent": 10.8695650100708,
+            "RangeFrom": 0,
+            "RangeTo": 50,
+            "Item": {
+                "instanceID": 24658
+            }
+        },
+        {
+            "Description": "Necro Sword 2D_10.86957",
+            "RelativePercent": 10.8695650100708,
+            "RangeFrom": 50,
+            "RangeTo": 100,
+            "Item": {
+                "instanceID": 24660
+            }
+        },
+        {
+            "Description": "Necro Sword 2D_10.86957",
+            "RelativePercent": 10.8695650100708,
+            "RangeFrom": 230,
+            "RangeTo": 280,
+            "Item": {
+                "instanceID": 24660
+            }
+        },
+        {
+            "Description": "Battle Axe 2D_10.86957",
+            "RelativePercent": 10.8695650100708,
+            "RangeFrom": 280,
+            "RangeTo": 330,
+            "Item": {
+                "instanceID": 24658
+            }
+        },
+        {
+            "Description": "Necro Sword 2D_16.30435",
+            "RelativePercent": 16.30434799194336,
+            "RangeFrom": 100,
+            "RangeTo": 175,
+            "Item": {
+                "instanceID": 24662
+            }
+        },
+        {
+            "Description": "Battle Axe 2D_16.30435",
+            "RelativePercent": 16.30434799194336,
+            "RangeFrom": 330,
+            "RangeTo": 405,
+            "Item": {
+                "instanceID": 24670
+            }
+        }
+    ]
+}

@@ -1,0 +1,34 @@
+{
+    "config": {
+        "instanceID": 17646
+    },
+    "itemID": {
+        "Name": "",
+        "ID": 24,
+        "Item": {
+            "instanceID": 17588
+        }
+    },
+    "autoName": true,
+    "rarity": {
+        "instanceID": 17648
+    },
+    "meshPrefab": {
+        "instanceID": 0
+    },
+    "sprite": {
+        "instanceID": 17650
+    },
+    "purchaseCost": 10,
+    "sellCost": 5,
+    "forQuests": [
+        {
+            "instanceID": 17652
+        },
+        {
+            "instanceID": 17654
+        }
+    ],
+    "itemName": "Oil Quest Item",
+    "UserDescription": "This is a key item, never duplicated"
+}

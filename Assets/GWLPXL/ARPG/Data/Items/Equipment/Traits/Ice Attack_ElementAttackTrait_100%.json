@@ -1,0 +1,27 @@
+{
+    "config": {
+        "instanceID": 18294
+    },
+    "AutoName": true,
+    "traitID": {
+        "Name": "Ice Attack",
+        "ID": 11,
+        "Trait": {
+            "instanceID": 18044
+        }
+    },
+    "traitName": "Ice Attack",
+    "TraitPrefixes": [
+        "Icey",
+        "Frozen",
+        "Chilly"
+    ],
+    "TraitSuffixes": [
+        "of Iciness",
+        "of Ice",
+        "of the Tundra"
+    ],
+    "myLevelMulti": 100,
+    "weight": 5,
+    "Type": 2
+}

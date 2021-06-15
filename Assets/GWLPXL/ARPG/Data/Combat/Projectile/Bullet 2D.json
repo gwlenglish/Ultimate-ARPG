@@ -1,0 +1,20 @@
+{
+    "config": {
+        "instanceID": 18974
+    },
+    "id": {
+        "Name": "",
+        "ID": 1,
+        "Instance": {
+            "instanceID": 32328
+        }
+    },
+    "ProjectileVars": {
+        "descriptiveName": "Bullet",
+        "description": "Normal bullet.",
+        "speed": 55.0,
+        "disableOnTouch": true,
+        "friendlyFire": false,
+        "lifetime": 10.0
+    }
+}

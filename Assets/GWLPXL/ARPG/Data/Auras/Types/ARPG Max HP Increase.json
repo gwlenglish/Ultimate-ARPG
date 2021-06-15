@@ -1,0 +1,47 @@
+{
+    "config": {
+        "instanceID": 18134
+    },
+    "auraID": {
+        "Name": "",
+        "ID": 0,
+        "Aura": {
+            "instanceID": 18114
+        }
+    },
+    "AuraData": {
+        "AutoName": true,
+        "AutoAssignID": false,
+        "AuraName": "ARPG Max HP Increase",
+        "AuraDescription": "Increases Max HP by 25",
+        "AuraPrefab": {
+            "instanceID": 18136
+        },
+        "auraCategory": 0,
+        "uniqueID": 0,
+        "AuraLogics": [
+            {
+                "instanceID": 18138
+            }
+        ],
+        "AuraGroups": [
+            1
+        ],
+        "Pulses": false,
+        "PulseRate": 0.0,
+        "AOE": true,
+        "LayersToCheck": [
+            {
+                "serializedVersion": "2",
+                "m_Bits": 1
+            },
+            {
+                "serializedVersion": "2",
+                "m_Bits": 2048
+            }
+        ],
+        "ColliderType": 0,
+        "AreaRadius": 5.0,
+        "CheckAreaRate": 0.25
+    }
+}

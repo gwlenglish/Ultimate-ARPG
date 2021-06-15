@@ -1,0 +1,28 @@
+{
+    "config": {
+        "instanceID": 17984
+    },
+    "itemID": {
+        "Name": "",
+        "ID": 1,
+        "Item": {
+            "instanceID": 17858
+        }
+    },
+    "autoName": true,
+    "rarity": {
+        "instanceID": 17898
+    },
+    "meshPrefab": {
+        "instanceID": 17986
+    },
+    "sprite": {
+        "instanceID": 17650
+    },
+    "purchaseCost": 10,
+    "sellCost": 5,
+    "potionName": "Mana Potion",
+    "stackingAmount": 5,
+    "resource": 1,
+    "restoreAmount": 20
+}

@@ -1,0 +1,26 @@
+{
+    "config": {
+        "instanceID": 23104
+    },
+    "itemID": {
+        "Name": "",
+        "ID": 0,
+        "Item": {
+            "instanceID": 22982
+        }
+    },
+    "autoName": true,
+    "rarity": {
+        "instanceID": 17906
+    },
+    "meshPrefab": {
+        "instanceID": 0
+    },
+    "sprite": {
+        "instanceID": 0
+    },
+    "purchaseCost": 10,
+    "sellCost": 5,
+    "Amount": 100,
+    "CurrencyName": "Gold"
+}

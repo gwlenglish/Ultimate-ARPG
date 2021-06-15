@@ -1,0 +1,43 @@
+{
+    "config": {
+        "instanceID": 18276
+    },
+    "ID": {
+        "Name": "King Loot",
+        "ID": 6,
+        "LootDrops": {
+            "instanceID": 17494
+        }
+    },
+    "LootPrefab": {
+        "instanceID": 17634
+    },
+    "AllPossibleItems": [
+        {
+            "instanceID": 17432
+        },
+        {
+            "instanceID": 17436
+        }
+    ],
+    "LootTable": [
+        {
+            "Description": "Legendary Righty_50",
+            "RelativePercent": 50.0,
+            "RangeFrom": 0,
+            "RangeTo": 5,
+            "Item": {
+                "instanceID": 17432
+            }
+        },
+        {
+            "Description": "Legendary Lefty_50",
+            "RelativePercent": 50.0,
+            "RangeFrom": 5,
+            "RangeTo": 10,
+            "Item": {
+                "instanceID": 17436
+            }
+        }
+    ]
+}

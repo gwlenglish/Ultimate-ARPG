@@ -1,0 +1,31 @@
+{
+    "config": {
+        "instanceID": 18290
+    },
+    "ID": {
+        "Name": "Skeleton Key",
+        "ID": 13,
+        "LootDrops": {
+            "instanceID": 17508
+        }
+    },
+    "LootPrefab": {
+        "instanceID": 17634
+    },
+    "AllPossibleItems": [
+        {
+            "instanceID": 17470
+        }
+    ],
+    "LootTable": [
+        {
+            "Description": "Skeleton Key_100",
+            "RelativePercent": 100.0,
+            "RangeFrom": 0,
+            "RangeTo": 100,
+            "Item": {
+                "instanceID": 17470
+            }
+        }
+    ]
+}

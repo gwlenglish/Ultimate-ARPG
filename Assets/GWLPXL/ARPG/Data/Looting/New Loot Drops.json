@@ -1,0 +1,17 @@
+{
+    "config": {
+        "instanceID": 18288
+    },
+    "ID": {
+        "Name": "New Loot Drops",
+        "ID": 11,
+        "LootDrops": {
+            "instanceID": 17504
+        }
+    },
+    "LootPrefab": {
+        "instanceID": 17634
+    },
+    "AllPossibleItems": [],
+    "LootTable": []
+}

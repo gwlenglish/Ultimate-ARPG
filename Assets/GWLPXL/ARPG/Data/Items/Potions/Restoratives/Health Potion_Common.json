@@ -1,0 +1,28 @@
+{
+    "config": {
+        "instanceID": 17978
+    },
+    "itemID": {
+        "Name": "",
+        "ID": 2,
+        "Item": {
+            "instanceID": 17856
+        }
+    },
+    "autoName": true,
+    "rarity": {
+        "instanceID": 17898
+    },
+    "meshPrefab": {
+        "instanceID": 17980
+    },
+    "sprite": {
+        "instanceID": 17982
+    },
+    "purchaseCost": 10,
+    "sellCost": 5,
+    "potionName": "Health Potion",
+    "stackingAmount": 5,
+    "resource": 0,
+    "restoreAmount": 100
+}
