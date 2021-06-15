@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using GWLPXL.ARPG._Scripts.Editor.ArpgTree.com;
 using GWLPXL.ARPG._Scripts.Editor.com;
+using GWLPXL.ARPG._Scripts.Editor.Data.com;
 using GWLPXL.ARPGCore.Saving.com;
 using GWLPXL.ARPGCore.Statics.com;
 
@@ -24,8 +25,9 @@ namespace GWLPXL.ARPG._Scripts.Editor.ReloadProcessors.com
             
             Root.AddToItemAsChildArray(Tree,
                 added.Where(w => w != null)
-                    .Select(s => new ArpgItemDataContainer(s, Database.GetSearchFolders()[0])).ToArray(),
-                obj => ArpgEditorHelper.GetNameOfArpgObject(obj.Object));
+                    .Select(s => new ArpgItemDataContainer(s, Database.GetSearchFolders()[0], this)).ToArray(),
+                obj => ArpgEditorHelper.GetNameOfArpgObject(obj.Object),
+                ArpgTreeData.DefaultDragAndDropFunc, ArpgTreeData.DefaultOnRightClickFunc);
         }
 
         public ArpgTreeItem Tree { get; set; }

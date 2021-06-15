@@ -170,10 +170,10 @@ namespace GWLPXL.ARPG._Scripts.Editor.Data.com
             // status changes?
         }
         
-        private static Func<object, Object> DefaultDragAndDropFunc =
+        public static Func<object, Object> DefaultDragAndDropFunc =
             (obj) => ((ArpgItemDataContainer) obj).Object;
 
-        private static Action<ArpgTreeItem> DefaultOnRightClickFunc = item =>
+        public static Action<ArpgTreeItem> DefaultOnRightClickFunc = item =>
         {
             var menu = new GenericMenu();
             menu.AddItem(new GUIContent("Delete"), false, Delete);
