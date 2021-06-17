@@ -23,4 +23,14 @@ namespace GWLPXL.ARPGCore.Items.com
         public UnityEnchantEvents SceneEvents = new UnityEnchantEvents();
     }
 
+    [System.Serializable]
+    public class EnchantUIEvents
+    {
+        public UnityEngine.Events.UnityEvent OnStartDragEnchantable;
+        public UnityEngine.Events.UnityEvent OnStartDragEnchant;
+        public UnityEngine.Events.UnityEvent OnPreviewSetEnchantable;
+        public UnityEngine.Events.UnityEvent OnPreviewSetEnchant;
+        public UnityEquipmentEnchantedEvent OnEnchantSuccess;
+    }
+
 }

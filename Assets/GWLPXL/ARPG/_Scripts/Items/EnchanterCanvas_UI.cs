@@ -8,12 +8,13 @@ using GWLPXL.ARPGCore.Traits.com;
 
 namespace GWLPXL.ARPGCore.CanvasUI.com
 {
-
+   
 
     public class EnchanterCanvas_UI : MonoBehaviour, IEnchanterCanvas
     {
         public bool FreezeDungeon = true;
         public Transform MainPanel = null;
+        public EnchantUIEvents SceneEvents;
         public bool IsNative = true;
         public int Ilevel = 1;
         [Header("Dragging Input")]
@@ -49,26 +50,79 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         protected bool active;
 
         Item preview = null;
+
+        #region unity calls
         protected virtual void Awake()
         {
-            previewEnchant = EnchantPreviewInstance.GetComponent<IEnchantUIElement>();
-            enchantablePreview = EnchantablePreviewInstance.GetComponentInChildren<IEnchantableUIElement>();
-            decisionPreview = DecisionBoxPreview.GetComponentInChildren<IEnchantableUIElement>();
-            successEnchantable = SuccessBoxShowcase.GetComponentInChildren<IEnchantableUIElement>();
-            homeposition = DraggableEnchantableInstance.transform.position;
-            draggableenchantable = DraggableEnchantableInstance.GetComponent<IEnchantableUIElement>();
-            draggableEnchant = DraggableEnchantInstance.GetComponent<IEnchantUIElement>();
+            SetupUI();
 
         }
         protected virtual void Start()
         {
             Close();
         }
+        protected virtual void LateUpdate()
+        {
+            if (active == false) return;
+
+            //check mouse pos
+            if (draggingEnchant == false)
+            {
+                CheckDraggingOnEnchantable();
+                CheckStopDraggingEnchantable();
+                DoDraggingEnchantable();
+            }
+
+            if (draggingEnchantable == false)
+            {
+                CheckDraggingOnEnchant();
+                CheckStopDraggingEnchant();
+                DoDraggingEnchant();
+            }
+        }
+        #endregion
+
+
         public void Close()
         {
             CloseDown();
 
         }
+        public void Open(IUseEnchanterCanvas user)
+        {
+            Setup(user);
+        }
+        public void SetStation(EnchantingStation station)
+        {
+            if (this.station != null)
+            {
+                this.station.OnEnchanted -= EnchantSuccess;
+            }
+            this.station = station;
+            this.station.OnEnchanted += EnchantSuccess;
+
+
+        }
+       
+        public void Toggle()
+        {
+            if (MainPanel.gameObject.activeInHierarchy)
+            {
+                Close();
+            }
+            else
+            {
+                Open(user);
+            }
+        }
+
+        public bool GetCanvasEnabled()
+        {
+            return MainPanel.gameObject.activeInHierarchy;
+        }
+
+        public bool GetFreezeMover() => FreezeDungeon;
+
 
         public virtual void ClosePreview()
         {
@@ -93,7 +147,6 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             {
                 Equipment eq = item as Equipment;
                 EquipmentTrait[] natives = eq.GetStats().GetNativeTraits();
-                Debug.Log(natives.Length);
 
                 //get current traits, make copies
                 EquipmentTrait[] copynatives = new EquipmentTrait[natives.Length];
@@ -102,7 +155,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                     copynatives[i] = Instantiate(natives[i]);
                 }
                 EquipmentTrait[] randos = eq.GetStats().GetRandomTraits();
-                Debug.Log(randos.Length);
+
                 EquipmentTrait[] copyrandos = new EquipmentTrait[randos.Length];
                 for (int i = 0; i < copyrandos.Length; i++)
                 {
@@ -144,24 +197,20 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             draggableenchantable.SetEnchantable(null);
 
         }
-        protected virtual void LateUpdate()
+
+        protected virtual void EnchantSuccess(Equipment enchanted)
         {
-            if (active == false) return;
-
-            //check mouse pos
-            if (draggingEnchant == false)
-            {
-                CheckDraggingOnEnchantable();
-                CheckStopDraggingEnchantable();
-                DoDraggingEnchantable();
-            }
-
-            if (draggingEnchantable == false)
-            {
-                CheckDraggingOnEnchant();
-                CheckStopDraggingEnchant();
-                DoDraggingEnchant();
-            }
+            SceneEvents.OnEnchantSuccess?.Invoke(enchanted);
+        }
+        protected virtual void SetupUI()
+        {
+            previewEnchant = EnchantPreviewInstance.GetComponent<IEnchantUIElement>();
+            enchantablePreview = EnchantablePreviewInstance.GetComponentInChildren<IEnchantableUIElement>();
+            decisionPreview = DecisionBoxPreview.GetComponentInChildren<IEnchantableUIElement>();
+            successEnchantable = SuccessBoxShowcase.GetComponentInChildren<IEnchantableUIElement>();
+            homeposition = DraggableEnchantableInstance.transform.position;
+            draggableenchantable = DraggableEnchantableInstance.GetComponent<IEnchantableUIElement>();
+            draggableEnchant = DraggableEnchantInstance.GetComponent<IEnchantUIElement>();
         }
         protected virtual void DoDraggingEnchant()
         {
@@ -180,6 +229,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                 if (DraggableEnchantInstance.GetComponent<RectTransform>().rect.Overlaps(EnchantPreviewInstance.GetComponent<RectTransform>().rect))
                 {
                     EnchantPreviewInstance.GetComponent<IEnchantUIElement>().SetEnchant(draggableEnchant.GetEnchant());
+                    SceneEvents.OnPreviewSetEnchant?.Invoke();
                 }
 
             }
@@ -206,6 +256,8 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         protected virtual void TryPlaceInSlot(EquipmentTrait enchant)
         {
             draggableEnchant.SetEnchant(enchant);
+            if (enchant == null) return;
+            SceneEvents.OnStartDragEnchant?.Invoke();
         }
         protected virtual void UpdateEquipmentUI(Item item)
         {
@@ -251,8 +303,9 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                 draggingEnchantable = false;//also check if trying to place in slot
                 if (DraggableEnchantableInstance.GetComponent<RectTransform>().rect.Overlaps(EnchantablePreviewInstance.GetComponent<RectTransform>().rect))
                 {
+                    //placed
                     EnchantablePreviewInstance.GetComponent<IEnchantableUIElement>().SetEnchantable(draggableenchantable.GetEnchantable());
-                
+                    SceneEvents.OnPreviewSetEnchantable?.Invoke();
                 }
 
             }
@@ -262,6 +315,8 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         protected virtual void TryPlaceInSlot(Item item)
         {
             draggableenchantable.SetEnchantable(item);
+            if (item == null) return;
+            SceneEvents.OnStartDragEnchantable?.Invoke();
         }
 
         protected virtual void CloseDown()
@@ -298,10 +353,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             }
         }
 
-        public void Open(IUseEnchanterCanvas user)
-        {
-            Setup(user);
-        }
+
 
         protected virtual void Setup(IUseEnchanterCanvas user)
         {
@@ -353,29 +405,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             uidic[item] = element;
         }
 
-        public void SetStation(EnchantingStation station)
-        {
-            this.station = station;
-        }
-
-        public void Toggle()
-        {
-            if (MainPanel.gameObject.activeInHierarchy)
-            {
-                Close();
-            }
-            else
-            {
-                Open(user);
-            }
-        }
-
-        public bool GetCanvasEnabled()
-        {
-            return MainPanel.gameObject.activeInHierarchy;
-        }
-
-        public bool GetFreezeMover() => FreezeDungeon;
+        
       
     }
 }

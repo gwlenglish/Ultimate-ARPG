@@ -282,7 +282,7 @@ namespace GWLPXL.ARPGCore.Items.com
         [Header("Traits")]
         [Tooltip("Traits you can set in the editor and will always be on this piece of equipment.")]
         [SerializeField]
-        protected EquipmentTrait[] nativeTraits;
+        protected EquipmentTrait[] nativeTraits = new EquipmentTrait[0];
         [Tooltip("Randomly created at runtime, not guarenteed to be on the equipment always.")]
         protected EquipmentTrait[] randomTraits = new EquipmentTrait[0];
 
