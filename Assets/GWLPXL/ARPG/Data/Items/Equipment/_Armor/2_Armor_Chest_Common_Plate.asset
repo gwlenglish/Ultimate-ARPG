@@ -44,5 +44,7 @@ MonoBehaviour:
     baseStatMinValue: 1
     baseStateILevelMulti: 1
     nativeTraits: []
+    sockets: []
   wearablePefab: {fileID: 0}
+  enchantable: 1
   armorMat: 4

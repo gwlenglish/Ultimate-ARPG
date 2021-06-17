@@ -79,7 +79,7 @@ namespace GWLPXL.ARPGCore.Statics.com
         static StringBuilder sb = new StringBuilder("");
         public static string GetRandomTraitDescriptor(string[] possibleNames)
         {
-            int rando = Random.Range(0, possibleNames.Length - 1);
+            int rando = Random.Range(0, possibleNames.Length);
             return possibleNames[rando];
         }
         public static string GetGeneratedName(Equipment equipment)//could refactor out to put the names on the SO's themselves...

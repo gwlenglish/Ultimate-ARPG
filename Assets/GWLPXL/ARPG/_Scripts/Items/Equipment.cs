@@ -78,7 +78,7 @@ namespace GWLPXL.ARPGCore.Items.com
             GetStats().SetGeneratedName(generatedName);
         }
 
-        EquipmentTrait[] DetermineRandomTraits(int iLevel)
+        protected virtual EquipmentTrait[] DetermineRandomTraits(int iLevel)
         {
             EquipmentTrait[] _traits = new EquipmentTrait[0];
             if (GetTraitTier() == null) return _traits;
@@ -262,6 +262,12 @@ namespace GWLPXL.ARPGCore.Items.com
 
     }
 
+    [System.Serializable]
+    public class Socket
+    {
+        [Tooltip("Leave empty for an empty socket.")]
+        public EquipmentTrait SocketedThing;
+    }
     #region helper classes
     [System.Serializable]
     public class EquipmentStats
@@ -285,8 +291,48 @@ namespace GWLPXL.ARPGCore.Items.com
         protected EquipmentTrait[] nativeTraits = new EquipmentTrait[0];
         [Tooltip("Randomly created at runtime, not guarenteed to be on the equipment always.")]
         protected EquipmentTrait[] randomTraits = new EquipmentTrait[0];
+        [SerializeField]
+        [Tooltip("defines the number of sockets the item has.")]
+        protected Socket[] sockets = new Socket[0];
 
         protected int iLevel = 1;
+
+        #region sockets
+        //to do, updating sockets and also saving
+        public virtual void SetSocket(int atIndex, Socket socket)
+        {
+            if (atIndex < 0 || atIndex > sockets.Length - 1)
+            {
+                Debug.LogWarning("Trying to set socket at index " + atIndex + " but index out of range.");
+                return;
+            }
+            sockets[atIndex] = socket;
+
+        }
+        public virtual Socket GetSocket(int atIndex)
+        {
+            if (atIndex < 0 || atIndex > sockets.Length - 1)
+            {
+                Debug.LogWarning("Trying to set socket at index " + atIndex + " but index exception");
+                return null;
+            }
+            return sockets[atIndex];
+        }
+        public virtual void SetSockets(Socket[] sockets)
+        {
+            this.sockets = sockets;
+        }
+        public virtual List<Socket> GetSockets()
+        {
+            List<Socket> _temp = new List<Socket>();
+            for (int i = 0; i < sockets.Length; i++)
+            {
+                _temp.Add(sockets[i]);
+            }
+            return _temp;
+        }
+
+        #endregion
         public virtual CombatStatType GetBaseType()
         {
             return baseType;

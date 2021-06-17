@@ -109,6 +109,24 @@ namespace GWLPXL.ARPGCore.Traits.com
         {
             myValue = value;
         }
+        public virtual string GetTraitUIDescription()
+        {
+            StringBuilder sb = new StringBuilder("");
+            sb.Append(GetTraitName());
+            if (GetLeveledValue() > 0)
+            {
+                sb.Append(positive);
+            }
+            else
+            {
+                sb.Append(negative);
+            }
+            sb.Append(GetLeveledValue().ToString());
+            sb.Append(percent);
+
+            return sb.ToString();
+
+        }
         #endregion
 
         #region json interface
@@ -129,24 +147,7 @@ namespace GWLPXL.ARPGCore.Traits.com
         #endregion
 
         #region public abstract
-        public virtual string GetTraitUIDescription()
-        {
-            StringBuilder sb = new StringBuilder("");
-            sb.Append(GetTraitName());
-            if (GetLeveledValue() > 0)
-            {
-                sb.Append(positive);
-            }
-            else
-            {
-                sb.Append(negative);
-            }
-            sb.Append(GetLeveledValue().ToString());
-            sb.Append(percent);
 
-            return sb.ToString();
-
-        }
         public abstract TraitType GetTraitType();
         public abstract void ApplyTrait(IAttributeUser toActor);
         public abstract void RemoveTrait(IAttributeUser toActor);
