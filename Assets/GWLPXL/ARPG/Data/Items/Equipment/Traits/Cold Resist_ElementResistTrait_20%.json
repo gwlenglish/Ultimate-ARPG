@@ -1,13 +1,13 @@
 {
     "config": {
-        "instanceID": 18346
+        "instanceID": 18304
     },
     "AutoName": true,
     "traitID": {
         "Name": "Cold Resist",
         "ID": 3,
         "Trait": {
-            "instanceID": 18088
+            "instanceID": 18136
         }
     },
     "traitName": "Cold Resist",
@@ -23,5 +23,8 @@
     ],
     "myLevelMulti": 20,
     "weight": 5,
+    "sprite": {
+        "instanceID": 0
+    },
     "Type": 2
 }

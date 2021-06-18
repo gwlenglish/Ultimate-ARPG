@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Config: {fileID: 4900000, guid: 716f2671973b7b5459efa21f8adff35e, type: 3}
   classID:
-    Name: NONE
-    ID: 1
+    Name: NONE_class
+    ID: 5
     SOReference: {fileID: 11400000}
   classAttributes:
     ClassName: NONE

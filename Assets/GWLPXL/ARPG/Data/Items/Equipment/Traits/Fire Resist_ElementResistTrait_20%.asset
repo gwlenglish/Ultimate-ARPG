@@ -28,4 +28,5 @@ MonoBehaviour:
   - of Hellfire
   myLevelMulti: 20
   weight: 5
+  sprite: {fileID: 0}
   Type: 1

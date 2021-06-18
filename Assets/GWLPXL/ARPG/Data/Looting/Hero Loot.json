@@ -1,30 +1,30 @@
 {
     "config": {
-        "instanceID": 18270
+        "instanceID": 25862
+    },
+    "lootPrefabOverride": {
+        "instanceID": 0
     },
     "ID": {
         "Name": "Hero Loot",
         "ID": 4,
         "LootDrops": {
-            "instanceID": 17490
+            "instanceID": 25268
         }
-    },
-    "LootPrefab": {
-        "instanceID": 17634
     },
     "AllPossibleItems": [
         {
-            "instanceID": 17432
+            "instanceID": 21022
         }
     ],
     "LootTable": [
         {
-            "Description": "Legendary Righty_100",
+            "Description": "_100",
             "RelativePercent": 100.0,
             "RangeFrom": 0,
             "RangeTo": 5,
             "Item": {
-                "instanceID": 17432
+                "instanceID": 21022
             }
         }
     ]

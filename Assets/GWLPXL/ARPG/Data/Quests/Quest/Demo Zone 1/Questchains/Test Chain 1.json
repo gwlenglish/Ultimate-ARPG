@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 17218
+        "instanceID": 21906
     },
     "ID": {
-        "Name": "",
-        "ID": 0,
+        "Name": "Test Chain 1",
+        "ID": 5,
         "Questchain": {
-            "instanceID": 0
+            "instanceID": 21886
         }
     },
     "questChainName": "Test Chain 1",
@@ -14,12 +14,15 @@
     "StartType": 1,
     "questStartTemplates": [
         {
-            "instanceID": 16524
+            "instanceID": 16492
         }
     ],
     "requirements": [
         {
-            "instanceID": 17220
+            "instanceID": 21908
+        },
+        {
+            "instanceID": 21910
         }
     ],
     "states": [
@@ -33,7 +36,7 @@
                 {
                     "DescriptiveName": "Quest Giver 1",
                     "Actor": {
-                        "instanceID": 16524
+                        "instanceID": 16492
                     },
                     "QuestGiverText": "Test Chain 1 available. This is an example of a quest chain with only 1 quest."
                 }
@@ -50,7 +53,7 @@
                 {
                     "DescriptiveName": "Quest Giver 1",
                     "Actor": {
-                        "instanceID": 16524
+                        "instanceID": 16492
                     },
                     "QuestGiverText": "Chain 1 Complete."
                 }
@@ -67,7 +70,7 @@
                 {
                     "DescriptiveName": "Quest Giver 1",
                     "Actor": {
-                        "instanceID": 16524
+                        "instanceID": 16492
                     },
                     "QuestGiverText": "Chain 1 Rewards Given"
                 }
@@ -77,24 +80,24 @@
     ],
     "quests": [
         {
-            "instanceID": 16690
+            "instanceID": 16558
         }
     ],
     "rewardType": 0,
     "questGiverTemplates": [
         {
-            "instanceID": 16524
+            "instanceID": 16492
         }
     ],
     "chainRewards": [
         {
-            "instanceID": 17222
+            "instanceID": 16928
         },
         {
-            "instanceID": 17224
+            "instanceID": 16930
         },
         {
-            "instanceID": 17226
+            "instanceID": 20868
         }
     ]
 }

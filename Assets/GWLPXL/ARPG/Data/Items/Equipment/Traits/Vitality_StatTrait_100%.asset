@@ -15,8 +15,8 @@ MonoBehaviour:
   config: {fileID: 4900000, guid: 8d2905bb87689aa43bbfe7126d029daf, type: 3}
   AutoName: 1
   traitID:
-    Name: Vitality
-    ID: 22
+    Name: Vitality_StatTrait_100%
+    ID: 26
     Trait: {fileID: 11400000}
   traitName: Vitality
   TraitPrefixes:
@@ -28,4 +28,5 @@ MonoBehaviour:
   - of Health
   myLevelMulti: 100
   weight: 7
+  sprite: {fileID: 0}
   Type: 3

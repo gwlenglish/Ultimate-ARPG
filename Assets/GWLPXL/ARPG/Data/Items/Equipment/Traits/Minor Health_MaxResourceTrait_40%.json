@@ -1,13 +1,13 @@
 {
     "config": {
-        "instanceID": 18334
+        "instanceID": 18292
     },
     "AutoName": true,
     "traitID": {
         "Name": "Minor Health",
         "ID": 6,
         "Trait": {
-            "instanceID": 18076
+            "instanceID": 18124
         }
     },
     "traitName": "Minor Health",
@@ -23,5 +23,8 @@
     ],
     "myLevelMulti": 40,
     "weight": 10,
+    "sprite": {
+        "instanceID": 0
+    },
     "Type": 0
 }

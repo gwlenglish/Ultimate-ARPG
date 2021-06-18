@@ -1,12 +1,12 @@
 {
     "Config": {
-        "instanceID": 32354
+        "instanceID": 36096
     },
     "classID": {
-        "Name": "NONE",
-        "ID": 1,
+        "Name": "NONE_class",
+        "ID": 5,
         "SOReference": {
-            "instanceID": 32318
+            "instanceID": 36058
         }
     },
     "classAttributes": {

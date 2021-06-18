@@ -13,17 +13,11 @@ MonoBehaviour:
   m_Name: King Head
   m_EditorClassIdentifier: 
   config: {fileID: 4900000, guid: 7047ba54b18e8c64b886372449fe3039, type: 3}
+  lootPrefabOverride: {fileID: 0}
   ID:
     Name: King Head
     ID: 5
     LootDrops: {fileID: 11400000}
-  LootPrefab: {fileID: 114661835936029034, guid: ccd8fea824547ec4589c40c00e341910,
-    type: 3}
   AllPossibleItems:
-  - {fileID: 11400000, guid: 9c9b6539439ed6b4cb873ff53f6260ec, type: 2}
-  LootTable:
-  - Description: King's Head_100
-    RelativePercent: 100
-    RangeFrom: 0
-    RangeTo: 5
-    Item: {fileID: 11400000, guid: 9c9b6539439ed6b4cb873ff53f6260ec, type: 2}
+  - {fileID: 0}
+  LootTable: []

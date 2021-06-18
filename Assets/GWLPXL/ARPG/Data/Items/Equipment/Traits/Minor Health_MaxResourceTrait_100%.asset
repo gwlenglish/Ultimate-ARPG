@@ -29,4 +29,5 @@ MonoBehaviour:
   - of Nourishment
   myLevelMulti: 100
   weight: 10
+  sprite: {fileID: 0}
   Type: 0

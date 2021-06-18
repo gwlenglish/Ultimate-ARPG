@@ -1,42 +1,42 @@
 {
     "config": {
-        "instanceID": 18282
+        "instanceID": 25870
+    },
+    "lootPrefabOverride": {
+        "instanceID": 0
     },
     "ID": {
         "Name": "Loot from Demo",
         "ID": 8,
         "LootDrops": {
-            "instanceID": 17498
+            "instanceID": 25274
         }
-    },
-    "LootPrefab": {
-        "instanceID": 17634
     },
     "AllPossibleItems": [
         {
-            "instanceID": 17474
+            "instanceID": 17820
         },
         {
-            "instanceID": 17446
+            "instanceID": 17800
         }
     ],
     "LootTable": [
         {
-            "Description": "Necklace_50",
+            "Description": "_50",
             "RelativePercent": 50.0,
             "RangeFrom": 0,
             "RangeTo": 50,
             "Item": {
-                "instanceID": 17474
+                "instanceID": 17820
             }
         },
         {
-            "Description": "Battle Axe_50",
+            "Description": "_50",
             "RelativePercent": 50.0,
             "RangeFrom": 50,
             "RangeTo": 100,
             "Item": {
-                "instanceID": 17446
+                "instanceID": 17800
             }
         }
     ]

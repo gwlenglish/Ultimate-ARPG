@@ -1,12 +1,12 @@
 {
     "Config": {
-        "instanceID": 16806
+        "instanceID": 25856
     },
     "classID": {
-        "Name": "Mage",
-        "ID": 0,
+        "Name": "Mage_class",
+        "ID": 3,
         "SOReference": {
-            "instanceID": 16570
+            "instanceID": 25254
         }
     },
     "classAttributes": {

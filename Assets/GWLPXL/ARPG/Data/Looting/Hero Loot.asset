@@ -13,16 +13,15 @@ MonoBehaviour:
   m_Name: Hero Loot
   m_EditorClassIdentifier: 
   config: {fileID: 4900000, guid: 10e865eacd56e5849807d37621bac473, type: 3}
+  lootPrefabOverride: {fileID: 0}
   ID:
     Name: Hero Loot
     ID: 4
     LootDrops: {fileID: 11400000}
-  LootPrefab: {fileID: 114661835936029034, guid: ccd8fea824547ec4589c40c00e341910,
-    type: 3}
   AllPossibleItems:
   - {fileID: 11400000, guid: 587079bc0b57a2747a3ed9d1739e3418, type: 2}
   LootTable:
-  - Description: Legendary Righty_100
+  - Description: _100
     RelativePercent: 100
     RangeFrom: 0
     RangeTo: 5

@@ -1,13 +1,13 @@
 {
     "config": {
-        "instanceID": 18310
+        "instanceID": 18268
     },
     "AutoName": true,
     "traitID": {
-        "Name": "Intelligence",
-        "ID": 20,
+        "Name": "Intelligence_StatTrait_100%",
+        "ID": 24,
         "Trait": {
-            "instanceID": 18060
+            "instanceID": 18104
         }
     },
     "traitName": "Intelligence",
@@ -22,5 +22,8 @@
     ],
     "myLevelMulti": 100,
     "weight": 7,
+    "sprite": {
+        "instanceID": 0
+    },
     "Type": 1
 }

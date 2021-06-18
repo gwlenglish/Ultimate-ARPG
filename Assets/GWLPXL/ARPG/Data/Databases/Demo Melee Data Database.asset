@@ -15,9 +15,9 @@ MonoBehaviour:
   searchFolders:
   - Assets/GWLPXL/ARPG/Data
   slots:
-  - DescriptiveName: Default 1
+  - DescriptiveName: Default
     ID:
       Name: Default
       ID: 1
       Instance: {fileID: 11400000, guid: 69526d7c50c13a547abcb3699407079b, type: 2}
-    Instance: {fileID: 11400000, guid: 6ddf829e47ef7704a82fc477a7c7700c, type: 2}
+    Instance: {fileID: 11400000, guid: 69526d7c50c13a547abcb3699407079b, type: 2}

@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 4900000, guid: e68abb8438e3c40429d461afc59f52fa, type: 3}
   itemID:
-    Name: 
-    ID: 0
+    Name: 100 Gold_Worn
+    ID: 31
     Item: {fileID: 11400000}
   autoName: 1
   rarity: {fileID: 11400000, guid: 19cbb9125e3278b4e873d3d27392b9e8, type: 2}

@@ -1,33 +1,33 @@
 {
     "config": {
-        "instanceID": 17246
+        "instanceID": 16934
     },
     "ID": {
         "Name": "The Key and Oil Repeatable",
         "ID": 10,
         "Quest": {
-            "instanceID": 16698
+            "instanceID": 16888
         }
     },
     "questName": "Key 3",
     "startType": 1,
     "questStartTemplates": [
         {
-            "instanceID": 16524
+            "instanceID": 16492
         }
     ],
     "questStates": [
         {
             "StateName": "InProgress",
             "QuestTemplate": {
-                "instanceID": 16698
+                "instanceID": 16888
             },
             "State": 1,
             "Lines": [
                 {
                     "DescriptiveName": "Quest Giver 1",
                     "Actor": {
-                        "instanceID": 16524
+                        "instanceID": 16492
                     },
                     "QuestGiverText": "Haven't you found them yet?"
                 }
@@ -37,14 +37,14 @@
         {
             "StateName": "Completed",
             "QuestTemplate": {
-                "instanceID": 16698
+                "instanceID": 16888
             },
             "State": 10,
             "Lines": [
                 {
                     "DescriptiveName": "Quest Giver 1",
                     "Actor": {
-                        "instanceID": 16524
+                        "instanceID": 16492
                     },
                     "QuestGiverText": "Finally. "
                 }
@@ -54,19 +54,19 @@
     ],
     "QuestRewards": [
         {
-            "instanceID": 17222
+            "instanceID": 16928
         },
         {
-            "instanceID": 17224
+            "instanceID": 16930
         }
     ],
     "rewardType": 0,
     "rewardGiverTemplate": [
         {
-            "instanceID": 16524
+            "instanceID": 16492
         }
     ],
     "logic": {
-        "instanceID": 17244
+        "instanceID": 16932
     }
 }

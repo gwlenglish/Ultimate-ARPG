@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 4900000, guid: 7120d6e2a6c3e5a448c1562676b3fa01, type: 3}
   id:
-    Name: 
-    ID: 18
+    Name: Leap Smash 2D
+    ID: 24
     Ability: {fileID: 11400000}
   autoName: 0
   Data:

@@ -15,12 +15,6 @@ MonoBehaviour:
   searchFolders:
   - Assets/GWLPXL/ARPG/Data
   slots:
-  - DescriptiveName: Arrow
-    ID:
-      Name: Arrow
-      ID: 0
-      Instance: {fileID: 11400000, guid: 11700495b68d06d40a0ba58cfba8f186, type: 2}
-    Instance: {fileID: 11400000, guid: 11700495b68d06d40a0ba58cfba8f186, type: 2}
   - DescriptiveName: Axe
     ID:
       Name: Axe
@@ -93,3 +87,9 @@ MonoBehaviour:
       ID: 12
       Instance: {fileID: 11400000, guid: 83783770a0a51b84eaa5863b3bbdfbf4, type: 2}
     Instance: {fileID: 11400000, guid: 83783770a0a51b84eaa5863b3bbdfbf4, type: 2}
+  - DescriptiveName: Arrow
+    ID:
+      Name: Arrow
+      ID: 13
+      Instance: {fileID: 11400000, guid: 11700495b68d06d40a0ba58cfba8f186, type: 2}
+    Instance: {fileID: 11400000, guid: 11700495b68d06d40a0ba58cfba8f186, type: 2}

@@ -15,8 +15,8 @@ MonoBehaviour:
   config: {fileID: 4900000, guid: a6a49ce8d543bb043b82cd3301c4969e, type: 3}
   AutoName: 1
   traitID:
-    Name: Strength
-    ID: 21
+    Name: Strength_StatTrait_100%
+    ID: 25
     Trait: {fileID: 11400000}
   traitName: Strength
   TraitPrefixes:
@@ -29,4 +29,5 @@ MonoBehaviour:
   - of The Ox
   myLevelMulti: 100
   weight: 7
+  sprite: {fileID: 0}
   Type: 0

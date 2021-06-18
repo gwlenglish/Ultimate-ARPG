@@ -23,4 +23,5 @@ MonoBehaviour:
   TraitSuffixes: []
   myLevelMulti: 100
   weight: 5
+  sprite: {fileID: 0}
   AbilityToMod: {fileID: 0}

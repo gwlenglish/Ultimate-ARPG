@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 4900000, guid: 359f565db58824746add65168ed90817, type: 3}
   logID:
-    Name: Player 1 Quest Log
-    ID: 0
+    Name: Player Hchu
+    ID: 3
     QuestLog: {fileID: 11400000}

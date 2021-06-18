@@ -1,13 +1,13 @@
 {
     "config": {
-        "instanceID": 18348
+        "instanceID": 18306
     },
     "AutoName": true,
     "traitID": {
         "Name": "Fire Resist",
         "ID": 4,
         "Trait": {
-            "instanceID": 18090
+            "instanceID": 18138
         }
     },
     "traitName": "Fire Resist",
@@ -22,5 +22,8 @@
     ],
     "myLevelMulti": 20,
     "weight": 5,
+    "sprite": {
+        "instanceID": 0
+    },
     "Type": 1
 }

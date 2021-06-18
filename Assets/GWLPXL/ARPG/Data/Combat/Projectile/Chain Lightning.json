@@ -1,20 +1,25 @@
 {
     "config": {
-        "instanceID": 0
+        "instanceID": 25752
     },
     "id": {
         "Name": "Chain Lightning",
         "ID": 4,
         "Instance": {
-            "instanceID": -1223778
+            "instanceID": 25286
         }
     },
     "ProjectileVars": {
-        "descriptiveName": "Chain Lightning",
+        "descriptiveName": "Chain Damage",
         "description": "Bounces",
-        "speed": 50.0,
+        "speed": 75.0,
         "disableOnTouch": true,
-        "autoDestructTime": 10.0,
-        "friendlyFire": false
+        "friendlyFire": false,
+        "lifetime": 10.0,
+        "blockingLayers": {
+            "serializedVersion": "2",
+            "m_Bits": 0
+        },
+        "block": 1
     }
 }

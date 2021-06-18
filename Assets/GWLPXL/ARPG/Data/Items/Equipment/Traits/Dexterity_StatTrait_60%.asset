@@ -27,4 +27,5 @@ MonoBehaviour:
   - of Nimbleness
   myLevelMulti: 60
   weight: 7
+  sprite: {fileID: 0}
   Type: 2

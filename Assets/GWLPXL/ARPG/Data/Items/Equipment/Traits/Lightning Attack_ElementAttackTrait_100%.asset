@@ -27,4 +27,5 @@ MonoBehaviour:
   - of Spark
   myLevelMulti: 100
   weight: 5
+  sprite: {fileID: 0}
   Type: 3

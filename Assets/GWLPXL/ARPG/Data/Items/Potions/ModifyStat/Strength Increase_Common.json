@@ -1,17 +1,17 @@
 {
     "config": {
-        "instanceID": 23108
+        "instanceID": 23060
     },
     "itemID": {
         "Name": "",
         "ID": 4,
         "Item": {
-            "instanceID": 22986
+            "instanceID": 22938
         }
     },
     "autoName": true,
     "rarity": {
-        "instanceID": 17898
+        "instanceID": 17884
     },
     "meshPrefab": {
         "instanceID": 0

@@ -1,13 +1,13 @@
 {
     "config": {
-        "instanceID": 18296
+        "instanceID": 16864
     },
     "AutoName": true,
     "traitID": {
         "Name": "Lightning Attack",
         "ID": 13,
         "Trait": {
-            "instanceID": 18046
+            "instanceID": 16314
         }
     },
     "traitName": "Lightning Attack",
@@ -21,5 +21,8 @@
     ],
     "myLevelMulti": 100,
     "weight": 5,
+    "sprite": {
+        "instanceID": 0
+    },
     "Type": 3
 }

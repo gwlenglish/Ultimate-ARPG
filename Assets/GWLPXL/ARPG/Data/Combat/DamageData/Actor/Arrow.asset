@@ -15,7 +15,7 @@ MonoBehaviour:
   config: {fileID: 4900000, guid: e37dbc50f6e88834d85578eaca92d795, type: 3}
   id:
     Name: Arrow
-    ID: 0
+    ID: 13
     Instance: {fileID: 11400000}
   DamageVar:
     combatHandler: {fileID: 11400000, guid: 394c5050f14d7ae44991ad1eae7cec6f, type: 2}

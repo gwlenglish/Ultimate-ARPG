@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 4900000, guid: 6c2ad180798f4894da937bd48e9b1c74, type: 3}
   databaseID:
-    Name: Player Warrior
-    ID: 2
+    Name: Player_HChu
+    ID: 12
     ActorStats: {fileID: 11400000}
   LevelUpEvent: {fileID: 11400000, guid: 2e88063ae68dbf6449dfdbc9456baffd, type: 2}
   myLevel: 1

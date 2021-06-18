@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 4900000, guid: 000e460d872dc18468a9fa6f65ef7676, type: 3}
   id:
-    Name: 
-    ID: 0
+    Name: BasicFlameThrower HChu
+    ID: 21
     Ability: {fileID: 11400000}
   autoName: 0
   Data:

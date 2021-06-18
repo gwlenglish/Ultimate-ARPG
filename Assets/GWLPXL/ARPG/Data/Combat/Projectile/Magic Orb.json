@@ -1,18 +1,18 @@
 {
     "config": {
-        "instanceID": 26400
+        "instanceID": 25740
     },
     "id": {
-        "Name": "",
-        "ID": 3,
+        "Name": "Magic Orb",
+        "ID": 7,
         "Instance": {
-            "instanceID": 25616
+            "instanceID": 25658
         }
     },
     "ProjectileVars": {
-        "descriptiveName": "AoE In Place",
-        "description": "Any projectile that stays in place",
-        "speed": 0.0,
+        "descriptiveName": "Orb",
+        "description": "Magic ball shoots forward",
+        "speed": 5.0,
         "disableOnTouch": false,
         "friendlyFire": false,
         "lifetime": 10.0,

@@ -1,4 +1,5 @@
 ﻿#if UNITY_EDITOR
+using System;
 using GWLPXL.ARPGCore.Abilities.com;
 using GWLPXL.ARPGCore.Auras.com;
 using GWLPXL.ARPGCore.Attributes.com;
@@ -17,6 +18,9 @@ using System.Text;
 using GWLPXL.ARPGCore.Types.com;
 using GWLPXL.ARPGCore.Combat.com;
 using System.IO;
+using System.Linq;
+using Attribute = GWLPXL.ARPGCore.Attributes.com.Attribute;
+using Object = UnityEngine.Object;
 
 /// <summary>
 /// I dislike the repetition of code, but works for now. Maybe v2 will change. 
@@ -25,87 +29,71 @@ using System.IO;
 namespace GWLPXL.ARPGCore.Statics.com
 {
     #region reload classes
-    public static class MeleeDB
+
+    public static class CommonReload
     {
-        public static void AddAllToList(MeleeDataDatabase saveSystem)
+        public class CommonReloadData
         {
-            List<MeleeData> temp = FindAttributes(saveSystem);
+            public Type Type;
+            public string SearchType;
+            public IDatabase Database;
+            public Func<Object, int> GetId;
+            public Action<Object, int> SetId;
+            public Action<List<Object>> SetSlots;
+        }
+        public static void AddAllToList(CommonReloadData data)
+        {
+            var temp = FindAttributes(data);
 
-            //sort by ID
-            temp.Sort((x, y) => x.GetID().ID.CompareTo(y.GetID().ID));
-            MeleeData[] arr = temp.ToArray();
-            MeleeDataDatabaseSlot[] dbArr = new MeleeDataDatabaseSlot[arr.Length];
-
-            //resolve any conflicts
-            List<MeleeData> conflics = RemoveConflicts(temp, arr);
-
-            //re-sort without conflicts
-            temp.Sort((x, y) => x.GetID().ID.CompareTo(y.GetID().ID));
-            arr = temp.ToArray();
-
-            //add the sort without conflicts to new array
-            for (int i = 0; i < arr.Length; i++)
+            if (temp.Count != 0)
             {
-                dbArr[i] = new MeleeDataDatabaseSlot(arr[i].GetID(), arr[i]);
+                //resolve any conflicts
+                List<Object> conflics = RemoveConflicts(data, temp);
 
-            }
+                //re-sort without conflicts
+                temp.Sort((x, y) => data.GetId(x).CompareTo(data.GetId(y)));
 
-            //handle the conflicted
-            for (int i = 0; i < dbArr.Length; i++)
-            {
-                if (dbArr[i] == null)
+                var max = 1;
+                if (temp.Count > 0) 
+                    max = temp.Max(a => data.GetId(a)) + 1;
+
+                foreach (var conflict in conflics)
                 {
-                    if (conflics.Count > 0)
-                    {
-                        conflics[0].GetID().ID = i;
-                        dbArr[i] = new MeleeDataDatabaseSlot(conflics[0].GetID(), conflics[0]);
-                        conflics.RemoveAt(0);
-                    }
-                    else
-                    {
-                        break;
-                    }
+                    data.SetId(conflict, max++);
+                    temp.Add(conflict);
+                }
+
+                foreach (var obj in temp)
+                {
+                    if (obj is ISaveJsonConfig jsonSave)
+                        SaveToJson(jsonSave);
                 }
             }
 
-            MeleeData[] theRest = conflics.ToArray();
-            for (int i = 0; i < theRest.Length; i++)
-            {
-                System.Array.Resize(ref dbArr, dbArr.Length + 1);
-                MeleeDataID newID = new MeleeDataID(theRest[i].name, dbArr.Length - 1, theRest[i]);
-                MeleeDataDatabaseSlot newSlot = new MeleeDataDatabaseSlot(newID, theRest[i]);
-                dbArr[dbArr.Length - 1] = newSlot;
-            }
-
-            for (int i = 0; i < dbArr.Length; i++)
-            {
-                ISaveJsonConfig jsonSave = dbArr[i].Instance;
-                SaveToJson(jsonSave);
-            }
-
             //assign to db
-            saveSystem.SetSlots(dbArr);
+            data.SetSlots(temp);
 
             //save
-            EditorUtility.SetDirty(saveSystem);
+            EditorUtility.SetDirty(data.Database.GetMyObject());
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
         }
-        static List<MeleeData> RemoveConflicts(List<MeleeData> temp, MeleeData[] arr)
+        
+        static List<Object> RemoveConflicts(CommonReloadData data, List<Object> temp)
         {
-            List<MeleeData> conflics = new List<MeleeData>();
+            List<Object> conflics = new List<Object>();
             List<int> used = new List<int>();
-            for (int i = 0; i < arr.Length; i++)
+            for (int i = 0; i < temp.Count; i++)
             {
-                if (used.Contains(arr[i].GetID().ID))
+                if (used.Contains(data.GetId(temp[i])) || data.GetId(temp[i]) == 0)
                 {
                     //conflict
-                    conflics.Add(arr[i]);
+                    conflics.Add(temp[i]);
                 }
                 else
                 {
                     //not conflict
-                    used.Add(arr[i].GetID().ID);
+                    used.Add(data.GetId(temp[i]));
                 }
             }
 
@@ -117,412 +105,126 @@ namespace GWLPXL.ARPGCore.Statics.com
 
             return conflics;
         }
-        static List<MeleeData> FindAttributes(MeleeDataDatabase saveSystem)
+        static List<Object> FindAttributes(CommonReloadData data)
         {
-            MeleeData template = ScriptableObject.CreateInstance<MeleeData>();
-            string key = template.GetType().Name;//magic string, since it's abstract and don't feel like reflection
-            string[] folders = saveSystem.GetSearchFolders();
+            var temp = new List<Object>();
+            string key = data.SearchType;
+            string[] folders = data.Database.GetSearchFolders();
+            if (folders.Length > 0)
+            {
+                for (int i = 0; i < folders.Length; i++)
+                {
+                    if (string.IsNullOrEmpty(folders[i]))
+                    {
+                        Debug.LogWarning("search folder on " + data.Type.Name + " is empty, defaulting to assets");
+                        folders[i] = "Assets";//if thing is null...
+                    }
+                }
+            }
+     
+           
             string[] percents = UnityEditor.AssetDatabase.FindAssets("t:" + key, folders);//specific if you want by putting t:armor or t:equipment, etc.
-            List<MeleeData> temp = new List<MeleeData>();
             foreach (var guid in percents)
             {
                 string obj = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
-                MeleeData newItem = UnityEditor.AssetDatabase.LoadAssetAtPath(obj, typeof(MeleeData)) as MeleeData;
+                var newItem = UnityEditor.AssetDatabase.LoadAssetAtPath(obj, data.Type);
                 if (newItem != null)
                 {
                     temp.Add(newItem);
-                    //  Debug.Log("Added");
                 }
             }
-
             return temp;
         }
         static void SaveToJson(ISaveJsonConfig jsonSave)
         {
             if (jsonSave.GetTextAsset() != null)
             {
-
                 JsconConfig.OverwriteJson(jsonSave);
             }
             else
             {
                 JsconConfig.SaveJson(jsonSave);
             }
+        }
+    }
+    public static class MeleeDB
+    {
+        public static void AddAllToList(MeleeDataDatabase saveSystem)
+        {
+            CommonReload.AddAllToList(new CommonReload.CommonReloadData()
+            {
+                Type = typeof(MeleeData),
+                SearchType = nameof(MeleeData),
+                Database = saveSystem,
+                GetId = obj => ((MeleeData)obj).GetID().ID,
+                SetId = (obj, id) =>
+                {
+                    var data = ((MeleeData)obj);
+                    var newId = new MeleeDataID(data.name, id, data);
+                    data.SetID(newId);
+                },
+                SetSlots = (list) => saveSystem.SetSlots(list.Select(s => new MeleeDataDatabaseSlot(((MeleeData)s).GetID(), (MeleeData)s)).ToArray())
+            });
         }
     }
     public static class ProjecileDB
     {
         public static void AddAllToList(ProjectileDataDatabase saveSystem)
         {
-            List<ProjectileData> temp = FindAttributes(saveSystem);
-
-            //sort by ID
-            temp.Sort((x, y) => x.GetID().ID.CompareTo(y.GetID().ID));
-            ProjectileData[] arr = temp.ToArray();
-            ProjectileDataDatabaseSlot[] dbArr = new ProjectileDataDatabaseSlot[arr.Length];
-
-            //resolve any conflicts
-            List<ProjectileData> conflics = RemoveConflicts(temp, arr);
-
-            //re-sort without conflicts
-            temp.Sort((x, y) => x.GetID().ID.CompareTo(y.GetID().ID));
-            arr = temp.ToArray();
-
-            //add the sort without conflicts to new array
-            for (int i = 0; i < arr.Length; i++)
+            CommonReload.AddAllToList(new CommonReload.CommonReloadData()
             {
-                dbArr[i] = new ProjectileDataDatabaseSlot(arr[i].GetID(), arr[i]);
-
-            }
-
-            //handle the conflicted
-            for (int i = 0; i < dbArr.Length; i++)
-            {
-                if (dbArr[i] == null)
+                Type = typeof(ProjectileData),
+                SearchType = nameof(ProjectileData),
+                Database = saveSystem,
+                GetId = obj => ((ProjectileData)obj).GetID().ID,
+                SetId = (obj, id) =>
                 {
-                    if (conflics.Count > 0)
-                    {
-                        conflics[0].GetID().ID = i;
-                        dbArr[i] = new ProjectileDataDatabaseSlot(conflics[0].GetID(), conflics[0]);
-                        conflics.RemoveAt(0);
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
-
-            ProjectileData[] theRest = conflics.ToArray();
-            for (int i = 0; i < theRest.Length; i++)
-            {
-                System.Array.Resize(ref dbArr, dbArr.Length + 1);
-                ProjectileDataID newID = new ProjectileDataID(theRest[i].name, dbArr.Length - 1, theRest[i]);
-                ProjectileDataDatabaseSlot newSlot = new ProjectileDataDatabaseSlot(newID, theRest[i]);
-                dbArr[dbArr.Length - 1] = newSlot;
-            }
-
-            for (int i = 0; i < dbArr.Length; i++)
-            {
-                ISaveJsonConfig jsonSave = dbArr[i].Instance;
-                SaveToJson(jsonSave);
-            }
-
-            //assign to db
-            saveSystem.SetSlots(dbArr);
-
-            //save
-            EditorUtility.SetDirty(saveSystem);
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
-        }
-        static List<ProjectileData> RemoveConflicts(List<ProjectileData> temp, ProjectileData[] arr)
-        {
-            List<ProjectileData> conflics = new List<ProjectileData>();
-            List<int> used = new List<int>();
-            for (int i = 0; i < arr.Length; i++)
-            {
-                if (used.Contains(arr[i].GetID().ID))
-                {
-                    //conflict
-                    conflics.Add(arr[i]);
-                }
-                else
-                {
-                    //not conflict
-                    used.Add(arr[i].GetID().ID);
-                }
-            }
-
-            //remove conflicts from sort
-            for (int i = 0; i < conflics.Count; i++)
-            {
-                temp.Remove(conflics[i]);
-            }
-
-            return conflics;
-        }
-        static List<ProjectileData> FindAttributes(ProjectileDataDatabase saveSystem)
-        {
-            ProjectileData template = ScriptableObject.CreateInstance<ProjectileData>();
-            string key = template.GetType().Name;//magic string, since it's abstract and don't feel like reflection
-            string[] folders = saveSystem.GetSearchFolders();
-            string[] percents = UnityEditor.AssetDatabase.FindAssets("t:" + key, folders);//specific if you want by putting t:armor or t:equipment, etc.
-            List<ProjectileData> temp = new List<ProjectileData>();
-            foreach (var guid in percents)
-            {
-                string obj = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
-                ProjectileData newItem = UnityEditor.AssetDatabase.LoadAssetAtPath(obj, typeof(ProjectileData)) as ProjectileData;
-                if (newItem != null)
-                {
-                    temp.Add(newItem);
-                    //  Debug.Log("Added");
-                }
-            }
-
-            return temp;
-        }
-        static void SaveToJson(ISaveJsonConfig jsonSave)
-        {
-            if (jsonSave.GetTextAsset() != null)
-            {
-
-                JsconConfig.OverwriteJson(jsonSave);
-            }
-            else
-            {
-                JsconConfig.SaveJson(jsonSave);
-            }
+                    var data = ((ProjectileData)obj);
+                    var newId = new ProjectileDataID(data.name, id, data);
+                    data.SetID(newId);
+                },
+                SetSlots = (list) => saveSystem.SetSlots(list.Select(s => new ProjectileDataDatabaseSlot(((ProjectileData)s).GetID(), (ProjectileData)s)).ToArray())
+            });
         }
     }
     public static class ActorDamageDB
     {
         public static void AddAllToList(ActorDamageDatabase saveSystem)
         {
-            List<ActorDamageData> temp = FindAttributes(saveSystem);
-
-            //sort by ID
-            temp.Sort((x, y) => x.GetID().ID.CompareTo(y.GetID().ID));
-            ActorDamageData[] arr = temp.ToArray();
-            ActorDamageDatabaseSlot[] dbArr = new ActorDamageDatabaseSlot[arr.Length];
-
-            //resolve any conflicts
-            List<ActorDamageData> conflics = RemoveConflicts(temp, arr);
-
-            //re-sort without conflicts
-            temp.Sort((x, y) => x.GetID().ID.CompareTo(y.GetID().ID));
-            arr = temp.ToArray();
-
-            //add the sort without conflicts to new array
-            for (int i = 0; i < arr.Length; i++)
+            CommonReload.AddAllToList(new CommonReload.CommonReloadData()
             {
-                dbArr[i] = new ActorDamageDatabaseSlot(arr[i].GetID(), arr[i]);
-
-            }
-
-            //handle the conflicted
-            for (int i = 0; i < dbArr.Length; i++)
-            {
-                if (dbArr[i] == null)
+                Type = typeof(ActorDamageData),
+                SearchType = nameof(ActorDamageData),
+                Database = saveSystem,
+                GetId = obj => ((ActorDamageData)obj).GetID().ID,
+                SetId = (obj, id) =>
                 {
-                    if (conflics.Count > 0)
-                    {
-                        conflics[0].GetID().ID = i;
-                        dbArr[i] = new ActorDamageDatabaseSlot(conflics[0].GetID(), conflics[0]);
-                        conflics.RemoveAt(0);
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
-
-            ActorDamageData[] theRest = conflics.ToArray();
-            for (int i = 0; i < theRest.Length; i++)
-            {
-                System.Array.Resize(ref dbArr, dbArr.Length + 1);
-                ActorDamageID newID = new ActorDamageID(theRest[i].name, dbArr.Length - 1, theRest[i]);
-                ActorDamageDatabaseSlot newSlot = new ActorDamageDatabaseSlot(newID, theRest[i]);
-                dbArr[dbArr.Length - 1] = newSlot;
-            }
-
-            for (int i = 0; i < dbArr.Length; i++)
-            {
-                ISaveJsonConfig jsonSave = dbArr[i].Instance;
-                SaveToJson(jsonSave);
-            }
-
-            //assign to db
-            saveSystem.SetSlots(dbArr);
-
-            //save
-            EditorUtility.SetDirty(saveSystem);
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
-        }
-        static List<ActorDamageData> RemoveConflicts(List<ActorDamageData> temp, ActorDamageData[] arr)
-        {
-            List<ActorDamageData> conflics = new List<ActorDamageData>();
-            List<int> used = new List<int>();
-            for (int i = 0; i < arr.Length; i++)
-            {
-                if (used.Contains(arr[i].GetID().ID))
-                {
-                    //conflict
-                    conflics.Add(arr[i]);
-                }
-                else
-                {
-                    //not conflict
-                    used.Add(arr[i].GetID().ID);
-                }
-            }
-
-            //remove conflicts from sort
-            for (int i = 0; i < conflics.Count; i++)
-            {
-                temp.Remove(conflics[i]);
-            }
-
-            return conflics;
-        }
-        static List<ActorDamageData> FindAttributes(ActorDamageDatabase saveSystem)
-        {
-            ActorDamageData template = ScriptableObject.CreateInstance<ActorDamageData>();
-            string key = template.GetType().Name;//magic string, since it's abstract and don't feel like reflection
-            string[] folders = saveSystem.GetSearchFolders();
-            string[] percents = UnityEditor.AssetDatabase.FindAssets("t:" + key, folders);//specific if you want by putting t:armor or t:equipment, etc.
-            List<ActorDamageData> temp = new List<ActorDamageData>();
-            foreach (var guid in percents)
-            {
-                string obj = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
-                ActorDamageData newItem = UnityEditor.AssetDatabase.LoadAssetAtPath(obj, typeof(ActorDamageData)) as ActorDamageData;
-                if (newItem != null)
-                {
-                    temp.Add(newItem);
-                    //  Debug.Log("Added");
-                }
-            }
-
-            return temp;
-        }
-        static void SaveToJson(ISaveJsonConfig jsonSave)
-        {
-            if (jsonSave.GetTextAsset() != null)
-            {
-
-                JsconConfig.OverwriteJson(jsonSave);
-            }
-            else
-            {
-                JsconConfig.SaveJson(jsonSave);
-            }
+                    var data = ((ActorDamageData)obj);
+                    var newId = new ActorDamageID(data.name, id, data);
+                    data.SetID(newId);
+                },
+                SetSlots = (list) => saveSystem.SetSlots(list.Select(s => new ActorDamageDatabaseSlot(((ActorDamageData)s).GetID(), (ActorDamageData)s)).ToArray())
+            });
         }
     }
     public static class QuestChainDB
     {
         public static void AddAllToList(QuestchainDatabase saveSystem)
         {
-            List<Questchain> temp = FindAttributes(saveSystem);
-
-            //sort by ID
-            temp.Sort((x, y) => x.GetID().ID.CompareTo(y.GetID().ID));
-            Questchain[] arr = temp.ToArray();
-            QuestchainDdatabaseSlot[] dbArr = new QuestchainDdatabaseSlot[arr.Length];
-
-            //resolve any conflicts
-            List<Questchain> conflics = RemoveConflicts(temp, arr);
-
-            //re-sort without conflicts
-            temp.Sort((x, y) => x.GetID().ID.CompareTo(y.GetID().ID));
-            arr = temp.ToArray();
-
-            //add the sort without conflicts to new array
-            for (int i = 0; i < arr.Length; i++)
+            CommonReload.AddAllToList(new CommonReload.CommonReloadData()
             {
-                dbArr[i] = new QuestchainDdatabaseSlot(arr[i].GetID(), arr[i]);
-
-            }
-
-            //handle the conflicted
-            for (int i = 0; i < dbArr.Length; i++)
-            {
-                if (dbArr[i] == null)
+                Type = typeof(Questchain),
+                SearchType = nameof(Questchain),
+                Database = saveSystem,
+                GetId = obj => ((Questchain)obj).GetID().ID,
+                SetId = (obj, id) =>
                 {
-                    if (conflics.Count > 0)
-                    {
-                        conflics[0].GetID().ID = i;
-                        dbArr[i] = new QuestchainDdatabaseSlot(conflics[0].GetID(), conflics[0]);
-                        conflics.RemoveAt(0);
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
-
-            Questchain[] theRest = conflics.ToArray();
-            for (int i = 0; i < theRest.Length; i++)
-            {
-                System.Array.Resize(ref dbArr, dbArr.Length + 1);
-                QuestchainID newID = new QuestchainID(theRest[i].GetQuestName(), dbArr.Length - 1, theRest[i]);
-                QuestchainDdatabaseSlot newSlot = new QuestchainDdatabaseSlot(newID, theRest[i]);
-                dbArr[dbArr.Length - 1] = newSlot;
-            }
-
-            for (int i = 0; i < dbArr.Length; i++)
-            {
-                ISaveJsonConfig jsonSave = dbArr[i].Questchain;
-                SaveToJson(jsonSave);
-            }
-
-            //assign to db
-            saveSystem.SetSlots(dbArr);
-
-            //save
-            EditorUtility.SetDirty(saveSystem);
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
-        }
-        static List<Questchain> RemoveConflicts(List<Questchain> temp, Questchain[] arr)
-        {
-            List<Questchain> conflics = new List<Questchain>();
-            List<int> used = new List<int>();
-            for (int i = 0; i < arr.Length; i++)
-            {
-                if (used.Contains(arr[i].GetID().ID))
-                {
-                    //conflict
-                    conflics.Add(arr[i]);
-                }
-                else
-                {
-                    //not conflict
-                    used.Add(arr[i].GetID().ID);
-                }
-            }
-
-            //remove conflicts from sort
-            for (int i = 0; i < conflics.Count; i++)
-            {
-                temp.Remove(conflics[i]);
-            }
-
-            return conflics;
-        }
-        static List<Questchain> FindAttributes(QuestchainDatabase saveSystem)
-        {
-            Questchain template = ScriptableObject.CreateInstance<Questchain>();
-            string key = template.GetType().Name;//magic string, since it's abstract and don't feel like reflection
-            string[] folders = saveSystem.GetSearchFolders();
-            string[] percents = UnityEditor.AssetDatabase.FindAssets("t:" + key, folders);//specific if you want by putting t:armor or t:equipment, etc.
-            List<Questchain> temp = new List<Questchain>();
-            foreach (var guid in percents)
-            {
-                string obj = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
-                Questchain newItem = UnityEditor.AssetDatabase.LoadAssetAtPath(obj, typeof(Questchain)) as Questchain;
-                if (newItem != null)
-                {
-                    temp.Add(newItem);
-                    //  Debug.Log("Added");
-                }
-            }
-
-            return temp;
-        }
-        static void SaveToJson(ISaveJsonConfig jsonSave)
-        {
-            if (jsonSave.GetTextAsset() != null)
-            {
-
-                JsconConfig.OverwriteJson(jsonSave);
-            }
-            else
-            {
-                JsconConfig.SaveJson(jsonSave);
-            }
+                    var data = ((Questchain)obj);
+                    var newId = new QuestchainID(data.name, id, data);
+                    data.SetID(newId);
+                },
+                SetSlots = (list) => saveSystem.SetSlots(list.Select(s => new QuestchainDdatabaseSlot(((Questchain)s).GetID(), (Questchain)s)).ToArray())
+            });
         }
     }
     /// <summary>
@@ -532,374 +234,60 @@ namespace GWLPXL.ARPGCore.Statics.com
     {
         public static void AddAllToList(EquipmentTraitDatabase saveSystem)
         {
-            List<EquipmentTrait> temp = FindAttributes(saveSystem);
-
-            //sort by ID
-            temp.Sort((x, y) => x.GetID().ID.CompareTo(y.GetID().ID));
-            EquipmentTrait[] arr = temp.ToArray();
-            TraitDatabaseSlot[] dbArr = new TraitDatabaseSlot[arr.Length];
-
-            //resolve any conflicts
-            List<EquipmentTrait> conflics = RemoveConflicts(temp, arr);
-
-            //re-sort without conflicts
-            temp.Sort((x, y) => x.GetID().ID.CompareTo(y.GetID().ID));
-            arr = temp.ToArray();
-
-            //add the sort without conflicts to new array
-            for (int i = 0; i < arr.Length; i++)
+            CommonReload.AddAllToList(new CommonReload.CommonReloadData()
             {
-                dbArr[i] = new TraitDatabaseSlot(arr[i].GetID(), arr[i]);
-
-            }
-
-            //handle the conflicted
-            for (int i = 0; i < dbArr.Length; i++)
-            {
-                if (dbArr[i] == null)
+                Type = typeof(EquipmentTrait),
+                SearchType = nameof(EquipmentTrait),
+                Database = saveSystem,
+                GetId = obj => ((EquipmentTrait)obj).GetID().ID,
+                SetId = (obj, id) =>
                 {
-                    if (conflics.Count > 0)
-                    {
-                        conflics[0].GetID().ID = i;
-                        dbArr[i] = new TraitDatabaseSlot(conflics[0].GetID(), conflics[0]);
-                        conflics.RemoveAt(0);
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
-
-            EquipmentTrait[] theRest = conflics.ToArray();
-            for (int i = 0; i < theRest.Length; i++)
-            {
-                System.Array.Resize(ref dbArr, dbArr.Length + 1);
-                EquipmentTraitID newID = new EquipmentTraitID(theRest[i].GetTraitName(), dbArr.Length - 1, theRest[i]);
-                TraitDatabaseSlot newSlot = new TraitDatabaseSlot(newID, theRest[i]);
-                dbArr[dbArr.Length - 1] = newSlot;
-            }
-
-            for (int i = 0; i < dbArr.Length; i++)
-            {
-                ISaveJsonConfig jsonSave = dbArr[i].Trait;
-                SaveToJson(jsonSave);
-            }
-
-            //assign to db
-            saveSystem.SetSlots(dbArr);
-
-            //save
-            EditorUtility.SetDirty(saveSystem);
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
-        }
-        static List<EquipmentTrait> RemoveConflicts(List<EquipmentTrait> temp, EquipmentTrait[] arr)
-        {
-            List<EquipmentTrait> conflics = new List<EquipmentTrait>();
-            List<int> used = new List<int>();
-            for (int i = 0; i < arr.Length; i++)
-            {
-                if (used.Contains(arr[i].GetID().ID))
-                {
-                    //conflict
-                    conflics.Add(arr[i]);
-                }
-                else
-                {
-                    //not conflict
-                    used.Add(arr[i].GetID().ID);
-                }
-            }
-
-            //remove conflicts from sort
-            for (int i = 0; i < conflics.Count; i++)
-            {
-                temp.Remove(conflics[i]);
-            }
-
-            return conflics;
-        }
-        static List<EquipmentTrait> FindAttributes(EquipmentTraitDatabase saveSystem)
-        {
-            string key = saveSystem.GetMagicString();//magic string, since it's abstract and don't feel like reflection
-            string[] folders = saveSystem.GetSearchFolders();
-            string[] percents = UnityEditor.AssetDatabase.FindAssets("t:" + key, folders);//specific if you want by putting t:armor or t:equipment, etc.
-            List<EquipmentTrait> temp = new List<EquipmentTrait>();
-            foreach (var guid in percents)
-            {
-                string obj = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
-                EquipmentTrait newItem = UnityEditor.AssetDatabase.LoadAssetAtPath(obj, typeof(EquipmentTrait)) as EquipmentTrait;
-                if (newItem != null)
-                {
-                    temp.Add(newItem);
-                    //  Debug.Log("Added");
-                }
-            }
-
-            return temp;
-        }
-        static void SaveToJson(ISaveJsonConfig jsonSave)
-        {
-            if (jsonSave.GetTextAsset() != null)
-            {
-
-                JsconConfig.OverwriteJson(jsonSave);
-            }
-            else
-            {
-                JsconConfig.SaveJson(jsonSave);
-            }
+                    var data = ((EquipmentTrait)obj);
+                    var newId = new EquipmentTraitID(data.name, id, data);
+                    data.SetTraitID(newId);
+                },
+                SetSlots = (list) => saveSystem.SetSlots(list.Select(s => new TraitDatabaseSlot(((EquipmentTrait)s).GetID(), (EquipmentTrait)s)).ToArray())
+            });
         }
     }
     public static class QuestLogDB
     {
         public static void AddAllToList(QuestLogDatabase saveSystem)
         {
-            List<QuestLog> temp = FindAttributes(saveSystem);
-
-            //sort by ID
-            temp.Sort((x, y) => x.GetID().ID.CompareTo(y.GetID().ID));
-            QuestLog[] arr = temp.ToArray();
-            QuestLogdatabaseSlot[] dbArr = new QuestLogdatabaseSlot[arr.Length];
-
-            //resolve any conflicts
-            List<QuestLog> conflics = RemoveConflicts(temp, arr);
-
-            //re-sort without conflicts
-            temp.Sort((x, y) => x.GetID().ID.CompareTo(y.GetID().ID));
-            arr = temp.ToArray();
-
-            //add the sort without conflicts to new array
-            for (int i = 0; i < arr.Length; i++)
+            CommonReload.AddAllToList(new CommonReload.CommonReloadData()
             {
-                dbArr[i] = new QuestLogdatabaseSlot(arr[i].GetID(), arr[i]);
-
-            }
-
-            //handle the conflicted
-            for (int i = 0; i < dbArr.Length; i++)
-            {
-                if (dbArr[i] == null)
+                Type = typeof(QuestLog),
+                SearchType = nameof(QuestLog),
+                Database = saveSystem,
+                GetId = obj => ((QuestLog)obj).GetID().ID,
+                SetId = (obj, id) =>
                 {
-                    if (conflics.Count > 0)
-                    {
-                        conflics[0].GetID().ID = i;
-                        dbArr[i] = new QuestLogdatabaseSlot(conflics[0].GetID(), conflics[0]);
-                        conflics.RemoveAt(0);
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
-
-            QuestLog[] theRest = conflics.ToArray();
-            for (int i = 0; i < theRest.Length; i++)
-            {
-                System.Array.Resize(ref dbArr, dbArr.Length + 1);
-                QuestLogID newID = new QuestLogID(theRest[i].GetID().Name, dbArr.Length - 1, theRest[i]);
-                QuestLogdatabaseSlot newSlot = new QuestLogdatabaseSlot(newID, theRest[i]);
-                dbArr[dbArr.Length - 1] = newSlot;
-            }
-
-            for (int i = 0; i < dbArr.Length; i++)
-            {
-                ISaveJsonConfig jsonSave = dbArr[i].Quest;
-                SaveToJson(jsonSave);
-            }
-
-            //assign to db
-            saveSystem.SetSlots(dbArr);
-
-            //save
-            EditorUtility.SetDirty(saveSystem);
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
-        }
-        static List<QuestLog> RemoveConflicts(List<QuestLog> temp, QuestLog[] arr)
-        {
-            List<QuestLog> conflics = new List<QuestLog>();
-            List<int> used = new List<int>();
-            for (int i = 0; i < arr.Length; i++)
-            {
-                if (used.Contains(arr[i].GetID().ID))
-                {
-                    //conflict
-                    conflics.Add(arr[i]);
-                }
-                else
-                {
-                    //not conflict
-                    used.Add(arr[i].GetID().ID);
-                }
-            }
-
-            //remove conflicts from sort
-            for (int i = 0; i < conflics.Count; i++)
-            {
-                temp.Remove(conflics[i]);
-            }
-
-            return conflics;
-        }
-        static List<QuestLog> FindAttributes(QuestLogDatabase saveSystem)
-        {
-            QuestLog template = ScriptableObject.CreateInstance<QuestLog>();
-            string key = template.GetType().Name;//magic string, since it's abstract and don't feel like reflection
-            string[] folders = saveSystem.GetSearchFolders();
-            string[] percents = UnityEditor.AssetDatabase.FindAssets("t:" + key, folders);//specific if you want by putting t:armor or t:equipment, etc.
-            List<QuestLog> temp = new List<QuestLog>();
-            foreach (var guid in percents)
-            {
-                string obj = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
-                QuestLog newItem = UnityEditor.AssetDatabase.LoadAssetAtPath(obj, typeof(QuestLog)) as QuestLog;
-                if (newItem != null)
-                {
-                    temp.Add(newItem);
-                    //  Debug.Log("Added");
-                }
-            }
-            UnityEngine.Object.DestroyImmediate(template);
-            return temp;
-        }
-        static void SaveToJson(ISaveJsonConfig jsonSave)
-        {
-            if (jsonSave.GetTextAsset() != null)
-            {
-
-                JsconConfig.OverwriteJson(jsonSave);
-            }
-            else
-            {
-                JsconConfig.SaveJson(jsonSave);
-            }
+                    var data = ((QuestLog)obj);
+                    var newId = new QuestLogID(data.name, id, data);
+                    data.SetID(newId);
+                },
+                SetSlots = (list) => saveSystem.SetSlots(list.Select(s => new QuestLogdatabaseSlot(((QuestLog)s).GetID(), (QuestLog)s)).ToArray())
+            });
         }
     }
     public static class QuestDB
     {
         public static void AddAllToList(QuestDatabase saveSystem)
         {
-            List<Quest> temp = FindAttributes(saveSystem);
-
-            //sort by ID
-            temp.Sort((x, y) => x.GetID().ID.CompareTo(y.GetID().ID));
-            Quest[] arr = temp.ToArray();
-            QuestDdatabaseSlot[] dbArr = new QuestDdatabaseSlot[arr.Length];
-
-            //resolve any conflicts
-            List<Quest> conflics = RemoveConflicts(temp, arr);
-
-            //re-sort without conflicts
-            temp.Sort((x, y) => x.GetID().ID.CompareTo(y.GetID().ID));
-            arr = temp.ToArray();
-
-            //add the sort without conflicts to new array
-            for (int i = 0; i < arr.Length; i++)
+            CommonReload.AddAllToList(new CommonReload.CommonReloadData()
             {
-                dbArr[i] = new QuestDdatabaseSlot(arr[i].GetID(), arr[i]);
-
-            }
-
-            //handle the conflicted
-            for (int i = 0; i < dbArr.Length; i++)
-            {
-                if (dbArr[i] == null)
+                Type = typeof(Quest),
+                SearchType = nameof(Quest),
+                Database = saveSystem,
+                GetId = obj => ((Quest)obj).GetID().ID,
+                SetId = (obj, id) =>
                 {
-                    if (conflics.Count > 0)
-                    {
-                        conflics[0].GetID().ID = i;
-                        dbArr[i] = new QuestDdatabaseSlot(conflics[0].GetID(), conflics[0]);
-                        conflics.RemoveAt(0);
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
-
-            Quest[] theRest = conflics.ToArray();
-            for (int i = 0; i < theRest.Length; i++)
-            {
-                System.Array.Resize(ref dbArr, dbArr.Length + 1);
-                QuestID newID = new QuestID(theRest[i].GetQuestName(), dbArr.Length - 1, theRest[i]);
-                QuestDdatabaseSlot newSlot = new QuestDdatabaseSlot(newID, theRest[i]);
-                dbArr[dbArr.Length - 1] = newSlot;
-            }
-
-            for (int i = 0; i < dbArr.Length; i++)
-            {
-                ISaveJsonConfig jsonSave = dbArr[i].Quest;
-                SaveToJson(jsonSave);
-            }
-
-            //assign to db
-            saveSystem.SetSlots(dbArr);
-
-            //save
-            EditorUtility.SetDirty(saveSystem);
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
-        }
-        static List<Quest> RemoveConflicts(List<Quest> temp, Quest[] arr)
-        {
-            List<Quest> conflics = new List<Quest>();
-            List<int> used = new List<int>();
-            for (int i = 0; i < arr.Length; i++)
-            {
-                if (used.Contains(arr[i].GetID().ID))
-                {
-                    //conflict
-                    conflics.Add(arr[i]);
-                }
-                else
-                {
-                    //not conflict
-                    used.Add(arr[i].GetID().ID);
-                }
-            }
-
-            //remove conflicts from sort
-            for (int i = 0; i < conflics.Count; i++)
-            {
-                temp.Remove(conflics[i]);
-            }
-
-            return conflics;
-        }
-        static List<Quest> FindAttributes(QuestDatabase saveSystem)
-        {
-            Quest template = ScriptableObject.CreateInstance<Quest>();
-            string key = template.GetType().Name;//magic string, since it's abstract and don't feel like reflection
-            string[] folders = saveSystem.GetSearchFolders();
-            string[] percents = UnityEditor.AssetDatabase.FindAssets("t:" + key, folders);//specific if you want by putting t:armor or t:equipment, etc.
-            List<Quest> temp = new List<Quest>();
-            foreach (var guid in percents)
-            {
-                string obj = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
-                Quest newItem = UnityEditor.AssetDatabase.LoadAssetAtPath(obj, typeof(Quest)) as Quest;
-                if (newItem != null)
-                {
-                    temp.Add(newItem);
-                    //  Debug.Log("Added");
-                }
-            }
-
-            return temp;
-        }
-        static void SaveToJson(ISaveJsonConfig jsonSave)
-        {
-            if (jsonSave.GetTextAsset() != null)
-            {
-
-                JsconConfig.OverwriteJson(jsonSave);
-            }
-            else
-            {
-                JsconConfig.SaveJson(jsonSave);
-            }
+                    var data = ((Quest)obj);
+                    var newId = new QuestID(data.name, id, data);
+                    data.SetID(newId);
+                },
+                SetSlots = (list) => saveSystem.SetSlots(list.Select(s => new QuestDdatabaseSlot(((Quest)s).GetID(), (Quest)s)).ToArray())
+            });
         }
     }
     /// <summary>
@@ -909,250 +297,40 @@ namespace GWLPXL.ARPGCore.Statics.com
     {
         public static void AddAllToList(ItemDatabase saveSystem)
         {
-            List<Item> temp = FindAttributes(saveSystem);
-
-            //sort by ID
-            temp.Sort((x, y) => x.GetID().ID.CompareTo(y.GetID().ID));
-            Item[] arr = temp.ToArray();
-            ItemDatabaseSlot[] dbArr = new ItemDatabaseSlot[arr.Length];
-
-            //resolve any conflicts
-            List<Item> conflics = RemoveConflicts(temp, arr);
-
-            //re-sort without conflicts
-            temp.Sort((x, y) => x.GetID().ID.CompareTo(y.GetID().ID));
-            arr = temp.ToArray();
-
-            //add the sort without conflicts to new array
-            for (int i = 0; i < arr.Length; i++)
+            CommonReload.AddAllToList(new CommonReload.CommonReloadData()
             {
-                dbArr[i] = new ItemDatabaseSlot(arr[i].GetID(), arr[i]);
-
-            }
-
-            //handle the conflicted
-            for (int i = 0; i < dbArr.Length; i++)
-            {
-                if (dbArr[i] == null)
+                Type = typeof(Item),
+                SearchType = nameof(Item),
+                Database = saveSystem,
+                GetId = obj => ((Item)obj).GetID().ID,
+                SetId = (obj, id) =>
                 {
-                    if (conflics.Count > 0)
-                    {
-                        conflics[0].GetID().ID = i;
-                        dbArr[i] = new ItemDatabaseSlot(conflics[0].GetID(), conflics[0]);
-                        conflics.RemoveAt(0);
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
-
-            Item[] theRest = conflics.ToArray();
-            for (int i = 0; i < theRest.Length; i++)
-            {
-                System.Array.Resize(ref dbArr, dbArr.Length + 1);
-                ItemID newID = new ItemID(theRest[i].GetGeneratedItemName(), dbArr.Length - 1, theRest[i]);
-                ItemDatabaseSlot newSlot = new ItemDatabaseSlot(newID, theRest[i]);
-                dbArr[dbArr.Length - 1] = newSlot;
-            }
-
-            for (int i = 0; i < dbArr.Length; i++)
-            {
-                
-                ISaveJsonConfig jsonSave = dbArr[i].Item;
-                SaveToJson(jsonSave);
-            }
-
-            //assign to db
-            saveSystem.SetSlots(dbArr);
-
-            //save
-            EditorUtility.SetDirty(saveSystem);
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
-        }
-        static List<Item> RemoveConflicts(List<Item> temp, Item[] arr)
-        {
-            List<Item> conflics = new List<Item>();
-            List<int> used = new List<int>();
-            for (int i = 0; i < arr.Length; i++)
-            {
-                if (used.Contains(arr[i].GetID().ID))
-                {
-                    //conflict
-                    conflics.Add(arr[i]);
-                }
-                else
-                {
-                    //not conflict
-                    used.Add(arr[i].GetID().ID);
-                }
-            }
-
-            //remove conflicts from sort
-            for (int i = 0; i < conflics.Count; i++)
-            {
-                temp.Remove(conflics[i]);
-            }
-
-            return conflics;
-        }
-        static List<Item> FindAttributes(ItemDatabase saveSystem)
-        {
-            string key = saveSystem.GetMagicString();//magic string, since it's abstract and don't feel like reflection
-            string[] folders = saveSystem.GetSearchFolders();
-            string[] percents = UnityEditor.AssetDatabase.FindAssets("t:" + key, folders);//specific if you want by putting t:armor or t:equipment, etc.
-            List<Item> temp = new List<Item>();
-            foreach (var guid in percents)
-            {
-                string obj = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
-                Item newItem = UnityEditor.AssetDatabase.LoadAssetAtPath(obj, typeof(Item)) as Item;
-                if (newItem != null)
-                {
-                    temp.Add(newItem);
-                    //  Debug.Log("Added");
-                }
-            }
-
-            return temp;
-        }
-        static void SaveToJson(ISaveJsonConfig jsonSave)
-        {
-            if (jsonSave.GetTextAsset() != null)
-            {
-
-                JsconConfig.OverwriteJson(jsonSave);
-            }
-            else
-            {
-                JsconConfig.SaveJson(jsonSave);
-            }
+                    var data = ((Item)obj);
+                    var newId = new ItemID(data.name, id, data);
+                    data.SetID(newId);
+                },
+                SetSlots = (list) => saveSystem.SetSlots(list.Select(s => new ItemDatabaseSlot(((Item)s).GetID(), (Item)s)).ToArray())
+            });
         }
     }
     public static class InvDatabase
     {
         public static void AddAllToList(InventoryDatabase saveSystem)
         {
-            List<ActorInventory> temp = FindAttributes(saveSystem);
-
-            //sort by ID
-            temp.Sort((x, y) => x.GetID().ID.CompareTo(y.GetID().ID));
-            ActorInventory[] arr = temp.ToArray();
-            InventoryDatabaseSlot[] dbArr = new InventoryDatabaseSlot[arr.Length];
-
-            //resolve any conflicts
-            List<ActorInventory> conflics = RemoveConflicts(temp, arr);
-
-            //re-sort without conflicts
-            temp.Sort((x, y) => x.GetID().ID.CompareTo(y.GetID().ID));
-            arr = temp.ToArray();
-
-            //add the sort without conflicts to new array
-            for (int i = 0; i < arr.Length; i++)
+            CommonReload.AddAllToList(new CommonReload.CommonReloadData()
             {
-                dbArr[i] = new InventoryDatabaseSlot(arr[i].GetID(), arr[i]);
-
-            }
-
-            //handle the conflicted
-            for (int i = 0; i < dbArr.Length; i++)
-            {
-                if (dbArr[i] == null)
+                Type = typeof(ActorInventory),
+                SearchType = nameof(ActorInventory),
+                Database = saveSystem,
+                GetId = obj => ((ActorInventory)obj).GetID().ID,
+                SetId = (obj, id) =>
                 {
-                    if (conflics.Count > 0)
-                    {
-                        conflics[0].GetID().ID = i;
-                        dbArr[i] = new InventoryDatabaseSlot(conflics[0].GetID(), conflics[0]);
-                        conflics.RemoveAt(0);
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
-
-            ActorInventory[] theRest = conflics.ToArray();
-            for (int i = 0; i < theRest.Length; i++)
-            {
-                System.Array.Resize(ref dbArr, dbArr.Length + 1);
-                InventoryID newID = new InventoryID(theRest[i].GetName(), dbArr.Length - 1, theRest[i]);
-                InventoryDatabaseSlot newSlot = new InventoryDatabaseSlot(newID, theRest[i]);
-                dbArr[dbArr.Length - 1] = newSlot;
-            }
-
-            for (int i = 0; i < dbArr.Length; i++)
-            {
-                ISaveJsonConfig jsonSave = dbArr[i].ActorInv;
-                SaveToJson(jsonSave);
-            }
-
-            //assign to db
-            saveSystem.SetSlots(dbArr);
-
-            //save
-            EditorUtility.SetDirty(saveSystem);
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
-        }
-        static List<ActorInventory> RemoveConflicts(List<ActorInventory> temp, ActorInventory[] arr)
-        {
-            List<ActorInventory> conflics = new List<ActorInventory>();
-            List<int> used = new List<int>();
-            for (int i = 0; i < arr.Length; i++)
-            {
-                if (used.Contains(arr[i].GetID().ID))
-                {
-                    //conflict
-                    conflics.Add(arr[i]);
-                }
-                else
-                {
-                    //not conflict
-                    used.Add(arr[i].GetID().ID);
-                }
-            }
-
-            //remove conflicts from sort
-            for (int i = 0; i < conflics.Count; i++)
-            {
-                temp.Remove(conflics[i]);
-            }
-
-            return conflics;
-        }
-        static List<ActorInventory> FindAttributes(InventoryDatabase saveSystem)
-        {
-            ActorInventory template = ScriptableObject.CreateInstance<ActorInventory>();
-            string key = template.GetType().Name;
-            string[] folders = saveSystem.GetSearchFolders();
-            string[] percents = UnityEditor.AssetDatabase.FindAssets("t:" + key, folders);//specific if you want by putting t:armor or t:equipment, etc.
-            List<ActorInventory> temp = new List<ActorInventory>();
-            foreach (var guid in percents)
-            {
-                string obj = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
-                ActorInventory newItem = UnityEditor.AssetDatabase.LoadAssetAtPath(obj, typeof(ActorInventory)) as ActorInventory;
-                if (newItem != null)
-                {
-                    temp.Add(newItem);
-                    //  Debug.Log("Added");
-                }
-            }
-
-            return temp;
-        }
-        static void SaveToJson(ISaveJsonConfig jsonSave)
-        {
-            if (jsonSave.GetTextAsset() != null)
-            {
-
-                JsconConfig.OverwriteJson(jsonSave);
-            }
-            else
-            {
-                JsconConfig.SaveJson(jsonSave);
-            }
+                    var data = ((ActorInventory)obj);
+                    var newId = new InventoryID(data.name, id, data);
+                    data.SetID(newId);
+                },
+                SetSlots = (list) => saveSystem.SetSlots(list.Select(s => new InventoryDatabaseSlot(((ActorInventory)s).GetID(), (ActorInventory)s)).ToArray())
+            });
         }
     }
 
@@ -1160,125 +338,20 @@ namespace GWLPXL.ARPGCore.Statics.com
     {
         public static void AddAllToList(ActorClassDatabase saveSystem)
         {
-            List<ActorClass> temp = FindAttributes(saveSystem);
-
-            //sort by ID
-            temp.Sort((x, y) => x.GetID().ID.CompareTo(y.GetID().ID));
-            ActorClass[] arr = temp.ToArray();
-            ClassDatabaseSlot[] dbArr = new ClassDatabaseSlot[arr.Length];
-
-            //resolve any conflicts
-            List<ActorClass> conflics = RemoveConflicts(temp, arr);
-
-            //re-sort without conflicts
-            temp.Sort((x, y) => x.GetID().ID.CompareTo(y.GetID().ID));
-            arr = temp.ToArray();
-
-            //add the sort without conflicts to new array
-            for (int i = 0; i < arr.Length; i++)
+            CommonReload.AddAllToList(new CommonReload.CommonReloadData()
             {
-                dbArr[i] = new ClassDatabaseSlot(arr[i].GetID(), arr[i]);
-
-            }
-
-            //handle the conflicted
-            for (int i = 0; i < dbArr.Length; i++)
-            {
-                if (dbArr[i] == null)
+                Type = typeof(ActorClass),
+                SearchType = nameof(ActorClass),
+                Database = saveSystem,
+                GetId = obj => ((ActorClass)obj).GetID().ID,
+                SetId = (obj, id) =>
                 {
-                    if (conflics.Count > 0)
-                    {
-                        conflics[0].GetID().ID = i;
-                        dbArr[i] = new ClassDatabaseSlot(conflics[0].GetID(), conflics[0]);
-                        conflics.RemoveAt(0);
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
-
-            ActorClass[] theRest = conflics.ToArray();
-            for (int i = 0; i < theRest.Length; i++)
-            {
-                System.Array.Resize(ref dbArr, dbArr.Length + 1);
-                ClassID newID = new ClassID(theRest[i].GetClassName(), dbArr.Length - 1, theRest[i]);
-                ClassDatabaseSlot newSlot = new ClassDatabaseSlot(newID, theRest[i]);
-                dbArr[dbArr.Length - 1] = newSlot;
-            }
-
-            for (int i = 0; i < dbArr.Length; i++)
-            {
-                ISaveJsonConfig jsonSave = dbArr[i].ActorClass;
-                SaveToJson(jsonSave);
-            }
-
-            //assign to db
-            saveSystem.SetSlots(dbArr);
-
-            //save
-            EditorUtility.SetDirty(saveSystem);
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
-        }
-        static List<ActorClass> RemoveConflicts(List<ActorClass> temp, ActorClass[] arr)
-        {
-            List<ActorClass> conflics = new List<ActorClass>();
-            List<int> used = new List<int>();
-            for (int i = 0; i < arr.Length; i++)
-            {
-                if (used.Contains(arr[i].GetID().ID))
-                {
-                    //conflict
-                    conflics.Add(arr[i]);
-                }
-                else
-                {
-                    //not conflict
-                    used.Add(arr[i].GetID().ID);
-                }
-            }
-
-            //remove conflicts from sort
-            for (int i = 0; i < conflics.Count; i++)
-            {
-                temp.Remove(conflics[i]);
-            }
-
-            return conflics;
-        }
-        static List<ActorClass> FindAttributes(ActorClassDatabase saveSystem)
-        {
-            ActorClass template = ScriptableObject.CreateInstance<ActorClass>();
-            string key = template.GetType().Name;
-            string[] folders = saveSystem.GetSearchFolders();
-            string[] percents = UnityEditor.AssetDatabase.FindAssets("t:" + key, folders);//specific if you want by putting t:armor or t:equipment, etc.
-            List<ActorClass> temp = new List<ActorClass>();
-            foreach (var guid in percents)
-            {
-                string obj = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
-                ActorClass newItem = UnityEditor.AssetDatabase.LoadAssetAtPath(obj, typeof(ActorClass)) as ActorClass;
-                if (newItem != null)
-                {
-                    temp.Add(newItem);
-                    //  Debug.Log("Added");
-                }
-            }
-
-            return temp;
-        }
-        static void SaveToJson(ISaveJsonConfig jsonSave)
-        {
-            if (jsonSave.GetTextAsset() != null)
-            {
-
-                JsconConfig.OverwriteJson(jsonSave);
-            }
-            else
-            {
-                JsconConfig.SaveJson(jsonSave);
-            }
+                    var data = ((ActorClass)obj);
+                    var newId = new ClassID(data.name, id, data);
+                    data.SetID(newId);
+                },
+                SetSlots = (list) => saveSystem.SetSlots(list.Select(s => new ClassDatabaseSlot(((ActorClass)s).GetID(), (ActorClass)s)).ToArray())
+            });
         }
     }
 
@@ -1286,125 +359,20 @@ namespace GWLPXL.ARPGCore.Statics.com
     {
         public static void AddAllToList(AuraControllerDatabase saveSystem)
         {
-            List<AuraController> temp = FindAttributes(saveSystem);
-
-            //sort by ID
-            temp.Sort((x, y) => x.GetID().ID.CompareTo(y.GetID().ID));
-            AuraController[] arr = temp.ToArray();
-            AuraControllerDatabaseSlot[] dbArr = new AuraControllerDatabaseSlot[arr.Length];
-
-            //resolve any conflicts
-            List<AuraController> conflics = RemoveConflicts(temp, arr);
-
-            //re-sort without conflicts
-            temp.Sort((x, y) => x.GetID().ID.CompareTo(y.GetID().ID));
-            arr = temp.ToArray();
-
-            //add the sort without conflicts to new array
-            for (int i = 0; i < arr.Length; i++)
+            CommonReload.AddAllToList(new CommonReload.CommonReloadData()
             {
-                dbArr[i] = new AuraControllerDatabaseSlot(arr[i].GetID(), arr[i]);
-
-            }
-
-            //handle the conflicted
-            for (int i = 0; i < dbArr.Length; i++)
-            {
-                if (dbArr[i] == null)
+                Type = typeof(AuraController),
+                SearchType = nameof(AuraController),
+                Database = saveSystem,
+                GetId = obj => ((AuraController)obj).GetID().ID,
+                SetId = (obj, id) =>
                 {
-                    if (conflics.Count > 0)
-                    {
-                        conflics[0].GetID().ID = i;
-                        dbArr[i] = new AuraControllerDatabaseSlot(conflics[0].GetID(), conflics[0]);
-                        conflics.RemoveAt(0);
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
-
-            AuraController[] theRest = conflics.ToArray();
-            for (int i = 0; i < theRest.Length; i++)
-            {
-                System.Array.Resize(ref dbArr, dbArr.Length + 1);
-                AuraControllerData newID = new AuraControllerData(theRest[i].GetID().Name, dbArr.Length - 1, theRest[i]);
-                AuraControllerDatabaseSlot newSlot = new AuraControllerDatabaseSlot(newID, theRest[i]);
-                dbArr[dbArr.Length - 1] = newSlot;
-            }
-
-            for (int i = 0; i < dbArr.Length; i++)
-            {
-                ISaveJsonConfig jsonSave = dbArr[i].Aura;
-                SaveToJson(jsonSave);
-            }
-
-            //assign to db
-            saveSystem.SetSlots(dbArr);
-
-            //save
-            EditorUtility.SetDirty(saveSystem);
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
-        }
-        static List<AuraController> RemoveConflicts(List<AuraController> temp, AuraController[] arr)
-        {
-            List<AuraController> conflics = new List<AuraController>();
-            List<int> used = new List<int>();
-            for (int i = 0; i < arr.Length; i++)
-            {
-                if (used.Contains(arr[i].GetID().ID))
-                {
-                    //conflict
-                    conflics.Add(arr[i]);
-                }
-                else
-                {
-                    //not conflict
-                    used.Add(arr[i].GetID().ID);
-                }
-            }
-
-            //remove conflicts from sort
-            for (int i = 0; i < conflics.Count; i++)
-            {
-                temp.Remove(conflics[i]);
-            }
-
-            return conflics;
-        }
-        static List<AuraController> FindAttributes(AuraControllerDatabase saveSystem)
-        {
-            AuraController template = ScriptableObject.CreateInstance<AuraController>();
-            string key = template.GetType().Name;
-            string[] folders = saveSystem.GetSearchFolders();
-            string[] percents = UnityEditor.AssetDatabase.FindAssets("t:" + key, folders);//specific if you want by putting t:armor or t:equipment, etc.
-            List<AuraController> temp = new List<AuraController>();
-            foreach (var guid in percents)
-            {
-                string obj = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
-                AuraController newItem = UnityEditor.AssetDatabase.LoadAssetAtPath(obj, typeof(AuraController)) as AuraController;
-                if (newItem != null)
-                {
-                    temp.Add(newItem);
-                    //  Debug.Log("Added");
-                }
-            }
-
-            return temp;
-        }
-        static void SaveToJson(ISaveJsonConfig jsonSave)
-        {
-            if (jsonSave.GetTextAsset() != null)
-            {
-
-                JsconConfig.OverwriteJson(jsonSave);
-            }
-            else
-            {
-                JsconConfig.SaveJson(jsonSave);
-            }
+                    var data = ((AuraController)obj);
+                    var newId = new AuraControllerData(data.name, id, data);
+                    data.AuraControllerData = newId;
+                },
+                SetSlots = (list) => saveSystem.SetSlots(list.Select(s => new AuraControllerDatabaseSlot(((AuraController)s).GetID(), (AuraController)s)).ToArray())
+            });
         }
     }
 
@@ -1412,250 +380,40 @@ namespace GWLPXL.ARPGCore.Statics.com
     {
         public static void AddAllToList(LootDropsDatabase saveSystem)
         {
-            List<LootDrops> temp = FindAttributes(saveSystem);
-
-            //sort by ID
-            temp.Sort((x, y) => x.GetID().ID.CompareTo(y.GetID().ID));
-            LootDrops[] arr = temp.ToArray();
-            LootDropsDatabaseSlot[] dbArr = new LootDropsDatabaseSlot[arr.Length];
-
-            //resolve any conflicts
-            List<LootDrops> conflics = RemoveConflicts(temp, arr);
-
-            //re-sort without conflicts
-            temp.Sort((x, y) => x.GetID().ID.CompareTo(y.GetID().ID));
-            arr = temp.ToArray();
-
-            //add the sort without conflicts to new array
-            for (int i = 0; i < arr.Length; i++)
+            CommonReload.AddAllToList(new CommonReload.CommonReloadData()
             {
-                dbArr[i] = new LootDropsDatabaseSlot(arr[i].GetID(), arr[i]);
-
-            }
-
-            //handle the conflicted
-            for (int i = 0; i < dbArr.Length; i++)
-            {
-                if (dbArr[i] == null)
+                Type = typeof(LootDrops),
+                SearchType = nameof(LootDrops),
+                Database = saveSystem,
+                GetId = obj => ((LootDrops)obj).GetID().ID,
+                SetId = (obj, id) =>
                 {
-                    if (conflics.Count > 0)
-                    {
-                        conflics[0].GetID().ID = i;
-                        dbArr[i] = new LootDropsDatabaseSlot(conflics[0].GetID(), conflics[0]);
-                        conflics.RemoveAt(0);
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
-
-            LootDrops[] theRest = conflics.ToArray();
-            for (int i = 0; i < theRest.Length; i++)
-            {
-                System.Array.Resize(ref dbArr, dbArr.Length + 1);
-                LootID newID = new LootID(theRest[i].GetID().Name, dbArr.Length - 1, theRest[i]);
-                LootDropsDatabaseSlot newSlot = new LootDropsDatabaseSlot(newID, theRest[i]);
-                dbArr[dbArr.Length - 1] = newSlot;
-            }
-
-            for (int i = 0; i < dbArr.Length; i++)
-            {
-                ISaveJsonConfig jsonSave = dbArr[i].LootDrops;
-                SaveToJson(jsonSave);
-            }
-
-            //assign to db
-            saveSystem.SetSlots(dbArr);
-
-            //save
-            EditorUtility.SetDirty(saveSystem);
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
-        }
-        static List<LootDrops> RemoveConflicts(List<LootDrops> temp, LootDrops[] arr)
-        {
-            List<LootDrops> conflics = new List<LootDrops>();
-            List<int> used = new List<int>();
-            for (int i = 0; i < arr.Length; i++)
-            {
-                if (used.Contains(arr[i].GetID().ID))
-                {
-                    //conflict
-                    conflics.Add(arr[i]);
-                }
-                else
-                {
-                    //not conflict
-                    used.Add(arr[i].GetID().ID);
-                }
-            }
-
-            //remove conflicts from sort
-            for (int i = 0; i < conflics.Count; i++)
-            {
-                temp.Remove(conflics[i]);
-            }
-
-            return conflics;
-        }
-        static List<LootDrops> FindAttributes(LootDropsDatabase saveSystem)
-        {
-            LootDrops template = ScriptableObject.CreateInstance<LootDrops>();
-            string key = template.GetType().Name;
-            string[] folders = saveSystem.GetSearchFolders();
-            string[] percents = UnityEditor.AssetDatabase.FindAssets("t:" + key, folders);//specific if you want by putting t:armor or t:equipment, etc.
-            List<LootDrops> temp = new List<LootDrops>();
-            foreach (var guid in percents)
-            {
-                string obj = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
-                LootDrops newItem = UnityEditor.AssetDatabase.LoadAssetAtPath(obj, typeof(LootDrops)) as LootDrops;
-                if (newItem != null)
-                {
-                    temp.Add(newItem);
-                    //  Debug.Log("Added");
-                }
-            }
-
-            return temp;
-        }
-        static void SaveToJson(ISaveJsonConfig jsonSave)
-        {
-            if (jsonSave.GetTextAsset() != null)
-            {
-
-                JsconConfig.OverwriteJson(jsonSave);
-            }
-            else
-            {
-                JsconConfig.SaveJson(jsonSave);
-            }
+                    var data = ((LootDrops)obj);
+                    var newId = new LootID(data.name, id, data);
+                    data.ID = newId;
+                },
+                SetSlots = (list) => saveSystem.SetSlots(list.Select(s => new LootDropsDatabaseSlot(((LootDrops)s).GetID(), (LootDrops)s)).ToArray())
+            });
         }
     }
     public static class AurasDatabase
     {
         public static void AddAllToList(AuraDatabase saveSystem)
         {
-            List<Aura> temp = FindAttributes(saveSystem);
-
-            //sort by ID
-            temp.Sort((x, y) => x.GetID().ID.CompareTo(y.GetID().ID));
-            Aura[] arr = temp.ToArray();
-            AuraDatabaseSlot[] dbArr = new AuraDatabaseSlot[arr.Length];
-
-            //resolve any conflicts
-            List<Aura> conflics = RemoveConflicts(temp, arr);
-
-            //re-sort without conflicts
-            temp.Sort((x, y) => x.GetID().ID.CompareTo(y.GetID().ID));
-            arr = temp.ToArray();
-
-            //add the sort without conflicts to new array
-            for (int i = 0; i < arr.Length; i++)
+            CommonReload.AddAllToList(new CommonReload.CommonReloadData()
             {
-                dbArr[i] = new AuraDatabaseSlot(arr[i].GetID(), arr[i]);
-
-            }
-
-            //handle the conflicted
-            for (int i = 0; i < dbArr.Length; i++)
-            {
-                if (dbArr[i] == null)
+                Type = typeof(Aura),
+                SearchType = nameof(Aura),
+                Database = saveSystem,
+                GetId = obj => ((Aura)obj).GetID().ID,
+                SetId = (obj, id) =>
                 {
-                    if (conflics.Count > 0)
-                    {
-                        conflics[0].GetID().ID = i;
-                        dbArr[i] = new AuraDatabaseSlot(conflics[0].GetID(), conflics[0]);
-                        conflics.RemoveAt(0);
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
-
-            Aura[] theRest = conflics.ToArray();
-            for (int i = 0; i < theRest.Length; i++)
-            {
-                System.Array.Resize(ref dbArr, dbArr.Length + 1);
-                AuraID newID = new AuraID(theRest[i].AuraData.AuraName, dbArr.Length - 1, theRest[i]);
-                AuraDatabaseSlot newSlot = new AuraDatabaseSlot(newID, theRest[i]);
-                dbArr[dbArr.Length - 1] = newSlot;
-            }
-
-            for (int i = 0; i < dbArr.Length; i++)
-            {
-                ISaveJsonConfig jsonSave = dbArr[i].Aura;
-                SaveToJson(jsonSave);
-            }
-
-            //assign to db
-            saveSystem.SetSlots(dbArr);
-
-            //save
-            EditorUtility.SetDirty(saveSystem);
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
-        }
-        static List<Aura> RemoveConflicts(List<Aura> temp, Aura[] arr)
-        {
-            List<Aura> conflics = new List<Aura>();
-            List<int> used = new List<int>();
-            for (int i = 0; i < arr.Length; i++)
-            {
-                if (used.Contains(arr[i].GetID().ID))
-                {
-                    //conflict
-                    conflics.Add(arr[i]);
-                }
-                else
-                {
-                    //not conflict
-                    used.Add(arr[i].GetID().ID);
-                }
-            }
-
-            //remove conflicts from sort
-            for (int i = 0; i < conflics.Count; i++)
-            {
-                temp.Remove(conflics[i]);
-            }
-
-            return conflics;
-        }
-        static List<Aura> FindAttributes(AuraDatabase saveSystem)
-        {
-            Aura template = ScriptableObject.CreateInstance<Aura>();
-            string key = template.GetType().Name;
-            string[] folders = saveSystem.GetSearchFolders();
-            string[] percents = UnityEditor.AssetDatabase.FindAssets("t:" + key, folders);//specific if you want by putting t:armor or t:equipment, etc.
-            List<Aura> temp = new List<Aura>();
-            foreach (var guid in percents)
-            {
-                string obj = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
-                Aura newItem = UnityEditor.AssetDatabase.LoadAssetAtPath(obj, typeof(Aura)) as Aura;
-                if (newItem != null)
-                {
-                    temp.Add(newItem);
-                    //  Debug.Log("Added");
-                }
-            }
-
-            return temp;
-        }
-        static void SaveToJson(ISaveJsonConfig jsonSave)
-        {
-            if (jsonSave.GetTextAsset() != null)
-            {
-
-                JsconConfig.OverwriteJson(jsonSave);
-            }
-            else
-            {
-                JsconConfig.SaveJson(jsonSave);
-            }
+                    var data = ((Aura)obj);
+                    var newId = new AuraID(data.name, id, data);
+                    data.SetID(newId);
+                },
+                SetSlots = (list) => saveSystem.SetSlots(list.Select(s => new AuraDatabaseSlot(((Aura)s).GetID(), (Aura)s)).ToArray())
+            });
         }
     }
 
@@ -1663,375 +421,59 @@ namespace GWLPXL.ARPGCore.Statics.com
     {
         public static void AddAllToList(ActorAttributesDatabase saveSystem)
         {
-            List<ActorAttributes> temp = FindAttributes(saveSystem);
-
-            //sort by ID
-            temp.Sort((x, y) => x.GetID().ID.CompareTo(y.GetID().ID));
-            ActorAttributes[] arr = temp.ToArray();
-            AttributesDatabaseSlot[] dbArr = new AttributesDatabaseSlot[arr.Length];
-
-            //resolve any conflicts
-            List<ActorAttributes> conflics = RemoveConflicts(temp, arr);
-
-            //re-sort without conflicts
-            temp.Sort((x, y) => x.GetID().ID.CompareTo(y.GetID().ID));
-            arr = temp.ToArray();
-
-            //add the sort without conflicts to new array
-            for (int i = 0; i < arr.Length; i++)
+            CommonReload.AddAllToList(new CommonReload.CommonReloadData()
             {
-                dbArr[i] = new AttributesDatabaseSlot(arr[i].GetID(), arr[i]);
-
-            }
-
-            //handle the conflicted
-            for (int i = 0; i < dbArr.Length; i++)
-            {
-                if (dbArr[i] == null)
+                Type = typeof(ActorAttributes),
+                SearchType = nameof(ActorAttributes),
+                Database = saveSystem,
+                GetId = obj => ((ActorAttributes)obj).GetID().ID,
+                SetId = (obj, id) =>
                 {
-                    if (conflics.Count > 0)
-                    {
-                        conflics[0].GetID().ID = i;
-                        dbArr[i] = new AttributesDatabaseSlot(conflics[0].GetID(), conflics[0]);
-                        conflics.RemoveAt(0);
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
-
-            ActorAttributes[] theRest = conflics.ToArray();
-            for (int i = 0; i < theRest.Length; i++)
-            {
-                System.Array.Resize(ref dbArr, dbArr.Length + 1);
-                AttributesID newID = new AttributesID(theRest[i].ActorName, dbArr.Length - 1, theRest[i]);
-                AttributesDatabaseSlot newSlot = new AttributesDatabaseSlot(newID, theRest[i]);
-                dbArr[dbArr.Length - 1] = newSlot;
-            }
-
-            for (int i = 0; i < dbArr.Length; i++)
-            {
-                ISaveJsonConfig jsonSave = dbArr[i].ActorStats;
-                SaveToJson(jsonSave);
-            }
-
-            //assign to db
-            saveSystem.SetSlots(dbArr);
-
-            //save
-            EditorUtility.SetDirty(saveSystem);
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
-        }
-        static List<ActorAttributes> RemoveConflicts(List<ActorAttributes> temp, ActorAttributes[] arr)
-        {
-            List<ActorAttributes> conflics = new List<ActorAttributes>();
-            List<int> used = new List<int>();
-            for (int i = 0; i < arr.Length; i++)
-            {
-                if (used.Contains(arr[i].GetID().ID))
-                {
-                    //conflict
-                    conflics.Add(arr[i]);
-                }
-                else
-                {
-                    //not conflict
-                    used.Add(arr[i].GetID().ID);
-                }
-            }
-
-            //remove conflicts from sort
-            for (int i = 0; i < conflics.Count; i++)
-            {
-                temp.Remove(conflics[i]);
-            }
-
-            return conflics;
-        }
-        static List<ActorAttributes> FindAttributes(ActorAttributesDatabase saveSystem)
-        {
-            ActorAttributes template = ScriptableObject.CreateInstance<ActorAttributes>();
-            string key = template.GetType().Name;
-            string[] folders = saveSystem.GetSearchFolders();
-            string[] percents = UnityEditor.AssetDatabase.FindAssets("t:" + key, folders);//specific if you want by putting t:armor or t:equipment, etc.
-            List<ActorAttributes> temp = new List<ActorAttributes>();
-            foreach (var guid in percents)
-            {
-                string obj = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
-                ActorAttributes newItem = UnityEditor.AssetDatabase.LoadAssetAtPath(obj, typeof(ActorAttributes)) as ActorAttributes;
-                if (newItem != null)
-                {
-                    temp.Add(newItem);
-                    //  Debug.Log("Added");
-                }
-            }
-
-            return temp;
-        }
-        static void SaveToJson(ISaveJsonConfig jsonSave)
-        {
-            if (jsonSave.GetTextAsset() != null)
-            {
-
-                JsconConfig.OverwriteJson(jsonSave);
-            }
-            else
-            {
-                JsconConfig.SaveJson(jsonSave);
-            }
+                    var data = ((ActorAttributes)obj);
+                    var newId = new AttributesID(data.name, id, data);
+                    data.SetStatsID(newId);
+                },
+                SetSlots = (list) => saveSystem.SetSlots(list.Select(s => new AttributesDatabaseSlot(((ActorAttributes)s).GetID(), (ActorAttributes)s)).ToArray())
+            });
         }
     }
     public static class AbilityDatabase
     {
         public static void AddAllToList(AbilitiesDatabase saveSystem)
         {
-            List<Ability> temp = FindAbilities(saveSystem);
-
-            //sort by ID
-            temp.Sort((x, y) => x.GetID().ID.CompareTo(y.GetID().ID));
-            Ability[] arr = temp.ToArray();
-            AbilityDatabaseSlot[] dbArr = new AbilityDatabaseSlot[arr.Length];
-
-            //resolve any conflicts
-            List<Ability> conflics = RemoveConflicts(temp, arr);
-
-            //re-sort without conflicts
-            temp.Sort((x, y) => x.GetID().ID.CompareTo(y.GetID().ID));
-            arr = temp.ToArray();
-
-            //add the sort without conflicts to new array
-            for (int i = 0; i < arr.Length; i++)
+            CommonReload.AddAllToList(new CommonReload.CommonReloadData()
             {
-                dbArr[i] = new AbilityDatabaseSlot(arr[i].GetID(), arr[i]);
-
-            }
-
-            //handle the conflicted
-            for (int i = 0; i < dbArr.Length; i++)
-            {
-                if (dbArr[i] == null)
+                Type = typeof(Ability),
+                SearchType = nameof(Ability),
+                Database = saveSystem,
+                GetId = obj => ((Ability)obj).GetID().ID,
+                SetId = (obj, id) =>
                 {
-                    if (conflics.Count > 0)
-                    {
-                        conflics[0].GetID().ID = i;
-                        dbArr[i] = new AbilityDatabaseSlot(conflics[0].GetID(), conflics[0]);
-                        conflics.RemoveAt(0);
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
-
-            Ability[] theRest = conflics.ToArray();
-            for (int i = 0; i < theRest.Length; i++)
-            {
-                System.Array.Resize(ref dbArr, dbArr.Length + 1);
-                AbilityID newID = new AbilityID(theRest[i].GetName(), dbArr.Length - 1, theRest[i]);
-                AbilityDatabaseSlot newSlot = new AbilityDatabaseSlot(newID, theRest[i]);
-                dbArr[dbArr.Length - 1] = newSlot;
-            }
-
-            for (int i = 0; i < dbArr.Length; i++)
-            {
-                ISaveJsonConfig jsonSave = dbArr[i].ID.Ability;
-                SaveToJson(jsonSave);
-            }
-
-            //assign to db
-            saveSystem.SetSlots(dbArr);
-
-            //save
-            EditorUtility.SetDirty(saveSystem);
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
-        }
-        static List<Ability> RemoveConflicts(List<Ability> temp, Ability[] arr)
-        {
-            List<Ability> conflics = new List<Ability>();
-            List<int> used = new List<int>();
-            for (int i = 0; i < arr.Length; i++)
-            {
-                if (used.Contains(arr[i].GetID().ID))
-                {
-                    //conflict
-                    conflics.Add(arr[i]);
-                }
-                else
-                {
-                    //not conflict
-                    used.Add(arr[i].GetID().ID);
-                }
-            }
-
-            //remove conflicts from sort
-            for (int i = 0; i < conflics.Count; i++)
-            {
-                temp.Remove(conflics[i]);
-            }
-
-            return conflics;
-        }
-        static List<Ability> FindAbilities(AbilitiesDatabase saveSystem)
-        {
-            Ability template = ScriptableObject.CreateInstance<Ability>();
-            string key = template.GetType().Name;
-            string[] folders = saveSystem.GetSearchFolders();
-            string[] percents = UnityEditor.AssetDatabase.FindAssets("t:" + key, folders);//specific if you want by putting t:armor or t:equipment, etc.
-            List<Ability> temp = new List<Ability>();
-            foreach (var guid in percents)
-            {
-                string obj = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
-                Ability newItem = UnityEditor.AssetDatabase.LoadAssetAtPath(obj, typeof(Ability)) as Ability;
-                if (newItem != null)
-                {
-                    temp.Add(newItem);
-                    //  Debug.Log("Added");
-                }
-            }
-
-            return temp;
-        }
-        static void SaveToJson(ISaveJsonConfig jsonSave)
-        {
-            if (jsonSave.GetTextAsset() != null)
-            {
-
-                JsconConfig.OverwriteJson(jsonSave);
-            }
-            else
-            {
-                JsconConfig.SaveJson(jsonSave);
-            }
+                    var data = ((Ability)obj);
+                    var newId = new AbilityID(data.name, id, data);
+                    data.SetID(newId);
+                },
+                SetSlots = (list) => saveSystem.SetSlots(list.Select(s => new AbilityDatabaseSlot(((Ability)s).GetID(), (Ability)s)).ToArray())
+            });
         }
     }
     public static class AbilityControllersDatabase
     {
         public static void AddAllToList(AbilityControllerDatabase saveSystem)
         {
-            List<AbilityController> temp = FindAbilities(saveSystem);
-
-            //sort by ID
-            temp.Sort((x, y) => x.GetID().ID.CompareTo(y.GetID().ID));
-            AbilityController[] arr = temp.ToArray();
-            AbilityControllerDatabaseSlot[] dbArr = new AbilityControllerDatabaseSlot[arr.Length];
-
-            //resolve any conflicts
-            List<AbilityController> conflics = RemoveConflicts(temp, arr);
-
-            //re-sort without conflicts
-            temp.Sort((x, y) => x.GetID().ID.CompareTo(y.GetID().ID));
-            arr = temp.ToArray();
-
-            //add the sort without conflicts to new array
-            for (int i = 0; i < arr.Length; i++)
+            CommonReload.AddAllToList(new CommonReload.CommonReloadData()
             {
-                dbArr[i] = new AbilityControllerDatabaseSlot(arr[i].GetID(), arr[i]);
-
-            }
-
-            //handle the conflicted
-            for (int i = 0; i < dbArr.Length; i++)
-            {
-                if (dbArr[i] == null)
+                Type = typeof(AbilityController),
+                SearchType = nameof(AbilityController),
+                Database = saveSystem,
+                GetId = obj => ((AbilityController)obj).GetID().ID,
+                SetId = (obj, id) =>
                 {
-                    if (conflics.Count > 0)
-                    {
-                        conflics[0].GetID().ID = i;
-                        dbArr[i] = new AbilityControllerDatabaseSlot(conflics[0].GetID(), conflics[0]);
-                        conflics.RemoveAt(0);
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
-
-            AbilityController[] theRest = conflics.ToArray();
-            for (int i = 0; i < theRest.Length; i++)
-            {
-                System.Array.Resize(ref dbArr, dbArr.Length + 1);
-                AbilityControllerID newID = new AbilityControllerID(theRest[i].Data.Name, dbArr.Length - 1, theRest[i]);
-                AbilityControllerDatabaseSlot newSlot = new AbilityControllerDatabaseSlot(newID, theRest[i]);
-                dbArr[dbArr.Length - 1] = newSlot;
-            }
-
-            for (int i = 0; i < dbArr.Length; i++)
-            {
-                ISaveJsonConfig jsonSave = dbArr[i].ID.AbilityController;
-                SaveToJson(jsonSave);
-            }
-
-            //assign to db
-            saveSystem.SetSlots(dbArr);
-
-            //save
-            EditorUtility.SetDirty(saveSystem);
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
-        }
-        static List<AbilityController> RemoveConflicts(List<AbilityController> temp, AbilityController[] arr)
-        {
-            List<AbilityController> conflics = new List<AbilityController>();
-            List<int> used = new List<int>();
-            for (int i = 0; i < arr.Length; i++)
-            {
-                if (used.Contains(arr[i].GetID().ID))
-                {
-                    //conflict
-                    conflics.Add(arr[i]);
-                }
-                else
-                {
-                    //not conflict
-                    used.Add(arr[i].GetID().ID);
-                }
-            }
-
-            //remove conflicts from sort
-            for (int i = 0; i < conflics.Count; i++)
-            {
-                temp.Remove(conflics[i]);
-            }
-
-            return conflics;
-        }
-        static List<AbilityController> FindAbilities(AbilityControllerDatabase saveSystem)
-        {
-            AbilityController template = ScriptableObject.CreateInstance<AbilityController>();
-            string key = template.GetType().Name;
-            string[] folders = saveSystem.GetSearchFolders();
-            string[] percents = UnityEditor.AssetDatabase.FindAssets("t:" + key, folders);//specific if you want by putting t:armor or t:equipment, etc.
-            List<AbilityController> temp = new List<AbilityController>();
-            foreach (var guid in percents)
-            {
-                string obj = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
-                AbilityController newItem = UnityEditor.AssetDatabase.LoadAssetAtPath(obj, typeof(AbilityController)) as AbilityController;
-                if (newItem != null)
-                {
-                    temp.Add(newItem);
-                    //  Debug.Log("Added");
-                }
-            }
-            UnityEngine.Object.DestroyImmediate(template);
-            return temp;
-        }
-        static void SaveToJson(ISaveJsonConfig jsonSave)
-        {
-            if (jsonSave.GetTextAsset() != null)
-            {
-
-                JsconConfig.OverwriteJson(jsonSave);
-            }
-            else
-            {
-                JsconConfig.SaveJson(jsonSave);
-            }
+                    var data = ((AbilityController)obj);
+                    data.GetID().ID = id;
+                },
+                SetSlots = (list) => saveSystem.SetSlots(list.Select(s => new AbilityControllerDatabaseSlot(((AbilityController)s).GetID(), (AbilityController)s)).ToArray())
+            });
         }
     }
     public static class ARPGGameDatabase
@@ -2812,7 +1254,7 @@ namespace GWLPXL.ARPGCore.Statics.com
                 ItemCSVValue value = new ItemCSVValue(
                     instance.GetItemType().ToString(),
                     (int)instance.GetItemType(),
-                    instance.GetGeneratedItemName());
+                    instance.GetBaseItemName());
                 newcsv.ItemValue = value;
 
                 ItemType type = instance.GetItemType();
@@ -2842,7 +1284,7 @@ namespace GWLPXL.ARPGCore.Statics.com
                         EquipmentCSVValue eqvalue = new EquipmentCSVValue(
                             equipment.GetEquipmentType().ToString(),
                             (int)equipment.GetEquipmentType(),
-                            equipment.GetGeneratedItemName(),
+                            equipment.GetBaseItemName(),
                             slotnames,
                             slottypes,
                             equipment.GetStats().GetBaseType().ToString(),

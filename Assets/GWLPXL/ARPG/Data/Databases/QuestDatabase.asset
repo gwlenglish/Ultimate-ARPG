@@ -15,12 +15,6 @@ MonoBehaviour:
   searchFolders:
   - Assets/GWLPXL/ARPG/Data
   slots:
-  - DescriptiveName: Explore Demo Scene
-    ID:
-      Name: Explore the lands!
-      ID: 0
-      Quest: {fileID: 11400000, guid: e07d8dfe1ebe3264fad5e733a612a8dc, type: 2}
-    Quest: {fileID: 11400000, guid: e07d8dfe1ebe3264fad5e733a612a8dc, type: 2}
   - DescriptiveName: Kill Demo Creatures
     ID:
       Name: Demo Creature
@@ -45,3 +39,9 @@ MonoBehaviour:
       ID: 10
       Quest: {fileID: 11400000, guid: fe647b504684a7b42ba4a71d6a9cf985, type: 2}
     Quest: {fileID: 11400000, guid: fe647b504684a7b42ba4a71d6a9cf985, type: 2}
+  - DescriptiveName: Explore Demo Scene
+    ID:
+      Name: Explore Demo Scene
+      ID: 11
+      Quest: {fileID: 11400000, guid: e07d8dfe1ebe3264fad5e733a612a8dc, type: 2}
+    Quest: {fileID: 11400000, guid: e07d8dfe1ebe3264fad5e733a612a8dc, type: 2}

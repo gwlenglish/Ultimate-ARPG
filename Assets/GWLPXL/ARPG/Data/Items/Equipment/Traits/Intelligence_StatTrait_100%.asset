@@ -15,8 +15,8 @@ MonoBehaviour:
   config: {fileID: 4900000, guid: 5c4da25d57252b44d8277b30fcd55794, type: 3}
   AutoName: 1
   traitID:
-    Name: Intelligence
-    ID: 20
+    Name: Intelligence_StatTrait_100%
+    ID: 24
     Trait: {fileID: 11400000}
   traitName: Intelligence
   TraitPrefixes:
@@ -28,4 +28,5 @@ MonoBehaviour:
   - of The Fox
   myLevelMulti: 100
   weight: 7
+  sprite: {fileID: 0}
   Type: 1

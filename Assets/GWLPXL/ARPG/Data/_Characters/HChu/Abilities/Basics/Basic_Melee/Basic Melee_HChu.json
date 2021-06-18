@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 23722
+        "instanceID": 24274
     },
     "id": {
         "Name": "Basic Melee HChu",
         "ID": 10,
         "Ability": {
-            "instanceID": 23344
+            "instanceID": 23984
         }
     },
     "autoName": false,
@@ -21,7 +21,7 @@
         "AnimationIndex": 0,
         "Logics": [
             {
-                "instanceID": 23724
+                "instanceID": 24276
             }
         ],
         "UniqueID": 8,

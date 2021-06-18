@@ -15,12 +15,6 @@ MonoBehaviour:
   searchFolders:
   - Assets/GWLPXL/ARPG/Data
   slots:
-  - DescriptiveName: Gold
-    ID:
-      Name: 
-      ID: 0
-      Item: {fileID: 11400000, guid: 785309e2160eab14dbd4fd2cf31215db, type: 2}
-    Item: {fileID: 11400000, guid: 785309e2160eab14dbd4fd2cf31215db, type: 2}
   - DescriptiveName: Mana Potion
     ID:
       Name: 
@@ -201,3 +195,9 @@ MonoBehaviour:
       ID: 30
       Item: {fileID: 11400000, guid: 4745f817dd08d6f468cf1cb5b45ec457, type: 2}
     Item: {fileID: 11400000, guid: 4745f817dd08d6f468cf1cb5b45ec457, type: 2}
+  - DescriptiveName: Gold
+    ID:
+      Name: 100 Gold_Worn
+      ID: 31
+      Item: {fileID: 11400000, guid: 785309e2160eab14dbd4fd2cf31215db, type: 2}
+    Item: {fileID: 11400000, guid: 785309e2160eab14dbd4fd2cf31215db, type: 2}

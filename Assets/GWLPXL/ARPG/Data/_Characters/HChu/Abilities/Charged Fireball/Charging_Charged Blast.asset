@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 4900000, guid: 4ba67968ae24ec94580fbe21547a2e80, type: 3}
   id:
-    Name: 
-    ID: 12
+    Name: Charging_Charged Blast
+    ID: 23
     Ability: {fileID: 11400000}
   autoName: 0
   Data:

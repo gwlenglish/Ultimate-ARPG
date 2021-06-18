@@ -13,16 +13,15 @@ MonoBehaviour:
   m_Name: Chest 1
   m_EditorClassIdentifier: 
   config: {fileID: 4900000, guid: 3d86923411b3dd147a44e1fd01e80f2a, type: 3}
+  lootPrefabOverride: {fileID: 0}
   ID:
     Name: Chest 1
     ID: 15
     LootDrops: {fileID: 11400000}
-  LootPrefab: {fileID: 114661835936029034, guid: ccd8fea824547ec4589c40c00e341910,
-    type: 3}
   AllPossibleItems:
   - {fileID: 11400000, guid: 5cd931fb8c634864891d3c4407c6aef4, type: 2}
   LootTable:
-  - Description: Legendary Lefty_100
+  - Description: _100
     RelativePercent: 100
     RangeFrom: 0
     RangeTo: 5

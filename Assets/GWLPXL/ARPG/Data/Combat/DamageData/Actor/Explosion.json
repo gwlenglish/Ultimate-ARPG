@@ -1,17 +1,17 @@
 {
     "config": {
-        "instanceID": 50790
+        "instanceID": 25316
     },
     "id": {
         "Name": "Fireball",
         "ID": 3,
         "Instance": {
-            "instanceID": 50788
+            "instanceID": 24780
         }
     },
     "DamageVar": {
         "combatHandler": {
-            "instanceID": 18650
+            "instanceID": 18356
         },
         "descriptiveName": "Explosion Demo",
         "damageOptions": {
@@ -43,6 +43,7 @@
                     "StatusEffects": [],
                     "AmountPerTick": -3,
                     "Duration": 3.0,
+                    "ClampStatusEffectToDuration": false,
                     "TickRate": 1.0,
                     "StackAmount": 2
                 }

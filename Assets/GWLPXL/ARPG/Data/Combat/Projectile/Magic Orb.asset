@@ -14,13 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 4900000, guid: 74703a6de2966b142b0074895154e53d, type: 3}
   id:
-    Name: 
-    ID: 3
+    Name: Magic Orb
+    ID: 7
     Instance: {fileID: 11400000}
   ProjectileVars:
     descriptiveName: Orb
     description: Magic ball shoots forward
     speed: 5
     disableOnTouch: 0
-    autoDestructTime: 10
     friendlyFire: 0
+    lifetime: 10
+    blockingLayers:
+      serializedVersion: 2
+      m_Bits: 0
+    block: 1

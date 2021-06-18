@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 4900000, guid: 908dfc99e5e13a144aed7725cf3ee9fa, type: 3}
   id:
-    Name: 
-    ID: 12
+    Name: Blast_Charged_Fireball
+    ID: 22
     Ability: {fileID: 11400000}
   autoName: 0
   Data:

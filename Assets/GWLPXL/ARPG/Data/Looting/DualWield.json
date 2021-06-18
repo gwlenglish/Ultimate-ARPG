@@ -1,30 +1,30 @@
 {
     "config": {
-        "instanceID": 18268
+        "instanceID": 20422
+    },
+    "lootPrefabOverride": {
+        "instanceID": 0
     },
     "ID": {
         "Name": "DualWield",
         "ID": 3,
         "LootDrops": {
-            "instanceID": 17488
+            "instanceID": 20216
         }
-    },
-    "LootPrefab": {
-        "instanceID": 17634
     },
     "AllPossibleItems": [
         {
-            "instanceID": 17438
+            "instanceID": 17810
         }
     ],
     "LootTable": [
         {
-            "Description": "Starting Axe Left Hand_100",
+            "Description": "_100",
             "RelativePercent": 100.0,
             "RangeFrom": 0,
             "RangeTo": 50,
             "Item": {
-                "instanceID": 17438
+                "instanceID": 17810
             }
         }
     ]

@@ -37,6 +37,8 @@ MonoBehaviour:
     baseStatMinValue: 1
     baseStateILevelMulti: 1
     nativeTraits: []
+    sockets: []
   wearablePefab: {fileID: 1884363590031733517, guid: c9d9525bca6ba054098d51fa122eabbb,
     type: 3}
+  enchantable: 1
   weaponType: 103

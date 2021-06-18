@@ -15,12 +15,6 @@ MonoBehaviour:
   searchFolders:
   - Assets/GWLPXL/ARPG/Data
   slots:
-  - DescriptiveName: ARPG Max HP Increase
-    ID:
-      Name: 
-      ID: 0
-      Aura: {fileID: 11400000, guid: bb6dcd1d393469143b67582bfbd92847, type: 2}
-    Aura: {fileID: 11400000, guid: bb6dcd1d393469143b67582bfbd92847, type: 2}
   - DescriptiveName: ARPG Max MP Increase 2D
     ID:
       Name: 
@@ -63,3 +57,9 @@ MonoBehaviour:
       ID: 7
       Aura: {fileID: 11400000, guid: 8393e4da3a5c6ee49ba3ee6bb413ae90, type: 2}
     Aura: {fileID: 11400000, guid: 8393e4da3a5c6ee49ba3ee6bb413ae90, type: 2}
+  - DescriptiveName: ARPG Max HP Increase
+    ID:
+      Name: ARPG Max HP Increase
+      ID: 8
+      Aura: {fileID: 11400000, guid: bb6dcd1d393469143b67582bfbd92847, type: 2}
+    Aura: {fileID: 11400000, guid: bb6dcd1d393469143b67582bfbd92847, type: 2}

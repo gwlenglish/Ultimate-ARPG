@@ -13,14 +13,8 @@ MonoBehaviour:
   m_Name: Demo_ClassDatabase
   m_EditorClassIdentifier: 
   searchFolders:
-  - 
+  - Assets/GWLPXL/ARPG/Data
   slots:
-  - DescriptiveName: Mage
-    ID:
-      Name: Mage
-      ID: 0
-      SOReference: {fileID: 11400000, guid: c95fef3db124db943ad1929d1425c70d, type: 2}
-    ActorClass: {fileID: 11400000, guid: c95fef3db124db943ad1929d1425c70d, type: 2}
   - DescriptiveName: NONE
     ID:
       Name: NONE
@@ -33,3 +27,9 @@ MonoBehaviour:
       ID: 2
       SOReference: {fileID: 11400000, guid: 17ef1abc2a9c3c445a52f01f4b445e40, type: 2}
     ActorClass: {fileID: 11400000, guid: 17ef1abc2a9c3c445a52f01f4b445e40, type: 2}
+  - DescriptiveName: Mage
+    ID:
+      Name: Mage_class
+      ID: 3
+      SOReference: {fileID: 11400000, guid: c95fef3db124db943ad1929d1425c70d, type: 2}
+    ActorClass: {fileID: 11400000, guid: c95fef3db124db943ad1929d1425c70d, type: 2}

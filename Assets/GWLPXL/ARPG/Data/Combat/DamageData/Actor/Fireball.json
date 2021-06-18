@@ -1,19 +1,19 @@
 {
     "config": {
-        "instanceID": 25166
+        "instanceID": 25620
     },
     "id": {
-        "Name": "Iceball",
-        "ID": 6,
+        "Name": "Fireball",
+        "ID": 10,
         "Instance": {
-            "instanceID": 32308
+            "instanceID": 25234
         }
     },
     "DamageVar": {
         "combatHandler": {
-            "instanceID": 18650
+            "instanceID": 18356
         },
-        "descriptiveName": "Iceball",
+        "descriptiveName": "Fireball",
         "damageOptions": {
             "physdmg": false,
             "elemdg": true,
@@ -26,9 +26,9 @@
             },
             "elementMultipliers": [
                 {
-                    "editorDescription": "Cold",
-                    "damageType": 2,
-                    "baseElementDamageAmount": 10,
+                    "editorDescription": "Fire",
+                    "damageType": 1,
+                    "baseElementDamageAmount": 15,
                     "percentOfCasterElement": 0.10000000149011612
                 }
             ]
@@ -39,12 +39,13 @@
             "additionalSOTs": [
                 {
                     "Type": 0,
-                    "ElementDamage": 2,
+                    "ElementDamage": 1,
                     "StatusEffects": [],
-                    "AmountPerTick": -1,
-                    "Duration": 5.0,
+                    "AmountPerTick": -3,
+                    "Duration": 3.0,
+                    "ClampStatusEffectToDuration": false,
                     "TickRate": 1.0,
-                    "StackAmount": 5
+                    "StackAmount": 2
                 }
             ],
             "damageRate": 1.0,

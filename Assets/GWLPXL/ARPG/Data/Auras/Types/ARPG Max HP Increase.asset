@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 4900000, guid: 16302e0601b334a4fbf5de0db9d993aa, type: 3}
   auraID:
-    Name: 
-    ID: 0
+    Name: ARPG Max HP Increase
+    ID: 8
     Aura: {fileID: 11400000}
   AuraData:
     AutoName: 1

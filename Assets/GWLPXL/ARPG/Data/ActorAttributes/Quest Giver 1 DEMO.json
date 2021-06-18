@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 17924
+        "instanceID": 16936
     },
     "databaseID": {
         "Name": "Quest Giver 1",
         "ID": 6,
         "ActorStats": {
-            "instanceID": 17532
+            "instanceID": 16492
         }
     },
     "LevelUpEvent": {

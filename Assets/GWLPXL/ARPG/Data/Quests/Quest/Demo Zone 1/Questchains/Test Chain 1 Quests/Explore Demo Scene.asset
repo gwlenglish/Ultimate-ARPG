@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 4900000, guid: 0d7a55dc3e95b4e4cb65ad62c53aa6ef, type: 3}
   ID:
-    Name: Explore the lands!
-    ID: 0
+    Name: Explore Demo Scene
+    ID: 11
     Quest: {fileID: 11400000}
   questName: Explore Demo Scene
   startType: 0

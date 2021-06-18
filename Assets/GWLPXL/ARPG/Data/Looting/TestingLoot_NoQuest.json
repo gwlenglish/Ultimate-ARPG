@@ -1,15 +1,15 @@
 {
     "config": {
-        "instanceID": 20416
+        "instanceID": 17818
     },
     "lootPrefabOverride": {
         "instanceID": 0
     },
     "ID": {
-        "Name": "Shop Keeper Demo Loot",
-        "ID": 12,
+        "Name": "TestingLoot_NoQuest",
+        "ID": 16,
         "LootDrops": {
-            "instanceID": 20076
+            "instanceID": 20316
         }
     },
     "AllPossibleItems": [

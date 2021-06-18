@@ -16,4 +16,4 @@ MonoBehaviour:
   logID:
     Name: Player 1 Quest Log
     ID: 2
-    QuestLog: {fileID: 11400000, guid: d6a897d4a702eda4c84fb92883fca964, type: 2}
+    QuestLog: {fileID: 11400000}

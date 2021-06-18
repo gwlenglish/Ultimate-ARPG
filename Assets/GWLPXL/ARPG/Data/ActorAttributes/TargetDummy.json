@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 18132
+        "instanceID": 17864
     },
     "databaseID": {
         "Name": "Target Dummy",
         "ID": 3,
         "ActorStats": {
-            "instanceID": 18048
+            "instanceID": 17782
         }
     },
     "LevelUpEvent": {

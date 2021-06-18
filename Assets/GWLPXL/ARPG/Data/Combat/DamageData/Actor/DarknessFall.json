@@ -1,17 +1,17 @@
 {
     "config": {
-        "instanceID": 25856
+        "instanceID": 25666
     },
     "id": {
         "Name": "Flamethrower",
         "ID": 5,
         "Instance": {
-            "instanceID": 25136
+            "instanceID": 25228
         }
     },
     "DamageVar": {
         "combatHandler": {
-            "instanceID": 18650
+            "instanceID": 18356
         },
         "descriptiveName": "Darkness Fall",
         "damageOptions": {
@@ -43,6 +43,7 @@
                     "StatusEffects": [],
                     "AmountPerTick": -1,
                     "Duration": 3.0,
+                    "ClampStatusEffectToDuration": false,
                     "TickRate": 1.0,
                     "StackAmount": 3
                 }

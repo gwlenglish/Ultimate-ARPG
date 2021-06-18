@@ -1,13 +1,13 @@
 {
     "config": {
-        "instanceID": 18314
+        "instanceID": 18272
     },
     "AutoName": true,
     "traitID": {
-        "Name": "Vitality",
-        "ID": 22,
+        "Name": "Vitality_StatTrait_100%",
+        "ID": 26,
         "Trait": {
-            "instanceID": 18064
+            "instanceID": 18108
         }
     },
     "traitName": "Vitality",
@@ -22,5 +22,8 @@
     ],
     "myLevelMulti": 100,
     "weight": 7,
+    "sprite": {
+        "instanceID": 0
+    },
     "Type": 3
 }

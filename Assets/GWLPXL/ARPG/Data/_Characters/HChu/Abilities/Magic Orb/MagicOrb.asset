@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 4900000, guid: 2e7482935ff4a1344bdd9da66e86cab2, type: 3}
   id:
-    Name: 
-    ID: 19
+    Name: MagicOrb
+    ID: 25
     Ability: {fileID: 11400000}
   autoName: 0
   Data:

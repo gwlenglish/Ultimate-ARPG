@@ -15,12 +15,6 @@ MonoBehaviour:
   searchFolders:
   - Assets/GWLPXL/ARPG/Data
   slots:
-  - DescriptiveName: Player 1 Quest Log
-    ID:
-      Name: Player 1 Quest Log
-      ID: 0
-      QuestLog: {fileID: 11400000, guid: 994194e1a81a4884cb32abc274c5fb9a, type: 2}
-    Quest: {fileID: 11400000, guid: 994194e1a81a4884cb32abc274c5fb9a, type: 2}
   - DescriptiveName: QuestLog_Blank
     ID:
       Name: QuestLog_Blank
@@ -33,3 +27,9 @@ MonoBehaviour:
       ID: 2
       QuestLog: {fileID: 11400000, guid: ce2f2f996ddc86e43b3e41a3d48f1487, type: 2}
     Quest: {fileID: 11400000, guid: ce2f2f996ddc86e43b3e41a3d48f1487, type: 2}
+  - DescriptiveName: Player Hchu
+    ID:
+      Name: Player Hchu
+      ID: 3
+      QuestLog: {fileID: 11400000, guid: 994194e1a81a4884cb32abc274c5fb9a, type: 2}
+    Quest: {fileID: 11400000, guid: 994194e1a81a4884cb32abc274c5fb9a, type: 2}

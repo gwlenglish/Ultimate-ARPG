@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 18974
+        "instanceID": 18686
     },
     "id": {
         "Name": "",
         "ID": 1,
         "Instance": {
-            "instanceID": 32328
+            "instanceID": 18504
         }
     },
     "ProjectileVars": {
@@ -15,6 +15,11 @@
         "speed": 55.0,
         "disableOnTouch": true,
         "friendlyFire": false,
-        "lifetime": 10.0
+        "lifetime": 10.0,
+        "blockingLayers": {
+            "serializedVersion": "2",
+            "m_Bits": 0
+        },
+        "block": 1
     }
 }

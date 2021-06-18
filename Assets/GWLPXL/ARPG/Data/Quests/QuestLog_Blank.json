@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 25214
+        "instanceID": 25878
     },
     "logID": {
         "Name": "QuestLog_Blank",
         "ID": 1,
         "QuestLog": {
-            "instanceID": 32338
+            "instanceID": 25288
         }
     }
 }

@@ -13,22 +13,21 @@ MonoBehaviour:
   m_Name: King Loot
   m_EditorClassIdentifier: 
   config: {fileID: 4900000, guid: f8658e545d1ba9d42bc6017f05cf77d9, type: 3}
+  lootPrefabOverride: {fileID: 0}
   ID:
     Name: King Loot
     ID: 6
     LootDrops: {fileID: 11400000}
-  LootPrefab: {fileID: 114661835936029034, guid: ccd8fea824547ec4589c40c00e341910,
-    type: 3}
   AllPossibleItems:
   - {fileID: 11400000, guid: 587079bc0b57a2747a3ed9d1739e3418, type: 2}
   - {fileID: 11400000, guid: 5cd931fb8c634864891d3c4407c6aef4, type: 2}
   LootTable:
-  - Description: Legendary Righty_50
+  - Description: _50
     RelativePercent: 50
     RangeFrom: 0
     RangeTo: 5
     Item: {fileID: 11400000, guid: 587079bc0b57a2747a3ed9d1739e3418, type: 2}
-  - Description: Legendary Lefty_50
+  - Description: _50
     RelativePercent: 50
     RangeFrom: 5
     RangeTo: 10

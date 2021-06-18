@@ -1,32 +1,32 @@
 {
     "config": {
-        "instanceID": 23726
+        "instanceID": 36342
     },
     "id": {
-        "Name": "",
-        "ID": 12,
+        "Name": "Blast_Charged_Fireball",
+        "ID": 22,
         "Ability": {
-            "instanceID": 59998
+            "instanceID": 36340
         }
     },
     "autoName": false,
     "Data": {
-        "Name": "Charged Blast",
-        "Description": "Casts a charged blast",
+        "Name": "Charged Fireball",
+        "Description": "Casts a charged Fireball",
         "DamageMultiplier": 1.0,
         "Range": 10.0,
         "ResourceCost": 5.0,
         "ResourceType": 1,
-        "AnimationTrigger": "ChainLightning",
+        "AnimationTrigger": "Fireball",
         "AnimationIndex": 1,
         "Logics": [
             {
-                "instanceID": 23762
+                "instanceID": 24286
             }
         ],
         "UniqueID": 7,
         "Sprite": {
-            "instanceID": 23730
+            "instanceID": 24282
         }
     },
     "category": 1,

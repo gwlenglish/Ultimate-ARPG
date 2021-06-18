@@ -13,16 +13,15 @@ MonoBehaviour:
   m_Name: Chest 3
   m_EditorClassIdentifier: 
   config: {fileID: 4900000, guid: d09a7685d5f461e469aeb36bf8ea8695, type: 3}
+  lootPrefabOverride: {fileID: 0}
   ID:
     Name: Chest 3
     ID: 2
     LootDrops: {fileID: 11400000}
-  LootPrefab: {fileID: 114661835936029034, guid: ccd8fea824547ec4589c40c00e341910,
-    type: 3}
   AllPossibleItems:
   - {fileID: 11400000, guid: 4b6ecbc03eedf764d91a9854bb892d54, type: 2}
   LootTable:
-  - Description: Legendary Shield_100
+  - Description: _100
     RelativePercent: 100
     RangeFrom: 0
     RangeTo: 5

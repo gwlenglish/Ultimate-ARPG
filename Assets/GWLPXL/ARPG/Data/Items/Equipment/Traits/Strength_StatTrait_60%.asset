@@ -29,4 +29,5 @@ MonoBehaviour:
   - of The Ox
   myLevelMulti: 60
   weight: 7
+  sprite: {fileID: 0}
   Type: 0

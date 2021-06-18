@@ -13,17 +13,11 @@ MonoBehaviour:
   m_Name: LongBowTest
   m_EditorClassIdentifier: 
   config: {fileID: 4900000, guid: d89719b7f6fc4694abf340f9e3606b0b, type: 3}
+  lootPrefabOverride: {fileID: 0}
   ID:
     Name: Shop Keeper Demo
     ID: 7
     LootDrops: {fileID: 11400000}
-  LootPrefab: {fileID: 114661835936029034, guid: ccd8fea824547ec4589c40c00e341910,
-    type: 3}
   AllPossibleItems:
-  - {fileID: 11400000, guid: 6dcb0dbb9f77166499c911fab5104abb, type: 2}
-  LootTable:
-  - Description: Longbow_100
-    RelativePercent: 100
-    RangeFrom: 0
-    RangeTo: 5
-    Item: {fileID: 11400000, guid: 6dcb0dbb9f77166499c911fab5104abb, type: 2}
+  - {fileID: 0}
+  LootTable: []

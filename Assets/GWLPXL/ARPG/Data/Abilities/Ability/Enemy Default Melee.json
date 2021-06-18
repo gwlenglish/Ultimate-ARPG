@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 18090
+        "instanceID": 17878
     },
     "id": {
         "Name": "",
         "ID": 9,
         "Ability": {
-            "instanceID": 18074
+            "instanceID": 17862
         }
     },
     "autoName": false,
@@ -21,7 +21,7 @@
         "AnimationIndex": 0,
         "Logics": [
             {
-                "instanceID": 18092
+                "instanceID": 17880
             }
         ],
         "UniqueID": 5,
@@ -42,9 +42,7 @@
         "PhysicsType": 0,
         "OnCasterDamaged": false,
         "OnCasterDied": true,
-        "InterruptEffects": [
-            "Slow"
-        ],
+        "InterruptEffects": [],
         "Abilities": []
     }
 }

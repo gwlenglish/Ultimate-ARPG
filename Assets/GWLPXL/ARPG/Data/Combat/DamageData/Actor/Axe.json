@@ -1,17 +1,17 @@
 {
     "config": {
-        "instanceID": 18556
+        "instanceID": 18354
     },
     "id": {
         "Name": "Axe",
         "ID": 1,
         "Instance": {
-            "instanceID": 18402
+            "instanceID": 18192
         }
     },
     "DamageVar": {
         "combatHandler": {
-            "instanceID": 18558
+            "instanceID": 18356
         },
         "descriptiveName": "Axe",
         "damageOptions": {

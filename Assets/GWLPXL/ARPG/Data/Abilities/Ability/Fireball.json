@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 25122
+        "instanceID": 25318
     },
     "id": {
         "Name": "",
         "ID": 13,
         "Ability": {
-            "instanceID": 24394
+            "instanceID": 24788
         }
     },
     "autoName": false,
@@ -17,11 +17,11 @@
         "Range": 10.0,
         "ResourceCost": 5.0,
         "ResourceType": 1,
-        "AnimationTrigger": "Ability",
+        "AnimationTrigger": "Fireball",
         "AnimationIndex": 1,
         "Logics": [
             {
-                "instanceID": 23734
+                "instanceID": 24286
             }
         ],
         "UniqueID": 7,

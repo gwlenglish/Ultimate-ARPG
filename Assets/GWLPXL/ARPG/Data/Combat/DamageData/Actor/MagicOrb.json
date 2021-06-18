@@ -1,17 +1,17 @@
 {
     "config": {
-        "instanceID": 25854
+        "instanceID": 25660
     },
     "id": {
         "Name": "Fireball",
         "ID": 11,
         "Instance": {
-            "instanceID": 25124
+            "instanceID": 25236
         }
     },
     "DamageVar": {
         "combatHandler": {
-            "instanceID": 18650
+            "instanceID": 18356
         },
         "descriptiveName": "MagicOrb",
         "damageOptions": {
@@ -43,6 +43,7 @@
                     "StatusEffects": [],
                     "AmountPerTick": -3,
                     "Duration": 3.0,
+                    "ClampStatusEffectToDuration": false,
                     "TickRate": 1.0,
                     "StackAmount": 2
                 }

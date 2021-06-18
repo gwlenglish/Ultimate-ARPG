@@ -15,12 +15,6 @@ MonoBehaviour:
   searchFolders:
   - Assets/GWLPXL/ARPG/Data
   slots:
-  - DescriptiveName: Rockie
-    ID:
-      Name: Rockie
-      ID: 0
-      ActorStats: {fileID: 11400000, guid: 14b8f3ee866e9a5449900f4d0b8a2222, type: 2}
-    ActorStats: {fileID: 11400000, guid: 14b8f3ee866e9a5449900f4d0b8a2222, type: 2}
   - DescriptiveName: Player Default
     ID:
       Name: Player Default
@@ -31,8 +25,8 @@ MonoBehaviour:
     ID:
       Name: Player Warrior
       ID: 2
-      ActorStats: {fileID: 11400000, guid: 6adca9c1b6d8783468ab141edc7f345b, type: 2}
-    ActorStats: {fileID: 11400000, guid: 6adca9c1b6d8783468ab141edc7f345b, type: 2}
+      ActorStats: {fileID: 11400000, guid: ce798347600945c4cbeca81ff57405e1, type: 2}
+    ActorStats: {fileID: 11400000, guid: ce798347600945c4cbeca81ff57405e1, type: 2}
   - DescriptiveName: Target Dummy
     ID:
       Name: Target Dummy
@@ -81,3 +75,15 @@ MonoBehaviour:
       ID: 11
       ActorStats: {fileID: 11400000, guid: 38c1b9e89909ea24695be9dd55ce5393, type: 2}
     ActorStats: {fileID: 11400000, guid: 38c1b9e89909ea24695be9dd55ce5393, type: 2}
+  - DescriptiveName: Player Hchu
+    ID:
+      Name: Player_HChu
+      ID: 12
+      ActorStats: {fileID: 11400000, guid: 6adca9c1b6d8783468ab141edc7f345b, type: 2}
+    ActorStats: {fileID: 11400000, guid: 6adca9c1b6d8783468ab141edc7f345b, type: 2}
+  - DescriptiveName: Rockie
+    ID:
+      Name: Enemy_Fodder
+      ID: 13
+      ActorStats: {fileID: 11400000, guid: 14b8f3ee866e9a5449900f4d0b8a2222, type: 2}
+    ActorStats: {fileID: 11400000, guid: 14b8f3ee866e9a5449900f4d0b8a2222, type: 2}

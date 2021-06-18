@@ -1,19 +1,19 @@
 {
     "config": {
-        "instanceID": 25162
+        "instanceID": 18728
     },
     "id": {
-        "Name": "Cutlass",
-        "ID": 2,
+        "Name": "Pistol",
+        "ID": 7,
         "Instance": {
-            "instanceID": 28884
+            "instanceID": 18502
         }
     },
     "DamageVar": {
         "combatHandler": {
-            "instanceID": 18650
+            "instanceID": 18356
         },
-        "descriptiveName": "Cutlass",
+        "descriptiveName": "Pistol",
         "damageOptions": {
             "physdmg": true,
             "elemdg": false,
@@ -21,8 +21,8 @@
         },
         "damageMultipliers": {
             "physicalMultipler": {
-                "baseDamageAmount": 5,
-                "percentOfCasterAttack": 0.10000000149011612
+                "baseDamageAmount": 2,
+                "percentOfCasterAttack": 0.0
             },
             "elementMultipliers": []
         },

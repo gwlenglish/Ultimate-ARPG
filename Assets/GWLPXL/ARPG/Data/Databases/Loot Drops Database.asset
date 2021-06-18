@@ -15,12 +15,6 @@ MonoBehaviour:
   searchFolders:
   - Assets/GWLPXL/ARPG/Data
   slots:
-  - DescriptiveName: 2D Drop Table
-    ID:
-      Name: 2D Drop Table
-      ID: 0
-      LootDrops: {fileID: 11400000, guid: 486f3eb623b25b34a8f4acbfeb3b7520, type: 2}
-    LootDrops: {fileID: 11400000, guid: 486f3eb623b25b34a8f4acbfeb3b7520, type: 2}
   - DescriptiveName: Chest 2
     ID:
       Name: Chest 2
@@ -111,3 +105,9 @@ MonoBehaviour:
       ID: 15
       LootDrops: {fileID: 11400000, guid: 07696762ea131d147b2c846baa7643a8, type: 2}
     LootDrops: {fileID: 11400000, guid: 07696762ea131d147b2c846baa7643a8, type: 2}
+  - DescriptiveName: TestingLoot_NoQuest
+    ID:
+      Name: TestingLoot_NoQuest
+      ID: 16
+      LootDrops: {fileID: 11400000, guid: efc032183629289488943d1959b6ead6, type: 2}
+    LootDrops: {fileID: 11400000, guid: efc032183629289488943d1959b6ead6, type: 2}

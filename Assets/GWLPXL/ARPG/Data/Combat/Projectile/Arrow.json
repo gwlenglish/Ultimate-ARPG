@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 18992
+        "instanceID": 18694
     },
     "id": {
-        "Name": "",
-        "ID": 0,
+        "Name": "Arrow",
+        "ID": 5,
         "Instance": {
-            "instanceID": 32326
+            "instanceID": 18538
         }
     },
     "ProjectileVars": {
@@ -15,6 +15,11 @@
         "speed": 35.0,
         "disableOnTouch": true,
         "friendlyFire": false,
-        "lifetime": 10.0
+        "lifetime": 10.0,
+        "blockingLayers": {
+            "serializedVersion": "2",
+            "m_Bits": 0
+        },
+        "block": 1
     }
 }

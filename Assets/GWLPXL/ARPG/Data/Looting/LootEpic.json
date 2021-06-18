@@ -1,30 +1,30 @@
 {
     "config": {
-        "instanceID": 18284
+        "instanceID": 20418
+    },
+    "lootPrefabOverride": {
+        "instanceID": 0
     },
     "ID": {
         "Name": "Loot Epic",
         "ID": 9,
         "LootDrops": {
-            "instanceID": 17500
+            "instanceID": 16548
         }
-    },
-    "LootPrefab": {
-        "instanceID": 17634
     },
     "AllPossibleItems": [
         {
-            "instanceID": 17442
+            "instanceID": 17836
         }
     ],
     "LootTable": [
         {
-            "Description": "Cutlass_100",
+            "Description": "_100",
             "RelativePercent": 100.0,
             "RangeFrom": 0,
             "RangeTo": 15,
             "Item": {
-                "instanceID": 17442
+                "instanceID": 17836
             }
         }
     ]

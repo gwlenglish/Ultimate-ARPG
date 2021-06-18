@@ -13,11 +13,10 @@ MonoBehaviour:
   m_Name: New Loot Drops
   m_EditorClassIdentifier: 
   config: {fileID: 4900000, guid: bad7367c80eb01347b349a7de8f79c6b, type: 3}
+  lootPrefabOverride: {fileID: 0}
   ID:
     Name: New Loot Drops
     ID: 11
     LootDrops: {fileID: 11400000}
-  LootPrefab: {fileID: 114661835936029034, guid: ccd8fea824547ec4589c40c00e341910,
-    type: 3}
   AllPossibleItems: []
   LootTable: []

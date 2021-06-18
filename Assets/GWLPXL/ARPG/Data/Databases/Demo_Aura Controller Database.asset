@@ -15,15 +15,6 @@ MonoBehaviour:
   searchFolders:
   - Assets/GWLPXL/ARPG/Data
   slots:
-  - DescriptiveName: Player HChu
-    ID:
-      AutoName: 0
-      AutoAssignUniqueID: 0
-      Name: Player 1
-      Description: Demo player 1
-      ID: 0
-      ControllerRef: {fileID: 11400000, guid: 2cfb7f0817f2a9f4b9c10bd3d783444b, type: 2}
-    Aura: {fileID: 11400000, guid: 2cfb7f0817f2a9f4b9c10bd3d783444b, type: 2}
   - DescriptiveName: Player 2 Aura Controller
     ID:
       AutoName: 0
@@ -51,3 +42,12 @@ MonoBehaviour:
       ID: 3
       ControllerRef: {fileID: 11400000, guid: e301f5dbb9bc74d41916d3bb49ed4281, type: 2}
     Aura: {fileID: 11400000, guid: e301f5dbb9bc74d41916d3bb49ed4281, type: 2}
+  - DescriptiveName: Player HChu
+    ID:
+      AutoName: 0
+      AutoAssignUniqueID: 0
+      Name: Player HChu
+      Description: 
+      ID: 4
+      ControllerRef: {fileID: 11400000, guid: 2cfb7f0817f2a9f4b9c10bd3d783444b, type: 2}
+    Aura: {fileID: 11400000, guid: 2cfb7f0817f2a9f4b9c10bd3d783444b, type: 2}

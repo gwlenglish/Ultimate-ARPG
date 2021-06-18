@@ -15,12 +15,6 @@ MonoBehaviour:
   searchFolders:
   - Assets/GWLPXL/ARPG/Data
   slots:
-  - DescriptiveName: Test Chain 1
-    ID:
-      Name: 
-      ID: 0
-      Questchain: {fileID: 0}
-    Questchain: {fileID: 11400000, guid: 4aabe6c9dac2724418af2191df3e33bb, type: 2}
   - DescriptiveName: Test Chain 2
     ID:
       Name: Test Chain 2
@@ -33,3 +27,9 @@ MonoBehaviour:
       ID: 4
       Questchain: {fileID: 11400000, guid: 720a30a427aba9248afbc95a9c3d010e, type: 2}
     Questchain: {fileID: 11400000, guid: 720a30a427aba9248afbc95a9c3d010e, type: 2}
+  - DescriptiveName: Test Chain 1
+    ID:
+      Name: Test Chain 1
+      ID: 5
+      Questchain: {fileID: 11400000, guid: 4aabe6c9dac2724418af2191df3e33bb, type: 2}
+    Questchain: {fileID: 11400000, guid: 4aabe6c9dac2724418af2191df3e33bb, type: 2}
