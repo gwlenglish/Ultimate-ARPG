@@ -266,7 +266,13 @@ namespace GWLPXL.ARPGCore.Items.com
     public class Socket
     {
         [Tooltip("Leave empty for an empty socket.")]
-        public Socketable SocketedThing;
+        public Socketable SocketedThing = null;
+        public SocketTypes SocketType = SocketTypes.Any;
+        public Socket(Socketable thing, SocketTypes type)
+        {
+            SocketedThing = thing;
+            SocketType = type;
+        }
     }
     #region helper classes
     [System.Serializable]

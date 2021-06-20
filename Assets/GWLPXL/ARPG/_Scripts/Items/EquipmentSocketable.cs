@@ -11,16 +11,16 @@ namespace GWLPXL.ARPGCore.Items.com
 
     public class EquipmentSocketable : Socketable
     {
-        public EquipmentTrait Socketable = null;
+        public EquipmentTrait EquipmentTraitSocketable = null;
         public override string GetUserDescription()
         {
             string generated = GetGeneratedItemName();
             if (string.IsNullOrEmpty(generated) == false)
             {
-                return GetGeneratedItemName() + Socketable.GetTraitUIDescription();
+                return GetGeneratedItemName() + EquipmentTraitSocketable.GetTraitUIDescription();
             }
 
-            return GetBaseItemName() + Socketable.GetTraitUIDescription();
+            return GetBaseItemName() + EquipmentTraitSocketable.GetTraitUIDescription();
         }
     }
 }

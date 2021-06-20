@@ -27,4 +27,5 @@ MonoBehaviour:
     BaseName: 
     StackingAmount: 0
     GeneratedName: 
+    Type: 200
   Socketable: {fileID: 0}

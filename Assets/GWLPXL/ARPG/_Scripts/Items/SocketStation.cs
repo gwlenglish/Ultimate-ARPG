@@ -16,6 +16,7 @@ namespace GWLPXL.ARPGCore.Items.com
         public System.Action<SocketStation> OnStationSetup;
         public System.Action<SocketStation> OnStationClosed;
         public System.Action OnFailToAddStorageIssue;
+        public System.Action OnFailToAddTypeMisMatch;
         public bool DestroyRemovedSockets = false;
         List<Socketable> socketables = new List<Socketable>();//this needs to turn into an item.
         ActorInventory userInventory = null;
@@ -95,6 +96,14 @@ namespace GWLPXL.ARPGCore.Items.com
                 DebugHelpers.com.ARPGDebugger.DebugMessage("No socket found" + equipment.GetUserDescription(), equipment);
                 return;
             }
+
+            if (socket.SocketType != newSocketable.GetSocketType())
+            {
+                DebugHelpers.com.ARPGDebugger.DebugMessage("Socket Type Mismatch, can't add" + equipment.GetUserDescription(), equipment);
+                OnFailToAddTypeMisMatch?.Invoke();
+                return;
+            }
+                
 
             bool handled = HandleRemoval(equipment, socket);
             if (handled == false)

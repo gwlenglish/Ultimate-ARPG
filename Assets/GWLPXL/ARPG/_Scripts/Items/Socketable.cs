@@ -5,16 +5,20 @@ namespace GWLPXL.ARPGCore.Items.com
 
     public abstract class Socketable : Item
     {
-        public SocketableVars Vars;
+        public SocketableVars SocketableVariables;
 
+        public virtual SocketTypes GetSocketType()
+        {
+            return SocketableVariables.Type;
+        }
         public override string GetBaseItemName()
         {
-            return Vars.BaseName;
+            return SocketableVariables.BaseName;
         }
 
         public override string GetGeneratedItemName()
         {
-            return Vars.GeneratedName;
+            return SocketableVariables.GeneratedName;
         }
 
         public override ItemType GetItemType()
@@ -24,18 +28,18 @@ namespace GWLPXL.ARPGCore.Items.com
 
         public override int GetStackingAmount()
         {
-            return Vars.StackingAmount;
+            return SocketableVariables.StackingAmount;
         }
 
 
         public override bool IsStacking()
         {
-            return Vars.StackingAmount > 1;
+            return SocketableVariables.StackingAmount > 1;
         }
 
         public override void SetGeneratedItemName(string newName)
         {
-            Vars.GeneratedName = newName;
+            SocketableVariables.GeneratedName = newName;
         }
     }
 
@@ -45,9 +49,11 @@ namespace GWLPXL.ARPGCore.Items.com
         public string BaseName = string.Empty;
         public int StackingAmount = 5;
         public string GeneratedName = string.Empty;
+        public SocketTypes Type = SocketTypes.Any;
 
-        public SocketableVars(string basename, int stacking = 1)
+        public SocketableVars(SocketTypes type, string basename, int stacking = 1)
         {
+            Type = type;
             BaseName = basename;
             StackingAmount = stacking;
         }
