@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 520a4212e222384458bd22f4d643fce0, type: 3}
-  m_Name: New Socketable Testing
+  m_Script: {fileID: 11500000, guid: 193f2142f98da1d46839bd7765d6c4a9, type: 3}
+  m_Name: New Equipment Socketable Test
   m_EditorClassIdentifier: 
   config: {fileID: 0}
   itemID:
@@ -25,6 +25,6 @@ MonoBehaviour:
   sellCost: 5
   Vars:
     BaseName: 
-    StackingAmount: 1
+    StackingAmount: 0
     GeneratedName: 
-    Socketable: {fileID: 0}
+  Socketable: {fileID: 0}
