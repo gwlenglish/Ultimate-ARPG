@@ -13,5 +13,29 @@ MonoBehaviour:
   m_Name: Demo InventoryDatabase
   m_EditorClassIdentifier: 
   searchFolders:
-  - Assets/GWLPXL/ARPG/Data/Test
-  slots: []
+  - Assets/GWLPXL/ARPG/Data
+  slots:
+  - DescriptiveName: PlayerWarriorInventory
+    ID:
+      Name: PlayerWarriorInventory
+      ID: 1
+      SOReference: {fileID: 11400000, guid: 0c4deae43ee7be444a26ce098ef496ee, type: 2}
+    ActorInv: {fileID: 11400000, guid: 0c4deae43ee7be444a26ce098ef496ee, type: 2}
+  - DescriptiveName: ShopKeeper_01
+    ID:
+      Name: 
+      ID: 2
+      SOReference: {fileID: 0}
+    ActorInv: {fileID: 11400000, guid: 07f00baa263cf784fb406183c232a206, type: 2}
+  - DescriptiveName: PlayerInvDefault
+    ID:
+      Name: PlayerInvDefault
+      ID: 3
+      SOReference: {fileID: 11400000, guid: 995e7b42f76747b44a43848b61c89a7c, type: 2}
+    ActorInv: {fileID: 11400000, guid: 995e7b42f76747b44a43848b61c89a7c, type: 2}
+  - DescriptiveName: Player_HChu_Inventory
+    ID:
+      Name: Player_HChu_Inventory
+      ID: 4
+      SOReference: {fileID: 11400000, guid: 82c7244542b92ac4b868ee79308e9d83, type: 2}
+    ActorInv: {fileID: 11400000, guid: 82c7244542b92ac4b868ee79308e9d83, type: 2}

@@ -16,8 +16,8 @@ MonoBehaviour:
   EquipEvent: {fileID: 11400000, guid: 728143b852e189442ad8ee741118be1c, type: 2}
   UnEquipEvent: {fileID: 11400000, guid: 1e01f730773b4024cbfe78bb7511c7ba, type: 2}
   ID:
-    Name: PlayerInvDefault
-    ID: 0
+    Name: Player_HChu_Inventory
+    ID: 4
     SOReference: {fileID: 11400000}
   inventoryName: Inventory
   ItemInventorySize: 25
