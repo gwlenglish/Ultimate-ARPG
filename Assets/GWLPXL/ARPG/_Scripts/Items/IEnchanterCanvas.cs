@@ -15,6 +15,5 @@ namespace GWLPXL.ARPGCore.Items.com
         bool GetFreezeMover();
     }
 
-
-    
+   
 }

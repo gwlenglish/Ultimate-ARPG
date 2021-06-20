@@ -13,7 +13,7 @@ namespace GWLPXL.ARPGCore.Items.com
         public System.Action<Equipment> OnEnchanted;
         public System.Action<EnchantingStation> OnStationSetup;
         public System.Action<EnchantingStation> OnStationClosed;
-        List<EquipmentTrait> enchants;
+        List<EquipmentTrait> enchants = new List<EquipmentTrait>();
         ActorInventory userInventory;
 
         public virtual void CloseStation()

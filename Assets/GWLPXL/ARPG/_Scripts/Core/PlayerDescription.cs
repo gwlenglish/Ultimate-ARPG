@@ -144,7 +144,7 @@ namespace GWLPXL.ARPGCore.Statics.com
             {
                 ElementAttack eleAttack = (ElementAttack)eleAttacks[i];
                 if (eleAttack.Type == ElementType.None) continue;//skip it so it doesn't add itself to the description
-                sb.Append(eleAttack.GetFullDescription() + enter);//this is
+                sb.Append(eleAttack.GetFullDescription() + enter);//for some reason not formatting the same as resist
 
             }
 

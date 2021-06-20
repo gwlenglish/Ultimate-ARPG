@@ -123,7 +123,11 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
         public bool GetFreezeMover() => FreezeDungeon;
 
-
+        public virtual void SetILevel(string ilevel)
+        {
+            int.TryParse(ilevel, out int result);
+            Ilevel = result;
+        }
         public virtual void ClosePreview()
         {
             preview = null;

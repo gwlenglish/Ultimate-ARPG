@@ -4155,7 +4155,7 @@ GameObject:
   - component: {fileID: 5710349178950200363}
   - component: {fileID: 5710349178950200362}
   - component: {fileID: 5710349178950200361}
-  - component: {fileID: 5984677922792995543}
+  - component: {fileID: 8651661691882236256}
   m_Layer: 25
   m_Name: CanvasSystem
   m_TagString: Untagged
@@ -4282,7 +4282,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerActionBarPrefab: {fileID: 7480626038917429534, guid: 8f70fa7e9b5eee64d808d5333268c7a1,
     type: 3}
---- !u!114 &5984677922792995543
+--- !u!114 &8651661691882236256
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4291,7 +4291,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5710349178950200374}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb6dbad2c73efa343b93dffa35c09e3e, type: 3}
+  m_Script: {fileID: 11500000, guid: d8c026783e011504db1126137064c9ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5710349179355384376
