@@ -41,12 +41,14 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             if (enchant == null)
             {
                 ItemImage.sprite = EmptySprite;
+                ItemImage.enabled = false;
                 EnchantNameText.SetText(EmptyText);
                 EnchantDescriptionText.SetText(EmptyText);
             }
             else
             {
                 ItemImage.sprite = enchant.Sprite;
+                ItemImage.enabled = true;
                 EnchantNameText.SetText(enchant.EnchantName);
                 EnchantDescriptionText.SetText(enchant.EnchantDescription);
             }

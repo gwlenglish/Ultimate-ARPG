@@ -8636,6 +8636,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1689396161}
     m_Modifications:
+    - target: {fileID: 3382761490944223937, guid: 209b8eba7a52cce4d9f2e30796af555c,
+        type: 3}
+      propertyPath: Enchants.Array.data[0].EnchantName
+      value: Frost Fire
+      objectReference: {fileID: 0}
+    - target: {fileID: 3382761490944223937, guid: 209b8eba7a52cce4d9f2e30796af555c,
+        type: 3}
+      propertyPath: Enchants.Array.data[1].EnchantName
+      value: Thor's Hand
+      objectReference: {fileID: 0}
     - target: {fileID: 3382761490944223942, guid: 209b8eba7a52cce4d9f2e30796af555c,
         type: 3}
       propertyPath: m_Name
