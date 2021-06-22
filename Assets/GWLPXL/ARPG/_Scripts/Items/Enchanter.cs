@@ -12,7 +12,7 @@ namespace GWLPXL.ARPGCore.Items.com
     public class Enchanter : MonoBehaviour, IInteract
     {
         public EnchantingStation EnchantingStation = new EnchantingStation();
-        public List<EquipmentTrait> Enchants;
+        public List<EquipmentEnchant> Enchants;
         public UnityEnchanterEvents EnchantEvents;
         public float Range = 3;
         public GameObject EnchanterUIPrefab;

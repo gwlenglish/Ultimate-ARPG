@@ -4,47 +4,55 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using GWLPXL.ARPGCore.Items.com;
+
 namespace GWLPXL.ARPGCore.CanvasUI.com
 {
     public interface IEnchantUIElement
     {
-        void SetEnchant(EquipmentTrait item);
-        EquipmentTrait GetEnchant();
+        void SetEnchant(EquipmentEnchant item);
+        EquipmentEnchant GetEnchant();
     }
 
     public class EnchantUIElement : MonoBehaviour, IEnchantUIElement
     {
-        public TextMeshProUGUI ItemDescriptionText = null;
+        public TextMeshProUGUI EnchantNameText = null;
+        public TextMeshProUGUI EnchantDescriptionText = null;
         public Image ItemImage;
         public string EmptyText = string.Empty;
         public Sprite EmptySprite = null;
-        EquipmentTrait enchant;
+        protected EquipmentEnchant enchant;
 
-        private void Awake()
+        protected virtual void Awake()
         {
-            ItemDescriptionText.SetText(string.Empty);
-            ItemImage.sprite = null;
+            Setup(enchant);
         }
       
 
-        public void SetEnchant(EquipmentTrait enchant)
+        public void SetEnchant(EquipmentEnchant enchant)
+        {
+            Setup(enchant);
+
+        }
+
+        protected virtual void Setup(EquipmentEnchant enchant)
         {
             this.enchant = enchant;
             if (enchant == null)
             {
                 ItemImage.sprite = EmptySprite;
-                ItemDescriptionText.SetText(EmptyText);
+                EnchantNameText.SetText(EmptyText);
+                EnchantDescriptionText.SetText(EmptyText);
             }
             else
             {
-                ItemImage.sprite = enchant.GetSprite();
-                ItemDescriptionText.SetText(enchant.GetTraitUIDescription());
+                ItemImage.sprite = enchant.Sprite;
+                EnchantNameText.SetText(enchant.EnchantName);
+                EnchantDescriptionText.SetText(enchant.EnchantDescription);
             }
-
-
         }
 
-        public EquipmentTrait GetEnchant()
+        public EquipmentEnchant GetEnchant()
         {
             return this.enchant;
         }

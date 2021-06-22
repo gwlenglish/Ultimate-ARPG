@@ -4,7 +4,7 @@ using UnityEngine;
 using GWLPXL.ARPGCore.Traits.com;
 namespace GWLPXL.ARPGCore.Items.com
 {
-
+    
     /// <summary>
     /// class that performs the enchanting. Adds a trait to equipment.
     /// </summary>
@@ -13,24 +13,26 @@ namespace GWLPXL.ARPGCore.Items.com
         public System.Action<Equipment> OnEnchanted;
         public System.Action<EnchantingStation> OnStationSetup;
         public System.Action<EnchantingStation> OnStationClosed;
-        List<EquipmentTrait> enchants = new List<EquipmentTrait>();
+        List<EquipmentEnchant> enchants = new List<EquipmentEnchant>();
         ActorInventory userInventory;
 
+        #region ini cycle
         public virtual void CloseStation()
         {
-            this.enchants = new List<EquipmentTrait>();
+            this.enchants.Clear();
             this.userInventory = null;
             OnStationClosed?.Invoke(this);
 
         }
-        public virtual void SetupStation(ActorInventory userInventory, List<EquipmentTrait> enchants)
+        public virtual void SetupStation(ActorInventory userInventory, List<EquipmentEnchant> enchants)
         {
             this.enchants = enchants;
             this.userInventory = userInventory;
             OnStationSetup?.Invoke(this);
         }
+        #endregion
 
-       
+        #region getters
         public virtual List<Equipment> GetEquippedEquipment()
         {
             Dictionary<Types.com.EquipmentSlotsType, EquipmentSlot> temp = userInventory.GetEquippedEquipment();
@@ -58,7 +60,7 @@ namespace GWLPXL.ARPGCore.Items.com
             }
             return _temp;
         }
-        public virtual List<EquipmentTrait> GetAllEnchants()
+        public virtual List<EquipmentEnchant> GetAllEnchants()
         {
             return enchants;
         }
@@ -67,19 +69,59 @@ namespace GWLPXL.ARPGCore.Items.com
             List<string> names = new List<string>();
             for (int i = 0; i < enchants.Count; i++)
             {
-                if (names.Contains(enchants[i].GetTraitName()) == false)
-                {
-                    names.Add(enchants[i].GetTraitName());
-                }
+                names.Add(enchants[i].EnchantName);
+                
 
             }
             return names;
         }
-        public virtual EquipmentTrait GetEnchantTemplate(int index)
-        {
-            return enchants[index];
-        }
+       
+        #endregion
 
+        #region enchant overrides
+        /// <summary>
+        /// takes a list of enchants
+        /// </summary>
+        /// <param name="equipment"></param>
+        /// <param name="enchants"></param>
+        /// <param name="isNative"></param>
+        /// <param name="isPreview"></param>
+        public virtual void Enchant(Equipment equipment, List<EquipmentEnchant> enchants, bool isNative = true, bool isPreview = false)
+        {
+            for (int i = 0; i < enchants.Count; i++)
+            {
+                List<EquipmentTrait> traits = enchants[i].EnchantTraits;
+                for (int j = 0; j < traits.Count; j++)
+                {
+                    Enchant(equipment, traits[j], enchants[i].EnchantLevel, isNative, true);//make true to bypass the event to raise
+                }
+            }
+
+            if (isPreview == false)//raise event here, so it only happens once
+            {
+                OnEnchanted?.Invoke(equipment);
+            }
+        }
+        /// <summary>
+        /// takes a single enchant
+        /// </summary>
+        /// <param name="equipment"></param>
+        /// <param name="enchant"></param>
+        /// <param name="isNative"></param>
+        /// <param name="isPreview"></param>
+        public virtual void Enchant(Equipment equipment, EquipmentEnchant enchant, bool isNative = true, bool isPreview = false)
+        {
+            List<EquipmentTrait> traits = enchant.EnchantTraits;
+            for (int j = 0; j < traits.Count; j++)
+            {
+                Enchant(equipment, traits[j], enchants[j].EnchantLevel, isNative, true);//make true to bypass the event to raise
+            }
+            
+            if (isPreview == false)
+            {
+                OnEnchanted?.Invoke(equipment);
+            }
+        }
         /// <summary>
         /// Modifies an existing item and adds a trait to it at the ilevel. Can overload to put in the native or random slots. Preview will not raise the Enchant event.
         /// </summary>
@@ -131,5 +173,6 @@ namespace GWLPXL.ARPGCore.Items.com
             }
 
         }
+        #endregion
     }
 }

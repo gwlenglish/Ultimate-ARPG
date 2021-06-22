@@ -16,7 +16,6 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         public Transform MainPanel = null;
         public EnchantUIEvents SceneEvents;
         public bool IsNative = true;
-        public int Ilevel = 1;
         [Header("Dragging Input")]
         [SerializeField]
         protected string interactButton = "Fire1";
@@ -37,19 +36,19 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         protected List<GameObject> enchantUIElements = new List<GameObject>();
 
         protected Dictionary<Item, IEnchantableUIElement> uidic = new Dictionary<Item, IEnchantableUIElement>();
-        protected IUseEnchanterCanvas user;
-        protected IEnchantableUIElement draggableenchantable;
-        protected IEnchantUIElement draggableEnchant;
-        protected IEnchantUIElement previewEnchant;
-        protected IEnchantableUIElement successEnchantable;
-        protected IEnchantableUIElement decisionPreview;
-        protected IEnchantableUIElement enchantablePreview;
-        protected bool draggingEnchantable;
-        protected bool draggingEnchant;
-        protected Vector3 homeposition;
-        protected bool active;
+        protected IUseEnchanterCanvas user = null;
+        protected IEnchantableUIElement draggableenchantable = null;
+        protected IEnchantUIElement draggableEnchant = null;
+        protected IEnchantUIElement previewEnchant = null;
+        protected IEnchantableUIElement successEnchantable = null;
+        protected IEnchantableUIElement decisionPreview = null;
+        protected IEnchantableUIElement enchantablePreview = null;
+        protected bool draggingEnchantable = false;
+        protected bool draggingEnchant = false;
+        protected Vector3 homeposition = new Vector3(0, 0, 0);
+        protected bool active = false;
 
-        Item preview = null;
+        protected Item preview = null;
 
         #region unity calls
         protected virtual void Awake()
@@ -123,11 +122,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
         public bool GetFreezeMover() => FreezeDungeon;
 
-        public virtual void SetILevel(string ilevel)
-        {
-            int.TryParse(ilevel, out int result);
-            Ilevel = result;
-        }
+     
         public virtual void ClosePreview()
         {
             preview = null;
@@ -140,8 +135,8 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         public virtual void DisplayPreview()
         {
             Item item = enchantablePreview.GetEnchantable();
-            EquipmentTrait trait = previewEnchant.GetEnchant();
-            if (item == null || trait == null)
+            EquipmentEnchant enchant = previewEnchant.GetEnchant();
+            if (item == null || enchant == null)
             {
                 //failed
                 return;
@@ -170,9 +165,9 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                 copy.GetStats().SetNativeTraits(copynatives);//assign copies to copy
                 copy.GetStats().SetRandomTraits(copyrandos);
 
-                EquipmentTrait copyenchant = Instantiate(trait);
+                //EquipmentTrait copyenchant = Instantiate(enchant.EnchantTrait);//clean up if owrsk, remove
 
-                station.Enchant(copy, copyenchant, Ilevel, IsNative, true);
+                station.Enchant(copy, enchant, IsNative, true);
                 Debug.Log(eq);
                 preview = copy;
                 DecisionBoxPreview.SetActive(true);
@@ -185,14 +180,14 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         public virtual void Enchant()
         {
             Item item = enchantablePreview.GetEnchantable();
-            EquipmentTrait trait = previewEnchant.GetEnchant();
+            EquipmentEnchant trait = previewEnchant.GetEnchant();
             if (item == null || trait == null)
             {
                 //failed
                 return;
             }
             ClosePreview();
-            station.Enchant(item as Equipment, trait, Ilevel, IsNative);
+            station.Enchant(item as Equipment, trait,  IsNative);
             SuccessBoxShowcase.SetActive(true);
             successEnchantable.SetEnchantable(item);
             enchantablePreview.SetEnchantable(null);
@@ -257,7 +252,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
 
         }
-        protected virtual void TryPlaceInSlot(EquipmentTrait enchant)
+        protected virtual void TryPlaceInSlot(EquipmentEnchant enchant)
         {
             draggableEnchant.SetEnchant(enchant);
             if (enchant == null) return;
@@ -382,7 +377,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                 CreateUIEnchantableElement(invs[i]);
             }
 
-            List<EquipmentTrait> enchants = station.GetAllEnchants();
+            List<EquipmentEnchant> enchants = station.GetAllEnchants();
             for (int i = 0; i < enchants.Count; i++)
             {
                 CreateUIEnchantElement(enchants[i]);
@@ -394,7 +389,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             }
         }
 
-        protected virtual void CreateUIEnchantElement(EquipmentTrait enchant)
+        protected virtual void CreateUIEnchantElement(EquipmentEnchant enchant)
         {
             GameObject instance = Instantiate(EnchantUIElementPrefab, EnchantContentParent);
             instance.GetComponent<IEnchantUIElement>().SetEnchant(enchant);
