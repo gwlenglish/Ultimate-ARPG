@@ -344,6 +344,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                 Destroy(enchantableUIElements[i].gameObject);
             }
             enchantableUIElements.Clear();
+            enchantUIElements.Clear();
             station = null;
 
             if (FreezeDungeon)

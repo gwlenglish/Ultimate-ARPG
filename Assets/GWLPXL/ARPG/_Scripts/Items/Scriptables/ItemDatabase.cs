@@ -137,6 +137,17 @@ namespace GWLPXL.ARPGCore.Items.com
             }
             return null;
         }
+        public SocketItem FindSocketableByID(int itemID)
+        {
+            for (int i = 0; i < slots.Length; i++)
+            {
+                if (itemID == slots[i].ID.ID)
+                {
+                    return slots[i].Item as SocketItem;
+                }
+            }
+            return null;
+        }
         public Potion FindPotionByID(int itemID)
         {
             for (int i = 0; i < slots.Length; i++)

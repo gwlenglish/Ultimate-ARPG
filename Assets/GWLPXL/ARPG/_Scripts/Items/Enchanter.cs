@@ -9,12 +9,18 @@ namespace GWLPXL.ARPGCore.Items.com
     /// <summary>
     /// Enchanter actor example
     /// </summary>
+    /// 
+    [System.Serializable]
+    public class EnchanterVars
+    {
+        public List<EquipmentEnchant> Enchants = new List<EquipmentEnchant>();
+        public float InteractRange = 3;
+        public EnchantingStation EnchantingStation = new EnchantingStation();
+    }
     public class Enchanter : MonoBehaviour, IInteract
     {
-        public EnchantingStation EnchantingStation = new EnchantingStation();
-        public List<EquipmentEnchant> Enchants;
+        public EnchanterVars EnchanterVars = new EnchanterVars();
         public UnityEnchanterEvents EnchantEvents;
-        public float Range = 3;
         public GameObject EnchanterUIPrefab;
         GameObject uiinstance = null;
         IEnchanterCanvas canvas;
@@ -28,31 +34,31 @@ namespace GWLPXL.ARPGCore.Items.com
                 canvas = uiinstance.GetComponent<IEnchanterCanvas>();
             }
 
-            EnchantingStation.OnEnchanted += Enchanted;
-            EnchantingStation.OnStationSetup += StationReady;
-            EnchantingStation.OnStationClosed += StationClosed;
+            EnchanterVars. EnchantingStation.OnEnchanted += Enchanted;
+            EnchanterVars. EnchantingStation.OnStationSetup += StationReady;
+            EnchanterVars. EnchantingStation.OnStationClosed += StationClosed;
         }
 
         private void OnDestroy()
         {
-            EnchantingStation.OnEnchanted -= Enchanted;
-            EnchantingStation.OnStationSetup -= StationReady;
-            EnchantingStation.OnStationClosed -= StationClosed;
+            EnchanterVars.EnchantingStation.OnEnchanted -= Enchanted;
+            EnchanterVars.EnchantingStation.OnStationSetup -= StationReady;
+            EnchanterVars. EnchantingStation.OnStationClosed -= StationClosed;
         }
         #endregion
 
         #region scene events
-        void StationClosed(EnchantingStation station)
+        protected virtual void StationClosed(EnchantingStation station)
         {
             EnchantEvents.SceneEvents.OnStationClosed?.Invoke(station);
             Debug.Log("Station Closed");
         }
-        void StationReady(EnchantingStation station)
+        protected virtual void StationReady(EnchantingStation station)
         {
             EnchantEvents.SceneEvents.OnStationSetup?.Invoke(station);
             Debug.Log("Station Ready");
         }
-        void Enchanted(Equipment equipment)
+        protected virtual void Enchanted(Equipment equipment)
         {
             EnchantEvents.SceneEvents.OnEquipmentEnchanted?.Invoke(equipment);
             Debug.Log("Item Enchanted " + equipment.GetGeneratedItemName());
@@ -73,10 +79,10 @@ namespace GWLPXL.ARPGCore.Items.com
             IUseEnchanterCanvas user = CheckPreconditions(interactor);
             if (user == null) return false;
 
-            EnchantingStation.SetupStation(interactor.GetComponent<IActorHub>().MyInventory.GetInventoryRuntime(), Enchants);
+            EnchanterVars.EnchantingStation.SetupStation(interactor.GetComponent<IActorHub>().MyInventory.GetInventoryRuntime(), EnchanterVars.Enchants);
             if (canvas != null)
             {
-                canvas.SetStation(EnchantingStation);
+                canvas.SetStation(EnchanterVars.EnchantingStation);
                 canvas.Open(user);
             }
             return true;
@@ -86,7 +92,7 @@ namespace GWLPXL.ARPGCore.Items.com
         {
             Vector3 dir = interactor.transform.position - this.transform.position;
             float sqrd = dir.sqrMagnitude;
-            if (sqrd <= Range * Range)
+            if (sqrd <= EnchanterVars.InteractRange * EnchanterVars.InteractRange)
             {
                 return true;
             }

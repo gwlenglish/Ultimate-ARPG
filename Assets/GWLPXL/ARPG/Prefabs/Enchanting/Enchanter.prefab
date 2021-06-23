@@ -446,29 +446,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cef6a1e6cf3fc2b4c862cd1bd627d37e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Enchants:
-  - EnchantName: Frost Fire
-    EnchantDescription: Adds minor fire and frost damage
-    EnchantLevel: 10
-    Sprite: {fileID: 2983796907292953725, guid: d274d7b6131b1094fb3cf06d40b14134,
-      type: 3}
-    EnchantTraits:
-    - {fileID: 11400000, guid: c876999be317fe541a8a45889aa6fb52, type: 2}
-    - {fileID: 11400000, guid: 0ff7dea6379235a468cdc6b20d3ba90d, type: 2}
-  - EnchantName: Thor's Hand
-    EnchantDescription: Adds minor lightning damage
-    EnchantLevel: 20
-    Sprite: {fileID: 949155980521528692, guid: d274d7b6131b1094fb3cf06d40b14134, type: 3}
-    EnchantTraits:
-    - {fileID: 11400000, guid: 2376d2dbfa820594e9b67574051a465d, type: 2}
-  - EnchantName: Tyr's Blessing
-    EnchantDescription: Adds minor health and mana
-    EnchantLevel: 10
-    Sprite: {fileID: 3909212269490177266, guid: d274d7b6131b1094fb3cf06d40b14134,
-      type: 3}
-    EnchantTraits:
-    - {fileID: 11400000, guid: 1da6e88061cb63447a8ee7dcef92afa3, type: 2}
-    - {fileID: 11400000, guid: 2b70c8bd170bbdd4e8499d267e114f4d, type: 2}
+  EnchanterVars:
+    Enchants:
+    - EnchantName: FrostFire
+      EnchantDescription: Adds minor frost and fire damage
+      EnchantLevel: 20
+      Sprite: {fileID: 3977366460457049894, guid: d274d7b6131b1094fb3cf06d40b14134,
+        type: 3}
+      EnchantTraits:
+      - {fileID: 11400000, guid: c876999be317fe541a8a45889aa6fb52, type: 2}
+      - {fileID: 11400000, guid: 0ff7dea6379235a468cdc6b20d3ba90d, type: 2}
+    - EnchantName: Thor's Light
+      EnchantDescription: Adds major lightning damage
+      EnchantLevel: 50
+      Sprite: {fileID: 2450015216007869224, guid: d274d7b6131b1094fb3cf06d40b14134,
+        type: 3}
+      EnchantTraits:
+      - {fileID: 11400000, guid: 2376d2dbfa820594e9b67574051a465d, type: 2}
+    - EnchantName: Tyrande's Wind
+      EnchantDescription: Adds minor health and mana
+      EnchantLevel: 20
+      Sprite: {fileID: 3909212269490177266, guid: d274d7b6131b1094fb3cf06d40b14134,
+        type: 3}
+      EnchantTraits: []
+    InteractRange: 3
   EnchantEvents:
     SceneEvents:
       OnStationSetup:
@@ -480,6 +481,5 @@ MonoBehaviour:
       OnEquipmentEnchanted:
         m_PersistentCalls:
           m_Calls: []
-  Range: 3
   EnchanterUIPrefab: {fileID: 4847661434828802009, guid: 9293b707b8c1e5b45a7665f99179a552,
     type: 3}

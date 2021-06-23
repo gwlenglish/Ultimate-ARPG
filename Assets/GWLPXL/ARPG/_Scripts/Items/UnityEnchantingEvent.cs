@@ -3,7 +3,7 @@
 
 namespace GWLPXL.ARPGCore.Items.com
 {
- 
+
 
     [System.Serializable]
     public class UnityEnchantingEvent : UnityEvent<EnchantingStation> { }

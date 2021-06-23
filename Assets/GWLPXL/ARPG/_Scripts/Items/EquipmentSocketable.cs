@@ -9,7 +9,7 @@ namespace GWLPXL.ARPGCore.Items.com
     /// </summary>
     [CreateAssetMenu(menuName ="GWLPXL/ARPG/Socketables/New Equipment Socketable")]
 
-    public class EquipmentSocketable : Socketable
+    public class EquipmentSocketable : SocketItem
     {
         public EquipmentTrait EquipmentTraitSocketable = null;
         public override string GetUserDescription()

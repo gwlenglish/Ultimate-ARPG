@@ -12,7 +12,7 @@ namespace GWLPXL.ARPGCore.com
         int GetPlayerNumber();
         GameObject GetGameObject();
         IActorHub GetActorHub();
-       IShopper Shopper { get; set; }
+        IShopper Shopper { get; set; }
         IPlayerCanvasHub CanvasHub { get; set; }
 
     }

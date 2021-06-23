@@ -15,10 +15,10 @@ namespace GWLPXL.ARPGCore.Items.com
     {
         public UnitySocketingEvent OnStationSetup;
         public UnitySocketingEvent OnStationClosed;
-        public UnityEquipmentSocketEvent OnEquipmentEnchanted;
+        public UnityEquipmentSocketEvent OnEquipmentSocketed;
     }
     [System.Serializable]
-    public class UnitySocketerEvents
+    public class UnitySocketSmithEvents
     {
         public UnitySocketEvents SceneEvents = new UnitySocketEvents();
     }

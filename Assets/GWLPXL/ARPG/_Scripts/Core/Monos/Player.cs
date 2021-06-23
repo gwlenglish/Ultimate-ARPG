@@ -51,6 +51,7 @@ namespace GWLPXL.ARPGCore.com
         IUseAbilityInventory AbilityInventory { get; set; }
         IUseEnchanterCanvas EnchanterCanvas { get; set; }
         IUseShopKeeperCanvas Shopcanvas { get; set; }
+        IUseSocketSmithCanvas SocketCanvas { get; set; }
         IUseCanvas[] CanvasLinks { get; set; }
     }
 
@@ -163,6 +164,7 @@ namespace GWLPXL.ARPGCore.com
         public IFactionMember MyFaction { get; set; }
         public IPlayerCanvasHub CanvasHub { get; set; }
         public IUseEnchanterCanvas EnchanterCanvas { get; set; }
+        public IUseSocketSmithCanvas SocketCanvas { get; set; }
         #region private
 
         bool newplayer = false;
@@ -178,6 +180,7 @@ namespace GWLPXL.ARPGCore.com
             MyFaction = FactionSystem.GetComponent<IFactionMember>();
 
             EnchanterCanvas = CanvasSystem.GetComponent<IUseEnchanterCanvas>();
+            SocketCanvas = CanvasSystem.GetComponent<IUseSocketSmithCanvas>();
 
             MyStateMachine =
             StateMachineSystem.GetComponent<IStateMachineEntity>();

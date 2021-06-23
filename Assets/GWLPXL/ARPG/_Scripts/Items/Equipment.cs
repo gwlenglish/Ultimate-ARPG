@@ -266,9 +266,9 @@ namespace GWLPXL.ARPGCore.Items.com
     public class Socket
     {
         [Tooltip("Leave empty for an empty socket.")]
-        public Socketable SocketedThing = null;
+        public SocketItem SocketedThing = null;
         public SocketTypes SocketType = SocketTypes.Any;
-        public Socket(Socketable thing, SocketTypes type)
+        public Socket(SocketItem thing, SocketTypes type)
         {
             SocketedThing = thing;
             SocketType = type;

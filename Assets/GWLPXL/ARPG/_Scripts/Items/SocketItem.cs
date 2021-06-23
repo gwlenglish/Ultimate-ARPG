@@ -3,7 +3,7 @@
 namespace GWLPXL.ARPGCore.Items.com
 {
 
-    public abstract class Socketable : Item
+    public abstract class SocketItem : Item
     {
         public SocketableVars SocketableVariables;
 

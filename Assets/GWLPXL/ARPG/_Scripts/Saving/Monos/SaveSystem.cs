@@ -329,11 +329,12 @@ namespace GWLPXL.ARPGCore.Saving.com
 
                 for (int j = 0; j < _traits.Length; j++)
                 {
-                    bool isNative = _traits[j].IsNative;
-                    TraitType traitType = (TraitType)_traits[j].TraitEnum;
-                    int _multi = _traits[j].TraitMulti;
+                    EquipmentTraitSave toload = _traits[j];
+                    bool isNative = toload.IsNative;
+                    TraitType traitType = (TraitType)toload.TraitEnum;
+                    int _multi = toload.TraitMulti;
                     EquipmentTrait trait = null;
-                    EquipmentTrait archetype = gameDatabase.Traits.FindTraitByID(_traits[j].DatabaseID);
+                    EquipmentTrait archetype = gameDatabase.Traits.FindTraitByID(toload.DatabaseID);
                     trait = ScriptableObject.Instantiate(archetype);
 
                     if (trait != null)
@@ -351,9 +352,25 @@ namespace GWLPXL.ARPGCore.Saving.com
                     }
                 }
 
+                ///added sockets, keep an eye on it newest edition.
+                EquipmentSocketSave[] _sockets = equipment[i].Sockets;
+                List<Socket> sockets = new List<Socket>();
+                for (int j = 0; j < _sockets.Length; j++)
+                {
+                    EquipmentSocketSave _save = _sockets[j];
+                    Socket socket = LoadSocket(_save);
+                    if (socket != null)
+                    {
+                        sockets.Add(socket);
+                    }
+
+                }
+                
+
                 EquipmentStats _equipmentStats = equipment[i].Stats;
                 _equipmentStats.SetRandomTraits(randomTraitList.ToArray());
                 _equipmentStats.SetNativeTraits(nativeTraitList.ToArray());
+                _equipmentStats.SetSockets(sockets.ToArray());
 
                 EquipmentType type = (EquipmentType)equipment[i].TypeEnum;
                 EquipmentSlotsType[] slots = new EquipmentSlotsType[equipment[i].SlotsEnums.Length];
@@ -370,6 +387,9 @@ namespace GWLPXL.ARPGCore.Saving.com
 
                 int iLevel = equipment[i].ILevel;
                 _equipmentStats.SetiLevel(iLevel);
+
+                bool canEnchant = equipment[i].CanEnchant;
+                equipmentInstance.SetCanEnchant(canEnchant);
 
                 equipmentInstance.SetStats(_equipmentStats);
                 ItemID loadedID = equipment[i].ItemID;
@@ -400,6 +420,8 @@ namespace GWLPXL.ARPGCore.Saving.com
             }
 
         }
+
+      
         private void LoadPotions(ActorInventory inv, PlayerSave playerSave)
         {
             if (playerSave.Potions != null && playerSave.Potions.Length > 0)
@@ -423,6 +445,33 @@ namespace GWLPXL.ARPGCore.Saving.com
             }
         }
 
+        Socket LoadSocket(EquipmentSocketSave _save)
+        {
+            SocketTypes socketype = (SocketTypes)_save.SocketType;
+            SocketItem socketable = gameDatabase.Items.FindSocketableByID(_save.ItemID);
+            if (socketable == null)
+            {
+                Debug.LogWarning("No Socketable Item found with ID of " + _save.ItemID + " Can't load.");
+                return null;
+
+            }
+            EquipmentSocketable eqsocket = socketable as EquipmentSocketable;
+
+            EquipmentSocketable eqsocketcopy = Instantiate(eqsocket);
+            EquipmentTraitSave toload = _save.SocketedThing;
+            EquipmentTrait archetype = gameDatabase.Traits.FindTraitByID(toload.DatabaseID);
+            if (archetype == null)
+            {
+                Debug.LogWarning("No Trait found with ID of " + toload.DatabaseID + " Can't load.");
+                return null;
+            }
+            EquipmentTrait trait = ScriptableObject.Instantiate(archetype);
+            int savedvalue = toload.SavedValue;
+            trait.SetStaticValue(savedvalue);
+            eqsocketcopy.EquipmentTraitSocketable = trait;
+            Socket socket = new Socket(eqsocketcopy, socketype);
+            return socket;
+        }
         //currently saves items: potions, items: equipment, current scene info, stats, resources, databaseIDs, skills: active, skills: passive
         public void SaveGame(PlayerPersistant[] players)
         {
@@ -846,36 +895,59 @@ namespace GWLPXL.ARPGCore.Saving.com
             EquipmentTrait[] native = stats.GetNativeTraits();
             for (int j = 0; j < native.Length; j++)
             {
-                int subEnum = GetSubEnum(native[j]);
-                float multi = native[j].GetMyLevelMulti();
-                int intMulti = Mathf.RoundToInt(multi * Formulas.Hundred);
-                int savedValue = native[j].GetStaticValue();
-
-                TraitType traitType = native[j].GetTraitType();
-                int traitID = native[j].GetID().ID;
-                EquipmentTraitSave _newsave = new EquipmentTraitSave(traitID, true, intMulti, (int)traitType, subEnum, savedValue);
-                _trait.Add(_newsave);
+                EquipmentTrait tosave = native[j];
+                EquipmentTraitSave _newSave = GetTraitSave(tosave);
+                _trait.Add(_newSave);
             }
 
             EquipmentTrait[] random = stats.GetRandomTraits();
             for (int j = 0; j < random.Length; j++)
             {
-                int subEnum = GetSubEnum(random[j]);
-                float multi = random[j].GetMyLevelMulti();
-                int intMulti = Mathf.RoundToInt(multi * Formulas.Hundred);
-                TraitType traitType = random[j].GetTraitType();
-                int savedValue = random[j].GetStaticValue();
-                int traitID = random[j].GetID().ID;
-
-                EquipmentTraitSave _newSave = new EquipmentTraitSave(traitID, false, intMulti, (int)traitType, subEnum, savedValue);
+                EquipmentTrait tosave = random[j];
+                EquipmentTraitSave _newSave = GetTraitSave(tosave);
                 _trait.Add(_newSave);
             }
 
+            List<EquipmentSocketSave> socketSaves = new List<EquipmentSocketSave>();
+            List<Socket> sockets = stats.GetSockets();
+            for (int i = 0; i < sockets.Count; i++)
+            {
+                //TO DO, need to save the item ID..
+              
+                EquipmentSocketable socketedthing = sockets[i].SocketedThing as EquipmentSocketable;
+                if (socketedthing == null) continue;//not valid save
+                EquipmentSocketable socketable = sockets[i].SocketedThing as EquipmentSocketable;
+                if (socketable == null) continue;//not vlaid
+                EquipmentTrait sockettrait = socketedthing.EquipmentTraitSocketable;
+                if (sockettrait == null) continue;//not valid
+
+                int sockettype = (int)sockets[i].SocketType;
+                int itemID = socketedthing.GetID().ID;
+
+                EquipmentTraitSave _newSave = GetTraitSave(sockettrait);
+                EquipmentSocketSave socketsave = new EquipmentSocketSave(itemID, sockettype, _newSave);
+                socketSaves.Add(socketsave);
+
+            }
+            EquipmentSocketSave[] socketarr = socketSaves.ToArray();
             EquipmentTraitSave[] arr = _trait.ToArray();
             int databaseID = equipment.GetID().ID;
             ItemID id = equipment.GetID();
-            EquipmentSave newSave = new EquipmentSave(databaseID, isEquipped, _ilevel, type, slots, itemRarityEnum, stats, arr, id);
+            bool canenchant = equipment.CanEnchant();
+            EquipmentSave newSave = new EquipmentSave(databaseID, isEquipped, _ilevel, type, slots, itemRarityEnum, stats, arr, id, canenchant, socketarr);
             _tempEquip.Add(newSave);
+        }
+
+        private EquipmentTraitSave GetTraitSave(EquipmentTrait tosave)
+        {
+            int subEnum = GetSubEnum(tosave);
+            float multi = tosave.GetMyLevelMulti();
+            int intMulti = Mathf.RoundToInt(multi * Formulas.Hundred);
+            TraitType traitType = tosave.GetTraitType();
+            int savedValue = tosave.GetStaticValue();
+            int traitID = tosave.GetID().ID;
+            EquipmentTraitSave _newSave = new EquipmentTraitSave(traitID, false, intMulti, (int)traitType, subEnum, savedValue);
+            return _newSave;
         }
 
         //skill mod currently not working.
@@ -1121,7 +1193,6 @@ namespace GWLPXL.ARPGCore.Saving.com
             public int TraitEnum;
             public int SubEnum;
             public int SavedValue;
-
             public EquipmentTraitSave(int databasebaseID, bool isNative, int traitMulti, int traitEnum, int subEnum, int savedValue)
             {
                 DatabaseID = databasebaseID;
@@ -1130,6 +1201,7 @@ namespace GWLPXL.ARPGCore.Saving.com
                 TraitEnum = traitEnum;
                 SubEnum = subEnum;
                 SavedValue = savedValue;
+
             }
         }
 
@@ -1144,6 +1216,20 @@ namespace GWLPXL.ARPGCore.Saving.com
                 Amount = amount;
 
             }
+        }
+
+        [System.Serializable]
+        public class EquipmentSocketSave
+        {
+            public int ItemID;
+            public int SocketType;
+            public EquipmentTraitSave SocketedThing;
+            public EquipmentSocketSave(int itemID, int type, EquipmentTraitSave traitsave)
+            {
+                SocketType = type;
+                SocketedThing = traitsave;
+            }
+
         }
 
         [System.Serializable]
@@ -1178,6 +1264,7 @@ namespace GWLPXL.ARPGCore.Saving.com
         {
             public int DatabaseID;
             public bool Equipped;
+            public bool CanEnchant;
             public int ILevel;
             public int TypeEnum;
             public int[] SlotsEnums;
@@ -1185,8 +1272,8 @@ namespace GWLPXL.ARPGCore.Saving.com
             public ItemID ItemID;
             public EquipmentStats Stats;
             public EquipmentTraitSave[] Traits;
-            //add a string here
-            public EquipmentSave(int databaseID, bool isEquipped, int iLevel, int type, int[] slots, int itemRarity, EquipmentStats stats, EquipmentTraitSave[] traits, ItemID itemID)
+            public EquipmentSocketSave[] Sockets;
+            public EquipmentSave(int databaseID, bool isEquipped, int iLevel, int type, int[] slots, int itemRarity, EquipmentStats stats, EquipmentTraitSave[] traits, ItemID itemID, bool canEnchant, EquipmentSocketSave[] sockets)
             {
                 DatabaseID = databaseID;
                 Equipped = isEquipped;
@@ -1197,6 +1284,9 @@ namespace GWLPXL.ARPGCore.Saving.com
                 Stats = stats;
                 Traits = traits;
                 ItemID = itemID;
+                CanEnchant = canEnchant;
+                Sockets = sockets;
+
             }
         }
     }
