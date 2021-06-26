@@ -6,18 +6,20 @@ using UnityEngine;
 
 namespace GWLPXL.ARPGCore.Items.com
 {
+    
     [System.Serializable]
     public class SocketSmithVars
     {
         public SocketStation Station = new SocketStation();
         public float InteractRange = 3;
         public List<SocketItem> SocketItems = new List<SocketItem>();
-
-        public SocketSmithVars(float interactrange, List<SocketItem> socketitems)
+        public SocketTypeReader SocketReader = null;
+        public SocketSmithVars(float interactrange, List<SocketItem> socketitems, SocketTypeReader reader)
         {
             Station = new SocketStation();
             InteractRange = interactrange;
             SocketItems = socketitems;
+            this.SocketReader = reader;
         }
 
     }
@@ -30,17 +32,26 @@ namespace GWLPXL.ARPGCore.Items.com
         GameObject uiinstance = null;
         ISocketSmithCanvas canvas;
 
-        private void Start()
+        protected virtual void Start()
         {
+            Setup();
+        }
+
+        protected virtual void Setup()
+        {
+            SocketSmithVars.Station = new SocketStation();
+            SocketSmithVars.Station.SocketTypeReader = SocketSmithVars.SocketReader;
+            SocketSmithVars.Station.OnAddSocketable += SocketAdded;
+            SocketSmithVars.Station.OnStationSetup += StationReady;
+            SocketSmithVars.Station.OnStationClosed += StationClosed;
             if (SocketSmithUIPrefab != null)
             {
                 uiinstance = Instantiate(SocketSmithUIPrefab);
                 canvas = uiinstance.GetComponent<ISocketSmithCanvas>();
+                
+                canvas.Close();
             }
 
-            SocketSmithVars.Station.OnAddSocketable += SocketAdded;
-            SocketSmithVars.Station.OnStationSetup += StationReady;
-            SocketSmithVars.Station.OnStationClosed += StationClosed;
         }
 
         protected virtual void StationClosed(SocketStation station)

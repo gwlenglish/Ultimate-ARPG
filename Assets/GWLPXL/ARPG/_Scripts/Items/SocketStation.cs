@@ -11,6 +11,7 @@ namespace GWLPXL.ARPGCore.Items.com
     /// </summary>
     public class SocketStation
     {
+        public SocketTypeReader SocketTypeReader = default;
         public System.Action<Equipment> OnAddSocketable;
         public System.Action<Equipment> OnRemoveSocketable;
         public System.Action<SocketStation> OnStationSetup;

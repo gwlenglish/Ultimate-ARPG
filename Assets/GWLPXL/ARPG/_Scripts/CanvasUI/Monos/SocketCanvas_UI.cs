@@ -21,11 +21,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         ISocketSmithCanvas GetSocketSmithCanvas();
         void SetCanvasSmithCanvas(ISocketSmithCanvas socketsmithcanvas);
     }
-    public interface ISocketItemUIElement
-    {
-        void SetEnchant(SocketItem item);
-        SocketItem GetEnchant();
-    }
+
     public interface ISocketableUIElement
     {
         void SetSocketable(Item item);
@@ -50,7 +46,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         public Transform SocketablePreviewInstance = default;
         ISocketHolderUIElement previewholder = null;
 
-        protected Dictionary<Item, ISocketableUIElement> uidic = new Dictionary<Item, ISocketableUIElement>();
+        protected Dictionary<Item, ISocketHolderUIElement> uidic = new Dictionary<Item, ISocketHolderUIElement>();
         protected List<GameObject> socketableableUIElements = new List<GameObject>();
         protected List<GameObject> socketUIElements = new List<GameObject>();
         protected IUseSocketSmithCanvas user = null;
@@ -138,14 +134,14 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         protected virtual void CreateUISocketElement(SocketItem socket)
         {
             GameObject instance = Instantiate(SocketItemPrefab, SocketContentParent);
-            instance.GetComponent<ISocketItemUIElement>().SetEnchant(socket);
+            instance.GetComponent<ISocketItemUIElement>().SetSocketItem(socket);
             socketUIElements.Add(instance);
         }
         protected virtual void CreateUISocketableElement(Item item)
         {
             GameObject instance = Instantiate(SocketablePrefab, SocketableContentParent);
-            ISocketableUIElement element = instance.GetComponent<ISocketableUIElement>();
-            element.SetSocketable(item);
+            ISocketHolderUIElement element = instance.GetComponent<ISocketHolderUIElement>();
+            element.SetSockets(item as Equipment);
             socketableableUIElements.Add(instance);
             uidic[item] = element;
         }
@@ -153,7 +149,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         {
             if (uidic.ContainsKey(item))
             {
-                uidic[item].SetSocketable(item);
+                uidic[item].SetSockets(item as Equipment);
             }
         }
         public void SetStation(SocketStation station)

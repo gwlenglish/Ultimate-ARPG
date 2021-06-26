@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 namespace GWLPXL.ARPGCore.CanvasUI.com
 {
@@ -14,6 +16,8 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
     {
         public GameObject SocketPrefab = default;
         public Transform SocketParent = default;
+        public Image Image;
+        public TextMeshProUGUI DescriptionText;
         List<GameObject> instances = new List<GameObject>();
         Equipment equipment = null;
 
@@ -41,6 +45,9 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                 instances.Add(instance);
 
             }
+            Image.sprite = forEquipment.GetSprite();
+            DescriptionText.SetText(forEquipment.GetUserDescription());
+
         }
 
        
