@@ -18,14 +18,15 @@ MonoBehaviour:
     ID: 0
     Item: {fileID: 0}
   autoName: 1
-  rarity: {fileID: 0}
+  rarity: {fileID: 11400000, guid: 4df0bc156be553c4c9f8f3217ab8189b, type: 2}
   meshPrefab: {fileID: 0}
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 6c0361b4cfcbc8f4f9fa96c4b1473240, type: 3}
   purchaseCost: 10
   sellCost: 5
-  Vars:
-    BaseName: 
-    StackingAmount: 0
+  SocketableVariables:
+    BaseName: 'Dexterity '
+    StackingAmount: 1
     GeneratedName: 
-    Type: 200
-  Socketable: {fileID: 0}
+    Type: 100
+  EquipmentTraitSocketable: {fileID: 11400000, guid: db4bfadab29def742842255d949d3ed8,
+    type: 2}

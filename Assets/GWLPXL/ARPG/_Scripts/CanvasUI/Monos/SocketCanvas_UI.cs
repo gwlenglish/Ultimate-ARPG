@@ -18,10 +18,10 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
     public interface IUseSocketSmithCanvas
     {
         bool GetFreezeMover();
-        ISocketSmithCanvas GetEnchanterCanvas();
-        void SetCanvasSmithCanvas(ISocketSmithCanvas enchantercanvas);
+        ISocketSmithCanvas GetSocketSmithCanvas();
+        void SetCanvasSmithCanvas(ISocketSmithCanvas socketsmithcanvas);
     }
-    public interface ISocketUIElement
+    public interface ISocketItemUIElement
     {
         void SetEnchant(SocketItem item);
         SocketItem GetEnchant();
@@ -44,8 +44,11 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         public GameObject SocketablePrefab = default;
         public Transform SocketableContentParent = default;
         [Header("Sockets")]
-        public GameObject SocketPrefab = default;
+        public GameObject SocketItemPrefab = default;
         public Transform SocketContentParent = default;
+        [Header("Preview")]
+        public Transform SocketablePreviewInstance = default;
+        ISocketHolderUIElement previewholder = null;
 
         protected Dictionary<Item, ISocketableUIElement> uidic = new Dictionary<Item, ISocketableUIElement>();
         protected List<GameObject> socketableableUIElements = new List<GameObject>();
@@ -53,6 +56,10 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         protected IUseSocketSmithCanvas user = null;
         SocketStation station = default;
 
+        protected virtual void Awake()
+        {
+            previewholder = SocketablePreviewInstance.GetComponent<ISocketHolderUIElement>();
+        }
         public void Close()
         {
             uidic.Clear();
@@ -117,7 +124,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             }
 
             List<SocketItem> socketableItems = station.GetAllSocketables();
-            for (int i = 0; i < socketableItems.Count; i++)
+            for (int i = 0; i < socketableItems.Count; i++)//rethink...
             {
                 CreateUISocketElement(socketableItems[i]);
             }
@@ -130,8 +137,8 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         }
         protected virtual void CreateUISocketElement(SocketItem socket)
         {
-            GameObject instance = Instantiate(SocketPrefab, SocketContentParent);
-            instance.GetComponent<ISocketUIElement>().SetEnchant(socket);
+            GameObject instance = Instantiate(SocketItemPrefab, SocketContentParent);
+            instance.GetComponent<ISocketItemUIElement>().SetEnchant(socket);
             socketUIElements.Add(instance);
         }
         protected virtual void CreateUISocketableElement(Item item)

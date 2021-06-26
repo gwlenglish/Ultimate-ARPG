@@ -18,6 +18,7 @@ namespace GWLPXL.ARPGCore.Items.com
 
         public override string GetGeneratedItemName()
         {
+
             return SocketableVariables.GeneratedName;
         }
 
@@ -48,6 +49,7 @@ namespace GWLPXL.ARPGCore.Items.com
     {
         public string BaseName = string.Empty;
         public int StackingAmount = 5;
+        [UnityEngine.HideInInspector]
         public string GeneratedName = string.Empty;
         public SocketTypes Type = SocketTypes.Any;
 

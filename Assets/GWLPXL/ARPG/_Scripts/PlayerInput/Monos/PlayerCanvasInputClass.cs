@@ -104,7 +104,7 @@ namespace GWLPXL.ARPGCore.PlayerInput.com
             }
         }
 
-
+        //i hate this method but so it goes...
         public bool HasFreezeMoverCanvasEnabled()
         {
             if (hub.PlayerControlled.CanvasHub.InvCanvas != null)
@@ -140,6 +140,11 @@ namespace GWLPXL.ARPGCore.PlayerInput.com
             if (hub.PlayerControlled.CanvasHub.EnchanterCanvas != null)
             {
                 if (hub.PlayerControlled.CanvasHub.EnchanterCanvas.GetFreezeMover() == true) return true;
+            }
+
+            if (hub.PlayerControlled.CanvasHub.SocketCanvas != null)
+            {
+                if (hub.PlayerControlled.CanvasHub.SocketCanvas.GetFreezeMover() == true) return true;
             }
             return false;
         }

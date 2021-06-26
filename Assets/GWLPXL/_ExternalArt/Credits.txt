@@ -1,6 +1,10 @@
 zone 1
 https://hotpink.itch.io/zone-tan-3d-model
 
+gems & gems no background
+https://opengameart.org/content/gems-jewels
+
+
 3d weapon pack
 https://elijahcobden.itch.io/3d-melee-weapon-pack
 
