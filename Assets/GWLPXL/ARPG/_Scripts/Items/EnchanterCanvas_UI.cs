@@ -9,7 +9,9 @@ using GWLPXL.ARPGCore.Traits.com;
 namespace GWLPXL.ARPGCore.CanvasUI.com
 {
    
-
+    /// <summary>
+    /// to do, map rect transforms to dictionary like in socket smith
+    /// </summary>
     public class EnchanterCanvas_UI : MonoBehaviour, IEnchanterCanvas
     {
         public bool FreezeDungeon = true;
@@ -62,22 +64,16 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         }
         protected virtual void LateUpdate()
         {
-            if (active == false) return;
+            if (GetCanvasEnabled() == false) return;
 
-            //check mouse pos
-            if (draggingEnchant == false)
-            {
-                CheckDraggingOnEnchantable();
-                CheckStopDraggingEnchantable();
-                DoDraggingEnchantable();
-            }
+            CheckDraggingOnEnchantable();
+            CheckStopDraggingEnchantable();
+            DoDraggingEnchantable();
 
-            if (draggingEnchantable == false)
-            {
-                CheckDraggingOnEnchant();
-                CheckStopDraggingEnchant();
-                DoDraggingEnchant();
-            }
+            CheckDraggingOnEnchant();
+            CheckStopDraggingEnchant();
+            DoDraggingEnchant();
+           
         }
         #endregion
 
@@ -220,7 +216,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         protected virtual void CheckStopDraggingEnchant()
         {
             if (draggableEnchant.GetEnchant() == null) return;
-
+            if (draggingEnchant == false) return;
             if (Input.GetButtonUp(interactButton))
             {
                 DraggableEnchantInstance.transform.position = homeposition;
@@ -235,6 +231,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         }
         protected virtual void CheckDraggingOnEnchant()
         {
+            if (draggingEnchant) return;
             for (int i = 0; i < enchantUIElements.Count; i++)
             {
                 RectTransform rect = enchantUIElements[i].GetComponent<RectTransform>();
@@ -267,6 +264,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         }
         protected virtual void CheckDraggingOnEnchantable()
         {
+            if (draggingEnchantable) return;
             for (int i = 0; i < enchantableUIElements.Count; i++)
             {
                 RectTransform rect = enchantableUIElements[i].GetComponent<RectTransform>();
@@ -296,6 +294,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         protected virtual void CheckStopDraggingEnchantable()
         {
             if (draggableenchantable.GetEnchantable() == null) return;
+            if (draggingEnchantable == false) return;
             if (Input.GetButtonUp(interactButton))
             {
                 DraggableEnchantableInstance.transform.position = homeposition;

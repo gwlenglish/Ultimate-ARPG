@@ -12,13 +12,11 @@ namespace GWLPXL.ARPGCore.Items.com
     {
         public SocketStation Station = new SocketStation();
         public float InteractRange = 3;
-        public List<SocketItem> SocketItems = new List<SocketItem>();
         public SocketTypeReader SocketReader = null;
         public SocketSmithVars(float interactrange, List<SocketItem> socketitems, SocketTypeReader reader)
         {
             Station = new SocketStation();
             InteractRange = interactrange;
-            SocketItems = socketitems;
             this.SocketReader = reader;
         }
 
@@ -84,7 +82,7 @@ namespace GWLPXL.ARPGCore.Items.com
             IUseSocketSmithCanvas hub = CheckPreconditions(interactor);
             if (hub == null) return false;
 
-            SocketSmithVars.Station.SetupStation(interactor.GetComponent<IActorHub>().MyInventory.GetInventoryRuntime(), SocketSmithVars.SocketItems);
+            SocketSmithVars.Station.SetupStation(interactor.GetComponent<IActorHub>().MyInventory.GetInventoryRuntime());
             if (canvas != null)
             {
                 canvas.SetStation(SocketSmithVars.Station);

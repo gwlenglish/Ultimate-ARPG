@@ -10,6 +10,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
     public interface ISocketHolderUIElement
     {
         void SetSockets(Equipment forEquipment);
+        Equipment GetSocketHolder();
     }
 
     public class SocketHolderUIElement : MonoBehaviour, ISocketHolderUIElement
@@ -20,6 +21,11 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         public TextMeshProUGUI DescriptionText;
         List<GameObject> instances = new List<GameObject>();
         Equipment equipment = null;
+
+        public Equipment GetSocketHolder()
+        {
+            return equipment;
+        }
 
         public void SetSockets(Equipment forEquipment)
         {

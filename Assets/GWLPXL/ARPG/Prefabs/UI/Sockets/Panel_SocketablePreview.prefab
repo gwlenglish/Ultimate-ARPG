@@ -92,6 +92,8 @@ MonoBehaviour:
   SocketPrefab: {fileID: 6523614132023284585, guid: 91b450c2fc7dab04b825065a338df8c5,
     type: 3}
   SocketParent: {fileID: 3188217070501910075}
+  Image: {fileID: 1688145533220039922}
+  DescriptionText: {fileID: 1399239486478683792}
 --- !u!1 &7894315960737923650
 GameObject:
   m_ObjectHideFlags: 0

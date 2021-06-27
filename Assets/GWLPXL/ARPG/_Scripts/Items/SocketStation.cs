@@ -19,23 +19,32 @@ namespace GWLPXL.ARPGCore.Items.com
         public System.Action OnFailToAddStorageIssue;
         public System.Action OnFailToAddTypeMisMatch;
         public bool DestroyRemovedSockets = false;
-        List<SocketItem> socketables = new List<SocketItem>();//this needs to turn into an item.
+        List<ItemStack> stacksofsockets = new List<ItemStack>();
         ActorInventory userInventory = null;
 
         public virtual void CloseStation()
         {
-            this.socketables = new List<SocketItem>();
+            stacksofsockets.Clear();
             this.userInventory = null;
             OnStationClosed?.Invoke(this);
 
         }
-        public virtual List<SocketItem> GetAllSocketables()
+        public virtual List<ItemStack> GetAllSocketables()
         {   //from user inventory?, nah we load it. 
-            return socketables;
+            return stacksofsockets;
         }
-        public virtual void SetupStation(ActorInventory userInventory, List<SocketItem> enchants)
+        public virtual void SetupStation(ActorInventory userInventory)
         {
-            this.socketables = enchants;
+            stacksofsockets = new List<ItemStack>();
+            List<ItemStack> stacks = userInventory.GetAllUniqueStacks();
+            for (int i = 0; i < stacks.Count; i++)
+            {
+                if (stacks[i].Item is SocketItem)
+                {
+                    //found it
+                    stacksofsockets.Add(stacks[i]);
+                }
+            }
             this.userInventory = userInventory;
             OnStationSetup?.Invoke(this);
         }

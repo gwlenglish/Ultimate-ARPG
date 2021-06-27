@@ -8,8 +8,8 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 {
     public interface ISocketItemUIElement
     {
-        void SetSocketItem(SocketItem item);
-        SocketItem GetSocketItem();
+        void SetSocketItem(ItemStack item);
+        ItemStack GetSocketItem();
     }
 
     public class SocketItemUIElement : MonoBehaviour, ISocketItemUIElement
@@ -17,20 +17,20 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         public Image ThingImage = default;
         public TextMeshProUGUI ThingNameText = default;
         public TextMeshProUGUI ThingDescriptionText = default;
-        SocketItem item = null;
-        public SocketItem GetSocketItem()
+        ItemStack item = null;
+        public ItemStack GetSocketItem()
         {
             return item;
         }
 
-        public void SetSocketItem(SocketItem item)
+        public void SetSocketItem(ItemStack item)
         {
             this.item = item;
             Setup(item);
         }
 
 
-        protected virtual void Setup(SocketItem item)
+        protected virtual void Setup(ItemStack item)
         {
             if (item == null)
             {
@@ -38,9 +38,9 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                 return;
             }
 
-            ThingImage.sprite = item.GetSprite();
-            ThingNameText.SetText(item.GetGeneratedItemName());
-            ThingDescriptionText.SetText(item.GetUserDescription());
+            ThingImage.sprite = item.Item.GetSprite();
+            ThingNameText.SetText(item.Item.GetGeneratedItemName());
+            ThingDescriptionText.SetText(item.Item.GetUserDescription());
         }
 
        

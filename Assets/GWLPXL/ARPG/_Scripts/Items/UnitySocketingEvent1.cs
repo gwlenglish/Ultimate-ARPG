@@ -26,10 +26,10 @@ namespace GWLPXL.ARPGCore.Items.com
     [System.Serializable]
     public class SocketUIEvents
     {
-        public UnityEngine.Events.UnityEvent OnStartDragEnchantable;
-        public UnityEngine.Events.UnityEvent OnStartDragEnchant;
-        public UnityEngine.Events.UnityEvent OnPreviewSetEnchantable;
-        public UnityEngine.Events.UnityEvent OnPreviewSetEnchant;
+        public UnityEngine.Events.UnityEvent OnStartDragSocketHolder;
+        public UnityEngine.Events.UnityEvent OnStartDragSocketItem;
+        public UnityEngine.Events.UnityEvent OnPreviewSetHolder;
+        public UnityEngine.Events.UnityEvent OnPreviewSetSocketItem;
         public UnityEquipmentSocketEvent OnSocketSuccess;
     }
 
