@@ -219,13 +219,15 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             if (draggingEnchant == false) return;
             if (Input.GetButtonUp(interactButton))
             {
-                DraggableEnchantInstance.transform.position = homeposition;
-                draggingEnchant = false;//also check if trying to place in slot
+
                 if (DraggableEnchantInstance.GetComponent<RectTransform>().rect.Overlaps(EnchantPreviewInstance.GetComponent<RectTransform>().rect))
                 {
                     EnchantPreviewInstance.GetComponent<IEnchantUIElement>().SetEnchant(draggableEnchant.GetEnchant());
                     SceneEvents.OnPreviewSetEnchant?.Invoke();
                 }
+
+                DraggableEnchantInstance.transform.position = homeposition;
+                draggingEnchant = false;//also check if trying to place in slot
 
             }
         }

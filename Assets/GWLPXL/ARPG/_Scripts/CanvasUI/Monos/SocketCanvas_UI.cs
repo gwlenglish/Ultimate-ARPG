@@ -68,9 +68,10 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             //check mouse pos
             if (GetCanvasEnabled() == false) return;
 
+            CheckDraggingStartDraggingHolder();
             CheckStopDraggingHolder();
             DoDraggingEnchantable();
-            CheckDraggingStartDraggingHolder();
+
            
 
             //if (draggingitem == false)
@@ -107,6 +108,29 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                 Debug.Log("Drag Reset");
             }
         }
+        protected virtual void CheckStopDraggingSocketItem()
+        {
+            if (socketItemDraggable.GetSocketItem() == null) return;
+            if (draggingitem == false) return;
+            if (previewholder.GetSocketHolder() == null) return;
+
+            if (Input.GetButtonUp(InteractButton))
+            {
+                //add the socket...
+                //station.AddSocketable(previewholder.GetSocketHolder(), socketItemDraggable.GetSocketItem().Item);//need to minus from inventory...
+                ////maybe we get a center point instead of the entire thing...
+                //if (SocketablePreviewInstance.GetComponent<RectTransform>().rect.Overlaps(SocketHolderDraggableInstance.GetComponent<RectTransform>().rect))
+                //{
+                //    //placed
+                //    previewholder.SetSockets(socketHolderDraggable.GetSocketHolder());
+                //    SceneEvents.OnPreviewSetHolder?.Invoke();
+                //}
+
+                //SocketHolderDraggableInstance.position = homePosition;
+                //draggingholder = false;//also check if trying to place in slot
+                //Debug.Log("Drag Reset");
+            }
+        }
         protected virtual void CheckDraggingStartDraggingHolder()
         {
             if (draggingholder == true) return;
@@ -129,7 +153,36 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
         }
 
-        protected virtual void TryPlaceInSlot(Equipment item)
+        protected virtual void CheckDraggingStartDraggingSocketItem()
+        {
+            if (draggingitem == true) return;
+
+            foreach (var kvp in socketItemsRectsDic)
+            {
+                Vector2 localMousePos = kvp.Key.InverseTransformPoint(Input.mousePosition);
+                if (kvp.Key.rect.Contains(localMousePos))
+                {
+                    if (Input.GetButtonDown(InteractButton))
+                    {
+                        draggingitem = true;
+                        TryPlaceInSlot(kvp.Value.GetSocketItem());
+                        break;
+
+                    }
+                }
+            }
+
+
+        }
+
+        protected virtual void TryPlaceInSlot(ItemStack item)
+        {
+            socketItemDraggable.SetSocketItem(item);
+            if (item == null) return;
+            SceneEvents.OnStartDragSocketItem?.Invoke();
+            Debug.Log("Drag Start Success");
+        }
+        protected virtual void TryPlaceInSlot(Item item)
         {
             socketHolderDraggable.SetSockets(item as Equipment);
             if (item == null) return;
