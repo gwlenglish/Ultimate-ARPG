@@ -1,0 +1,48 @@
+{
+    "AffixOrders": [
+        {
+            "Label": "Quantity",
+            "EditorDescription": "",
+            "Words": []
+        },
+        {
+            "Label": "Quality",
+            "EditorDescription": "",
+            "Words": []
+        },
+        {
+            "Label": "Size",
+            "EditorDescription": "",
+            "Words": [
+                "Large",
+                "Massive",
+                "Enormous"
+            ]
+        },
+        {
+            "Label": "Age",
+            "EditorDescription": "",
+            "Words": []
+        },
+        {
+            "Label": "Shape",
+            "EditorDescription": "",
+            "Words": []
+        },
+        {
+            "Label": "Color",
+            "EditorDescription": "",
+            "Words": []
+        },
+        {
+            "Label": "Proper adjective",
+            "EditorDescription": "",
+            "Words": []
+        },
+        {
+            "Label": "Purpose",
+            "EditorDescription": "",
+            "Words": []
+        }
+    ]
+}

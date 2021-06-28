@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c793d0c72bf1ba4ca9690429b3a6fe9, type: 3}
+  m_Name: New Affix Reader SO
+  m_EditorClassIdentifier: 
+  Affixreader:
+    AffixOrders:
+    - Label: Quantity
+      EditorDescription: 
+      Words: []
+    - Label: Quality
+      EditorDescription: 
+      Words: []
+    - Label: Size
+      EditorDescription: 
+      Words:
+      - Large
+      - Massive
+      - Enormous
+    - Label: Age
+      EditorDescription: 
+      Words: []
+    - Label: Shape
+      EditorDescription: 
+      Words: []
+    - Label: Color
+      EditorDescription: 
+      Words: []
+    - Label: Proper adjective
+      EditorDescription: 
+      Words: []
+    - Label: Purpose
+      EditorDescription: 
+      Words: []
