@@ -82,10 +82,10 @@ namespace GWLPXL.ARPGCore.Statics.com
             int rando = Random.Range(0, possibleNames.Length);
             return possibleNames[rando];
         }
-        public static string GetGeneratedName(Equipment equipment)//could refactor out to put the names on the SO's themselves...
+        //need to plugin to the affix reader? or could be separate. 
+        public static string GetGeneratedName(Equipment equipment)
         {
             sb.Clear();
-
 
             EquipmentTrait[] NativeTraits = equipment.GetStats().GetNativeTraits();
             if (NativeTraits.Length > 0)

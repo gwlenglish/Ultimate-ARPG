@@ -151,6 +151,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Phrase: Round Sword
+  Noun: Longsword
+  AffixTries: 2
+  adverbchance: 101
+  GetNameKey: 282
   PhraseKey: 32
   Words:
   - Cutting
