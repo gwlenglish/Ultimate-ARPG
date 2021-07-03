@@ -15,14 +15,22 @@ namespace GWLPXL.ARPGCore.Items.com
             SlotID = slotID;
             Item = forItem;
             CurrentStackSize = currentstacksize;
-            if (CurrentStackSize >= Item.GetStackingAmount())
-            {
-                IsFull = true;
-            }
-            else
+            if (Item == null)
             {
                 IsFull = false;
             }
+            else
+            {
+                if (CurrentStackSize >= Item.GetStackingAmount())
+                {
+                    IsFull = true;
+                }
+                else
+                {
+                    IsFull = false;
+                }
+            }
+            
         }
     }
 

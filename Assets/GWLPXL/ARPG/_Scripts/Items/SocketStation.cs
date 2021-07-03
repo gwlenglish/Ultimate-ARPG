@@ -11,14 +11,17 @@ namespace GWLPXL.ARPGCore.Items.com
     /// </summary>
     public class SocketStation
     {
+        public ActorInventory Inventory => userInventory;
         public SocketTypeReader SocketTypeReader = default;
+        public System.Action OnSmithOpen;
+        public System.Action OnSmithClosed;
         public System.Action<Equipment> OnAddSocketable;
         public System.Action<Equipment> OnRemoveSocketable;
         public System.Action<SocketStation> OnStationSetup;
         public System.Action<SocketStation> OnStationClosed;
         public System.Action OnFailToAddStorageIssue;
         public System.Action OnFailToAddTypeMisMatch;
-        public bool DestroyRemovedSockets = false;
+
         List<ItemStack> stacksofsockets = new List<ItemStack>();
         ActorInventory userInventory = null;
 
@@ -29,6 +32,7 @@ namespace GWLPXL.ARPGCore.Items.com
             OnStationClosed?.Invoke(this);
 
         }
+        
         public virtual List<ItemStack> GetAllSocketables()
         {   //from user inventory?, nah we load it. 
             return stacksofsockets;
@@ -86,44 +90,33 @@ namespace GWLPXL.ARPGCore.Items.com
             return _temp;
         }
 
-        public virtual void RemoveSocketable(Equipment equipment, int atindex, bool isPreview = false)
+      public virtual bool CanAdd(Equipment equipment, int atIndex, SocketItem newSocketable)
         {
-            Socket socket = GetSocket(equipment, atindex);
+            Socket socket = GetSocket(equipment, atIndex);
             if (socket == null)
             {
                 DebugHelpers.com.ARPGDebugger.DebugMessage("No socket found" + equipment.GetUserDescription(), equipment);
-                return;
+                return false;
             }
-            bool handled = HandleRemoval(equipment, socket);
 
-        }
-
-        public virtual void AddSocketable(Equipment equipment, SocketItem newSocketable,  int atindex, bool isPreview = false)
-        {
-            Socket socket = GetSocket(equipment, atindex);
-            if (socket == null)
-            {
-                DebugHelpers.com.ARPGDebugger.DebugMessage("No socket found" + equipment.GetUserDescription(), equipment);
-                return;
-            }
 
             if (socket.SocketType != newSocketable.GetSocketType())
             {
                 DebugHelpers.com.ARPGDebugger.DebugMessage("Socket Type Mismatch, can't add" + equipment.GetUserDescription(), equipment);
                 OnFailToAddTypeMisMatch?.Invoke();
-                return;
+                return false;
             }
-                
+            return true;
+        }
 
-            bool handled = HandleRemoval(equipment, socket);
-            if (handled == false)
-            {
-                DebugHelpers.com.ARPGDebugger.DebugMessage("Unable to handle existing" + equipment.GetUserDescription(), equipment);
-                return;
-            }
+        public virtual bool AddSocketable(Equipment equipment, SocketItem newSocketable,  int atindex, bool isPreview = false)
+        {
 
+            Socket socket = GetSocket(equipment, atindex);
             socket.SocketedThing = newSocketable;
+            equipment.GetStats().SetSocket(atindex, socket);
             OnAddSocketable?.Invoke(equipment);
+            return true;
 
         }
         /// <summary>
@@ -137,30 +130,32 @@ namespace GWLPXL.ARPGCore.Items.com
             Socket socket = null;
             if (equipment != null)
             {
-                int count = equipment.GetStats().GetSockets().Count;
-                if (count > 0)
-                {
-                    socket = equipment.GetStats().GetSocket(atindex);
-                }
+                return equipment.GetStats().GetSocket(atindex);
             }
 
             return socket;
         }
 
-        protected virtual bool HandleRemoval(Equipment equipment, Socket socket)
+        protected virtual bool HandleRemoval(Equipment equipment, int index, bool destroyRemoved = false)
         {
-            if (socket.SocketedThing != null)
+            if (equipment.GetStats().GetSocket(index) == null)
             {
-                if (DestroyRemovedSockets)
+                return true;
+            }
+
+            if (equipment.GetStats().GetSocket(index).SocketedThing != null)
+            {
+                if (destroyRemoved)
                 {
                     //just make it null, no need to add back
-                    socket.SocketedThing = null;
+                    equipment.GetStats().GetSocket(index).SocketedThing = null;
                     OnRemoveSocketable?.Invoke(equipment);
                 }
                 else
                 {
                     //add it back to inventory, then null it.
-                    bool canwe = userInventory.CanWeAddItem(socket.SocketedThing);
+
+                    bool canwe = userInventory.CanWeAddItem(equipment.GetStats().GetSocket(index).SocketedThing);
                     if (canwe == false)
                     {
                         OnFailToAddStorageIssue?.Invoke();
@@ -168,13 +163,13 @@ namespace GWLPXL.ARPGCore.Items.com
                     }
                     else
                     {
+                        Debug.Log("REMOVED FROM INVENTORY");
                         //add it back to inventory, null it.
-                        userInventory.AddItemsToInventory(socket.SocketedThing, 1);
-                        socket.SocketedThing = null;
+                        userInventory.AddItemsToInventory(equipment.GetStats().GetSocket(index).SocketedThing, 1);
+                        equipment.GetStats().GetSocket(index).SocketedThing = null;
                         OnRemoveSocketable?.Invoke(equipment);
                     }
                 }
-
             }
             return true;
         }

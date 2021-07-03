@@ -11,20 +11,33 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
     {
         void SetSockets(Equipment forEquipment);
         Equipment GetSocketHolder();
+        List<ISocketUIElement> GetSockets();
     }
 
     public class SocketHolderUIElement : MonoBehaviour, ISocketHolderUIElement
     {
+        public System.Action<List<GameObject>> OnInsertablesCreated;
+        [Header("Socket Holder")]
         public GameObject SocketPrefab = default;
         public Transform SocketParent = default;
         public Image Image;
         public TextMeshProUGUI DescriptionText;
+
+        [Header("Socket Items")]
+        public GameObject SocketItemPrefab = default;
+        public Transform SocketItemParent = default;
         List<GameObject> instances = new List<GameObject>();
         Equipment equipment = null;
-
+        List<ISocketUIElement> socketInstances = new List<ISocketUIElement>();
+        List<GameObject> socketitemobjects = new List<GameObject>();
         public Equipment GetSocketHolder()
         {
             return equipment;
+        }
+
+        public List<ISocketUIElement> GetSockets()
+        {
+            return socketInstances;
         }
 
         public void SetSockets(Equipment forEquipment)
@@ -37,22 +50,41 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
         protected virtual void Setup(Equipment forEquipment)
         {
+            for (int i = 0; i < socketitemobjects.Count; i++)
+            {
+                Destroy(socketitemobjects[i]);//cldean up
+            }
             for (int i = 0; i < instances.Count; i++)
             {
                 Destroy(instances[i]);//remove old
             }
+            socketitemobjects.Clear();
             instances.Clear();
             List<Socket> sockets = forEquipment.GetStats().GetSockets();
+
             for (int i = 0; i < sockets.Count; i++)
             {
                 GameObject instance = Instantiate(SocketPrefab, SocketParent);
                 ISocketUIElement sock = instance.GetComponent<ISocketUIElement>();
                 sock.SetSocket(sockets[i]);
+                socketInstances.Add(sock);
                 instances.Add(instance);
+
+                if (SocketItemPrefab != null)//only preview displays the inserts
+                {
+                    GameObject socketitem = Instantiate(SocketItemPrefab, SocketItemParent);
+                    socketitemobjects.Add(socketitem);
+                    ISocketItemUIElementInsert sockeitemElement = socketitem.GetComponent<ISocketItemUIElementInsert>();
+                    sockeitemElement.SetIndex(i);
+                    sockeitemElement.SetSocket(sockets[i]);
+                }
+       
 
             }
             Image.sprite = forEquipment.GetSprite();
             DescriptionText.SetText(forEquipment.GetUserDescription());
+
+            OnInsertablesCreated?.Invoke(socketitemobjects);
 
         }
 

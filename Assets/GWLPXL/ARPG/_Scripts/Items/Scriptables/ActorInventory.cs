@@ -25,6 +25,7 @@ namespace GWLPXL.ARPGCore.Items.com
         /// used when swapping slots.
         /// </summary>
         public Action<int, ItemStack> OnSlotChanged;
+        public Action<int> OnSlotChange;
         public Action<Equipment> OnEquip;
         public Action<Equipment> OnUnEquip;
 
@@ -159,6 +160,8 @@ namespace GWLPXL.ARPGCore.Items.com
             OnSlotChanged?.Invoke(slotB, stackA);
             stackPerSlot[slotA] = stackB;
             OnSlotChanged?.Invoke(slotA, stackB);
+            OnSlotChange?.Invoke(slotA);
+            OnSlotChange?.Invoke(slotB);
             return true;
         }
         /// <summary>
@@ -724,6 +727,7 @@ namespace GWLPXL.ARPGCore.Items.com
             }
             stackPerSlot[slot] = value;
             OnSlotChanged?.Invoke(slot, value);
+            OnSlotChange?.Invoke(slot);
             return true;
 
 

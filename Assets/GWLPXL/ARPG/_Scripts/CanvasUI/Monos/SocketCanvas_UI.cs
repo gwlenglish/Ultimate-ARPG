@@ -19,10 +19,14 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
 
     /// <summary>
-    /// to do, socket items dragging
+    /// to do, inserts dragging
+    /// to do, replace preview items (need to delete its socket items)
     /// </summary>
     public class SocketCanvas_UI : MonoBehaviour, ISocketSmithCanvas
     {
+
+        public SocketStation Station => station;
+
         public SocketUIEvents SceneEvents = new SocketUIEvents();
         public GameObject MainPanel = default;
         public bool FreezeDungeon = true;
@@ -45,6 +49,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         ISocketHolderUIElement socketHolderDraggable = null;
         protected Dictionary<RectTransform, ISocketHolderUIElement> sockerHolderRectsDic = new Dictionary<RectTransform, ISocketHolderUIElement>();
         protected Dictionary<RectTransform, ISocketItemUIElement> socketItemsRectsDic = new Dictionary<RectTransform, ISocketItemUIElement>();
+        
 
         protected Dictionary<Item, ISocketHolderUIElement> uidic = new Dictionary<Item, ISocketHolderUIElement>();
         protected List<GameObject> socketableableUIElements = new List<GameObject>();
@@ -55,14 +60,46 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         bool draggingholder = false;
         bool draggingitem = false;
         Vector3 homePosition;
+
+        List<GameObject> socketInserts = new List<GameObject>();
+        Dictionary<RectTransform, ISocketItemUIElementInsert> socketinsertsdic = new Dictionary<RectTransform, ISocketItemUIElementInsert>();
+      
         protected virtual void Awake()
         {
+  
             previewholder = SocketablePreviewInstance.GetComponent<ISocketHolderUIElement>();
             socketItemDraggable = SocketItemDraggableInstance.GetComponent<ISocketItemUIElement>();
             socketHolderDraggable = SocketHolderDraggableInstance.GetComponent<ISocketHolderUIElement>();
             homePosition = SocketHolderDraggableInstance.position;
         }
+        private void OnEnable()
+        {
+            SocketHolderUIElement uielem = SocketablePreviewInstance.GetComponent<SocketHolderUIElement>();
+            if (uielem != null)
+            {
+                uielem.OnInsertablesCreated += SocketInserts;
+            }
 
+
+        }
+
+        void SocketInserts(List<GameObject> inserts)
+        {
+            socketInserts = inserts;
+            socketinsertsdic.Clear();
+            for (int i = 0; i < socketInserts.Count; i++)
+            {
+                socketinsertsdic[socketInserts[i].GetComponent<RectTransform>()] = socketInserts[i].GetComponent<ISocketItemUIElementInsert>();
+            }
+        }
+        private void Disable()
+        {
+            SocketHolderUIElement uielem = SocketablePreviewInstance.GetComponent<SocketHolderUIElement>();
+            if (uielem != null)
+            {
+                uielem.OnInsertablesCreated -= SocketInserts;
+            }
+        }
         protected virtual void LateUpdate()
         {
             //check mouse pos
@@ -70,86 +107,100 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
             CheckDraggingStartDraggingHolder();
             CheckStopDraggingHolder();
-            DoDraggingEnchantable();
+            DoDraggingSocketHolder();
 
+            //rethink how we can also add the inserts to the dictionary, so we can go the other way.
+            CheckDraggingStartDraggingSocketItem();
+            CheckStopDraggingSocketItem();
+            DoDraggingSocketItem();
+
+            //check dragging from slot inserts
+
+          //  CheckDraggingSlotInserts();
+        }
+
+        protected virtual void CheckDraggingSlotInserts()
+        {
+            if (socketInserts.Count <= 0) return;//no inserts, no dragging
+
+            
+            foreach (var kvp in socketinsertsdic)
+            {
            
-
-            //if (draggingitem == false)
-            //{
-            //    CheckDraggingOnEnchant();
-            //    CheckStopDraggingEnchant();
-            //    DoDraggingEnchant();
-            //}
-        }
-
-        protected virtual void DoDraggingEnchantable()
-        {
-            if (draggingholder)
-            {
-                SocketHolderDraggableInstance.position = Input.mousePosition;
-            }
-        }
-        protected virtual void CheckStopDraggingHolder()
-        {
-            if (socketHolderDraggable.GetSocketHolder() == null) return;
-            if (draggingholder == false) return;
-            if (Input.GetButtonUp(InteractButton))
-            {
-                //maybe we get a center point instead of the entire thing...
-                if (SocketablePreviewInstance.GetComponent<RectTransform>().rect.Overlaps(SocketHolderDraggableInstance.GetComponent<RectTransform>().rect))
-                {
-                    //placed
-                    previewholder.SetSockets(socketHolderDraggable.GetSocketHolder());
-                    SceneEvents.OnPreviewSetHolder?.Invoke();
-                }
-
-                SocketHolderDraggableInstance.position = homePosition;
-                draggingholder = false;//also check if trying to place in slot
-                Debug.Log("Drag Reset");
-            }
-        }
-        protected virtual void CheckStopDraggingSocketItem()
-        {
-            if (socketItemDraggable.GetSocketItem() == null) return;
-            if (draggingitem == false) return;
-            if (previewholder.GetSocketHolder() == null) return;
-
-            if (Input.GetButtonUp(InteractButton))
-            {
-                //add the socket...
-                //station.AddSocketable(previewholder.GetSocketHolder(), socketItemDraggable.GetSocketItem().Item);//need to minus from inventory...
-                ////maybe we get a center point instead of the entire thing...
-                //if (SocketablePreviewInstance.GetComponent<RectTransform>().rect.Overlaps(SocketHolderDraggableInstance.GetComponent<RectTransform>().rect))
-                //{
-                //    //placed
-                //    previewholder.SetSockets(socketHolderDraggable.GetSocketHolder());
-                //    SceneEvents.OnPreviewSetHolder?.Invoke();
-                //}
-
-                //SocketHolderDraggableInstance.position = homePosition;
-                //draggingholder = false;//also check if trying to place in slot
-                //Debug.Log("Drag Reset");
-            }
-        }
-        protected virtual void CheckDraggingStartDraggingHolder()
-        {
-            if (draggingholder == true) return;
-
-            foreach (var kvp in sockerHolderRectsDic)
-            {
                 Vector2 localMousePos = kvp.Key.InverseTransformPoint(Input.mousePosition);
                 if (kvp.Key.rect.Contains(localMousePos))
                 {
                     if (Input.GetButtonDown(InteractButton))
                     {
-                        draggingholder = true;
-                        TryPlaceInSlot(kvp.Value.GetSocketHolder());
-                        break;
+
+                        bool placed = TryPlaceInSlot(kvp.Value.GetSocket().SocketedThing);
+                        if (placed)
+                        {
+                            break;
+                        }
+
 
                     }
                 }
             }
+        }
+        protected virtual void DoDraggingSocketItem()
+        {
+            if (draggingitem)
+            {
+                SocketItemDraggableInstance.position = Input.mousePosition;
+            }
+        }
+        protected virtual void CheckStopDraggingSocketItem()
+        {
+          //  if (socketItemDraggable.GetSocketItem() == null) return;
+            if (draggingitem == false) return;
+            if (previewholder.GetSocketHolder() == null) return;
+            SocketItem socketitem = socketItemDraggable.GetSocketItem().Item as SocketItem;
+            if (socketitem == null) return;
 
+            if (Input.GetButtonUp(InteractButton))
+            {
+                //check, are we on a socket insert?
+                //if so, we need to switch socket things around. 
+                for (int i = 0; i < socketInserts.Count; i++)
+                {
+                    GameObject obj = socketInserts[i];
+                    RectTransform recT = obj.GetComponent<RectTransform>();
+                    Rect rect = recT.rect;
+                    Vector2 localMousePos = recT.InverseTransformPoint(Input.mousePosition);
+                    if (rect.Contains(localMousePos))
+                    {
+                        ISocketItemUIElementInsert socketinsert = obj.GetComponent<ISocketItemUIElementInsert>();
+                        Debug.Log(socketinsert);
+                        Equipment eq = previewholder.GetSocketHolder();
+                        Debug.Log(eq);
+                        int index = socketinsert.GetIndex();
+                        Debug.Log("Index " + index);
+  
+                        if (station.CanAdd(eq, index, socketitem))
+                        {
+                            bool removefrominventory = station.Inventory.RemoveItemFromSlot(socketitem, socketItemDraggable.GetSocketItem().SlotID);
+                            if (removefrominventory)
+                            {
+                                bool added = station.AddSocketable(eq, socketitem, index);//doesn't remove from inventory...
+                                socketItemDraggable.UpdateItem();
+                                socketinsert.UpdateSocket();
+                                previewholder.SetSockets(eq);
+                                break;
+                            }
+                        }
+           
+                        
+                       
+                    }
+                    
+
+                }
+                SocketItemDraggableInstance.position = homePosition;
+                draggingitem = false;
+
+            }
 
         }
 
@@ -164,9 +215,65 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                 {
                     if (Input.GetButtonDown(InteractButton))
                     {
-                        draggingitem = true;
-                        TryPlaceInSlot(kvp.Value.GetSocketItem());
-                        break;
+
+                        bool placed = TryPlaceInSlot(kvp.Value.GetSocketItem());
+                       if (placed)
+                        {
+                            break;
+                        }
+    
+
+                    }
+                }
+            }
+
+
+        }
+        protected virtual void DoDraggingSocketHolder()
+        {
+            if (draggingholder)
+            {
+                SocketHolderDraggableInstance.position = Input.mousePosition;
+            }
+        }
+        protected virtual void CheckStopDraggingHolder()
+        {
+            if (socketHolderDraggable.GetSocketHolder() == null) return;
+            if (draggingholder == false) return;
+            if (Input.GetButtonUp(InteractButton))
+            {
+                //maybe we get a center point instead of the entire thing...
+
+                if (SocketablePreviewInstance.GetComponent<RectTransform>().rect.Overlaps(SocketHolderDraggableInstance.GetComponent<RectTransform>().rect))
+                {
+                    //placed
+                    previewholder.SetSockets(socketHolderDraggable.GetSocketHolder());
+                    SceneEvents.OnPreviewSetHolder?.Invoke();
+                }
+
+                SocketHolderDraggableInstance.position = homePosition;
+                draggingholder = false;//also check if trying to place in slot
+                Debug.Log("Drag Reset");
+            }
+        }
+       
+        protected virtual void CheckDraggingStartDraggingHolder()
+        {
+            if (draggingholder == true) return;
+
+            foreach (var kvp in sockerHolderRectsDic)
+            {
+                Vector2 localMousePos = kvp.Key.InverseTransformPoint(Input.mousePosition);
+                if (kvp.Key.rect.Contains(localMousePos))
+                {
+                    if (Input.GetButtonDown(InteractButton))
+                    {
+                        bool placed = TryPlaceInSlot(kvp.Value.GetSocketHolder());
+                        if (placed)
+                        {
+                            break;
+                        }
+              
 
                     }
                 }
@@ -175,23 +282,34 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
         }
 
-        protected virtual void TryPlaceInSlot(ItemStack item)
+       
+
+        protected virtual bool TryPlaceInSlot(ItemStack item)
         {
-            socketItemDraggable.SetSocketItem(item);
-            if (item == null) return;
+            socketItemDraggable.SetSocketItem(item.SlotID, station.Inventory, RemoveSocketItemUI);
+            if (item == null) return draggingitem;
             SceneEvents.OnStartDragSocketItem?.Invoke();
             Debug.Log("Drag Start Success");
+            draggingitem = true;
+            return draggingitem;
         }
-        protected virtual void TryPlaceInSlot(Item item)
+        protected virtual bool TryPlaceInSlot(Item item)
         {
             socketHolderDraggable.SetSockets(item as Equipment);
-            if (item == null) return;
+            if (item == null) return draggingholder;
             SceneEvents.OnStartDragSocketHolder?.Invoke();
             Debug.Log("Drag Start Success");
+            draggingholder = true;
+            return draggingholder;
         }
 
         public void Close()
         {
+            if (station != null)
+            {
+                station.OnSmithClosed?.Invoke();
+            }
+
             uidic.Clear();
             MainPanel.gameObject.SetActive(false);
             if (station != null)
@@ -237,6 +355,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         }
         protected virtual void Setup(IUseSocketSmithCanvas user)
         {
+           
             this.user = user;
             this.user.SetCanvasSmithCanvas(this);
             MainPanel.gameObject.SetActive(true);
@@ -266,15 +385,33 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             {
                 DungeonMaster.Instance.GetDungeonUISceneRef().SetDungeonState(0);
             }
-
+            station.OnSmithOpen?.Invoke();
         }
+
+        
         protected virtual void CreateUISocketElement(ItemStack itemStack)
         {
             GameObject instance = Instantiate(SocketItemPrefab, SocketContentParent);
             ISocketItemUIElement socketitem = instance.GetComponent<ISocketItemUIElement>();
-            socketitem.SetSocketItem(itemStack);
+            socketitem.SetSocketItem(itemStack.SlotID, station.Inventory, RemoveSocketItemUI);
             socketUIElements.Add(instance);
             socketItemsRectsDic[instance.GetComponent<RectTransform>()] = socketitem;
+
+            station.Inventory.OnSlotChange += socketitem.UpdateItem;
+
+
+        }
+
+        protected virtual void RemoveSocketItemUI(GameObject key)
+        {
+            RectTransform t = key.GetComponent<RectTransform>();
+            if (socketItemsRectsDic.ContainsKey(t))
+            {
+                socketItemsRectsDic[t] = null;
+                socketItemsRectsDic.Remove(t);
+                Destroy(t.gameObject);
+            }
+            
         }
         protected virtual void CreateUISocketableElement(Item item)
         {

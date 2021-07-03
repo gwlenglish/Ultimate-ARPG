@@ -4,45 +4,77 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
+
 namespace GWLPXL.ARPGCore.CanvasUI.com
 {
     public interface ISocketItemUIElement
     {
-        void SetSocketItem(ItemStack item);
+        void SetSocketItem(int slot, ActorInventory inventory, System.Action<GameObject> cleanupCallback);
         ItemStack GetSocketItem();
+        void UpdateItem();
+        void UpdateItem(int slot);
+
     }
 
     public class SocketItemUIElement : MonoBehaviour, ISocketItemUIElement
     {
+        
         public Image ThingImage = default;
         public TextMeshProUGUI ThingNameText = default;
         public TextMeshProUGUI ThingDescriptionText = default;
-        ItemStack item = null;
+        int slot;
+
+        System.Action<GameObject> OnCleanUp;
+        ActorInventory inventory = null;
+
         public ItemStack GetSocketItem()
         {
-            return item;
+            return inventory.GetItemStackBySlot(slot);
         }
 
-        public void SetSocketItem(ItemStack item)
+      
+        
+        public void SetSocketItem(int stackSlot, ActorInventory inventory, System.Action<GameObject> cleanupCallback)
         {
-            this.item = item;
-            Setup(item);
+            this.slot = stackSlot;
+            this.inventory = inventory;
+            OnCleanUp = cleanupCallback;
+            Setup();
         }
 
-
-        protected virtual void Setup(ItemStack item)
+        public void UpdateItem()
         {
-            if (item == null)
+            Setup();
+        }
+
+        public void UpdateItem(int slot)
+        {
+            if (this.slot !=slot) return;
+            Setup();
+
+        }
+
+        protected virtual void Setup()
+        {
+            ItemStack stack = inventory.GetItemStackBySlot(slot);
+
+            if (stack.CurrentStackSize <= 0 || stack.Item == null)
             {
-                Debug.LogWarning("Item shouldn't be null and have an instance of it. Something went wrong");
+                DestroyMe();
                 return;
             }
-
-            ThingImage.sprite = item.Item.GetSprite();
-            ThingNameText.SetText(item.Item.GetGeneratedItemName());
-            ThingDescriptionText.SetText(item.Item.GetUserDescription());
+            ThingImage.sprite = stack.Item.GetSprite();
+            ThingNameText.SetText(stack.Item.GetGeneratedItemName());
+            ThingDescriptionText.SetText(stack.Item.GetUserDescription());
         }
 
-       
+        protected virtual void DestroyMe()
+        {
+            inventory.OnSlotChange -= UpdateItem;
+            OnCleanUp?.Invoke(this.gameObject);
+
+        }
+
     }
 }

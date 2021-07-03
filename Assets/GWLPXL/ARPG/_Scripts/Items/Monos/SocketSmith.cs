@@ -3,13 +3,14 @@ using GWLPXL.ARPGCore.com;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using GWLPXL.ARPGCore.DebugHelpers.com;
 namespace GWLPXL.ARPGCore.Items.com
 {
     
     [System.Serializable]
     public class SocketSmithVars
     {
+
         public SocketStation Station = new SocketStation();
         public float InteractRange = 3;
         public SocketTypeReader SocketReader = null;
@@ -30,6 +31,14 @@ namespace GWLPXL.ARPGCore.Items.com
         GameObject uiinstance = null;
         ISocketSmithCanvas canvas;
 
+        protected virtual void OnDestroy()
+        {
+            if (canvas != null)
+            {
+                SocketSmithVars.Station.OnSmithOpen -= Subscribe;
+                SocketSmithVars.Station.OnSmithClosed -= UnSubscribe;
+            }
+        }
         protected virtual void Start()
         {
             Setup();
@@ -39,33 +48,59 @@ namespace GWLPXL.ARPGCore.Items.com
         {
             SocketSmithVars.Station = new SocketStation();
             SocketSmithVars.Station.SocketTypeReader = SocketSmithVars.SocketReader;
-            SocketSmithVars.Station.OnAddSocketable += SocketAdded;
-            SocketSmithVars.Station.OnStationSetup += StationReady;
-            SocketSmithVars.Station.OnStationClosed += StationClosed;
+            SocketSmithVars.Station.OnSmithOpen += Subscribe;
+            SocketSmithVars.Station.OnSmithClosed += UnSubscribe;
             if (SocketSmithUIPrefab != null)
             {
                 uiinstance = Instantiate(SocketSmithUIPrefab);
                 canvas = uiinstance.GetComponent<ISocketSmithCanvas>();
                 
                 canvas.Close();
+                
             }
 
         }
 
+        protected virtual void Subscribe()
+        {
+            SocketSmithVars.Station.OnAddSocketable += AddedSocketItem;
+            SocketSmithVars.Station.OnStationSetup += StationReady;
+            SocketSmithVars.Station.OnStationClosed += StationClosed;
+
+            SocketSmithVars.Station.OnRemoveSocketable += RemovedSocketItem;
+            SocketSmithVars.Station.OnFailToAddStorageIssue += FailedStorage;
+        }
+        protected virtual void UnSubscribe()
+        {
+            SocketSmithVars.Station.OnAddSocketable -= AddedSocketItem;
+            SocketSmithVars.Station.OnStationSetup -= StationReady;
+            SocketSmithVars.Station.OnStationClosed -= StationClosed;
+
+            SocketSmithVars.Station.OnRemoveSocketable -= RemovedSocketItem;
+            SocketSmithVars.Station.OnFailToAddStorageIssue -= FailedStorage;
+        }
+        protected virtual void FailedStorage()
+        {
+            ARPGDebugger.DebugMessage("Failed to add storage, inventory storage problem " , this);
+        }
+        protected virtual void RemovedSocketItem(Equipment equipment)
+        {
+            ARPGDebugger.DebugMessage("Socket changed on EQUIPMENT " + equipment.GetGeneratedItemName(), this);
+        }
         protected virtual void StationClosed(SocketStation station)
         {
             SocketEvents.SceneEvents.OnStationClosed?.Invoke(station);
-            Debug.Log("Station Closed");
+            ARPGDebugger.DebugMessage("Station Closed", this);
         }
         protected virtual void StationReady(SocketStation station)
         {
             SocketEvents.SceneEvents.OnStationSetup?.Invoke(station);
-            Debug.Log("Station Ready");
+            ARPGDebugger.DebugMessage("Station Ready", this);
         }
-        protected virtual  void SocketAdded(Equipment equipment)
+        protected virtual  void AddedSocketItem(Equipment equipment)
         {
             SocketEvents.SceneEvents.OnEquipmentSocketed?.Invoke(equipment);
-            Debug.Log("Item Socketable Added " + equipment.GetGeneratedItemName());
+            ARPGDebugger.DebugMessage("Item Socketable Added " + equipment.GetGeneratedItemName(), this);
         }
         protected virtual IUseSocketSmithCanvas CheckPreconditions(GameObject obj)
         {
