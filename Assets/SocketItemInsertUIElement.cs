@@ -10,7 +10,9 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
     public interface ISocketItemUIElementInsert
     {
-        void SetSocket(Socket socket);
+        Item GetHolder();
+   
+        void SetSocket(Socket socket, Item holder);
         Socket GetSocket();
         int GetIndex();
         void SetIndex(int index);
@@ -26,6 +28,11 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
         Socket socket;
         int index;
+        Item holder;
+        public Item GetHolder()
+        {
+            return holder;
+        }
 
         public int GetIndex()
         {
@@ -42,9 +49,12 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             this.index = index;
         }
 
-        public void SetSocket(Socket socket)
+       
+
+        public void SetSocket(Socket socket, Item holder)
         {
             this.socket = socket;
+            this.holder = holder;
             Setup(socket);
         }
 

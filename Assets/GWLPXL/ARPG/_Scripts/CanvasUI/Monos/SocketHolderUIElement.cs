@@ -76,7 +76,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                     socketitemobjects.Add(socketitem);
                     ISocketItemUIElementInsert sockeitemElement = socketitem.GetComponent<ISocketItemUIElementInsert>();
                     sockeitemElement.SetIndex(i);
-                    sockeitemElement.SetSocket(sockets[i]);
+                    sockeitemElement.SetSocket(sockets[i], equipment);
                 }
        
 

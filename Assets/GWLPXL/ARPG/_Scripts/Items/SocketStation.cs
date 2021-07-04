@@ -109,6 +109,14 @@ namespace GWLPXL.ARPGCore.Items.com
             return true;
         }
 
+        public virtual bool RemoveSocketable(Equipment equipment, int atIndex)
+        {
+            Socket socket = GetSocket(equipment, atIndex);
+            socket.SocketedThing = null;
+            equipment.GetStats().SetSocket(atIndex, socket);
+            OnRemoveSocketable?.Invoke(equipment);
+            return true;
+        }
         public virtual bool AddSocketable(Equipment equipment, SocketItem newSocketable,  int atindex, bool isPreview = false)
         {
 

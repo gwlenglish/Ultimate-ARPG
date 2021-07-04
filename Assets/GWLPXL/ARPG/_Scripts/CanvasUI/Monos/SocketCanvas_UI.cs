@@ -140,8 +140,10 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                 {
                     if (Input.GetButtonDown(InteractButton))
                     {
+                        if (kvp.Value.GetSocket().SocketedThing == null) continue;//dont add a null one...
+
                         socketInsert.SetIndex(kvp.Value.GetIndex());
-                        socketInsert.SetSocket(kvp.Value.GetSocket());
+                        socketInsert.SetSocket(kvp.Value.GetSocket(), kvp.Value.GetHolder());
                         Debug.Log("Drag Start Success");
                         draggingitemfromsocket = true;
                         break;
@@ -167,7 +169,22 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                     if (rectitem.rect.Contains(localmouse))
                     {
                         //add back to inventory.
-                        Debug.Log("Return to Inventory");
+                        ISocketItemUIElementInsert insert = socketInserts[i].GetComponent<ISocketItemUIElementInsert>();
+                        bool canAdd = station.Inventory.CanWeAddItem(insert.GetSocket().SocketedThing);
+                        if (canAdd)
+                        {
+                            station.Inventory.AddItemsToInventory(insert.GetSocket().SocketedThing, 1);
+                            station.RemoveSocketable(insert.GetHolder() as Equipment, insert.GetIndex());
+                            //need to update visuals now. 
+                            insert.UpdateSocket();
+                            //needs to create its own ui element or add to existing...
+                            Debug.Log("Return to Inventory");
+                        }
+                        else
+                        {
+                            //reset
+                            Debug.Log("Return to Insert");
+                        }
                         break;
                     }
 
@@ -446,6 +463,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         
         protected virtual void CreateUISocketElement(ItemStack itemStack)
         {
+
             GameObject instance = Instantiate(SocketItemPrefab, SocketContentParent);
             ISocketItemUIElement socketitem = instance.GetComponent<ISocketItemUIElement>();
             socketitem.SetSocketItem(itemStack.SlotID, station.Inventory, RemoveSocketItemUI);
