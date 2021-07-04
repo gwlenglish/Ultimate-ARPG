@@ -9,24 +9,44 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
     public interface ISocketUIElement
     {
-        void SetSocket(Socket socket);
+        void SetSocket(int index, Item holder);
         Socket GetSocket();
+        void Refresh();
     }
     public class SocketUIElement : MonoBehaviour, ISocketUIElement
     {
         public Image Image = default;
         public Sprite EmptySprite = null;
         Socket socket = null;
-
+        int index;
+        Item holder;
 
         public Socket GetSocket()
         {
             return socket;
         }
 
-        public void SetSocket(Socket socket)
+        public void Refresh()
         {
-            this.socket = socket;
+            Debug.Log("REfreshed");
+            if (holder is Equipment)
+            {
+                Equipment eq = holder as Equipment;
+                socket = eq.GetStats().GetSocket(index);
+                SetSocket(index, holder);
+            }
+        }
+
+        public void SetSocket(int index, Item holder)
+        {
+            this.holder = holder;
+            this.index = index;
+            if (this.holder is Equipment)
+            {
+                Equipment eq = this.holder as Equipment;
+                this.socket = eq.GetStats().GetSocket(index);
+            }
+        
             Setup(socket);
         }
 

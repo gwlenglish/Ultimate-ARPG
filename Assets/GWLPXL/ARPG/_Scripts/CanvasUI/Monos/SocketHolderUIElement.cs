@@ -12,6 +12,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         void SetSockets(Equipment forEquipment);
         Equipment GetSocketHolder();
         List<ISocketUIElement> GetSockets();
+        void RefreshSockets();
     }
 
     public class SocketHolderUIElement : MonoBehaviour, ISocketHolderUIElement
@@ -30,6 +31,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         Equipment equipment = null;
         List<ISocketUIElement> socketInstances = new List<ISocketUIElement>();
         List<GameObject> socketitemobjects = new List<GameObject>();
+        List<ISocketItemUIElementInsert> inserts = new List<ISocketItemUIElementInsert>();
         public Equipment GetSocketHolder()
         {
             return equipment;
@@ -48,6 +50,13 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
         }
 
+        public void RefreshSockets()
+        {
+            Setup(equipment);
+
+
+        }
+
         protected virtual void Setup(Equipment forEquipment)
         {
             for (int i = 0; i < socketitemobjects.Count; i++)
@@ -58,6 +67,9 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             {
                 Destroy(instances[i]);//remove old
             }
+           
+            socketInstances.Clear();
+            inserts.Clear();
             socketitemobjects.Clear();
             instances.Clear();
             List<Socket> sockets = forEquipment.GetStats().GetSockets();
@@ -66,7 +78,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             {
                 GameObject instance = Instantiate(SocketPrefab, SocketParent);
                 ISocketUIElement sock = instance.GetComponent<ISocketUIElement>();
-                sock.SetSocket(sockets[i]);
+                sock.SetSocket(i, forEquipment);
                 socketInstances.Add(sock);
                 instances.Add(instance);
 
@@ -77,6 +89,8 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                     ISocketItemUIElementInsert sockeitemElement = socketitem.GetComponent<ISocketItemUIElementInsert>();
                     sockeitemElement.SetIndex(i);
                     sockeitemElement.SetSocket(sockets[i], equipment);
+
+                    inserts.Add(sockeitemElement);
                 }
        
 

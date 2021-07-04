@@ -813,6 +813,8 @@ namespace GWLPXL.ARPGCore.Items.com
             UniqueStacks.Add(newStack);
 
             OnAddItem?.Invoke(newItem);
+            OnSlotChange?.Invoke(availableSlot);
+            OnSlotChanged?.Invoke(availableSlot, newStack);
         }
 
 
@@ -846,6 +848,9 @@ namespace GWLPXL.ARPGCore.Items.com
                                     stack.IsFull = true;
                                 }
                                 addedToStack = true;
+                                OnAddItem?.Invoke(newItem);
+                                OnSlotChange?.Invoke(stack.SlotID);
+                                OnSlotChanged?.Invoke(stack.SlotID, stack);
                                 break;
                             }
                         }
@@ -854,10 +859,7 @@ namespace GWLPXL.ARPGCore.Items.com
 
             }
 
-            if (addedToStack)
-            {
-                OnAddItem?.Invoke(newItem);
-            }
+           
             return addedToStack;
         }
         #endregion

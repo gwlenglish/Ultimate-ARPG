@@ -60,7 +60,13 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
         public void UpdateSocket()
         {
-            Setup(socket);
+            if (holder is Equipment)
+            {
+                Equipment eq = holder as Equipment;
+                socket = eq.GetStats().GetSockets()[index];
+                Setup(socket);
+            }
+          
         }
 
         protected virtual void Setup(Socket socket)
@@ -81,6 +87,8 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             else
             {
                 ThingImage.sprite = EmptySprite;
+                ThingNameText.SetText(socket.SocketType.ToString());
+                ThingDescriptionText.SetText("");
 
             }
 

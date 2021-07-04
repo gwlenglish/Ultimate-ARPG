@@ -99,16 +99,33 @@ namespace GWLPXL.ARPGCore.Items.com
                 return false;
             }
 
-
-            if (socket.SocketType != newSocketable.GetSocketType())
+            if (newSocketable != null)
             {
-                DebugHelpers.com.ARPGDebugger.DebugMessage("Socket Type Mismatch, can't add" + equipment.GetUserDescription(), equipment);
-                OnFailToAddTypeMisMatch?.Invoke();
-                return false;
+                if (socket.SocketType != newSocketable.GetSocketType())
+                {
+                    DebugHelpers.com.ARPGDebugger.DebugMessage("Socket Type Mismatch, can't add" + equipment.GetUserDescription(), equipment);
+                    OnFailToAddTypeMisMatch?.Invoke();
+                    return false;
+                }
             }
+        
             return true;
         }
 
+        public virtual bool SwapSocketItem(Equipment equipment, int a, int b)
+        {
+            Socket sockA = equipment.GetStats().GetSocket(a);
+            Socket sockB = equipment.GetStats().GetSocket(b);
+            SocketItem itemA = sockA.SocketedThing;
+            SocketItem itemB = sockB.SocketedThing;
+            if (CanAdd(equipment, a, itemB) && CanAdd(equipment, b, itemA))
+            {
+                AddSocketable(equipment, itemB, a);
+                AddSocketable(equipment, itemA, b);
+                return true;
+            }
+            return false;
+        }
         public virtual bool RemoveSocketable(Equipment equipment, int atIndex)
         {
             Socket socket = GetSocket(equipment, atIndex);
@@ -144,6 +161,7 @@ namespace GWLPXL.ARPGCore.Items.com
             return socket;
         }
 
+       
         protected virtual bool HandleRemoval(Equipment equipment, int index, bool destroyRemoved = false)
         {
             if (equipment.GetStats().GetSocket(index) == null)

@@ -18,6 +18,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
   
 
 
+
     /// <summary>
     /// to do, inserts dragging
     /// to do, replace preview items (need to delete its socket items)
@@ -40,7 +41,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         public GameObject SocketItemPrefab = default;
         public Transform SocketContentParent = default;
         public Transform SocketItemPanel = default;
-[Header("Preview")]
+        [Header("Preview")]
         public Transform SocketablePreviewInstance = default;
         ISocketHolderUIElement previewholder = null;
 
@@ -53,8 +54,8 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         ISocketItemUIElementInsert socketInsert = null;
         protected Dictionary<RectTransform, ISocketHolderUIElement> sockerHolderRectsDic = new Dictionary<RectTransform, ISocketHolderUIElement>();
         protected Dictionary<RectTransform, ISocketItemUIElement> socketItemsRectsDic = new Dictionary<RectTransform, ISocketItemUIElement>();
-        
 
+        protected Dictionary<int, ISocketItemUIElement> slotInstance = new Dictionary<int, ISocketItemUIElement>();
         protected Dictionary<Item, ISocketHolderUIElement> uidic = new Dictionary<Item, ISocketHolderUIElement>();
         protected List<GameObject> socketableableUIElements = new List<GameObject>();
         protected List<GameObject> socketUIElements = new List<GameObject>();
@@ -97,7 +98,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                 socketinsertsdic[socketInserts[i].GetComponent<RectTransform>()] = socketInserts[i].GetComponent<ISocketItemUIElementInsert>();
             }
         }
-        private void Disable()
+        protected virtual void OnDisable()
         {
             SocketHolderUIElement uielem = SocketablePreviewInstance.GetComponent<SocketHolderUIElement>();
             if (uielem != null)
@@ -166,10 +167,14 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                     //check if we put it back. 
                     RectTransform rectitem = SocketItemPanel.GetComponent<RectTransform>();//this doesn't work, 
                     Vector2 localmouse = rectitem.InverseTransformPoint(Input.mousePosition);
+                    ISocketItemUIElementInsert insert = socketInserts[i].GetComponent<ISocketItemUIElementInsert>();
+
+
                     if (rectitem.rect.Contains(localmouse))
                     {
                         //add back to inventory.
-                        ISocketItemUIElementInsert insert = socketInserts[i].GetComponent<ISocketItemUIElementInsert>();
+                        if (insert.GetSocket().SocketedThing == null) continue;
+
                         bool canAdd = station.Inventory.CanWeAddItem(insert.GetSocket().SocketedThing);
                         if (canAdd)
                         {
@@ -177,12 +182,16 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                             station.RemoveSocketable(insert.GetHolder() as Equipment, insert.GetIndex());
                             //need to update visuals now. 
                             insert.UpdateSocket();
+                            socketHolderDraggable.RefreshSockets();//also need to refresh the thing in the item panel...
+                            uidic[insert.GetHolder()].RefreshSockets();//doesn't seem to work...
+                            previewholder.SetSockets(previewholder.GetSocketHolder());
                             //needs to create its own ui element or add to existing...
                             Debug.Log("Return to Inventory");
                         }
                         else
                         {
                             //reset
+
                             Debug.Log("Return to Insert");
                         }
                         break;
@@ -195,9 +204,18 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                     if (rect.Contains(localMousePos))
                     {
                         //swap them.
-
-                        Debug.Log("Swap");
-                        break;
+                        bool swap = station.SwapSocketItem(insert.GetHolder() as Equipment, insert.GetIndex(), socketInsert.GetIndex());
+                        if (swap)
+                        {
+                            insert.UpdateSocket();
+                            socketHolderDraggable.RefreshSockets();//also need to refresh the thing in the item panel...
+                            uidic[insert.GetHolder()].RefreshSockets();//doesn't seem to work...
+                            previewholder.SetSockets(previewholder.GetSocketHolder());
+                            socketInsert.UpdateSocket();
+                            Debug.Log("Swap");
+                            break;
+                        }
+               
                     }
 
                 }
@@ -380,15 +398,14 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             if (station != null)
             {
                 station.OnSmithClosed?.Invoke();
+                station.Inventory.OnSlotChanged -= UpdateUI;
+                station.OnAddSocketable -= UpdateEquipmentUI;
+
             }
 
             uidic.Clear();
             MainPanel.gameObject.SetActive(false);
-            if (station != null)
-            {
-                station.OnAddSocketable -= UpdateEquipmentUI;
-
-            }
+          
 
             for (int i = 0; i < socketableableUIElements.Count; i++)
             {
@@ -425,6 +442,26 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         {
             Setup(user);
         }
+        protected virtual void UpdateUI(int slot, ItemStack stack)
+        {
+            Debug.Log("Event Called");
+            if (slotInstance.ContainsKey(slot))
+            {
+                //update
+                slotInstance[slot].UpdateItem();
+                Debug.Log("Event Update");
+            }
+            else
+            {
+                if (stack.Item != null && stack.Item is EquipmentSocketable)
+                {
+                    CreateUISocketElement(stack);
+                    Debug.Log("Event Craete");
+                }
+               
+                //create new
+            }
+        }
         protected virtual void Setup(IUseSocketSmithCanvas user)
         {
            
@@ -433,6 +470,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             MainPanel.gameObject.SetActive(true);
 
             station.OnAddSocketable += UpdateEquipmentUI;
+            station.Inventory.OnSlotChanged += UpdateUI;
 
             List<Equipment> equipped = station.GetEquippedEquipmentWithSockets();
             for (int i = 0; i < equipped.Count; i++)
@@ -469,7 +507,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             socketitem.SetSocketItem(itemStack.SlotID, station.Inventory, RemoveSocketItemUI);
             socketUIElements.Add(instance);
             socketItemsRectsDic[instance.GetComponent<RectTransform>()] = socketitem;
-
+            slotInstance[itemStack.SlotID] = socketitem;
             station.Inventory.OnSlotChange += socketitem.UpdateItem;
 
 
@@ -480,8 +518,10 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             RectTransform t = key.GetComponent<RectTransform>();
             if (socketItemsRectsDic.ContainsKey(t))
             {
+                int id = socketItemsRectsDic[t].GetSocketItem().SlotID;
                 socketItemsRectsDic[t] = null;
                 socketItemsRectsDic.Remove(t);
+                slotInstance.Remove(id);
                 Destroy(t.gameObject);
             }
             
