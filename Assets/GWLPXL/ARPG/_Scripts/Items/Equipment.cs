@@ -268,6 +268,7 @@ namespace GWLPXL.ARPGCore.Items.com
         [Tooltip("Leave empty for an empty socket.")]
         public SocketItem SocketedThing = null;
         public SocketTypes SocketType = SocketTypes.Any;
+      
         public Socket(SocketItem thing, SocketTypes type)
         {
             SocketedThing = thing;
@@ -304,7 +305,27 @@ namespace GWLPXL.ARPGCore.Items.com
         protected int iLevel = 1;
 
         #region sockets
-        //to do, updating sockets and also saving
+        public virtual List<string> GetAllSocketAffixes()
+        {
+            List<string> _temp = new List<string>();
+            for (int i = 0; i < sockets.Length; i++)
+            {
+                if (sockets[i].SocketedThing != null)
+                {
+                    if (sockets[i].SocketedThing is EquipmentSocketable)
+                    {
+                        EquipmentSocketable sock = sockets[i].SocketedThing as EquipmentSocketable;
+                        EquipmentTrait trait = sock.EquipmentTraitSocketable;
+                        for (int j = 0; j < trait.GetAllAffixes().Count; j++)
+                        {
+                            _temp.Add(trait.GetAllAffixes()[j]);
+                        }
+                    }
+                }
+            }
+            return _temp;
+        }
+
         public virtual void SetSocket(int atIndex, Socket socket)
         {
             if (atIndex < 0 || atIndex > sockets.Length - 1)
@@ -413,8 +434,22 @@ namespace GWLPXL.ARPGCore.Items.com
                 _temp.Add(randomTraits[i]);
             }
 
+            for (int i = 0; i < sockets.Length; i++)
+            {
+                SocketItem item = sockets[i].SocketedThing;
+                if (item != null)
+                {
+                    if (item is EquipmentSocketable)
+                    {
+                        EquipmentSocketable eqsock = item as EquipmentSocketable;
+                        _temp.Add(eqsock.EquipmentTraitSocketable);
+                    }
+                }
+            }
+
             return _temp.ToArray();
         }
+        
 
     }
 

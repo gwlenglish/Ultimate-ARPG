@@ -1,0 +1,29 @@
+{
+    "config": {
+        "instanceID": 17268
+    },
+    "AutoName": true,
+    "traitID": {
+        "Name": "Dexterity",
+        "ID": 7,
+        "Trait": {
+            "instanceID": 232138
+        }
+    },
+    "traitName": "Large Gem Dexterity",
+    "TraitPrefixes": [
+        "Agile",
+        "Nimble"
+    ],
+    "TraitSuffixes": [
+        "of Dexterity",
+        "of Nimbleness"
+    ],
+    "myValue": 10,
+    "myLevelMulti": 100,
+    "weight": 7,
+    "sprite": {
+        "instanceID": 0
+    },
+    "Type": 2
+}

@@ -103,6 +103,11 @@ public static class AffixHelper
         List<string> split = phrase.Split(delimiter).ToList();
         return GetSortedAffixes(split, reader);
     }
+    public static List<string> SplitAffixes(string phrase, AffixReader reader, char delimiter = ' ')
+    {
+        List<string> split = phrase.Split(delimiter).ToList();
+        return split;
+    }
     /// <summary>
     /// Returns a sorted version of the affixes, but uses a preloaded dictionary instead of looping. Mostly just an optimized version of the base.
     /// </summary>

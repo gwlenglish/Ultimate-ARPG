@@ -1,8 +1,9 @@
-﻿using GWLPXL.ARPGCore.Traits.com;
+﻿using GWLPXL.ARPGCore.Statics.com;
+using GWLPXL.ARPGCore.Traits.com;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.Linq;
 namespace GWLPXL.ARPGCore.Items.com
 {
 
@@ -13,6 +14,7 @@ namespace GWLPXL.ARPGCore.Items.com
     {
         public ActorInventory Inventory => userInventory;
         public SocketTypeReader SocketTypeReader = default;
+        public AffixReaderSO AffixReaderSO = default;
         public System.Action OnSmithOpen;
         public System.Action OnSmithClosed;
         public System.Action<Equipment> OnAddSocketable;
@@ -37,9 +39,26 @@ namespace GWLPXL.ARPGCore.Items.com
         {   //from user inventory?, nah we load it. 
             return stacksofsockets;
         }
+        /// <summary>
+        /// working on getting prefix and suffix seperately next, all at once doens't work so well because it's all prefixes
+        /// </summary>
+        /// <param name="equipment"></param>
+        public virtual void RenameItemWithSocket(Equipment equipment)
+        {
+            List<string> socketAffixes = equipment.GetStats().GetAllSocketAffixes();
+            string newname = PlayerDescription.GetGeneratedName(equipment);
+            if (socketAffixes.Count > 0)//we have none
+            {
+                List<string> generated = AffixReaderSO.GetSplitAffixes(newname);
+                var combined = socketAffixes.Concat(generated).ToList();
+                newname = AffixReaderSO.GetNameWithAffixesPreLoaded(combined, equipment.GetBaseItemName(), 0);
+            }
+            
+            equipment.SetGeneratedItemName(newname);
+        }
         public virtual void SetupStation(ActorInventory userInventory)
         {
-            stacksofsockets = new List<ItemStack>();
+            stacksofsockets.Clear();
             List<ItemStack> stacks = userInventory.GetAllUniqueStacks();
             for (int i = 0; i < stacks.Count; i++)
             {
@@ -90,6 +109,7 @@ namespace GWLPXL.ARPGCore.Items.com
             return _temp;
         }
 
+        
       public virtual bool CanAdd(Equipment equipment, int atIndex, SocketItem newSocketable)
         {
             Socket socket = GetSocket(equipment, atIndex);
@@ -126,21 +146,31 @@ namespace GWLPXL.ARPGCore.Items.com
             }
             return false;
         }
-        public virtual bool RemoveSocketable(Equipment equipment, int atIndex)
+        public virtual bool RemoveSocketable(Equipment equipment, int atIndex, bool andRename = false)
         {
             Socket socket = GetSocket(equipment, atIndex);
             socket.SocketedThing = null;
             equipment.GetStats().SetSocket(atIndex, socket);
             OnRemoveSocketable?.Invoke(equipment);
+
+            if (andRename)
+            {
+                RenameItemWithSocket(equipment);
+            }
             return true;
         }
-        public virtual bool AddSocketable(Equipment equipment, SocketItem newSocketable,  int atindex, bool isPreview = false)
+        public virtual bool AddSocketable(Equipment equipment, SocketItem newSocketable,  int atindex, bool alsoRename = false)
         {
 
             Socket socket = GetSocket(equipment, atindex);
             socket.SocketedThing = newSocketable;
             equipment.GetStats().SetSocket(atindex, socket);
             OnAddSocketable?.Invoke(equipment);
+
+            if (alsoRename)
+            {
+                RenameItemWithSocket(equipment);
+            }
             return true;
 
         }
@@ -161,7 +191,13 @@ namespace GWLPXL.ARPGCore.Items.com
             return socket;
         }
 
-       
+       /// <summary>
+       /// would be ideal, but doesn't seem to be working at the moment
+       /// </summary>
+       /// <param name="equipment"></param>
+       /// <param name="index"></param>
+       /// <param name="destroyRemoved"></param>
+       /// <returns></returns>
         protected virtual bool HandleRemoval(Equipment equipment, int index, bool destroyRemoved = false)
         {
             if (equipment.GetStats().GetSocket(index) == null)

@@ -25,6 +25,7 @@ MonoBehaviour:
   TraitSuffixes:
   - of Dexterity
   - of Nimbleness
+  myValue: 1
   myLevelMulti: 60
   weight: 7
   sprite: {fileID: 0}

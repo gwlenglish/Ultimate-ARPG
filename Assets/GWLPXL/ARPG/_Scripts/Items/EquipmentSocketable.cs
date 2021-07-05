@@ -12,6 +12,8 @@ namespace GWLPXL.ARPGCore.Items.com
     public class EquipmentSocketable : SocketItem
     {
         public EquipmentTrait EquipmentTraitSocketable = null;
+
+
         public override string GetUserDescription()
         {
             string generated = GetGeneratedItemName();

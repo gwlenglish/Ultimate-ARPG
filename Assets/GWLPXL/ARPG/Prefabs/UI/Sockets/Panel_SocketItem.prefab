@@ -223,6 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88290a13857efc44aa9bd194352bd9be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DraggableInstance: 0
   ThingImage: {fileID: 488807548270709604}
   ThingNameText: {fileID: 202363385324087558}
   ThingDescriptionText: {fileID: 6657447595860362243}

@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dab32a9c2e15add409e77a624860c042, type: 3}
-  m_Name: Dexterity_StatTrait_100%
+  m_Name: Small Gem Dexterity
   m_EditorClassIdentifier: 
-  config: {fileID: 4900000, guid: b5d900875a2a25d4ab8e31eea2c58625, type: 3}
+  config: {fileID: 4900000, guid: efd93381c98ce794380c55a029ce3f9f, type: 3}
   AutoName: 1
   traitID:
     Name: Dexterity
-    ID: 19
+    ID: 7
     Trait: {fileID: 11400000}
   traitName: Dexterity
   TraitPrefixes:
@@ -25,8 +25,8 @@ MonoBehaviour:
   TraitSuffixes:
   - of Dexterity
   - of Nimbleness
-  myValue: 1
-  myLevelMulti: 100
+  myValue: 10
+  myLevelMulti: 60
   weight: 7
   sprite: {fileID: 0}
   Type: 2

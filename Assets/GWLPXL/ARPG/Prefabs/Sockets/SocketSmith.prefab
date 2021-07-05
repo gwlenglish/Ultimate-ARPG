@@ -163,9 +163,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SocketSmithVars:
     InteractRange: 3
-    SocketItems:
-    - {fileID: 11400000, guid: da00f54431d9ec5469b244cd404d52ae, type: 2}
     SocketReader: {fileID: 11400000, guid: 54347a991db2f5444bcc37233d0ab366, type: 2}
+    AffixReader: {fileID: 11400000, guid: 3e4efdf6488b65849a561f01bd339f43, type: 2}
   SocketEvents:
     SceneEvents:
       OnStationSetup:

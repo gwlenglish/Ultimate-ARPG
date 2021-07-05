@@ -10,22 +10,23 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 {
     public interface ISocketItemUIElement
     {
-        void SetSocketItem(int slot, ActorInventory inventory, System.Action<GameObject> cleanupCallback);
+        void SetSocketItem(int slot, ActorInventory inventory);
         ItemStack GetSocketItem();
         void UpdateItem();
         void UpdateItem(int slot);
+
 
     }
 
     public class SocketItemUIElement : MonoBehaviour, ISocketItemUIElement
     {
-        
+        public bool DraggableInstance = false;
         public Image ThingImage = default;
         public TextMeshProUGUI ThingNameText = default;
         public TextMeshProUGUI ThingDescriptionText = default;
         int slot;
 
-        System.Action<GameObject> OnCleanUp;
+
         ActorInventory inventory = null;
 
         public ItemStack GetSocketItem()
@@ -35,11 +36,10 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
       
         
-        public void SetSocketItem(int stackSlot, ActorInventory inventory, System.Action<GameObject> cleanupCallback)
+        public void SetSocketItem(int stackSlot, ActorInventory inventory)
         {
             this.slot = stackSlot;
             this.inventory = inventory;
-            OnCleanUp = cleanupCallback;
             Setup();
         }
 
@@ -58,23 +58,39 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         protected virtual void Setup()
         {
             ItemStack stack = inventory.GetItemStackBySlot(slot);
-
-            if (stack.CurrentStackSize <= 0 || stack.Item == null)
+            if (stack.Item == false || stack.CurrentStackSize <= 0)
             {
-                DestroyMe();
-                return;
+                if (DraggableInstance == false)
+                {
+                    gameObject.SetActive(false);
+                }
+
+                ThingImage.sprite = null;
+                ThingNameText.SetText("Empty");
+                ThingDescriptionText.SetText("Empty");
             }
-            ThingImage.sprite = stack.Item.GetSprite();
-            ThingNameText.SetText(stack.Item.GetGeneratedItemName());
-            ThingDescriptionText.SetText(stack.Item.GetUserDescription());
+            else
+            {
+                //here's we could filter if we want.
+                if (stack.Item is SocketItem)
+                {
+                    ThingImage.sprite = stack.Item.GetSprite();
+                    ThingNameText.SetText(stack.Item.GetGeneratedItemName());
+                    ThingDescriptionText.SetText(stack.Item.GetUserDescription());
+                }
+                else
+                {
+                    gameObject.SetActive(false);
+                   
+
+                }
+
+            }
+           
+  
         }
 
-        protected virtual void DestroyMe()
-        {
-            inventory.OnSlotChange -= UpdateItem;
-            OnCleanUp?.Invoke(this.gameObject);
-
-        }
+      
 
     }
 }

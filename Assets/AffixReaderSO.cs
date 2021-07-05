@@ -48,6 +48,10 @@ public class AffixReaderSO : ScriptableObject
         AffixHelper.LoadReader(Affixreader, wordIndexDic);
         
     }
+    public virtual List<string> GetSplitAffixes(string phrase, char delimiter = ' ')
+    {
+        return AffixHelper.SplitAffixes(phrase, Affixreader, delimiter);
+    }
     public virtual string GetRandomAffix(int fromOrder)
     {
         return AffixHelper.GetRandomAffix(fromOrder, Affixreader);

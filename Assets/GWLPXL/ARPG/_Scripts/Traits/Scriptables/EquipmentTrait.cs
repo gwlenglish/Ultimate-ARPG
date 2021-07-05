@@ -3,6 +3,7 @@ using GWLPXL.ARPGCore.Attributes.com;
 
 using GWLPXL.ARPGCore.Statics.com;
 using GWLPXL.ARPGCore.Types.com;
+using System.Collections.Generic;
 
 using System.Text;
 using UnityEngine;
@@ -32,7 +33,10 @@ namespace GWLPXL.ARPGCore.Traits.com
         [Tooltip("Suffixes go after the equipment name.")]
         [SerializeField]
         protected string[] TraitSuffixes = new string[0];
+
         //multiplied by level to get stats
+        [SerializeField]
+        [Tooltip("Base Power. Multiplied by myLevelMulti to get final result.")]
         protected int myValue = 1;
         [SerializeField]
         [Tooltip("An item's power is determined by its ILevel. This is a multipler for the ILevel. So if an item has an Ilevel of 100, a multi of 50 would return a value of 50 of this trait (100 * 50) = 50." +
@@ -47,6 +51,19 @@ namespace GWLPXL.ARPGCore.Traits.com
         #region public virtual
         public virtual string[] GetPrefixes() => TraitPrefixes;
         public virtual string[] GetSuffixes() => TraitSuffixes;
+        public virtual List<string> GetAllAffixes()
+        {
+            List<string> _temp = new List<string>();
+            for (int i = 0; i < GetPrefixes().Length; i++)
+            {
+                _temp.Add(GetPrefixes()[i]);
+            }
+            for (int i = 0; i < GetSuffixes().Length; i++)
+            {
+                _temp.Add(GetSuffixes()[i]);
+            }
+            return _temp;
+        }
         public virtual void SetPrefixes(string[] newPrefixes) => TraitPrefixes = newPrefixes;
         public virtual void SetSuffixes(string[] newSuffixes) => TraitSuffixes = newSuffixes;
         public virtual int GetMyLevelMultRaw() => myLevelMulti;
