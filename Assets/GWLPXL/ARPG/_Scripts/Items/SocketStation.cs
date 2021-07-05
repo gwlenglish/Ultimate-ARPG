@@ -52,47 +52,86 @@ namespace GWLPXL.ARPGCore.Items.com
             string newname = PlayerDescription.GetGeneratedName(equipment);
             if (socketaffixes.Count > 0)//we have none
             {
-                string[] sep = new string[1] { equipment.GetBaseItemName() };
-                string[] result = newname.Split(sep, StringSplitOptions.None);
-                Debug.Log("RESult " + result.Length);
-                if (result.Length > 0)
+                //get existing
+                string key = equipment.GetBaseItemName().ToLower();
+                List<string> entire = AffixHelper.SplitPhrase(equipment.GetGeneratedItemName());
+                List<string> front = new List<string>();
+                List<string> back = new List<string>();
+                bool firsthalf = true;
+                for (int i = 0; i < entire.Count; i++)
                 {
-                    Debug.Log(result[0]);
-                   
-                    List<string> generatedprefixes = AffixReaderSO.GetSplitAffixes(result[0]);
-                    List<string> socketprefixes = equipment.GetStats().GetAllSocketPrefixes();
-                    generatedprefixes.Concat(socketprefixes);
-                    string prefixtoname = AffixReaderSO.GetNameWithAffixesPreLoaded(generatedprefixes, equipment.GetBaseItemName(), 0);
-                    sb.Append(prefixtoname);
-                }
-              
-                if (result.Length > 1)
-                {
-                    Debug.Log(result[1]);
-                    string postnoun = AffixReaderSO.GetPostNoun(result[1]);
-                    List<string> generatedpostnoun = AffixReaderSO.GetSplitAffixes(result[1]);
-                    List<string> socketpostprefixes = equipment.GetStats().GetAllSocketAffixes();
-                    generatedpostnoun.Concat(socketpostprefixes);
-                    if (string.IsNullOrEmpty(postnoun) == false && generatedpostnoun.Count > 0)
+                    if (AffixHelper.WordEquals(entire[i].ToLower(), key))
                     {
-                        string of = " of ";
-                        string postnounwithaffixes = AffixReaderSO.GetNameWithAffixesPreLoaded(generatedpostnoun, postnoun, 0);
-                        sb.Append(of);
-                        sb.Append(postnounwithaffixes);
+                        //found it
+
+                        firsthalf = false;
+                        continue;
+                    }
+
+                    if (firsthalf)
+                    {
+                        front.Add(entire[i]);
                     }
                     else
                     {
-                        //didn't find noun or didn't find prefixes
+                        back.Add(entire[i]);
                     }
+                }
+                //
+                List<string> socketprefixes = equipment.GetStats().GetAllSocketPrefixes();
+                if (front.Count > 0)
+                {
 
-                   
+                    front.Concat(socketprefixes);
+                    string prefixtoname = AffixReaderSO.GetNameWithAffixesPreLoaded(front, equipment.GetBaseItemName(), 0);
+                    sb.Append(prefixtoname);
+                }
+                else
+                {
+                    //try create one
+                    string prefixtoname = AffixReaderSO.GetNameWithAffixesPreLoaded(socketprefixes, equipment.GetBaseItemName(), 0);
+                    sb.Append(prefixtoname);
                 }
 
-                newname = sb.ToString();
+                List<string> socketpostprefixes = equipment.GetStats().GetAllSocketSuffixes();
+                if (back.Count > 0)
+                {
+                    string postnoun = AffixReaderSO.GetPostNoun(back);
+
+                    back.Concat(socketpostprefixes);
+                    if (string.IsNullOrEmpty(postnoun) == false)
+                    {
+                        string of = " of ";
+                        string postnounwithaffixes = AffixReaderSO.GetNameWithAffixesPreLoaded(back, postnoun, 0);
+                        sb.Append(of);
+                        sb.Append(postnounwithaffixes);
+                    }
+
+                }
+                else
+                {
+                    //try create one
+                    List<string> nouns = equipment.GetStats().GetAllNounsSockets();
+                    string newpostnoun = AffixReaderSO.GetPostNoun(nouns);
+                    if (string.IsNullOrEmpty(newpostnoun) == false)
+                    {
+                        string of = " of ";
+                        string postnounwithaffixes = AffixReaderSO.GetNameWithAffixesPreLoaded(socketpostprefixes, newpostnoun, 0);
+                        sb.Append(of);
+                        sb.Append(postnounwithaffixes);
+                    }
+                }
+
+              
+                equipment.SetGeneratedItemName(sb.ToString());
+            }
+            else
+            {
+                equipment.SetGeneratedItemName(newname);
             }
 
  
-            equipment.SetGeneratedItemName(newname);
+
         }
         public virtual void SetupStation(ActorInventory userInventory)
         {

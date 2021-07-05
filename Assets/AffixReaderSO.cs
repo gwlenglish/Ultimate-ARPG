@@ -51,6 +51,10 @@ public class AffixReaderSO : ScriptableObject
         AffixHelper.LoadReader(Affixreader, wordIndexDic);
         
     }
+    public virtual string GetPostNoun(List<string> nouns)
+    {
+        return AffixHelper.GetPostNounFromPreload(nouns, Affixreader, nounIndexDic);
+    }
     public virtual string GetPostNoun(string phrase)
     {
         return AffixHelper.GetPostNounFromPreload(phrase, Affixreader, nounIndexDic);

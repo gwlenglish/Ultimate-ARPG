@@ -33,7 +33,8 @@ namespace GWLPXL.ARPGCore.Traits.com
         [Tooltip("Suffixes go after the equipment name.")]
         [SerializeField]
         protected string[] TraitSuffixes = new string[0];
-        
+        [SerializeField]
+        protected string[] TraitNouns = new string[0];
         //multiplied by level to get stats
         [SerializeField]
         [Tooltip("Base Power. Multiplied by myLevelMulti to get final result.")]
@@ -51,6 +52,7 @@ namespace GWLPXL.ARPGCore.Traits.com
         #region public virtual
         public virtual string[] GetPrefixes() => TraitPrefixes;
         public virtual string[] GetSuffixes() => TraitSuffixes;
+        public virtual string[] GetAllNouns() => TraitNouns;
         public virtual List<string> GetAllAffixes()
         {
             List<string> _temp = new List<string>();

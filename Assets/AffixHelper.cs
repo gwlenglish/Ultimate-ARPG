@@ -26,15 +26,20 @@ public static class AffixHelper
         return fullprefixandname;
 
     }
-
-    public static string GetPostNounFromPreload(string phrase, AffixReader reader, Dictionary<string, int> preload, char delimiter = ' ')
+    /// <summary>
+    /// returns first found
+    /// </summary>
+    /// <param name="words"></param>
+    /// <param name="reader"></param>
+    /// <param name="preload"></param>
+    /// <param name="delimiter"></param>
+    /// <returns></returns>
+    public static string GetPostNounFromPreload(List<string> words, AffixReader reader, Dictionary<string, int> preload, char delimiter = ' ')
     {
         if (preload.Count == 0)
         {
             LoadPostNouns(reader, preload);
         }
-
-        List<string> words = SplitPhrase(phrase, delimiter);
 
         for (int i = 0; i < words.Count; i++)
         {
@@ -46,6 +51,26 @@ public static class AffixHelper
 
         }
         return string.Empty;
+    }
+
+    /// <summary>
+    /// returns first found
+    /// </summary>
+    /// <param name="phrase"></param>
+    /// <param name="reader"></param>
+    /// <param name="preload"></param>
+    /// <param name="delimiter"></param>
+    /// <returns></returns>
+    public static string GetPostNounFromPreload(string phrase, AffixReader reader, Dictionary<string, int> preload, char delimiter = ' ')
+    {
+        if (preload.Count == 0)
+        {
+            LoadPostNouns(reader, preload);
+        }
+
+        List<string> words = SplitPhrase(phrase, delimiter);
+
+        return GetPostNounFromPreload(words, reader, preload, delimiter);
     }
     /// <summary>
     /// full name with affixes

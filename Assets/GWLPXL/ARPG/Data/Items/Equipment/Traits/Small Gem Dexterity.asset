@@ -23,6 +23,9 @@ MonoBehaviour:
   - Agile
   - Nimble
   TraitSuffixes:
+  - Agile
+  - Nimble
+  TraitNouns:
   - of Dexterity
   - of Nimbleness
   myValue: 10

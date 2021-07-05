@@ -7,7 +7,7 @@ using GWLPXL.ARPGCore.Wearables.com;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
-
+using System.Linq;
 namespace GWLPXL.ARPGCore.Items.com
 {
 
@@ -208,6 +208,29 @@ namespace GWLPXL.ARPGCore.Items.com
             }
             return sb.ToString();
         }
+        public virtual string GetSocketTraitsDescription()
+        {
+            StringBuilder sb = new StringBuilder("");
+            List<Socket> sockets = GetStats().GetSockets();
+            for (int i = 0; i < sockets.Count; i++)
+            {
+                if (sockets[i].SocketedThing == null)
+                {
+                    sb.Append("\n" + sockets[i].SocketType.ToString() + " EMPTY");
+                }
+                else
+                {
+                    if (sockets[i].SocketedThing is EquipmentSocketable)
+                    {
+                        EquipmentSocketable eqsock = sockets[i].SocketedThing as EquipmentSocketable;
+                        sb.Append("\n" + eqsock.EquipmentTraitSocketable.GetTraitUIDescription());
+                    }
+
+                }
+        
+            }
+            return sb.ToString();
+        }
 
         public virtual string GetNativeTraitDescription()
         {
@@ -229,6 +252,10 @@ namespace GWLPXL.ARPGCore.Items.com
 
             return GetStats().GetBaseType().ToString() + ": " + GetStats().GetBaseStateConverted().ToString();
         }
+        /// <summary>
+        /// eventually move to a static naming class
+        /// </summary>
+        /// <returns></returns>
         public override string GetUserDescription()
         {
             StringBuilder sb = new StringBuilder("");
@@ -241,7 +268,7 @@ namespace GWLPXL.ARPGCore.Items.com
 
             sb.Append(GetRandomTraitsDescription());
 
-           
+            sb.Append(GetSocketTraitsDescription());
 
             return sb.ToString();
         }
@@ -311,6 +338,53 @@ namespace GWLPXL.ARPGCore.Items.com
         protected int iLevel = 1;
 
         #region sockets
+        public virtual List<string> GetAllNounsSockets()
+        {
+            List<string> _temp = new List<string>();
+            for (int i = 0; i < GetSockets().Count; i++)
+            {
+                if (GetSockets()[i].SocketedThing != null && GetSockets()[i].SocketedThing is EquipmentSocketable)
+                {
+                    EquipmentSocketable sock = GetSockets()[i].SocketedThing as EquipmentSocketable;
+                    for (int j = 0; j < sock.EquipmentTraitSocketable.GetAllNouns().Length; j++)
+                    {
+                        _temp.Add(sock.EquipmentTraitSocketable.GetAllNouns()[j]);
+                    }
+                }
+            }
+            return _temp;
+        }
+        public virtual List<string> GetAllNounsTraits()
+        {
+            List<string> _temp = GetAllNounsNative();
+            List<string> rando = GetAllNounsRandom();
+            _temp.Concat(rando);
+            return _temp;
+        }
+        public virtual List<string> GetAllNounsRandom()
+        {
+            List<string> _temp = new List<string>();
+            for (int i = 0; i < GetNativeTraits().Length; i++)
+            {
+                for (int j = 0; j < GetRandomTraits()[i].GetAllNouns().Length; j++)
+                {
+                    _temp.Add(GetRandomTraits()[i].GetAllNouns()[j]);
+                }
+            }
+            return _temp;
+        }
+        public virtual List<string> GetAllNounsNative()
+        {
+            List<string> _temp = new List<string>();
+            for (int i = 0; i < GetNativeTraits().Length; i++)
+            {
+                for (int j = 0; j < GetNativeTraits()[i].GetAllNouns().Length; j++)
+                {
+                    _temp.Add(GetNativeTraits()[i].GetAllNouns()[j]);
+                }
+            }
+            return _temp;
+        }
         public virtual List<string> GetAllSocketAffixes()
         {
             List<string> _temp = new List<string>();
