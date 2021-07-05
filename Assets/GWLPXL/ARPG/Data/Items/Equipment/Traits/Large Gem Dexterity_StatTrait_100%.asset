@@ -23,8 +23,8 @@ MonoBehaviour:
   - Agile
   - Nimble
   TraitSuffixes:
-  - of Dexterity
-  - of Nimbleness
+  - Dexterity
+  - Nimbleness
   myValue: 10
   myLevelMulti: 100
   weight: 7

@@ -32,6 +32,7 @@ namespace GWLPXL.ARPGCore.Items.com
         protected int stackingAmount = 1;
         [SerializeField]
         protected bool enchantable = true;
+
         public abstract string GetMaterialDescription();
         public abstract EquipmentType GetEquipmentType();
         public override bool CanEnchant()
@@ -301,7 +302,12 @@ namespace GWLPXL.ARPGCore.Items.com
         [SerializeField]
         [Tooltip("defines the number of sockets the item has.")]
         protected Socket[] sockets = new Socket[0];
-
+        protected string droppedName = string.Empty;
+        public virtual string GetDroppedName() => droppedName;
+        public virtual void SetDroppedName(string droppedName)
+        {
+            this.droppedName = droppedName;
+        }
         protected int iLevel = 1;
 
         #region sockets
@@ -319,6 +325,46 @@ namespace GWLPXL.ARPGCore.Items.com
                         for (int j = 0; j < trait.GetAllAffixes().Count; j++)
                         {
                             _temp.Add(trait.GetAllAffixes()[j]);
+                        }
+                    }
+                }
+            }
+            return _temp;
+        }
+        public virtual List<string> GetAllSocketPrefixes()
+        {
+            List<string> _temp = new List<string>();
+            for (int i = 0; i < sockets.Length; i++)
+            {
+                if (sockets[i].SocketedThing != null)
+                {
+                    if (sockets[i].SocketedThing is EquipmentSocketable)
+                    {
+                        EquipmentSocketable sock = sockets[i].SocketedThing as EquipmentSocketable;
+                        EquipmentTrait trait = sock.EquipmentTraitSocketable;
+                        for (int j = 0; j < trait.GetPrefixes().Length; j++)
+                        {
+                            _temp.Add(trait.GetPrefixes()[j]);
+                        }
+                    }
+                }
+            }
+            return _temp;
+        }
+        public virtual List<string> GetAllSocketSuffixes()
+        {
+            List<string> _temp = new List<string>();
+            for (int i = 0; i < sockets.Length; i++)
+            {
+                if (sockets[i].SocketedThing != null)
+                {
+                    if (sockets[i].SocketedThing is EquipmentSocketable)
+                    {
+                        EquipmentSocketable sock = sockets[i].SocketedThing as EquipmentSocketable;
+                        EquipmentTrait trait = sock.EquipmentTraitSocketable;
+                        for (int j = 0; j < trait.GetSuffixes().Length; j++)
+                        {
+                            _temp.Add(trait.GetSuffixes()[j]);
                         }
                     }
                 }

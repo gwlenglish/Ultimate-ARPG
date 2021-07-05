@@ -85,6 +85,11 @@ namespace GWLPXL.ARPGCore.Statics.com
         //need to plugin to the affix reader? or could be separate. 
         public static string GetGeneratedName(Equipment equipment)
         {
+            if (string.IsNullOrEmpty(equipment.GetStats().GetDroppedName()) == false)
+            {
+                return equipment.GetStats().GetDroppedName();
+            }
+    
             sb.Clear();
 
             EquipmentTrait[] NativeTraits = equipment.GetStats().GetNativeTraits();
@@ -109,6 +114,7 @@ namespace GWLPXL.ARPGCore.Statics.com
 
             //ARPGDebugger.DebugMessage(sb.ToString());
             equipment.SetGeneratedItemName(sb.ToString());
+            equipment.GetStats().SetDroppedName(sb.ToString());
             return sb.ToString();
 
         }

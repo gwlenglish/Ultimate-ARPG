@@ -33,7 +33,7 @@ namespace GWLPXL.ARPGCore.Traits.com
         [Tooltip("Suffixes go after the equipment name.")]
         [SerializeField]
         protected string[] TraitSuffixes = new string[0];
-
+        
         //multiplied by level to get stats
         [SerializeField]
         [Tooltip("Base Power. Multiplied by myLevelMulti to get final result.")]

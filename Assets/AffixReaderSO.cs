@@ -9,6 +9,7 @@ public class AffixOrder
     public string EditorDescription = string.Empty;
     public List<string> Words = new List<string>();
     public List<string> AdverbModifiers = new List<string>();
+
 }
 
 public struct SortedAffix
@@ -28,6 +29,7 @@ public struct SortedAffix
 public class AffixReader
 {
     public List<AffixOrder> AffixOrders = new List<AffixOrder>();
+    public List<string> PostNounModifiers = new List<string>();
 
 }
 
@@ -38,7 +40,8 @@ public class AffixReaderSO : ScriptableObject
 
     [System.NonSerialized]
     Dictionary<string, int> wordIndexDic = new Dictionary<string, int>();
-
+    [System.NonSerialized]
+    Dictionary<string, int> nounIndexDic = new Dictionary<string, int>();
     public virtual void ClearDictionary()
     {
         wordIndexDic.Clear();
@@ -48,9 +51,13 @@ public class AffixReaderSO : ScriptableObject
         AffixHelper.LoadReader(Affixreader, wordIndexDic);
         
     }
+    public virtual string GetPostNoun(string phrase)
+    {
+        return AffixHelper.GetPostNounFromPreload(phrase, Affixreader, nounIndexDic);
+    }
     public virtual List<string> GetSplitAffixes(string phrase, char delimiter = ' ')
     {
-        return AffixHelper.SplitAffixes(phrase, Affixreader, delimiter);
+        return AffixHelper.SplitPhrase(phrase, delimiter);
     }
     public virtual string GetRandomAffix(int fromOrder)
     {

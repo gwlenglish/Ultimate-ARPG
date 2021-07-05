@@ -4,6 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System;
+using System.Text;
 namespace GWLPXL.ARPGCore.Items.com
 {
 
@@ -26,7 +28,7 @@ namespace GWLPXL.ARPGCore.Items.com
 
         List<ItemStack> stacksofsockets = new List<ItemStack>();
         ActorInventory userInventory = null;
-
+        StringBuilder sb = new StringBuilder();
         public virtual void CloseStation()
         {
             stacksofsockets.Clear();
@@ -45,15 +47,51 @@ namespace GWLPXL.ARPGCore.Items.com
         /// <param name="equipment"></param>
         public virtual void RenameItemWithSocket(Equipment equipment)
         {
-            List<string> socketAffixes = equipment.GetStats().GetAllSocketAffixes();
+            sb.Clear();
+            List<string> socketaffixes = equipment.GetStats().GetAllSocketAffixes();
             string newname = PlayerDescription.GetGeneratedName(equipment);
-            if (socketAffixes.Count > 0)//we have none
+            if (socketaffixes.Count > 0)//we have none
             {
-                List<string> generated = AffixReaderSO.GetSplitAffixes(newname);
-                var combined = socketAffixes.Concat(generated).ToList();
-                newname = AffixReaderSO.GetNameWithAffixesPreLoaded(combined, equipment.GetBaseItemName(), 0);
+                string[] sep = new string[1] { equipment.GetBaseItemName() };
+                string[] result = newname.Split(sep, StringSplitOptions.None);
+                Debug.Log("RESult " + result.Length);
+                if (result.Length > 0)
+                {
+                    Debug.Log(result[0]);
+                   
+                    List<string> generatedprefixes = AffixReaderSO.GetSplitAffixes(result[0]);
+                    List<string> socketprefixes = equipment.GetStats().GetAllSocketPrefixes();
+                    generatedprefixes.Concat(socketprefixes);
+                    string prefixtoname = AffixReaderSO.GetNameWithAffixesPreLoaded(generatedprefixes, equipment.GetBaseItemName(), 0);
+                    sb.Append(prefixtoname);
+                }
+              
+                if (result.Length > 1)
+                {
+                    Debug.Log(result[1]);
+                    string postnoun = AffixReaderSO.GetPostNoun(result[1]);
+                    List<string> generatedpostnoun = AffixReaderSO.GetSplitAffixes(result[1]);
+                    List<string> socketpostprefixes = equipment.GetStats().GetAllSocketAffixes();
+                    generatedpostnoun.Concat(socketpostprefixes);
+                    if (string.IsNullOrEmpty(postnoun) == false && generatedpostnoun.Count > 0)
+                    {
+                        string of = " of ";
+                        string postnounwithaffixes = AffixReaderSO.GetNameWithAffixesPreLoaded(generatedpostnoun, postnoun, 0);
+                        sb.Append(of);
+                        sb.Append(postnounwithaffixes);
+                    }
+                    else
+                    {
+                        //didn't find noun or didn't find prefixes
+                    }
+
+                   
+                }
+
+                newname = sb.ToString();
             }
-            
+
+ 
             equipment.SetGeneratedItemName(newname);
         }
         public virtual void SetupStation(ActorInventory userInventory)

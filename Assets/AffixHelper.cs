@@ -26,6 +26,27 @@ public static class AffixHelper
         return fullprefixandname;
 
     }
+
+    public static string GetPostNounFromPreload(string phrase, AffixReader reader, Dictionary<string, int> preload, char delimiter = ' ')
+    {
+        if (preload.Count == 0)
+        {
+            LoadPostNouns(reader, preload);
+        }
+
+        List<string> words = SplitPhrase(phrase, delimiter);
+
+        for (int i = 0; i < words.Count; i++)
+        {
+            string key = words[i].ToLower();
+            if (preload.ContainsKey(key))
+            {
+                return words[i];
+            }
+
+        }
+        return string.Empty;
+    }
     /// <summary>
     /// full name with affixes
     /// </summary>
@@ -103,7 +124,7 @@ public static class AffixHelper
         List<string> split = phrase.Split(delimiter).ToList();
         return GetSortedAffixes(split, reader);
     }
-    public static List<string> SplitAffixes(string phrase, AffixReader reader, char delimiter = ' ')
+    public static List<string> SplitPhrase(string phrase, char delimiter = ' ')
     {
         List<string> split = phrase.Split(delimiter).ToList();
         return split;
@@ -231,6 +252,27 @@ public static class AffixHelper
                 }
               
             }
+        }
+    }
+    public static void LoadPostNouns(AffixReader reader, Dictionary<string, int> preloadDic)
+    {
+        for (int i = 0; i < reader.PostNounModifiers.Count; i++)
+        {
+            string word = reader.PostNounModifiers[i];
+            if (string.IsNullOrEmpty(word)) continue;
+
+            string key = word.ToLower();
+            if (preloadDic.ContainsKey(key))
+            {
+                UnityEngine.Debug.LogWarning("Duplicate entries in the reader. The word " + word.ToUpper() + " is found at index " + preloadDic[word].ToString() + " and " + i.ToString() + ". Will only use the first entry found of the word");
+                continue;
+            }
+            else
+            {
+                preloadDic[key] = i;
+            }
+
+            
         }
     }
 

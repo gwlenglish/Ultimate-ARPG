@@ -150,5 +150,30 @@
                 "Just"
             ]
         }
+    ],
+    "PostNounModifiers": [
+        "Hellfire",
+        "Dexterity",
+        "Ice",
+        "Iciness",
+        "Tundra",
+        "Nimbleness",
+        "Flame",
+        "Fire",
+        "Intellect",
+        "Brilliance",
+        "Fox",
+        "Lightning",
+        "Spark",
+        "Vitality",
+        "Invigoration",
+        "Nourishment",
+        "Mysticism",
+        "Mana",
+        "Magic",
+        "Strength",
+        "Power",
+        "Ox",
+        "Health"
     ]
 }
