@@ -12,11 +12,13 @@ namespace GWLPXL.ARPGCore.Items.com
     /// <summary>
     /// in progress
     /// </summary>
+
     public class SocketStation
     {
         public ActorInventory Inventory => userInventory;
-        public SocketTypeReader SocketTypeReader = default;
+        public SocketTypeReaderSO SocketTypeReader = default;
         public AffixReaderSO AffixReaderSO = default;
+        public bool Rename = true;
         public System.Action OnSmithOpen;
         public System.Action OnSmithClosed;
         public System.Action<Equipment> OnAddSocketable;
@@ -225,8 +227,8 @@ namespace GWLPXL.ARPGCore.Items.com
             SocketItem itemB = sockB.SocketedThing;
             if (CanAdd(equipment, a, itemB) && CanAdd(equipment, b, itemA))
             {
-                AddSocketable(equipment, itemB, a);
-                AddSocketable(equipment, itemA, b);
+                AddSocketable(equipment, itemB, a, false);
+                AddSocketable(equipment, itemA, b, false);
                 return true;
             }
             return false;

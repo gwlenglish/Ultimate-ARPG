@@ -12,16 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1f05ac52ae89f4419638d20017cd65d, type: 3}
   m_Name: SocketReader
   m_EditorClassIdentifier: 
-  TypeReaders:
-  - Type: 100
-    Sprite: {fileID: 0}
-    Name: 
-    Description: 
-  - Type: 100
-    Sprite: {fileID: 0}
-    Name: 
-    Description: 
-  - Type: 100
-    Sprite: {fileID: 0}
-    Name: 
-    Description: 
+  Reader:
+    TypeReaders:
+    - Name: 
+      Type: 100
+      Sprite: {fileID: 0}
+      Description: 
+    - Name: 
+      Type: 101
+      Sprite: {fileID: 0}
+      Description: 
+    - Name: 
+      Type: 102
+      Sprite: {fileID: 0}
+      Description: 

@@ -165,6 +165,7 @@ MonoBehaviour:
     InteractRange: 3
     SocketReader: {fileID: 11400000, guid: 54347a991db2f5444bcc37233d0ab366, type: 2}
     AffixReader: {fileID: 11400000, guid: 3e4efdf6488b65849a561f01bd339f43, type: 2}
+    RenameItemsOnSocketChanged: 1
   SocketEvents:
     SceneEvents:
       OnStationSetup:

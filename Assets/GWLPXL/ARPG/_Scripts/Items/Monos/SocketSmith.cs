@@ -13,9 +13,11 @@ namespace GWLPXL.ARPGCore.Items.com
 
         public SocketStation Station = new SocketStation();
         public float InteractRange = 3;
-        public SocketTypeReader SocketReader = null;
+//
+        public SocketTypeReaderSO SocketReader = null;//not used at the moment.
         public AffixReaderSO AffixReader = null;
-        public SocketSmithVars(float interactrange, List<SocketItem> socketitems, SocketTypeReader reader)
+        public bool RenameItemsOnSocketChanged = true;
+        public SocketSmithVars(float interactrange, SocketTypeReaderSO reader)
         {
             Station = new SocketStation();
             InteractRange = interactrange;
@@ -50,6 +52,7 @@ namespace GWLPXL.ARPGCore.Items.com
             SocketSmithVars.Station = new SocketStation();
             SocketSmithVars.Station.SocketTypeReader = SocketSmithVars.SocketReader;
             SocketSmithVars.Station.AffixReaderSO = SocketSmithVars.AffixReader;
+            SocketSmithVars.Station.Rename = SocketSmithVars.RenameItemsOnSocketChanged;
             SocketSmithVars.Station.OnSmithOpen += Subscribe;
             SocketSmithVars.Station.OnSmithClosed += UnSubscribe;
             if (SocketSmithUIPrefab != null)

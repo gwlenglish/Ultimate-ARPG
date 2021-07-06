@@ -363,7 +363,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                             if (canAddToInventory && removefrominventory)
                             {
                                 station.Inventory.AddItemsToInventory(eqsock, 1);
-                                bool added = station.AddSocketable(eq, socketitem, index, true);
+                                bool added = station.AddSocketable(eq, socketitem, index, station.Rename);
                                 if (added)
                                 {
                                     socketItemDraggable.UpdateItem();
@@ -381,7 +381,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                             if (removefrominventory)
                             {
                                 //if removed okay, then add as socketable
-                                bool added = station.AddSocketable(eq, socketitem, index, true);
+                                bool added = station.AddSocketable(eq, socketitem, index, station.Rename);
                                 if (added)
                                 {
                                     socketItemDraggable.UpdateItem();
@@ -650,7 +650,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         protected virtual void ReturnedToInventory(ISocketItemUIElementInsert insert)
         {
             station.Inventory.AddItemsToInventory(insert.GetSocket().SocketedThing, 1);
-            station.RemoveSocketable(insert.GetHolder() as Equipment, insert.GetIndex(), true);
+            station.RemoveSocketable(insert.GetHolder() as Equipment, insert.GetIndex(), station.Rename);
             //need to update visuals now. 
             insert.UpdateSocket();
             socketHolderDraggable.RefreshSockets();

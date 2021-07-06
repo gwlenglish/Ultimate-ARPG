@@ -6136,6 +6136,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 68734295638115851, guid: d08f797b46dde5c41a1af02ea0956f6b,
+        type: 3}
+      propertyPath: SocketSmithVars.Station.Rename
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 68734295638115852, guid: d08f797b46dde5c41a1af02ea0956f6b,
         type: 3}
       propertyPath: m_RootOrder
