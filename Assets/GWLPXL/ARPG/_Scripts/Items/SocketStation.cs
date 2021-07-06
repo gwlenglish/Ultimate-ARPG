@@ -186,8 +186,16 @@ namespace GWLPXL.ARPGCore.Items.com
             return _temp;
         }
 
-        
-      public virtual bool CanAdd(Equipment equipment, int atIndex, SocketItem newSocketable)
+       
+      public virtual EquipmentSocketable SocketItemExists(Equipment equipment, int atIndex)
+        {
+            Socket socket = GetSocket(equipment, atIndex);
+            if (socket == null) return null;
+            if (socket.SocketedThing == null) return null;
+            EquipmentSocketable ewsock = socket.SocketedThing as EquipmentSocketable;
+            return ewsock;
+        }
+        public virtual bool CanAdd(Equipment equipment, int atIndex, SocketItem newSocketable)
         {
             Socket socket = GetSocket(equipment, atIndex);
             if (socket == null)
@@ -228,12 +236,13 @@ namespace GWLPXL.ARPGCore.Items.com
             Socket socket = GetSocket(equipment, atIndex);
             socket.SocketedThing = null;
             equipment.GetStats().SetSocket(atIndex, socket);
-            OnRemoveSocketable?.Invoke(equipment);
 
             if (andRename)
             {
                 RenameItemWithSocket(equipment);
             }
+            OnRemoveSocketable?.Invoke(equipment);
+
             return true;
         }
         public virtual bool AddSocketable(Equipment equipment, SocketItem newSocketable,  int atindex, bool alsoRename = false)
@@ -242,12 +251,13 @@ namespace GWLPXL.ARPGCore.Items.com
             Socket socket = GetSocket(equipment, atindex);
             socket.SocketedThing = newSocketable;
             equipment.GetStats().SetSocket(atindex, socket);
-            OnAddSocketable?.Invoke(equipment);
+   
 
             if (alsoRename)
             {
                 RenameItemWithSocket(equipment);
             }
+            OnAddSocketable?.Invoke(equipment);
             return true;
 
         }

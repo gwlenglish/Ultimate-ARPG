@@ -49,7 +49,7 @@ MonoBehaviour:
     - SocketedThing: {fileID: 0}
       SocketType: 100
     - SocketedThing: {fileID: 0}
-      SocketType: 100
+      SocketType: 102
     - SocketedThing: {fileID: 0}
       SocketType: 100
   wearablePefab: {fileID: 4511641574797939093, guid: d0037fee19d32944cb2c8c7f87893813,

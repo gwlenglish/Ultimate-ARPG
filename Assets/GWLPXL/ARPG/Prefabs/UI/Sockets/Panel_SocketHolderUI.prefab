@@ -336,7 +336,7 @@ GameObject:
   - component: {fileID: 1448541016541499053}
   - component: {fileID: 8926644604791891820}
   m_Layer: 5
-  m_Name: Panel_SocketableUI
+  m_Name: Panel_SocketHolderUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -417,3 +417,5 @@ MonoBehaviour:
   SocketParent: {fileID: 1502494004768245312}
   Image: {fileID: 3425624913417469065}
   DescriptionText: {fileID: 3137922866897805035}
+  SocketItemPrefab: {fileID: 0}
+  SocketItemParent: {fileID: 0}
