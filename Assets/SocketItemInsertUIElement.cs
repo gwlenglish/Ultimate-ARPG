@@ -22,7 +22,6 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
     {
 
         public Image ThingImage = default;
-        public TextMeshProUGUI ThingNameText = default;
         public TextMeshProUGUI ThingDescriptionText = default;
         public Sprite EmptySprite = default;
 
@@ -81,14 +80,12 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             if (socketitem != null)
             {
                 ThingImage.sprite = socketitem.GetSprite();
-                ThingNameText.SetText(socketitem.GetGeneratedItemName());
                 ThingDescriptionText.SetText(socketitem.GetUserDescription());
             }
             else
             {
                 ThingImage.sprite = EmptySprite;
-                ThingNameText.SetText(socket.SocketType.ToString());
-                ThingDescriptionText.SetText("");
+                ThingDescriptionText.SetText(socket.SocketType.ToString());
 
             }
 
