@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using GWLPXL.ARPGCore.Traits.com;
+using System.Text;
+using GWLPXL.ARPGCore.Statics.com;
+using System.Linq;
+
 namespace GWLPXL.ARPGCore.Items.com
 {
     
@@ -13,6 +17,9 @@ namespace GWLPXL.ARPGCore.Items.com
         public System.Action<Equipment> OnEnchanted;
         public System.Action<EnchantingStation> OnStationSetup;
         public System.Action<EnchantingStation> OnStationClosed;
+        public ActorInventory UserInventory => userInventory;
+        public AffixReaderSO AffixReaderSO = default;
+        public bool RenameItem = true;
         List<EquipmentEnchant> enchants = new List<EquipmentEnchant>();
         ActorInventory userInventory;
 
@@ -79,29 +86,9 @@ namespace GWLPXL.ARPGCore.Items.com
         #endregion
 
         #region enchant overrides
-        /// <summary>
-        /// takes a list of enchants
-        /// </summary>
-        /// <param name="equipment"></param>
-        /// <param name="enchants"></param>
-        /// <param name="isNative"></param>
-        /// <param name="isPreview"></param>
-        public virtual void Enchant(Equipment equipment, List<EquipmentEnchant> enchants, bool isNative = true, bool isPreview = false)
-        {
-            for (int i = 0; i < enchants.Count; i++)
-            {
-                List<EquipmentTrait> traits = enchants[i].EnchantTraits;
-                for (int j = 0; j < traits.Count; j++)
-                {
-                    Enchant(equipment, traits[j], enchants[i].EnchantLevel, isNative, true);//make true to bypass the event to raise
-                }
-            }
+       
+       
 
-            if (isPreview == false)//raise event here, so it only happens once
-            {
-                OnEnchanted?.Invoke(equipment);
-            }
-        }
         /// <summary>
         /// takes a single enchant
         /// </summary>
@@ -109,19 +96,44 @@ namespace GWLPXL.ARPGCore.Items.com
         /// <param name="enchant"></param>
         /// <param name="isNative"></param>
         /// <param name="isPreview"></param>
-        public virtual void Enchant(Equipment equipment, EquipmentEnchant enchant, bool isNative = true, bool isPreview = false)
+        public virtual void Enchant(Equipment equipment, EquipmentEnchant enchant, bool isNative = true)
         {
             List<EquipmentTrait> traits = enchant.EnchantTraits;
             for (int j = 0; j < traits.Count; j++)
             {
-                Enchant(equipment, traits[j], enchants[j].EnchantLevel, isNative, true);//make true to bypass the event to raise
+                Enchant(equipment, traits[j], enchants[j].EnchantLevel, isNative);//make true to bypass the event to raise
             }
-            
-            if (isPreview == false)
+
+            if (RenameItem)
             {
-                OnEnchanted?.Invoke(equipment);
+                EquipmentDescription.RenameItemWithEnchant(equipment, AffixReaderSO);
             }
+           
         }
+        /// <summary>
+        /// takes a list of enchants
+        /// </summary>
+        /// <param name="equipment"></param>
+        /// <param name="enchants"></param>
+        /// <param name="isNative"></param>
+        /// <param name="isPreview"></param>
+        protected virtual void Enchant(Equipment equipment, List<EquipmentEnchant> enchants, bool isNative = true, bool isPreview = false)
+        {
+            for (int i = 0; i < enchants.Count; i++)
+            {
+                List<EquipmentTrait> traits = enchants[i].EnchantTraits;
+                for (int j = 0; j < traits.Count; j++)
+                {
+                    Enchant(equipment, traits[j], enchants[i].EnchantLevel, isNative);//make true to bypass the event to raise
+                }
+            }
+
+        }
+        /// <summary>
+        /// renames and raises the event if not a preview enchant.
+        /// </summary>
+        /// <param name="equipment"></param>
+        /// <param name="isPreview"></param>
         /// <summary>
         /// Modifies an existing item and adds a trait to it at the ilevel. Can overload to put in the native or random slots. Preview will not raise the Enchant event.
         /// </summary>
@@ -129,7 +141,7 @@ namespace GWLPXL.ARPGCore.Items.com
         /// <param name="newEnchantTrait"></param>
         /// <param name="traitIlevel"></param>
         /// <param name="isNative"></param>
-        public virtual void Enchant(Equipment equipment, EquipmentTrait newEnchantTrait, int traitIlevel, bool isNative = true, bool isPreview = false)
+        protected virtual void Enchant(Equipment equipment, EquipmentTrait newEnchantTrait, int traitIlevel, bool isNative = true)
         {
             if (equipment == null)
             {
@@ -165,12 +177,26 @@ namespace GWLPXL.ARPGCore.Items.com
             {
                 equipment.GetStats().SetRandomTraits(existing);
             }
-            
-            if (isPreview == false)
-            {
-                OnEnchanted?.Invoke(equipment);
 
-            }
+
+
+            //if (isPreview == false)
+            //{
+              
+            //    OnEnchanted?.Invoke(equipment);
+
+            //}
+
+
+
+        }
+
+
+        public virtual void RenameItemWithEnchant(Equipment equipment)
+        {
+
+            EquipmentDescription.RenameItemWithEnchant(equipment, AffixReaderSO);
+            
 
         }
         #endregion

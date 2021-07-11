@@ -1,6 +1,5 @@
 ﻿using GWLPXL.ARPGCore.com;
-using GWLPXL.ARPGCore.Traits.com;
-using System.Collections;
+
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,6 +15,9 @@ namespace GWLPXL.ARPGCore.Items.com
         public List<EquipmentEnchant> Enchants = new List<EquipmentEnchant>();
         public float InteractRange = 3;
         public EnchantingStation EnchantingStation = new EnchantingStation();
+        public AffixReaderSO AffixReader = default;
+        public bool RenameItemOnEnchant = true;
+       
     }
     public class Enchanter : MonoBehaviour, IInteract
     {
@@ -26,7 +28,7 @@ namespace GWLPXL.ARPGCore.Items.com
         IEnchanterCanvas canvas;
 
         #region callbacks
-        private void Start()
+        protected virtual void Start()
         {
             if (EnchanterUIPrefab != null)
             {
@@ -39,7 +41,7 @@ namespace GWLPXL.ARPGCore.Items.com
             EnchanterVars. EnchantingStation.OnStationClosed += StationClosed;
         }
 
-        private void OnDestroy()
+        protected    virtual void OnDestroy()
         {
             EnchanterVars.EnchantingStation.OnEnchanted -= Enchanted;
             EnchanterVars.EnchantingStation.OnStationSetup -= StationReady;
@@ -76,10 +78,17 @@ namespace GWLPXL.ARPGCore.Items.com
         }
         public bool DoInteraction(GameObject interactor)
         {
+            return TryDoInteraction(interactor);
+        }
+
+        protected virtual bool TryDoInteraction(GameObject interactor)
+        {
             IUseEnchanterCanvas user = CheckPreconditions(interactor);
             if (user == null) return false;
 
             EnchanterVars.EnchantingStation.SetupStation(interactor.GetComponent<IActorHub>().MyInventory.GetInventoryRuntime(), EnchanterVars.Enchants);
+            EnchanterVars.EnchantingStation.AffixReaderSO = EnchanterVars.AffixReader;
+            EnchanterVars.EnchantingStation.RenameItem = EnchanterVars.RenameItemOnEnchant;
             if (canvas != null)
             {
                 canvas.SetStation(EnchanterVars.EnchantingStation);
@@ -90,6 +99,11 @@ namespace GWLPXL.ARPGCore.Items.com
 
         public bool IsInRange(GameObject interactor)
         {
+            return TryRange(interactor);
+        }
+
+        protected virtual bool TryRange(GameObject interactor)
+        {
             Vector3 dir = interactor.transform.position - this.transform.position;
             float sqrd = dir.sqrMagnitude;
             if (sqrd <= EnchanterVars.InteractRange * EnchanterVars.InteractRange)
@@ -99,6 +113,5 @@ namespace GWLPXL.ARPGCore.Items.com
             return false;
         }
 
-       
     }
 }

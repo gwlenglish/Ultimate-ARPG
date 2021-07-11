@@ -6,10 +6,15 @@ using UnityEngine.UI;
 using TMPro;
 namespace GWLPXL.ARPGCore.CanvasUI.com
 {
+    /// <summary>
+    /// for invnetory -> ui
+    /// </summary>
     public interface IEnchantableUIElement
     {
-        void SetEnchantable(Item item);
-        Item GetEnchantable();
+        void SetEnchantableItem(int slot, ActorInventory inventory);
+        ItemStack GetEnchantable();
+        void UpdateItem();
+        void UpdateItem(int slot);
     }
 
     public class EnchantableUIElement : MonoBehaviour, IEnchantableUIElement
@@ -18,33 +23,72 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         public Image ItemImage;
         public string EmptyText = "Empty";
         public Sprite EmptySprite = null;
-        Item item;
+        protected int slot;
+        protected ActorInventory inv;
 
         private void Awake()
         {
             ItemDescriptionText.SetText(string.Empty);
             ItemImage.sprite = null;
         }
-        public void SetEnchantable(Item item)
+        public void SetEnchantableItem(int slot, ActorInventory inventory)
         {
-            this.item = item;
-            if (item == null)
+            this.slot = slot;
+            this.inv = inventory;
+            Setup();
+   
+        }
+
+        public ItemStack GetEnchantable()
+        {
+            return inv.GetItemStackBySlot(slot);
+        }
+
+        public void UpdateItem()
+        {
+            Setup();
+        }
+
+        public void UpdateItem(int slot)
+        {
+            if (this.slot != slot) return;
+            Setup();
+        }
+
+        protected virtual void Setup()
+        {
+            if (slot < 0)
             {
+                gameObject.SetActive(false);
+                return;
+            }
+            ItemStack stack = inv.GetItemStackBySlot(slot);
+            if (stack.Item == false || stack.CurrentStackSize <= 0)
+            {
+                gameObject.SetActive(false);
+
                 ItemImage.sprite = EmptySprite;
                 ItemDescriptionText.SetText(EmptyText);
             }
             else
             {
-                ItemImage.sprite = item.GetSprite();
-                ItemDescriptionText.SetText(item.GetUserDescription());
+                //here's we could filter if we want.
+                if (stack.Item is Equipment)
+                {
+                    ItemImage.sprite = stack.Item.GetSprite();
+                    ItemDescriptionText.SetText(stack.Item.GetUserDescription());
+                    gameObject.SetActive(true);
+                }
+                else
+                {
+                    gameObject.SetActive(false);
+
+
+                }
+
             }
 
 
-        }
-
-        public Item GetEnchantable()
-        {
-            return item;
         }
     }
 }

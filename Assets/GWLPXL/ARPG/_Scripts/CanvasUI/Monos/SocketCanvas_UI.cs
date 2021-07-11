@@ -594,14 +594,17 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
         protected virtual void CreateUISocketElement(ItemStack itemStack)
         {
+            if (slotPerUIDic.ContainsKey(itemStack.SlotID) == false)
+            {
+                GameObject instance = Instantiate(SocketItemPrefab, SocketContentParent);
+                ISocketItemUIElement socketitem = instance.GetComponent<ISocketItemUIElement>();
+                station.Inventory.OnSlotChange += socketitem.UpdateItem;
+                socketitem.SetSocketItem(itemStack.SlotID, station.Inventory);
+                SocketItemUI newui = new SocketItemUI(itemStack, instance);
+                socketitemsdic[instance] = newui;
+                slotPerUIDic[itemStack.SlotID] = instance;
+            }
 
-            GameObject instance = Instantiate(SocketItemPrefab, SocketContentParent);
-            ISocketItemUIElement socketitem = instance.GetComponent<ISocketItemUIElement>();
-            station.Inventory.OnSlotChange += socketitem.UpdateItem;
-            socketitem.SetSocketItem(itemStack.SlotID, station.Inventory);
-            SocketItemUI newui = new SocketItemUI(itemStack, instance);
-            socketitemsdic[instance] = newui;
-            slotPerUIDic[itemStack.SlotID] = instance;
 
         }
 

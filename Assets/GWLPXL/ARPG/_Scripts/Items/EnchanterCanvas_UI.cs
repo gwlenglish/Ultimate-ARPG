@@ -8,7 +8,24 @@ using GWLPXL.ARPGCore.Traits.com;
 
 namespace GWLPXL.ARPGCore.CanvasUI.com
 {
-   
+   [System.Serializable]
+   public class EnchantableItemUI
+    {
+        public ItemStack ItemStack;
+        public GameObject UIObject;
+        public RectTransform RectTransform;
+        public IEnchantableUIElement Interface;
+        public EnchantableItemUI(ItemStack stack, GameObject ob)
+        {
+            ItemStack = stack;
+            UIObject = ob;
+            RectTransform = ob.GetComponent<RectTransform>();
+            Interface = ob.GetComponentInChildren<IEnchantableUIElement>();
+        }
+
+
+      
+    }
     /// <summary>
     /// to do, map rect transforms to dictionary like in socket smith
     /// </summary>
@@ -42,15 +59,23 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         protected IEnchantableUIElement draggableenchantable = null;
         protected IEnchantUIElement draggableEnchant = null;
         protected IEnchantUIElement previewEnchant = null;
-        protected IEnchantableUIElement successEnchantable = null;
-        protected IEnchantableUIElement decisionPreview = null;
-        protected IEnchantableUIElement enchantablePreview = null;
+
+
+        protected IItemViewUI successEnchantable = null;
+        protected IItemViewUI decisionPreview = null;
+        protected IItemViewUI enchantablePreview = null;
         protected bool draggingEnchantable = false;
         protected bool draggingEnchant = false;
         protected Vector3 homeposition = new Vector3(0, 0, 0);
         protected bool active = false;
 
         protected Item preview = null;
+
+        protected Item original = null;
+        protected int originalslot = -1;
+
+        Dictionary<int, GameObject> slotPerUIDic = new Dictionary<int, GameObject>();
+        Dictionary<GameObject, EnchantableItemUI> enchantableitemsdic = new Dictionary<GameObject, EnchantableItemUI>();
 
         #region unity calls
         protected virtual void Awake()
@@ -122,15 +147,15 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         public virtual void ClosePreview()
         {
             preview = null;
-            decisionPreview.SetEnchantable(null);
+            original = null;
+            decisionPreview.SetItem(null);
+            enchantablePreview.SetItem(null);
             previewEnchant.SetEnchant(null);
-            enchantablePreview.SetEnchantable(null);
-
             DecisionBoxPreview.SetActive(false);
         }
         public virtual void DisplayPreview()
         {
-            Item item = enchantablePreview.GetEnchantable();
+            ItemStack item = enchantablePreview.GetViewStack();
             EquipmentEnchant enchant = previewEnchant.GetEnchant();
             if (item == null || enchant == null)
             {
@@ -138,59 +163,62 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                 return;
             }
 
-            if (item is Equipment)
+            if (item.Item is Equipment)
             {
-                Equipment eq = item as Equipment;
-                EquipmentTrait[] natives = eq.GetStats().GetNativeTraits();
-
-                //get current traits, make copies
-                EquipmentTrait[] copynatives = new EquipmentTrait[natives.Length];
-                for (int i = 0; i < copynatives.Length; i++)
-                {
-                    copynatives[i] = Instantiate(natives[i]);
-                }
-                EquipmentTrait[] randos = eq.GetStats().GetRandomTraits();
-
-                EquipmentTrait[] copyrandos = new EquipmentTrait[randos.Length];
-                for (int i = 0; i < copyrandos.Length; i++)
-                {
-                    copyrandos[i] = Instantiate(randos[i]);
-                }
-
-                Equipment copy = Instantiate(eq);
-                copy.GetStats().SetNativeTraits(copynatives);//assign copies to copy
-                copy.GetStats().SetRandomTraits(copyrandos);
-
-                //EquipmentTrait copyenchant = Instantiate(enchant.EnchantTrait);//clean up if owrsk, remove
-
-                station.Enchant(copy, enchant, IsNative, true);
-                Debug.Log(eq);
+                Equipment eq = item.Item as Equipment;
+                original = eq;
+                Equipment copy = ScriptableObject.Instantiate(eq);
                 preview = copy;
+                originalslot = item.SlotID;
+                station.Enchant(copy, enchant, IsNative);
+
                 DecisionBoxPreview.SetActive(true);
-                decisionPreview.SetEnchantable(preview);
+
+                decisionPreview.SetItem(copy);//this needs to just display the item.
+
             }
 
-
-         
         }
         public virtual void Enchant()
         {
-            Item item = enchantablePreview.GetEnchantable();
+            ItemStack item = enchantablePreview.GetViewStack();
             EquipmentEnchant trait = previewEnchant.GetEnchant();
             if (item == null || trait == null)
             {
                 //failed
                 return;
             }
-            ClosePreview();
-            station.Enchant(item as Equipment, trait,  IsNative);
-            SuccessBoxShowcase.SetActive(true);
-            successEnchantable.SetEnchantable(item);
-            enchantablePreview.SetEnchantable(null);
-            previewEnchant.SetEnchant(null);
-            draggableEnchant.SetEnchant(null);
-            draggableenchantable.SetEnchantable(null);
 
+            if (originalslot > -1)
+            {
+                //switch.
+                item.Item = preview;
+                originalslot = -1;
+            }
+            else
+            {
+                //first time
+                station.Enchant(item.Item as Equipment, trait, IsNative);
+
+            }
+            station.UserInventory.OnSlotChange?.Invoke(item.SlotID);
+
+            ClosePreview();
+            CloseDraggables();
+            station.OnEnchanted?.Invoke(item.Item as Equipment);
+
+            successEnchantable.SetItem(item.Item);
+            SuccessBoxShowcase.SetActive(true);
+
+
+
+
+        }
+
+        protected virtual void CloseDraggables()
+        {
+            draggableEnchant.SetEnchant(null);
+            draggableenchantable.SetEnchantableItem(-1, null);
         }
 
         protected virtual void EnchantSuccess(Equipment enchanted)
@@ -200,9 +228,9 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         protected virtual void SetupUI()
         {
             previewEnchant = EnchantPreviewInstance.GetComponent<IEnchantUIElement>();
-            enchantablePreview = EnchantablePreviewInstance.GetComponentInChildren<IEnchantableUIElement>();
-            decisionPreview = DecisionBoxPreview.GetComponentInChildren<IEnchantableUIElement>();
-            successEnchantable = SuccessBoxShowcase.GetComponentInChildren<IEnchantableUIElement>();
+            enchantablePreview = EnchantablePreviewInstance.GetComponentInChildren<IItemViewUI>();
+            decisionPreview = DecisionBoxPreview.GetComponentInChildren<IItemViewUI>();
+            successEnchantable = SuccessBoxShowcase.GetComponentInChildren<IItemViewUI>();
             homeposition = DraggableEnchantableInstance.transform.position;
             draggableenchantable = DraggableEnchantableInstance.GetComponent<IEnchantableUIElement>();
             draggableEnchant = DraggableEnchantInstance.GetComponent<IEnchantUIElement>();
@@ -257,30 +285,25 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             if (enchant == null) return;
             SceneEvents.OnStartDragEnchant?.Invoke();
         }
-        protected virtual void UpdateEquipmentUI(Item item)
-        {
-            if (uidic.ContainsKey(item))
-            {
-                uidic[item].SetEnchantable(item);
-            }
-        }
+        
         protected virtual void CheckDraggingOnEnchantable()
         {
             if (draggingEnchantable) return;
-            for (int i = 0; i < enchantableUIElements.Count; i++)
+            foreach (var kvp in enchantableitemsdic)
             {
-                RectTransform rect = enchantableUIElements[i].GetComponent<RectTransform>();
+                RectTransform rect = kvp.Value.RectTransform;
                 Vector2 localMousePosition = rect.InverseTransformPoint(Input.mousePosition);
                 if (rect.rect.Contains(localMousePosition))
                 {
                     if (Input.GetButtonDown(interactButton))
                     {
-                        draggingEnchantable = true;
-                        TryPlaceInSlot(enchantableUIElements[i].GetComponent<IEnchantableUIElement>().GetEnchantable());
+                        TryPlaceInSlot(kvp.Value.Interface.GetEnchantable());
                         break;
                     }
                 }
             }
+
+           
 
 
         }
@@ -295,7 +318,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
         protected virtual void CheckStopDraggingEnchantable()
         {
-            if (draggableenchantable.GetEnchantable() == null) return;
+
             if (draggingEnchantable == false) return;
             if (Input.GetButtonUp(interactButton))
             {
@@ -304,7 +327,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                 if (DraggableEnchantableInstance.GetComponent<RectTransform>().rect.Overlaps(EnchantablePreviewInstance.GetComponent<RectTransform>().rect))
                 {
                     //placed
-                    EnchantablePreviewInstance.GetComponent<IEnchantableUIElement>().SetEnchantable(draggableenchantable.GetEnchantable());
+                    enchantablePreview.SetItemStack(draggableenchantable.GetEnchantable());
                     SceneEvents.OnPreviewSetEnchantable?.Invoke();
                 }
 
@@ -312,10 +335,11 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         }
        
 
-        protected virtual void TryPlaceInSlot(Item item)
+        protected virtual void TryPlaceInSlot(ItemStack item)
         {
-            draggableenchantable.SetEnchantable(item);
+            draggableenchantable.SetEnchantableItem(item.SlotID, station.UserInventory);
             if (item == null) return;
+            draggingEnchantable = true;
             SceneEvents.OnStartDragEnchantable?.Invoke();
         }
 
@@ -324,28 +348,28 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             active = false;
             DecisionBoxPreview.SetActive(false);
             SuccessBoxShowcase.SetActive(false);
-            decisionPreview.SetEnchantable(null);
+            decisionPreview.SetItem(null);
+            enchantablePreview.SetItem(null);
             previewEnchant.SetEnchant(null);
-            enchantablePreview.SetEnchantable(null);
+      
 
             uidic.Clear();
             MainPanel.gameObject.SetActive(false);
 
-            if (station != null)
-            {
-                station.OnEnchanted -= UpdateEquipmentUI;
-            }
 
             for (int i = 0; i < enchantUIElements.Count; i++)
             {
                 Destroy(enchantUIElements[i].gameObject);
             }
-            for (int i = 0; i < enchantableUIElements.Count; i++)
+            foreach (var kvp in enchantableitemsdic)
             {
-                Destroy(enchantableUIElements[i].gameObject);
+                RemoveEnchantableItemUI(kvp.Key);
             }
+
             enchantableUIElements.Clear();
             enchantUIElements.Clear();
+            slotPerUIDic.Clear();
+            enchantableitemsdic.Clear();
             station = null;
 
             if (FreezeDungeon)
@@ -362,22 +386,30 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             this.user = user;
             this.user.SetShopCanvass(this);
             MainPanel.gameObject.SetActive(true);
-            station.OnEnchanted += UpdateEquipmentUI;
-          
 
-            List<Equipment> equipped = station.GetEquippedEquipment();
 
-            for (int i = 0; i < equipped.Count; i++)
+            ///redo with item stacks
+            ///
+            List<ItemStack> stacks = station.UserInventory.GetAllUniqueStacks();
+            for (int i = 0; i < stacks.Count; i++)
             {
-                Item item = equipped[i];
-                CreateUIEnchantableElement(item);
+                CreateUIEnchantableElement(stacks[i]);
             }
 
-            List<Equipment> invs = station.GetEquipmentInInventory();
-            for (int i = 0; i < invs.Count; i++)
-            {
-                CreateUIEnchantableElement(invs[i]);
-            }
+
+            //how to handle currently equipped?
+
+            //currently doesn't handle currently equipped.
+            //station.UserInventory.GetEquippedEquipment
+            //List<Equipment> equipped = station.GetEquippedEquipment();
+
+            //for (int i = 0; i < equipped.Count; i++)
+            //{
+            //    Item item = equipped[i];
+            //    CreateUIEnchantableElement(item);
+            //}
+
+
 
             List<EquipmentEnchant> enchants = station.GetAllEnchants();
             for (int i = 0; i < enchants.Count; i++)
@@ -391,19 +423,51 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             }
         }
 
+       protected virtual void RemoveEnchantableItemUI(GameObject key)
+        {
+            if (enchantableitemsdic.ContainsKey(key))
+            {
+                EnchantableItemUI value = enchantableitemsdic[key];
+                station.UserInventory.OnSlotChange -= value.Interface.UpdateItem;
+                slotPerUIDic.Remove(value.ItemStack.SlotID);
+                enchantableUIElements.Remove(key);
+                Destroy(key);
+            }
+        }
         protected virtual void CreateUIEnchantElement(EquipmentEnchant enchant)
         {
             GameObject instance = Instantiate(EnchantUIElementPrefab, EnchantContentParent);
             instance.GetComponent<IEnchantUIElement>().SetEnchant(enchant);
             enchantUIElements.Add(instance);
         }
-        protected virtual void CreateUIEnchantableElement(Item item)
+        protected virtual void CreateUIEnchantableElement(ItemStack itemstack)
         {
-            GameObject instance = Instantiate(EnchantableUIElementPrefab, EnchantableContentParent);
-            IEnchantableUIElement element = instance.GetComponent<IEnchantableUIElement>();
-            element.SetEnchantable(item);
-            enchantableUIElements.Add(instance);
-            uidic[item] = element;
+            if (slotPerUIDic.ContainsKey(itemstack.SlotID) == false)
+            {
+                if (itemstack.Item == null)
+                {
+                    //do nothing.
+                    return;
+                }
+
+
+                if (itemstack.Item is Equipment)
+                {
+
+                    GameObject instance = Instantiate(EnchantableUIElementPrefab, EnchantableContentParent);
+                    EnchantableItemUI newui = new EnchantableItemUI(itemstack, instance);
+                    newui.Interface.SetEnchantableItem(itemstack.SlotID, station.UserInventory);
+                    enchantableUIElements.Add(instance);
+                    enchantableitemsdic[instance] = newui;
+                    station.UserInventory.OnSlotChange += newui.Interface.UpdateItem;
+                    slotPerUIDic[itemstack.SlotID] = instance;
+                }
+                
+
+
+
+            }
+          
         }
 
         

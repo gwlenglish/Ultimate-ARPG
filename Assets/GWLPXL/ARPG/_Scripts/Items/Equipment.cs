@@ -338,6 +338,22 @@ namespace GWLPXL.ARPGCore.Items.com
         protected int iLevel = 1;
 
         #region sockets
+
+        public virtual List<string> GetAllTraitNouns()
+        {
+            List<string> _temp = new List<string>();
+            EquipmentTrait[] traits = GetAllTraits();
+            for (int i = 0; i < traits.Length; i++)
+            {
+                string[] nouns = traits[i].GetAllNouns();
+                for (int j = 0; j < nouns.Length; j++)
+                {
+                    _temp.Add(nouns[j]);
+                }
+            }
+
+            return _temp;
+        }
         public virtual List<string> GetAllNounsSockets()
         {
             List<string> _temp = new List<string>();
@@ -384,6 +400,64 @@ namespace GWLPXL.ARPGCore.Items.com
                 }
             }
             return _temp;
+        }
+
+        /// <summary>
+        /// get all prefixes and suffixes
+        /// </summary>
+        /// <returns></returns>
+        public virtual List<string> GetAllTraitAffixes()
+        {
+            List<string> _temp = new List<string>();
+            List<string> affixes = new List<string>();
+            EquipmentTrait[] traits = GetAllTraits();
+            for (int i = 0; i < traits.Length; i++)
+            {
+                affixes.Clear();
+                affixes = traits[i].GetAllAffixes();
+                for (int j = 0; j < affixes.Count; j++)
+                {
+                    _temp.Add(affixes[j]);
+                }
+            }
+
+            return _temp;
+            
+        }
+        public virtual List<string> GetAllTraitPrefixes()
+        {
+            List<string> _temp = new List<string>();
+
+            EquipmentTrait[] traits = GetAllTraits();
+            for (int i = 0; i < traits.Length; i++)
+            {
+
+                string[] affixes = traits[i].GetPrefixes();
+                for (int j = 0; j < affixes.Length; j++)
+                {
+                    _temp.Add(affixes[j]);
+                }
+            }
+
+            return _temp;
+
+        }
+        public virtual List<string> GetAllTraitSuffixes()
+        {
+            List<string> _temp = new List<string>();
+
+            EquipmentTrait[] traits = GetAllTraits();
+            for (int i = 0; i < traits.Length; i++)
+            {
+                string[] affixes = traits[i].GetSuffixes();
+                for (int j = 0; j < affixes.Length; j++)
+                {
+                    _temp.Add(affixes[j]);
+                }
+            }
+
+            return _temp;
+
         }
         public virtual List<string> GetAllSocketAffixes()
         {

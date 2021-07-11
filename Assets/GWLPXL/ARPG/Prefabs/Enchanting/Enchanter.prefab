@@ -468,8 +468,12 @@ MonoBehaviour:
       EnchantLevel: 20
       Sprite: {fileID: 3909212269490177266, guid: d274d7b6131b1094fb3cf06d40b14134,
         type: 3}
-      EnchantTraits: []
+      EnchantTraits:
+      - {fileID: 11400000, guid: 2b70c8bd170bbdd4e8499d267e114f4d, type: 2}
+      - {fileID: 11400000, guid: 1da6e88061cb63447a8ee7dcef92afa3, type: 2}
     InteractRange: 3
+    AffixReader: {fileID: 11400000, guid: 3e4efdf6488b65849a561f01bd339f43, type: 2}
+    RenameItemOnEnchant: 1
   EnchantEvents:
     SceneEvents:
       OnStationSetup:

@@ -559,7 +559,7 @@ GameObject:
   - component: {fileID: 8191873354594129230}
   - component: {fileID: 4449848951842885511}
   - component: {fileID: 747440002177273779}
-  - component: {fileID: 2986522484174547190}
+  - component: {fileID: 8242414481831681229}
   m_Layer: 5
   m_Name: Panel_EnchantableSuccess
   m_TagString: Untagged
@@ -625,7 +625,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2986522484174547190
+--- !u!114 &8242414481831681229
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -634,8 +634,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7324259410975172209}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e42e967c772b0a48a3fc59d6c75fc63, type: 3}
+  m_Script: {fileID: 11500000, guid: 973ccb7c4c72fb64b929df6a0c9e1f37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ItemDescriptionText: {fileID: 3875651911587684341}
   ItemImage: {fileID: 3589214337623031191}
+  EmptyText: Empty
+  EmptySprite: {fileID: 0}
