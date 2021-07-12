@@ -22,12 +22,13 @@ MonoBehaviour:
   TraitPrefixes:
   - Agile
   - Nimble
+  - Red
   TraitSuffixes:
   - Agile
   - Nimble
   TraitNouns:
-  - of Dexterity
-  - of Nimbleness
+  - Dexterity
+  - Nimbleness
   myValue: 10
   myLevelMulti: 60
   weight: 7

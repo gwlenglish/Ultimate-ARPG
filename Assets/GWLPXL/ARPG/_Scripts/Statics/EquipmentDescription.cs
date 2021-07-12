@@ -8,7 +8,9 @@ using System.Linq;
 namespace GWLPXL.ARPGCore.Statics.com
 {
 
-
+    /// <summary>
+    /// to do, need to know when it's enchanted or not. need to know if no more sockets or not.
+    /// </summary>
     public static class EquipmentDescription
     {
         static StringBuilder sb = new StringBuilder();
@@ -17,7 +19,7 @@ namespace GWLPXL.ARPGCore.Statics.com
         {
             sb.Clear();
             List<string> socketaffixes = equipment.GetStats().GetAllSocketAffixes();
-            string newname = PlayerDescription.GetGeneratedName(equipment);
+            string newname = equipment.GetStats().GetDroppedName();
             if (socketaffixes.Count > 0)//we have none
             {
                 //get existing
@@ -105,7 +107,7 @@ namespace GWLPXL.ARPGCore.Statics.com
         {
             sb.Clear();
             List<string> affixes = equipment.GetStats().GetAllTraitAffixes();
-            string newname = PlayerDescription.GetGeneratedName(equipment);
+            string newname = equipment.GetStats().GetDroppedName();
             if (affixes.Count > 0)//we have none
             {
                 //get existing
