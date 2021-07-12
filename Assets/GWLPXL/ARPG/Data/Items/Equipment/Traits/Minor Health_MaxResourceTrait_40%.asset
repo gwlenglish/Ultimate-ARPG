@@ -27,6 +27,8 @@ MonoBehaviour:
   - of Vitality
   - of Invigoration
   - of Nourishment
+  TraitNouns: []
+  myValue: 1
   myLevelMulti: 40
   weight: 10
   sprite: {fileID: 0}

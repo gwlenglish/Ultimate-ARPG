@@ -1,13 +1,13 @@
 {
     "config": {
-        "instanceID": 18288
+        "instanceID": 17122
     },
     "AutoName": true,
     "traitID": {
         "Name": "Strength",
         "ID": 23,
         "Trait": {
-            "instanceID": 18120
+            "instanceID": 16906
         }
     },
     "traitName": "Strength",
@@ -21,6 +21,8 @@
         "of Power",
         "of The Ox"
     ],
+    "TraitNouns": [],
+    "myValue": 1,
     "myLevelMulti": 60,
     "weight": 7,
     "sprite": {

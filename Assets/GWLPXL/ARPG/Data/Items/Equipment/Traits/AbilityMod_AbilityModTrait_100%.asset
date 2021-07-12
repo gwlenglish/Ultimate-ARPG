@@ -21,6 +21,8 @@ MonoBehaviour:
   traitName: Skillmod Test 1
   TraitPrefixes: []
   TraitSuffixes: []
+  TraitNouns: []
+  myValue: 1
   myLevelMulti: 100
   weight: 5
   sprite: {fileID: 0}

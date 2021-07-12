@@ -1,17 +1,17 @@
 {
     "config": {
-        "instanceID": 25840
+        "instanceID": 25532
     },
     "id": {
         "Name": "Fist",
         "ID": 4,
         "Instance": {
-            "instanceID": 25226
+            "instanceID": 24926
         }
     },
     "DamageVar": {
         "combatHandler": {
-            "instanceID": 18356
+            "instanceID": 17190
         },
         "descriptiveName": "Fist",
         "damageOptions": {

@@ -1,32 +1,32 @@
 {
     "config": {
-        "instanceID": 16880
+        "instanceID": 16740
     },
     "itemID": {
         "Name": "",
         "ID": 24,
         "Item": {
-            "instanceID": 16802
+            "instanceID": 16594
         }
     },
     "autoName": true,
     "rarity": {
-        "instanceID": 16882
+        "instanceID": 16632
     },
     "meshPrefab": {
         "instanceID": 0
     },
     "sprite": {
-        "instanceID": 16884
+        "instanceID": 16738
     },
     "purchaseCost": 10,
     "sellCost": 5,
     "forQuests": [
         {
-            "instanceID": 16886
+            "instanceID": 16636
         },
         {
-            "instanceID": 16888
+            "instanceID": 16638
         }
     ],
     "itemName": "Oil Quest Item",

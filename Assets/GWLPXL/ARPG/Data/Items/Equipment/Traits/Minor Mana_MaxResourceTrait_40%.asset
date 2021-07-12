@@ -27,6 +27,8 @@ MonoBehaviour:
   - of Mysticism
   - of Mana
   - of Magic
+  TraitNouns: []
+  myValue: 1
   myLevelMulti: 40
   weight: 10
   sprite: {fileID: 0}

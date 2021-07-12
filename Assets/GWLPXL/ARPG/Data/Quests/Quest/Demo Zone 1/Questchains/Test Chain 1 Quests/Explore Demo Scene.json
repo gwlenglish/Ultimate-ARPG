@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 21926
+        "instanceID": 20976
     },
     "ID": {
         "Name": "Explore Demo Scene",
         "ID": 11,
         "Quest": {
-            "instanceID": 16558
+            "instanceID": 20960
         }
     },
     "questName": "Explore Demo Scene",
@@ -16,14 +16,14 @@
         {
             "StateName": "InProgress",
             "QuestTemplate": {
-                "instanceID": 16558
+                "instanceID": 20960
             },
             "State": 1,
             "Lines": [
                 {
                     "DescriptiveName": "Quest Giver 1",
                     "Actor": {
-                        "instanceID": 16492
+                        "instanceID": 16082
                     },
                     "QuestGiverText": "Done exploring?"
                 }
@@ -33,14 +33,14 @@
         {
             "StateName": "Completed",
             "QuestTemplate": {
-                "instanceID": 16558
+                "instanceID": 20960
             },
             "State": 10,
             "Lines": [
                 {
                     "DescriptiveName": "Quest Giver 1",
                     "Actor": {
-                        "instanceID": 16492
+                        "instanceID": 16082
                     },
                     "QuestGiverText": "Nice! I'll be the top of my class now. "
                 }
@@ -50,19 +50,19 @@
     ],
     "QuestRewards": [
         {
-            "instanceID": 16928
+            "instanceID": 16982
         },
         {
-            "instanceID": 16930
+            "instanceID": 16984
         }
     ],
     "rewardType": 0,
     "rewardGiverTemplate": [
         {
-            "instanceID": 16492
+            "instanceID": 16082
         }
     ],
     "logic": {
-        "instanceID": 21928
+        "instanceID": 20978
     }
 }

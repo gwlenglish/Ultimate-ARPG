@@ -111,7 +111,7 @@ namespace GWLPXL.ARPGCore.Items.com
 
             if (RenameItem)
             {
-                EquipmentDescription.RenameItemWithEnchant(equipment, AffixReaderSO);
+                EquipmentDescription.RenameItemWithEnchant(equipment, enchant, AffixReaderSO, RenameType);
             }
            
         }
@@ -185,22 +185,13 @@ namespace GWLPXL.ARPGCore.Items.com
 
 
 
-            //if (isPreview == false)
-            //{
-              
-            //    OnEnchanted?.Invoke(equipment);
-
-            //}
-
-
-
         }
 
 
-        public virtual void RenameItemWithEnchant(Equipment equipment)
+        public virtual void RenameItemWithEnchant(Equipment equipment, EquipmentEnchant enchant)
         {
 
-            EquipmentDescription.RenameItemWithEnchant(equipment, AffixReaderSO);
+            EquipmentDescription.RenameItemWithEnchant(equipment, enchant, AffixReaderSO, RenameType);
             
 
         }

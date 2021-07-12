@@ -25,6 +25,7 @@ MonoBehaviour:
   TraitSuffixes:
   - of Dexterity
   - of Nimbleness
+  TraitNouns: []
   myValue: 1
   myLevelMulti: 100
   weight: 7

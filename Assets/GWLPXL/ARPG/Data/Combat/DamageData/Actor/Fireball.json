@@ -1,17 +1,17 @@
 {
     "config": {
-        "instanceID": 25620
+        "instanceID": 25332
     },
     "id": {
         "Name": "Fireball",
         "ID": 10,
         "Instance": {
-            "instanceID": 25234
+            "instanceID": 24934
         }
     },
     "DamageVar": {
         "combatHandler": {
-            "instanceID": 18356
+            "instanceID": 17190
         },
         "descriptiveName": "Fireball",
         "damageOptions": {

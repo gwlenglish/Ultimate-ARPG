@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 20872
+        "instanceID": 19692
     },
     "ID": {
         "Name": "Kill repeat",
         "ID": 4,
         "Quest": {
-            "instanceID": 20832
+            "instanceID": 19680
         }
     },
     "questName": "Kill Repeat",
@@ -16,14 +16,14 @@
         {
             "StateName": "InProgress",
             "QuestTemplate": {
-                "instanceID": 20832
+                "instanceID": 19680
             },
             "State": 1,
             "Lines": [
                 {
                     "DescriptiveName": "Quest Giver 1",
                     "Actor": {
-                        "instanceID": 16492
+                        "instanceID": 16082
                     },
                     "QuestGiverText": "More."
                 }
@@ -33,14 +33,14 @@
         {
             "StateName": "Completed",
             "QuestTemplate": {
-                "instanceID": 20832
+                "instanceID": 19680
             },
             "State": 10,
             "Lines": [
                 {
                     "DescriptiveName": "Quest Giver 1",
                     "Actor": {
-                        "instanceID": 16492
+                        "instanceID": 16082
                     },
                     "QuestGiverText": "That'll do for now. "
                 }
@@ -50,14 +50,14 @@
         {
             "StateName": "RewardsCollected",
             "QuestTemplate": {
-                "instanceID": 20832
+                "instanceID": 19680
             },
             "State": 20,
             "Lines": [
                 {
                     "DescriptiveName": "Quest Giver 1",
                     "Actor": {
-                        "instanceID": 16492
+                        "instanceID": 16082
                     },
                     "QuestGiverText": "Hmmm?"
                 }
@@ -67,15 +67,15 @@
     ],
     "QuestRewards": [
         {
-            "instanceID": 16928
+            "instanceID": 16982
         },
         {
-            "instanceID": 16930
+            "instanceID": 16984
         }
     ],
     "rewardType": 1,
     "rewardGiverTemplate": [],
     "logic": {
-        "instanceID": 20870
+        "instanceID": 19690
     }
 }

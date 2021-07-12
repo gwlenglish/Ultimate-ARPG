@@ -1,13 +1,13 @@
 {
     "config": {
-        "instanceID": 18272
+        "instanceID": 17106
     },
     "AutoName": true,
     "traitID": {
         "Name": "Vitality_StatTrait_100%",
         "ID": 26,
         "Trait": {
-            "instanceID": 18108
+            "instanceID": 16894
         }
     },
     "traitName": "Vitality",
@@ -20,6 +20,8 @@
         "of Vitality",
         "of Health"
     ],
+    "TraitNouns": [],
+    "myValue": 1,
     "myLevelMulti": 100,
     "weight": 7,
     "sprite": {

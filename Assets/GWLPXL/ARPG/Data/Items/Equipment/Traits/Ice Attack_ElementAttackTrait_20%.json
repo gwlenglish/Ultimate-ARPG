@@ -1,13 +1,13 @@
 {
     "config": {
-        "instanceID": 18300
+        "instanceID": 17134
     },
     "AutoName": true,
     "traitID": {
         "Name": "Ice Attack",
         "ID": 20,
         "Trait": {
-            "instanceID": 18132
+            "instanceID": 16918
         }
     },
     "traitName": "Ice Attack",
@@ -21,6 +21,8 @@
         "of Ice",
         "of the Tundra"
     ],
+    "TraitNouns": [],
+    "myValue": 1,
     "myLevelMulti": 20,
     "weight": 5,
     "sprite": {

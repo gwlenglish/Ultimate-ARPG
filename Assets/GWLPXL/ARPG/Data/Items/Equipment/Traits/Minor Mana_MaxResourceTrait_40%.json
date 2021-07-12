@@ -1,13 +1,13 @@
 {
     "config": {
-        "instanceID": 18290
+        "instanceID": 17124
     },
     "AutoName": true,
     "traitID": {
         "Name": "Minor Mana",
         "ID": 21,
         "Trait": {
-            "instanceID": 18122
+            "instanceID": 16908
         }
     },
     "traitName": "Minor Mana",
@@ -21,6 +21,8 @@
         "of Mana",
         "of Magic"
     ],
+    "TraitNouns": [],
+    "myValue": 1,
     "myLevelMulti": 40,
     "weight": 10,
     "sprite": {

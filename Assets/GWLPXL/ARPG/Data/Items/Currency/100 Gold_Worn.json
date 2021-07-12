@@ -1,17 +1,17 @@
 {
     "config": {
-        "instanceID": 23056
+        "instanceID": 22760
     },
     "itemID": {
         "Name": "100 Gold_Worn",
         "ID": 31,
         "Item": {
-            "instanceID": 22934
+            "instanceID": 22640
         }
     },
     "autoName": true,
     "rarity": {
-        "instanceID": 17892
+        "instanceID": 16656
     },
     "meshPrefab": {
         "instanceID": 0

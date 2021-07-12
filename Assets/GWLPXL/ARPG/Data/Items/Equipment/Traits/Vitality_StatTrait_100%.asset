@@ -26,6 +26,8 @@ MonoBehaviour:
   TraitSuffixes:
   - of Vitality
   - of Health
+  TraitNouns: []
+  myValue: 1
   myLevelMulti: 100
   weight: 7
   sprite: {fileID: 0}

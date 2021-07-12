@@ -27,6 +27,8 @@ MonoBehaviour:
   - of Strength
   - of Power
   - of The Ox
+  TraitNouns: []
+  myValue: 1
   myLevelMulti: 100
   weight: 7
   sprite: {fileID: 0}

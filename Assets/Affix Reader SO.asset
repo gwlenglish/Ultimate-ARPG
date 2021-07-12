@@ -57,6 +57,10 @@ MonoBehaviour:
       - Solid
       - Agile
       - Nimble
+      - Sharpened
+      - Edged
+      - Sharp
+      - Keen
       AdverbModifiers:
       - Unusually
       - Very
@@ -101,6 +105,8 @@ MonoBehaviour:
       - Wood
       - Metal
       - Steel
+      - Diamond
+      - Cloth
       AdverbModifiers:
       - Unusually
       - Very
@@ -111,6 +117,7 @@ MonoBehaviour:
       - General-purpose
       - U-shaped
       - Four-sided
+      - Gem-Studded
       AdverbModifiers:
       - Unusually
       - Very

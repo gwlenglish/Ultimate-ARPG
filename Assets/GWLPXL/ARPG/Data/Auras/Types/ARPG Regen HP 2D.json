@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 25854
+        "instanceID": 25546
     },
     "auraID": {
         "Name": "",
         "ID": 7,
         "Aura": {
-            "instanceID": 25246
+            "instanceID": 24946
         }
     },
     "AuraData": {
@@ -15,13 +15,13 @@
         "AuraName": "ARPG Regen HP 2D",
         "AuraDescription": "Increases Max MP by 25, 2D version",
         "AuraPrefab": {
-            "instanceID": 25842
+            "instanceID": 25534
         },
         "auraCategory": 0,
         "uniqueID": 0,
         "AuraLogics": [
             {
-                "instanceID": 18008
+                "instanceID": 16784
             }
         ],
         "AuraGroups": [

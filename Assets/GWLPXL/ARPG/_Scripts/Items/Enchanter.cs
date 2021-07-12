@@ -5,6 +5,16 @@ using UnityEngine;
 
 namespace GWLPXL.ARPGCore.Items.com
 {
+    [System.Serializable]
+    public class AffixOverrides
+    {
+        [Tooltip("Overrides prefixes. Leave empty to disable.")]
+        public List<string> Prefixes = new List<string>();
+        [Tooltip("Overrides suffixes. Leave empty to disable.")]
+        public List<string> Suffixes = new List<string>();
+        [Tooltip("Overrides nouns. Leave empty to disable.")]
+        public List<string> Nouns = new List<string>();
+    }
     /// <summary>
     /// Enchanter actor example
     /// </summary>
@@ -18,6 +28,7 @@ namespace GWLPXL.ARPGCore.Items.com
         public AffixReaderSO AffixReader = default;
         public bool RenameItemOnEnchant = true;
         public RenameType Type = RenameType.Suffix;
+        
        
     }
     public class Enchanter : MonoBehaviour, IInteract

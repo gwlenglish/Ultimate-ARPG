@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 25844
+        "instanceID": 25536
     },
     "auraID": {
         "Name": "",
         "ID": 4,
         "Aura": {
-            "instanceID": 25240
+            "instanceID": 24940
         }
     },
     "AuraData": {
@@ -15,13 +15,13 @@
         "AuraName": "Haste",
         "AuraDescription": "Increase ability speed multi to 1.5",
         "AuraPrefab": {
-            "instanceID": 25846
+            "instanceID": 25538
         },
         "auraCategory": 0,
         "uniqueID": 0,
         "AuraLogics": [
             {
-                "instanceID": 25848
+                "instanceID": 25540
             }
         ],
         "AuraGroups": [

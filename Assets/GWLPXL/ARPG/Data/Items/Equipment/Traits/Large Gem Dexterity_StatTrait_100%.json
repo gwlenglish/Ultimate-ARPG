@@ -1,13 +1,13 @@
 {
     "config": {
-        "instanceID": 17268
+        "instanceID": 16938
     },
     "AutoName": true,
     "traitID": {
-        "Name": "Dexterity",
-        "ID": 7,
+        "Name": "Large Gem Dexterity_StatTrait_100%",
+        "ID": 27,
         "Trait": {
-            "instanceID": 232138
+            "instanceID": 16780
         }
     },
     "traitName": "Large Gem Dexterity",
@@ -16,8 +16,12 @@
         "Nimble"
     ],
     "TraitSuffixes": [
-        "of Dexterity",
-        "of Nimbleness"
+        "Agile",
+        "Nimble"
+    ],
+    "TraitNouns": [
+        "Dexterity",
+        "Nimbleness"
     ],
     "myValue": 10,
     "myLevelMulti": 100,

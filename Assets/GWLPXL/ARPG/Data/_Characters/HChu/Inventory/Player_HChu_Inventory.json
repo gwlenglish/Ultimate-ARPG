@@ -1,18 +1,18 @@
 {
     "config": {
-        "instanceID": 17794
+        "instanceID": 16540
     },
     "EquipEvent": {
-        "instanceID": 17796
+        "instanceID": 16542
     },
     "UnEquipEvent": {
-        "instanceID": 17798
+        "instanceID": 16544
     },
     "ID": {
         "Name": "Player_HChu_Inventory",
         "ID": 4,
         "SOReference": {
-            "instanceID": 17788
+            "instanceID": 16534
         }
     },
     "inventoryName": "Inventory",
@@ -20,45 +20,54 @@
     "currentCurrency": 100,
     "startingEquipment": [
         {
-            "instanceID": 17800
+            "instanceID": 16546
         }
     ],
     "startingItems": [
         {
-            "instanceID": 17802
+            "instanceID": 16548
         },
         {
-            "instanceID": 17802
+            "instanceID": 16548
         },
         {
-            "instanceID": 17802
+            "instanceID": 16548
         },
         {
-            "instanceID": 17802
+            "instanceID": 16548
         },
         {
-            "instanceID": 17802
+            "instanceID": 16548
         },
         {
-            "instanceID": 17804
+            "instanceID": 16550
         },
         {
-            "instanceID": 17806
+            "instanceID": 16552
         },
         {
-            "instanceID": 17808
+            "instanceID": 16554
         },
         {
-            "instanceID": 17810
+            "instanceID": 16556
         },
         {
-            "instanceID": 17812
+            "instanceID": 16558
         },
         {
-            "instanceID": 17814
+            "instanceID": 16560
         },
         {
-            "instanceID": 17816
+            "instanceID": 16562
+        },
+        {
+            "instanceID": 16564
+        },
+        {
+            "instanceID": 16566
+        },
+        {
+            "instanceID": 16564
         }
     ],
     "startingGold": 0

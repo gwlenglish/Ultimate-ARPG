@@ -1,23 +1,23 @@
 {
     "config": {
-        "instanceID": 23064
+        "instanceID": 22756
     },
     "itemID": {
         "Name": "",
         "ID": 15,
         "Item": {
-            "instanceID": 22942
+            "instanceID": 22636
         }
     },
     "autoName": true,
     "rarity": {
-        "instanceID": 17884
+        "instanceID": 16648
     },
     "meshPrefab": {
         "instanceID": 0
     },
     "sprite": {
-        "instanceID": 22502
+        "instanceID": 21490
     },
     "purchaseCost": 10,
     "sellCost": 5,
@@ -30,21 +30,21 @@
             "ILevelMulti": 1.0,
             "MaxNumberOfTraitsPerTier": 4,
             "PossibleTierDrops": {
-                "instanceID": 17896
+                "instanceID": 16660
             }
         },
         {
             "ILevelMulti": 0.800000011920929,
             "MaxNumberOfTraitsPerTier": 2,
             "PossibleTierDrops": {
-                "instanceID": 17896
+                "instanceID": 16660
             }
         },
         {
             "ILevelMulti": 0.6000000238418579,
             "MaxNumberOfTraitsPerTier": 1,
             "PossibleTierDrops": {
-                "instanceID": 17896
+                "instanceID": 16660
             }
         }
     ],

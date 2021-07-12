@@ -221,7 +221,7 @@ public static class AffixHelper
 
         string sortedaffixes = sb.ToString();
 
-        UnityEngine.Debug.Log(sortedaffixes);
+
         return sortedaffixes;
     }
     /// <summary>

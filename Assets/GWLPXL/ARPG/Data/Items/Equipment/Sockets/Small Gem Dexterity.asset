@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 193f2142f98da1d46839bd7765d6c4a9, type: 3}
   m_Name: Small Gem Dexterity
   m_EditorClassIdentifier: 
-  config: {fileID: 0}
+  config: {fileID: 4900000, guid: 43c137d0025796a4c94888f7ecaf838e, type: 3}
   itemID:
-    Name: 
-    ID: 0
-    Item: {fileID: 0}
+    Name: Small Gem Dexterity
+    ID: 33
+    Item: {fileID: 11400000}
   autoName: 1
   rarity: {fileID: 11400000, guid: 4df0bc156be553c4c9f8f3217ab8189b, type: 2}
   meshPrefab: {fileID: 0}

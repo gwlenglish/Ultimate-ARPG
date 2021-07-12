@@ -24,9 +24,13 @@ MonoBehaviour:
   - Frozen
   - Chilly
   TraitSuffixes:
-  - of Iciness
-  - of Ice
-  - of the Tundra
+  - Icey
+  - Frozen
+  - Chilly
+  TraitNouns:
+  - Ice
+  - Iciness
+  myValue: 1
   myLevelMulti: 100
   weight: 5
   sprite: {fileID: 0}

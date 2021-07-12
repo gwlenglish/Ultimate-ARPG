@@ -201,3 +201,15 @@ MonoBehaviour:
       ID: 31
       Item: {fileID: 11400000, guid: 785309e2160eab14dbd4fd2cf31215db, type: 2}
     Item: {fileID: 11400000, guid: 785309e2160eab14dbd4fd2cf31215db, type: 2}
+  - DescriptiveName: 'Large Dexterity '
+    ID:
+      Name: Large Gem Dexterity
+      ID: 32
+      Item: {fileID: 11400000, guid: 516654ffecb8b224bb613054a6f182da, type: 2}
+    Item: {fileID: 11400000, guid: 516654ffecb8b224bb613054a6f182da, type: 2}
+  - DescriptiveName: 'Small Dexterity '
+    ID:
+      Name: Small Gem Dexterity
+      ID: 33
+      Item: {fileID: 11400000, guid: da00f54431d9ec5469b244cd404d52ae, type: 2}
+    Item: {fileID: 11400000, guid: da00f54431d9ec5469b244cd404d52ae, type: 2}

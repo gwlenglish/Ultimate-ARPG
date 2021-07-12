@@ -1,23 +1,28 @@
 {
     "config": {
-        "instanceID": 17268
+        "instanceID": 16936
     },
     "AutoName": true,
     "traitID": {
-        "Name": "Dexterity",
-        "ID": 7,
+        "Name": "Small Gem Dexterity",
+        "ID": 28,
         "Trait": {
-            "instanceID": 232146
+            "instanceID": 16778
         }
     },
     "traitName": "Dexterity",
     "TraitPrefixes": [
         "Agile",
-        "Nimble"
+        "Nimble",
+        "Red"
     ],
     "TraitSuffixes": [
-        "of Dexterity",
-        "of Nimbleness"
+        "Agile",
+        "Nimble"
+    ],
+    "TraitNouns": [
+        "Dexterity",
+        "Nimbleness"
     ],
     "myValue": 10,
     "myLevelMulti": 60,

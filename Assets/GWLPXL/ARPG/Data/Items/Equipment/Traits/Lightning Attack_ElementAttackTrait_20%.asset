@@ -25,6 +25,8 @@ MonoBehaviour:
   TraitSuffixes:
   - of Lightning
   - of Spark
+  TraitNouns: []
+  myValue: 1
   myLevelMulti: 20
   weight: 5
   sprite: {fileID: 0}

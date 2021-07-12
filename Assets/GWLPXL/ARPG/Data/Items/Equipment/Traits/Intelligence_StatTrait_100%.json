@@ -1,13 +1,13 @@
 {
     "config": {
-        "instanceID": 18268
+        "instanceID": 17102
     },
     "AutoName": true,
     "traitID": {
         "Name": "Intelligence_StatTrait_100%",
         "ID": 24,
         "Trait": {
-            "instanceID": 18104
+            "instanceID": 16890
         }
     },
     "traitName": "Intelligence",
@@ -20,6 +20,8 @@
         "of Brilliance",
         "of The Fox"
     ],
+    "TraitNouns": [],
+    "myValue": 1,
     "myLevelMulti": 100,
     "weight": 7,
     "sprite": {

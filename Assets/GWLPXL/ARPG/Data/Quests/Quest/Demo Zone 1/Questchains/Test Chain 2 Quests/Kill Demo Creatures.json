@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 20866
+        "instanceID": 19686
     },
     "ID": {
         "Name": "Demo Creature",
         "ID": 1,
         "Quest": {
-            "instanceID": 20830
+            "instanceID": 19678
         }
     },
     "questName": "Kill Demo Creatures",
@@ -16,14 +16,14 @@
         {
             "StateName": "InProgress",
             "QuestTemplate": {
-                "instanceID": 20830
+                "instanceID": 19678
             },
             "State": 1,
             "Lines": [
                 {
                     "DescriptiveName": "Quest Giver 1",
                     "Actor": {
-                        "instanceID": 16492
+                        "instanceID": 16082
                     },
                     "QuestGiverText": "Is that 3? You think so? Where'd you learn to count?"
                 }
@@ -33,14 +33,14 @@
         {
             "StateName": "Completed",
             "QuestTemplate": {
-                "instanceID": 20830
+                "instanceID": 19678
             },
             "State": 10,
             "Lines": [
                 {
                     "DescriptiveName": "Quest Giver 1",
                     "Actor": {
-                        "instanceID": 16492
+                        "instanceID": 16082
                     },
                     "QuestGiverText": "1...2...3. Nailed it. "
                 }
@@ -50,7 +50,7 @@
         {
             "StateName": "Rewards Collected",
             "QuestTemplate": {
-                "instanceID": 20830
+                "instanceID": 19678
             },
             "State": 20,
             "Lines": [],
@@ -59,18 +59,18 @@
     ],
     "QuestRewards": [
         {
-            "instanceID": 16928
+            "instanceID": 16982
         },
         {
-            "instanceID": 16930
+            "instanceID": 16984
         },
         {
-            "instanceID": 20868
+            "instanceID": 19688
         }
     ],
     "rewardType": 1,
     "rewardGiverTemplate": [],
     "logic": {
-        "instanceID": 20870
+        "instanceID": 19690
     }
 }

@@ -1,17 +1,17 @@
 {
     "config": {
-        "instanceID": 18692
+        "instanceID": 17536
     },
     "id": {
         "Name": "Arrow",
         "ID": 13,
         "Instance": {
-            "instanceID": 18536
+            "instanceID": 17378
         }
     },
     "DamageVar": {
         "combatHandler": {
-            "instanceID": 18356
+            "instanceID": 17190
         },
         "descriptiveName": "Arrow",
         "damageOptions": {

@@ -27,9 +27,10 @@ namespace GWLPXL.ARPGCore.Items.com
         public AffixReaderSO AffixReader = null;
         public bool RenameItemsOnSocketChanged = true;
         public RenameType RenameType = RenameType.Prefix;
+        [Tooltip("Leaving elements at 0 will disable the overrides.")]
+        public AffixOverrides AffixOverrides;
         public SocketSmithVars(float interactrange, SocketTypeReaderSO reader)
         {
-            Station = new SocketStation();
             InteractRange = interactrange;
             this.SocketReader = reader;
         }
@@ -134,7 +135,7 @@ namespace GWLPXL.ARPGCore.Items.com
             IUseSocketSmithCanvas hub = CheckPreconditions(interactor);
             if (hub == null) return false;
             ActorInventory inv = interactor.GetComponent<IActorHub>().MyInventory.GetInventoryRuntime();
-            SocketSmithVars.Station.SetupStation(inv, SocketSmithVars.AffixReader, SocketSmithVars.RenameItemsOnSocketChanged, SocketSmithVars.RenameType);
+            SocketSmithVars.Station.SetupStation(inv, SocketSmithVars.AffixReader, SocketSmithVars.RenameItemsOnSocketChanged, SocketSmithVars.RenameType, SocketSmithVars.AffixOverrides);
             if (canvas != null)
             {
                 canvas.SetStation(SocketSmithVars.Station);

@@ -1,13 +1,13 @@
 {
     "config": {
-        "instanceID": 18266
+        "instanceID": 17100
     },
     "AutoName": true,
     "traitID": {
         "Name": "Dexterity",
         "ID": 19,
         "Trait": {
-            "instanceID": 18102
+            "instanceID": 16888
         }
     },
     "traitName": "Dexterity",
@@ -19,6 +19,8 @@
         "of Dexterity",
         "of Nimbleness"
     ],
+    "TraitNouns": [],
+    "myValue": 1,
     "myLevelMulti": 100,
     "weight": 7,
     "sprite": {

@@ -153,3 +153,15 @@ MonoBehaviour:
       ID: 26
       Trait: {fileID: 11400000, guid: 547fcfcca22f54842a6f7005b5c0cc6b, type: 2}
     Trait: {fileID: 11400000, guid: 547fcfcca22f54842a6f7005b5c0cc6b, type: 2}
+  - DescriptiveName: Large Gem Dexterity
+    ID:
+      Name: Large Gem Dexterity_StatTrait_100%
+      ID: 27
+      Trait: {fileID: 11400000, guid: af425b251addcc2449bd9a523dad841b, type: 2}
+    Trait: {fileID: 11400000, guid: af425b251addcc2449bd9a523dad841b, type: 2}
+  - DescriptiveName: Dexterity
+    ID:
+      Name: Small Gem Dexterity
+      ID: 28
+      Trait: {fileID: 11400000, guid: 0b7381c41bfc5e442ae0c40b650956fa, type: 2}
+    Trait: {fileID: 11400000, guid: 0b7381c41bfc5e442ae0c40b650956fa, type: 2}

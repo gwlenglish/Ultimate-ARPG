@@ -1,6 +1,6 @@
 {
     "config": {
-        "instanceID": 21020
+        "instanceID": 19868
     },
     "lootPrefabOverride": {
         "instanceID": 0
@@ -9,15 +9,15 @@
         "Name": "King Loot",
         "ID": 6,
         "LootDrops": {
-            "instanceID": 20888
+            "instanceID": 19736
         }
     },
     "AllPossibleItems": [
         {
-            "instanceID": 21022
+            "instanceID": 19870
         },
         {
-            "instanceID": 21024
+            "instanceID": 19872
         }
     ],
     "LootTable": [
@@ -27,7 +27,7 @@
             "RangeFrom": 0,
             "RangeTo": 5,
             "Item": {
-                "instanceID": 21022
+                "instanceID": 19870
             }
         },
         {
@@ -36,7 +36,7 @@
             "RangeFrom": 5,
             "RangeTo": 10,
             "Item": {
-                "instanceID": 21024
+                "instanceID": 19872
             }
         }
     ]

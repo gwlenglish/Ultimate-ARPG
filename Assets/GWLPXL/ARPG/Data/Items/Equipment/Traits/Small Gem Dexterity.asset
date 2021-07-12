@@ -15,17 +15,16 @@ MonoBehaviour:
   config: {fileID: 4900000, guid: efd93381c98ce794380c55a029ce3f9f, type: 3}
   AutoName: 1
   traitID:
-    Name: Dexterity
-    ID: 7
+    Name: Small Gem Dexterity
+    ID: 28
     Trait: {fileID: 11400000}
   traitName: Dexterity
   TraitPrefixes:
-  - Agile
-  - Nimble
-  - Red
+  - Gem-Studded
+  - Slicing
   TraitSuffixes:
-  - Agile
-  - Nimble
+  - Gem-Studded
+  - Slicing
   TraitNouns:
   - Dexterity
   - Nimbleness

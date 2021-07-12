@@ -18,7 +18,9 @@ namespace GWLPXL.ARPGCore.Items.com
         public ActorInventory Inventory => userInventory;
         public SocketTypeReaderSO SocketTypeReader = default;
         public AffixReaderSO AffixReaderSO = default;
+        public AffixOverrides AffixOverrides = null;
         public bool Rename = true;
+        public RenameType Type = RenameType.Suffix;
         public System.Action OnSmithOpen;
         public System.Action OnSmithClosed;
         public System.Action<Equipment> OnAddSocketable;
@@ -44,19 +46,29 @@ namespace GWLPXL.ARPGCore.Items.com
             return stacksofsockets;
         }
         /// <summary>
+        /// for use on removal of socket.
+        /// </summary>
+        /// <param name="equipment"></param>
+        public virtual void RenameItemSocketRemoved(Equipment equipment, EquipmentSocketable removed)
+        {
+            EquipmentDescription.RenameItemWithSocketRemoved(equipment,  removed, Type, AffixOverrides);
+        }
+        /// <summary>
         /// working on getting prefix and suffix seperately next, all at once doens't work so well because it's all prefixes
         /// </summary>
         /// <param name="equipment"></param>
         public virtual void RenameItemWithSocket(Equipment equipment)
         {
 
-            EquipmentDescription.RenameItemWithSocket(equipment, AffixReaderSO);
+            EquipmentDescription.RenameItemWithSocket(equipment, AffixReaderSO, Type, AffixOverrides);
 
           
 
         }
-        public virtual void SetupStation(ActorInventory userInventory, AffixReaderSO affixreader = null, bool rename = false, RenameType type = RenameType.Suffix)
+        public virtual void SetupStation(ActorInventory userInventory, AffixReaderSO affixreader = null, bool rename = false, RenameType type = RenameType.Suffix, AffixOverrides overrides = null)
         {
+            this.AffixOverrides = overrides;
+            this.Type = type;
             this.userInventory = userInventory;
             this.AffixReaderSO = affixreader;
             this.Rename = rename;
@@ -158,14 +170,18 @@ namespace GWLPXL.ARPGCore.Items.com
         }
         public virtual bool RemoveSocketable(Equipment equipment, int atIndex, bool andRename = false)
         {
+           
             Socket socket = GetSocket(equipment, atIndex);
-            socket.SocketedThing = null;
-            equipment.GetStats().SetSocket(atIndex, socket);
-
+            EquipmentSocketable eq = socket.SocketedThing as EquipmentSocketable;
             if (andRename)
             {
-                RenameItemWithSocket(equipment);
+                RenameItemSocketRemoved(equipment, eq);
             }
+
+            socket.SocketedThing = null;
+            equipment.GetStats().SetSocket(atIndex, socket);
+         
+
             OnRemoveSocketable?.Invoke(equipment);
 
             return true;

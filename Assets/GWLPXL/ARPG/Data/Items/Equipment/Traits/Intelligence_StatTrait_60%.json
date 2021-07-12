@@ -1,13 +1,13 @@
 {
     "config": {
-        "instanceID": 18296
+        "instanceID": 17130
     },
     "AutoName": true,
     "traitID": {
         "Name": "Intelligence",
         "ID": 8,
         "Trait": {
-            "instanceID": 18128
+            "instanceID": 16914
         }
     },
     "traitName": "Intelligence",
@@ -20,6 +20,8 @@
         "of Brilliance",
         "of The Fox"
     ],
+    "TraitNouns": [],
+    "myValue": 1,
     "myLevelMulti": 60,
     "weight": 7,
     "sprite": {

@@ -23,9 +23,12 @@ MonoBehaviour:
   - Fiery
   - Blazing
   TraitSuffixes:
-  - of Flame
-  - of Fire
-  - of Hellfire
+  - Fiery
+  - Blazing
+  TraitNouns:
+  - Flame
+  - Hellfire
+  myValue: 1
   myLevelMulti: 100
   weight: 5
   sprite: {fileID: 0}

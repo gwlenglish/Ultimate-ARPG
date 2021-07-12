@@ -26,6 +26,8 @@ MonoBehaviour:
   - of Flame
   - of Fire
   - of Hellfire
+  TraitNouns: []
+  myValue: 1
   myLevelMulti: 100
   weight: 5
   sprite: {fileID: 0}

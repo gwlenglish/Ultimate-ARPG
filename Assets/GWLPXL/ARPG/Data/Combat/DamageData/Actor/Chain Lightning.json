@@ -1,17 +1,17 @@
 {
     "config": {
-        "instanceID": 25750
+        "instanceID": 25438
     },
     "id": {
         "Name": "",
         "ID": 9,
         "Instance": {
-            "instanceID": 25232
+            "instanceID": 24932
         }
     },
     "DamageVar": {
         "combatHandler": {
-            "instanceID": 18356
+            "instanceID": 17190
         },
         "descriptiveName": "Chain Lightning",
         "damageOptions": {

@@ -26,6 +26,8 @@ MonoBehaviour:
   - of Intellect
   - of Brilliance
   - of The Fox
+  TraitNouns: []
+  myValue: 1
   myLevelMulti: 100
   weight: 7
   sprite: {fileID: 0}

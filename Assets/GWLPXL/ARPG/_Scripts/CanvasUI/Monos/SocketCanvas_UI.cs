@@ -348,9 +348,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                     ISocketItemUIElementInsert socketinsert = kvp.Value.Interface;
                     Debug.Log(socketinsert);
                     Equipment eq = previewholder.GetSocketHolder();
-                    Debug.Log(eq);
                     int index = socketinsert.GetIndex();
-                    Debug.Log("Index " + index);
 
                     if (station.CanAdd(eq, index, socketitem))
                     {
@@ -495,6 +493,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                 station.OnSmithClosed?.Invoke();
                 station.Inventory.OnSlotChanged -= UpdateUI;
                 station.OnAddSocketable -= UpdateEquipmentUI;
+                station.OnRemoveSocketable -= UpdateEquipmentUI;
             }
 
             uidic.Clear();
@@ -562,7 +561,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             this.user = user;
             this.user.SetCanvasSmithCanvas(this);
             MainPanel.gameObject.SetActive(true);
-
+            station.OnRemoveSocketable += UpdateEquipmentUI;
             station.OnAddSocketable += UpdateEquipmentUI;
             station.Inventory.OnSlotChanged += UpdateUI;
 

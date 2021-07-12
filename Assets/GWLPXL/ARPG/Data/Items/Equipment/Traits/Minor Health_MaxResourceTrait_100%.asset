@@ -24,9 +24,14 @@ MonoBehaviour:
   - Vital
   - Invigorating
   TraitSuffixes:
-  - of Vitality
-  - of Invigoration
-  - of Nourishment
+  - Healthy
+  - Vital
+  - Invigorating
+  TraitNouns:
+  - Vitality
+  - Invigoration
+  - Nourishment
+  myValue: 1
   myLevelMulti: 100
   weight: 10
   sprite: {fileID: 0}

@@ -5071,7 +5071,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 1412256737}
   m_maskType: 0
-  _SortingLayer: 0
   _SortingLayerID: 0
   _SortingOrder: 0
 --- !u!222 &1412256736
@@ -5871,7 +5870,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 1846889548}
   m_maskType: 0
-  _SortingLayer: 0
   _SortingLayerID: 0
   _SortingOrder: 0
 --- !u!222 &1846889547
@@ -6124,7 +6122,7 @@ PrefabInstance:
     - target: {fileID: 68734295638115840, guid: d08f797b46dde5c41a1af02ea0956f6b,
         type: 3}
       propertyPath: m_Name
-      value: SocketSmith_PREVIEW
+      value: SocketSmith
       objectReference: {fileID: 0}
     - target: {fileID: 68734295638115840, guid: d08f797b46dde5c41a1af02ea0956f6b,
         type: 3}
@@ -6840,13 +6838,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5710349178914030362, guid: 3265ee1c6ac2d4a46801109d947df153,
         type: 3}
-      propertyPath: m_Enabled
-      value: 1
+      propertyPath: Abilities.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5710349178914030362, guid: 3265ee1c6ac2d4a46801109d947df153,
         type: 3}
-      propertyPath: Abilities.Array.size
-      value: 0
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5710349178914030362, guid: 3265ee1c6ac2d4a46801109d947df153,
         type: 3}
@@ -7025,7 +7023,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 6157183799375924859}
   m_maskType: 0
-  _SortingLayer: 0
   _SortingLayerID: 0
   _SortingOrder: 0
 --- !u!224 &6157183799375924855
@@ -7309,20 +7306,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7178999053924585382, guid: ad7bb88b50347664bab66af3af0f1856,
         type: 3}
-      propertyPath: shopLevel
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 7178999053924585382, guid: ad7bb88b50347664bab66af3af0f1856,
-        type: 3}
       propertyPath: requirements.Array.size
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7178999053924585382, guid: ad7bb88b50347664bab66af3af0f1856,
-        type: 3}
-      propertyPath: requirements.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: dcda7d4694d521a4da254883e3d76257,
-        type: 2}
     - target: {fileID: 7178999053924585382, guid: ad7bb88b50347664bab66af3af0f1856,
         type: 3}
       propertyPath: shopEvents.OnShopOpen.m_PersistentCalls.m_Calls.Array.size
@@ -7333,6 +7319,17 @@ PrefabInstance:
       propertyPath: shopEvents.OnShopClosed.m_PersistentCalls.m_Calls.Array.size
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7178999053924585382, guid: ad7bb88b50347664bab66af3af0f1856,
+        type: 3}
+      propertyPath: shopLevel
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7178999053924585382, guid: ad7bb88b50347664bab66af3af0f1856,
+        type: 3}
+      propertyPath: requirements.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: dcda7d4694d521a4da254883e3d76257,
+        type: 2}
     - target: {fileID: 7178999053924585382, guid: ad7bb88b50347664bab66af3af0f1856,
         type: 3}
       propertyPath: shopEvents.OnShopOpen.m_PersistentCalls.m_Calls.Array.data[0].m_Mode

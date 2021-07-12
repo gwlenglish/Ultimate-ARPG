@@ -23,8 +23,12 @@ MonoBehaviour:
   - Electric
   - Zapping
   TraitSuffixes:
-  - of Lightning
-  - of Spark
+  - Electric
+  - Zapping
+  TraitNouns:
+  - Spark
+  - Lightning
+  myValue: 1
   myLevelMulti: 100
   weight: 5
   sprite: {fileID: 0}

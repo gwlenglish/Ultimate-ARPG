@@ -1,13 +1,13 @@
 {
     "config": {
-        "instanceID": 16862
+        "instanceID": 17052
     },
     "AutoName": true,
     "traitID": {
         "Name": "Fire Attack",
         "ID": 12,
         "Trait": {
-            "instanceID": 16312
+            "instanceID": 16878
         }
     },
     "traitName": "Fire Attack",
@@ -20,6 +20,8 @@
         "of Fire",
         "of Hellfire"
     ],
+    "TraitNouns": [],
+    "myValue": 1,
     "myLevelMulti": 100,
     "weight": 5,
     "sprite": {

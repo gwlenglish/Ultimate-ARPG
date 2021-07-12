@@ -1,13 +1,13 @@
 {
     "config": {
-        "instanceID": 18304
+        "instanceID": 17138
     },
     "AutoName": true,
     "traitID": {
         "Name": "Cold Resist",
         "ID": 3,
         "Trait": {
-            "instanceID": 18136
+            "instanceID": 16922
         }
     },
     "traitName": "Cold Resist",
@@ -21,6 +21,8 @@
         "of Ice",
         "of the Tundra"
     ],
+    "TraitNouns": [],
+    "myValue": 1,
     "myLevelMulti": 20,
     "weight": 5,
     "sprite": {

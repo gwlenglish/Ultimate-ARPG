@@ -1,23 +1,23 @@
 {
     "config": {
-        "instanceID": 17912
+        "instanceID": 16676
     },
     "itemID": {
         "Name": "",
         "ID": 18,
         "Item": {
-            "instanceID": 17806
+            "instanceID": 16552
         }
     },
     "autoName": true,
     "rarity": {
-        "instanceID": 17884
+        "instanceID": 16648
     },
     "meshPrefab": {
-        "instanceID": 17914
+        "instanceID": 16678
     },
     "sprite": {
-        "instanceID": 17916
+        "instanceID": 16680
     },
     "purchaseCost": 10,
     "sellCost": 5,
@@ -30,21 +30,21 @@
             "ILevelMulti": 1.0,
             "MaxNumberOfTraitsPerTier": 4,
             "PossibleTierDrops": {
-                "instanceID": 17896
+                "instanceID": 16660
             }
         },
         {
             "ILevelMulti": 0.800000011920929,
             "MaxNumberOfTraitsPerTier": 2,
             "PossibleTierDrops": {
-                "instanceID": 17896
+                "instanceID": 16660
             }
         },
         {
             "ILevelMulti": 0.6000000238418579,
             "MaxNumberOfTraitsPerTier": 1,
             "PossibleTierDrops": {
-                "instanceID": 17896
+                "instanceID": 16660
             }
         }
     ],
@@ -54,10 +54,29 @@
         "baseStatMinValue": 1,
         "baseStateILevelMulti": 1.0,
         "nativeTraits": [],
-        "sockets": []
+        "sockets": [
+            {
+                "SocketedThing": {
+                    "instanceID": 0
+                },
+                "SocketType": 100
+            },
+            {
+                "SocketedThing": {
+                    "instanceID": 0
+                },
+                "SocketType": 102
+            },
+            {
+                "SocketedThing": {
+                    "instanceID": 0
+                },
+                "SocketType": 100
+            }
+        ]
     },
     "wearablePefab": {
-        "instanceID": 17918
+        "instanceID": 16682
     },
     "enchantable": true,
     "armorMat": 4

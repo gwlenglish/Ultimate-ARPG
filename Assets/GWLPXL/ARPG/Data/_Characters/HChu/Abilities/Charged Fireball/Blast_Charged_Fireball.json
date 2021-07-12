@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 36342
+        "instanceID": 25520
     },
     "id": {
         "Name": "Blast_Charged_Fireball",
         "ID": 22,
         "Ability": {
-            "instanceID": 36340
+            "instanceID": 24906
         }
     },
     "autoName": false,
@@ -21,12 +21,12 @@
         "AnimationIndex": 1,
         "Logics": [
             {
-                "instanceID": 24286
+                "instanceID": 23974
             }
         ],
         "UniqueID": 7,
         "Sprite": {
-            "instanceID": 24282
+            "instanceID": 23970
         }
     },
     "category": 1,

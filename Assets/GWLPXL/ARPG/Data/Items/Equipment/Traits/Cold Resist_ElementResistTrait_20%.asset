@@ -27,6 +27,8 @@ MonoBehaviour:
   - of Iciness
   - of Ice
   - of the Tundra
+  TraitNouns: []
+  myValue: 1
   myLevelMulti: 20
   weight: 5
   sprite: {fileID: 0}

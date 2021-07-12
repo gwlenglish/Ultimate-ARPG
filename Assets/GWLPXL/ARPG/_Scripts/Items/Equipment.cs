@@ -406,11 +406,21 @@ namespace GWLPXL.ARPGCore.Items.com
         /// get all prefixes and suffixes
         /// </summary>
         /// <returns></returns>
-        public virtual List<string> GetAllTraitAffixes()
+        public virtual List<string> GetAllTraitAffixes(bool nosockets = false)
         {
+
             List<string> _temp = new List<string>();
             List<string> affixes = new List<string>();
-            EquipmentTrait[] traits = GetAllTraits();
+            EquipmentTrait[] traits;
+            if (nosockets)
+            {
+                traits = GetAllTraitsNoSockets();
+            }
+            else
+            {
+                traits = GetAllTraits();
+            }
+
             for (int i = 0; i < traits.Length; i++)
             {
                 affixes.Clear();
@@ -424,11 +434,19 @@ namespace GWLPXL.ARPGCore.Items.com
             return _temp;
             
         }
-        public virtual List<string> GetAllTraitPrefixes()
+        public virtual List<string> GetAllTraitPrefixes(bool nosckets = false)
         {
             List<string> _temp = new List<string>();
 
-            EquipmentTrait[] traits = GetAllTraits();
+            EquipmentTrait[] traits;
+            if (nosckets)
+            {
+                traits = GetAllTraitsNoSockets();
+            }
+            else
+            {
+                traits = GetAllTraits();
+            }
             for (int i = 0; i < traits.Length; i++)
             {
 
@@ -442,11 +460,20 @@ namespace GWLPXL.ARPGCore.Items.com
             return _temp;
 
         }
-        public virtual List<string> GetAllTraitSuffixes()
+        public virtual List<string> GetAllTraitSuffixes(bool nosockets = false)
         {
             List<string> _temp = new List<string>();
-
-            EquipmentTrait[] traits = GetAllTraits();
+            EquipmentTrait[] traits;
+            if (nosockets)
+            {
+                traits = GetAllTraitsNoSockets();
+            }
+            else
+            {
+                traits = GetAllTraits();
+            }
+     
+           
             for (int i = 0; i < traits.Length; i++)
             {
                 string[] affixes = traits[i].GetSuffixes();
@@ -616,6 +643,11 @@ namespace GWLPXL.ARPGCore.Items.com
         {
             return randomTraits;
         }
+
+        /// <summary>
+        /// native, random, and sockets
+        /// </summary>
+        /// <returns></returns>
         public virtual EquipmentTrait[] GetAllTraits()
         {
             List<EquipmentTrait> _temp = new List<EquipmentTrait>();
@@ -643,7 +675,26 @@ namespace GWLPXL.ARPGCore.Items.com
 
             return _temp.ToArray();
         }
-        
+        /// <summary>
+        /// native, random
+        /// </summary>
+        /// <returns></returns>
+        public virtual EquipmentTrait[] GetAllTraitsNoSockets()
+        {
+            List<EquipmentTrait> _temp = new List<EquipmentTrait>();
+            for (int i = 0; i < nativeTraits.Length; i++)
+            {
+                _temp.Add(nativeTraits[i]);
+            }
+            for (int i = 0; i < randomTraits.Length; i++)
+            {
+                _temp.Add(randomTraits[i]);
+            }
+
+           
+
+            return _temp.ToArray();
+        }
 
     }
 

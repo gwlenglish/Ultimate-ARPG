@@ -1,18 +1,20 @@
 {
     "config": {
-        "instanceID": 23070
+        "instanceID": 22764
     },
     "AutoName": true,
     "traitID": {
         "Name": "Skillmod Test 1",
         "ID": 22,
         "Trait": {
-            "instanceID": 22948
+            "instanceID": 22644
         }
     },
     "traitName": "Skillmod Test 1",
     "TraitPrefixes": [],
     "TraitSuffixes": [],
+    "TraitNouns": [],
+    "myValue": 1,
     "myLevelMulti": 100,
     "weight": 5,
     "sprite": {

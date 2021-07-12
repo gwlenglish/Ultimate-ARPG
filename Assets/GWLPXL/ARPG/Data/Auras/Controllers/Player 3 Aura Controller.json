@@ -1,6 +1,6 @@
 {
     "config": {
-        "instanceID": 25678
+        "instanceID": 25368
     },
     "AuraControllerData": {
         "AutoName": false,
@@ -9,7 +9,7 @@
         "Description": "P3 demo",
         "ID": 2,
         "ControllerRef": {
-            "instanceID": 25250
+            "instanceID": 24950
         }
     },
     "startingAuras": [],
