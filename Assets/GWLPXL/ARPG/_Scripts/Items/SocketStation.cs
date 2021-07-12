@@ -30,7 +30,7 @@ namespace GWLPXL.ARPGCore.Items.com
 
         List<ItemStack> stacksofsockets = new List<ItemStack>();
         ActorInventory userInventory = null;
-        StringBuilder sb = new StringBuilder();
+
         public virtual void CloseStation()
         {
             stacksofsockets.Clear();
@@ -55,9 +55,12 @@ namespace GWLPXL.ARPGCore.Items.com
           
 
         }
-        public virtual void SetupStation(ActorInventory userInventory)
+        public virtual void SetupStation(ActorInventory userInventory, AffixReaderSO affixreader = null, bool rename = false, RenameType type = RenameType.Suffix)
         {
-            stacksofsockets.Clear();
+            this.userInventory = userInventory;
+            this.AffixReaderSO = affixreader;
+            this.Rename = rename;
+
             List<ItemStack> stacks = userInventory.GetAllUniqueStacks();
             for (int i = 0; i < stacks.Count; i++)
             {
@@ -67,7 +70,7 @@ namespace GWLPXL.ARPGCore.Items.com
                     stacksofsockets.Add(stacks[i]);
                 }
             }
-            this.userInventory = userInventory;
+   
             OnStationSetup?.Invoke(this);
         }
 

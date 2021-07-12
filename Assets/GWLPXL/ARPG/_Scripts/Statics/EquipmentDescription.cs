@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Text;
 using System.Linq;
-
+using GWLPXL.ARPGCore.DebugHelpers.com;
 namespace GWLPXL.ARPGCore.Statics.com
 {
 
@@ -105,6 +105,11 @@ namespace GWLPXL.ARPGCore.Statics.com
         }
         public static void RenameItemWithEnchant(Equipment equipment, AffixReaderSO AffixReaderSO)
         {
+            if (equipment == null || AffixReaderSO == null)
+            {
+                Debug.LogWarning("Can't rename item becuase either equipment or AffixReader is null");
+                return;
+            }
             sb.Clear();
             List<string> affixes = equipment.GetStats().GetAllTraitAffixes();
             string newname = equipment.GetStats().GetDroppedName();

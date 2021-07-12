@@ -6,7 +6,16 @@ using UnityEngine;
 using GWLPXL.ARPGCore.DebugHelpers.com;
 namespace GWLPXL.ARPGCore.Items.com
 {
-    
+    /// <summary>
+    /// you probably almost never want to select both.
+    /// </summary>
+    public enum RenameType
+    {
+        Prefix = 100,
+        Suffix = 101,
+        Both = 102,
+        None = 199
+    }
     [System.Serializable]
     public class SocketSmithVars
     {
@@ -17,6 +26,7 @@ namespace GWLPXL.ARPGCore.Items.com
         public SocketTypeReaderSO SocketReader = null;//not used at the moment.
         public AffixReaderSO AffixReader = null;
         public bool RenameItemsOnSocketChanged = true;
+        public RenameType RenameType = RenameType.Prefix;
         public SocketSmithVars(float interactrange, SocketTypeReaderSO reader)
         {
             Station = new SocketStation();
@@ -50,9 +60,6 @@ namespace GWLPXL.ARPGCore.Items.com
         protected virtual void Setup()
         {
             SocketSmithVars.Station = new SocketStation();
-            SocketSmithVars.Station.SocketTypeReader = SocketSmithVars.SocketReader;
-            SocketSmithVars.Station.AffixReaderSO = SocketSmithVars.AffixReader;
-            SocketSmithVars.Station.Rename = SocketSmithVars.RenameItemsOnSocketChanged;
             SocketSmithVars.Station.OnSmithOpen += Subscribe;
             SocketSmithVars.Station.OnSmithClosed += UnSubscribe;
             if (SocketSmithUIPrefab != null)
@@ -119,10 +126,15 @@ namespace GWLPXL.ARPGCore.Items.com
         }
         public bool DoInteraction(GameObject interactor)
         {
+            return TryOpenSocketSmith(interactor);
+        }
+
+        protected bool TryOpenSocketSmith(GameObject interactor)
+        {
             IUseSocketSmithCanvas hub = CheckPreconditions(interactor);
             if (hub == null) return false;
-
-            SocketSmithVars.Station.SetupStation(interactor.GetComponent<IActorHub>().MyInventory.GetInventoryRuntime());
+            ActorInventory inv = interactor.GetComponent<IActorHub>().MyInventory.GetInventoryRuntime();
+            SocketSmithVars.Station.SetupStation(inv, SocketSmithVars.AffixReader, SocketSmithVars.RenameItemsOnSocketChanged, SocketSmithVars.RenameType);
             if (canvas != null)
             {
                 canvas.SetStation(SocketSmithVars.Station);
@@ -133,6 +145,11 @@ namespace GWLPXL.ARPGCore.Items.com
 
         public bool IsInRange(GameObject interactor)
         {
+            return TryDetectRange(interactor);
+        }
+
+        protected virtual bool TryDetectRange(GameObject interactor)
+        {
             Vector3 dir = interactor.transform.position - this.transform.position;
             float sqrdmag = dir.sqrMagnitude;
             if (sqrdmag <= SocketSmithVars.InteractRange * SocketSmithVars.InteractRange)
@@ -142,6 +159,5 @@ namespace GWLPXL.ARPGCore.Items.com
             return false;
         }
 
-       
     }
 }

@@ -17,6 +17,7 @@ namespace GWLPXL.ARPGCore.Items.com
         public EnchantingStation EnchantingStation = new EnchantingStation();
         public AffixReaderSO AffixReader = default;
         public bool RenameItemOnEnchant = true;
+        public RenameType Type = RenameType.Suffix;
        
     }
     public class Enchanter : MonoBehaviour, IInteract
@@ -85,10 +86,10 @@ namespace GWLPXL.ARPGCore.Items.com
         {
             IUseEnchanterCanvas user = CheckPreconditions(interactor);
             if (user == null) return false;
-
-            EnchanterVars.EnchantingStation.SetupStation(interactor.GetComponent<IActorHub>().MyInventory.GetInventoryRuntime(), EnchanterVars.Enchants);
+            ActorInventory inv = interactor.GetComponent<IActorHub>().MyInventory.GetInventoryRuntime();
+            EnchanterVars.EnchantingStation.SetupStation(inv, EnchanterVars.Enchants, EnchanterVars.AffixReader, EnchanterVars.RenameItemOnEnchant, EnchanterVars.Type);
             EnchanterVars.EnchantingStation.AffixReaderSO = EnchanterVars.AffixReader;
-            EnchanterVars.EnchantingStation.RenameItem = EnchanterVars.RenameItemOnEnchant;
+
             if (canvas != null)
             {
                 canvas.SetStation(EnchanterVars.EnchantingStation);

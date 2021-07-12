@@ -166,6 +166,7 @@ MonoBehaviour:
     SocketReader: {fileID: 11400000, guid: 54347a991db2f5444bcc37233d0ab366, type: 2}
     AffixReader: {fileID: 11400000, guid: 3e4efdf6488b65849a561f01bd339f43, type: 2}
     RenameItemsOnSocketChanged: 1
+    RenameType: 100
   SocketEvents:
     SceneEvents:
       OnStationSetup:
@@ -446,7 +447,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 68734296141155422}
   m_maskType: 0
-  _SortingLayer: 0
   _SortingLayerID: 0
   _SortingOrder: 0
 --- !u!114 &68734296141155409

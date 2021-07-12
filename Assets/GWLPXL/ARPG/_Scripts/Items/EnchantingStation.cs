@@ -20,6 +20,7 @@ namespace GWLPXL.ARPGCore.Items.com
         public ActorInventory UserInventory => userInventory;
         public AffixReaderSO AffixReaderSO = default;
         public bool RenameItem = true;
+        public RenameType RenameType = RenameType.Suffix;
         List<EquipmentEnchant> enchants = new List<EquipmentEnchant>();
         ActorInventory userInventory;
 
@@ -31,10 +32,14 @@ namespace GWLPXL.ARPGCore.Items.com
             OnStationClosed?.Invoke(this);
 
         }
-        public virtual void SetupStation(ActorInventory userInventory, List<EquipmentEnchant> enchants)
+        public virtual void SetupStation(ActorInventory userInventory, List<EquipmentEnchant> enchants, AffixReaderSO affixreader = null, bool rename = true, RenameType type = RenameType.Suffix)
         {
             this.enchants = enchants;
             this.userInventory = userInventory;
+            this.RenameType = type;
+            this.RenameItem = rename;
+            this.AffixReaderSO = affixreader;
+           
             OnStationSetup?.Invoke(this);
         }
         #endregion
