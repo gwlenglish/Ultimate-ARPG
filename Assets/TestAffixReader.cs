@@ -1,7 +1,11 @@
-﻿using System.Collections;
+﻿using GWLPXL.ARPGCore.Items.com;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// debug use only, place in scene with an AffixReaderSO and test it out.
+/// </summary>
 public class TestAffixReader : MonoBehaviour
 {
     public string Phrase;

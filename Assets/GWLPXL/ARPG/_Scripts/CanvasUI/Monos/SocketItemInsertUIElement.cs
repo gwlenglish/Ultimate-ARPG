@@ -7,7 +7,9 @@ using UnityEngine.UI;
 
 namespace GWLPXL.ARPGCore.CanvasUI.com
 {
-
+    /// <summary>
+    /// Interface for the socket inserts UI
+    /// </summary>
     public interface ISocketItemUIElementInsert
     {
         Item GetHolder();
@@ -18,6 +20,9 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         void SetIndex(int index);
         void UpdateSocket();
     }
+    /// <summary>
+    /// example of the socket insert ui class, used to maintain references of any socket items placed within an equipment socket
+    /// </summary>
     public class SocketItemInsertUIElement : MonoBehaviour, ISocketItemUIElementInsert
     {
 
@@ -68,6 +73,10 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
           
         }
 
+        /// <summary>
+        /// override if you want a different setup
+        /// </summary>
+        /// <param name="socket"></param>
         protected virtual void Setup(Socket socket)
         {
             if (socket == null)
