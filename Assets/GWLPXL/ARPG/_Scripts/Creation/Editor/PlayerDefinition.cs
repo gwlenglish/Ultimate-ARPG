@@ -173,6 +173,8 @@ namespace GWLPXL.ARPGCore.Creation.com
         public bool CanTakeStatusEffects = true;
         public bool UseAnimatorController = true;
         public bool UseFactions = true;
+        public bool UseEnchanter = true;
+        public bool UseSocketSmith = true;
         public GameObject CharacterMesh = null;
         public GameObject PrefabToModify = null;
     }
@@ -269,8 +271,11 @@ namespace GWLPXL.ARPGCore.Creation.com
             //built in canvases, always use the dungeon canvas
             if (options.UseBuiltInCanvases)
             {
+  
                 PlayerCanvasInputClass canvasInputs = InputSystem.AddComponent<PlayerCanvasInputClass>();
 
+                PlayerEnchantingCanvasUser enchantinguser = canvasSystem.AddComponent<PlayerEnchantingCanvasUser>();
+                PlayerSocketCanvasUser socketUser = canvasSystem.AddComponent<PlayerSocketCanvasUser>();
                 PlayerAbilityTreeCanvas skilltree = canvasSystem.AddComponent<PlayerAbilityTreeCanvas>();
 
                 PlayerInvCanvasUser invUser = canvasSystem.AddComponent<PlayerInvCanvasUser>();
