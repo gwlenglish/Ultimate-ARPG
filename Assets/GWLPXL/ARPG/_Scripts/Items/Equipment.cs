@@ -223,7 +223,7 @@ namespace GWLPXL.ARPGCore.Items.com
                     if (sockets[i].SocketedThing is EquipmentSocketable)
                     {
                         EquipmentSocketable eqsock = sockets[i].SocketedThing as EquipmentSocketable;
-                        sb.Append("\n" + eqsock.EquipmentTraitSocketable.GetTraitUIDescription());
+                        sb.Append("\n" + eqsock.GetUserDescription());
                     }
 
                 }
@@ -362,10 +362,15 @@ namespace GWLPXL.ARPGCore.Items.com
                 if (GetSockets()[i].SocketedThing != null && GetSockets()[i].SocketedThing is EquipmentSocketable)
                 {
                     EquipmentSocketable sock = GetSockets()[i].SocketedThing as EquipmentSocketable;
-                    for (int j = 0; j < sock.EquipmentTraitSocketable.GetAllNouns().Length; j++)
+                    for (int k = 0; k < sock.EquipmentTraitSocketable.Count; k++)
                     {
-                        _temp.Add(sock.EquipmentTraitSocketable.GetAllNouns()[j]);
+                        EquipmentTrait trait = sock.EquipmentTraitSocketable[k];
+                        for (int j = 0; j < trait.GetAllNouns().Length; j++)
+                        {
+                            _temp.Add(trait.GetAllNouns()[j]);
+                        }
                     }
+                    
                 }
             }
             return _temp;
@@ -496,11 +501,16 @@ namespace GWLPXL.ARPGCore.Items.com
                     if (sockets[i].SocketedThing is EquipmentSocketable)
                     {
                         EquipmentSocketable sock = sockets[i].SocketedThing as EquipmentSocketable;
-                        EquipmentTrait trait = sock.EquipmentTraitSocketable;
-                        for (int j = 0; j < trait.GetAllAffixes().Count; j++)
+                        for (int k = 0; k < sock.EquipmentTraitSocketable.Count; k++)
                         {
-                            _temp.Add(trait.GetAllAffixes()[j]);
+                            EquipmentTrait trait = sock.EquipmentTraitSocketable[k];
+                            for (int j = 0; j < trait.GetAllAffixes().Count; j++)
+                            {
+                                _temp.Add(trait.GetAllAffixes()[j]);
+                            }
                         }
+          
+                       
                     }
                 }
             }
@@ -516,11 +526,15 @@ namespace GWLPXL.ARPGCore.Items.com
                     if (sockets[i].SocketedThing is EquipmentSocketable)
                     {
                         EquipmentSocketable sock = sockets[i].SocketedThing as EquipmentSocketable;
-                        EquipmentTrait trait = sock.EquipmentTraitSocketable;
-                        for (int j = 0; j < trait.GetPrefixes().Length; j++)
+                        for (int k = 0; k < sock.EquipmentTraitSocketable.Count; k++)
                         {
-                            _temp.Add(trait.GetPrefixes()[j]);
+                            EquipmentTrait trait = sock.EquipmentTraitSocketable[k];
+                            for (int j = 0; j < trait.GetPrefixes().Length; j++)
+                            {
+                                _temp.Add(trait.GetPrefixes()[j]);
+                            }
                         }
+                        
                     }
                 }
             }
@@ -536,11 +550,16 @@ namespace GWLPXL.ARPGCore.Items.com
                     if (sockets[i].SocketedThing is EquipmentSocketable)
                     {
                         EquipmentSocketable sock = sockets[i].SocketedThing as EquipmentSocketable;
-                        EquipmentTrait trait = sock.EquipmentTraitSocketable;
-                        for (int j = 0; j < trait.GetSuffixes().Length; j++)
+                        for (int k = 0; k < sock.EquipmentTraitSocketable.Count; k++)
                         {
-                            _temp.Add(trait.GetSuffixes()[j]);
+                            EquipmentTrait trait = sock.EquipmentTraitSocketable[k];
+                            for (int j = 0; j < trait.GetSuffixes().Length; j++)
+                            {
+                                _temp.Add(trait.GetSuffixes()[j]);
+                            }
                         }
+           
+                       
                     }
                 }
             }
@@ -668,7 +687,11 @@ namespace GWLPXL.ARPGCore.Items.com
                     if (item is EquipmentSocketable)
                     {
                         EquipmentSocketable eqsock = item as EquipmentSocketable;
-                        _temp.Add(eqsock.EquipmentTraitSocketable);
+                        for (int j = 0; j < eqsock.EquipmentTraitSocketable.Count; j++)
+                        {
+                            _temp.Add(eqsock.EquipmentTraitSocketable[j]);
+                        }
+                       
                     }
                 }
             }

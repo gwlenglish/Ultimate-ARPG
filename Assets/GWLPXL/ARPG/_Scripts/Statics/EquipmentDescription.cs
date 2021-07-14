@@ -5,6 +5,8 @@ using UnityEngine;
 using System.Text;
 using System.Linq;
 using GWLPXL.ARPGCore.DebugHelpers.com;
+using GWLPXL.ARPGCore.Traits.com;
+
 namespace GWLPXL.ARPGCore.Statics.com
 {
 
@@ -17,32 +19,10 @@ namespace GWLPXL.ARPGCore.Statics.com
         public static void RenameItemWithSocketRemoved(Equipment equipment, EquipmentSocketable removed, RenameType type, AffixOverrides overrides)
         {
             sb.Clear();
-           
-            //get existing
-            string key = equipment.GetBaseItemName().ToLower();
-            List<string> entire = AffixHelper.SplitPhrase(equipment.GetGeneratedItemName());
-            List<string> front = new List<string>();
-            List<string> back = new List<string>();
-            bool firsthalf = true;
-            for (int i = 0; i < entire.Count; i++)
-            {
-                if (AffixHelper.WordEquals(entire[i].ToLower(), key))
-                {
-                    //found it
 
-                    firsthalf = false;
-                    continue;
-                }
+            List<string> front, back;
+            SplitCurrentName(equipment, out front, out back);
 
-                if (firsthalf)
-                {
-                    front.Add(entire[i]);
-                }
-                else
-                {
-                    back.Add(entire[i]);
-                }
-            }
             Debug.Log(sb.ToString());
             switch (type)
             {
@@ -79,6 +59,35 @@ namespace GWLPXL.ARPGCore.Statics.com
             Debug.Log(sb.ToString());
         }
 
+        private static void SplitCurrentName(Equipment equipment, out List<string> front, out List<string> back)
+        {
+            //get existing
+            string key = equipment.GetBaseItemName().ToLower();
+            List<string> entire = AffixHelper.SplitPhrase(equipment.GetGeneratedItemName());
+            front = new List<string>();
+            back = new List<string>();
+            bool firsthalf = true;
+            for (int i = 0; i < entire.Count; i++)
+            {
+                if (AffixHelper.WordEquals(entire[i].ToLower(), key))
+                {
+                    //found it
+
+                    firsthalf = false;
+                    continue;
+                }
+
+                if (firsthalf)
+                {
+                    front.Add(entire[i]);
+                }
+                else
+                {
+                    back.Add(entire[i]);
+                }
+            }
+        }
+
         private static StringBuilder RemoveSocketSuffix(EquipmentSocketable removed, AffixOverrides overrides, List<string> back)
         {
             List<string> suffixes;
@@ -88,7 +97,12 @@ namespace GWLPXL.ARPGCore.Statics.com
             }
             else
             {
-                suffixes = removed.EquipmentTraitSocketable.GetSuffixes().ToList();
+                suffixes = new List<string>();
+                for (int i = 0; i < removed.EquipmentTraitSocketable.Count; i++)
+                {
+                    suffixes.Concat(removed.EquipmentTraitSocketable[i].GetSuffixes().ToList());
+                }
+
             }
 
             for (int i = 0; i < back.Count; i++)
@@ -114,9 +128,19 @@ namespace GWLPXL.ARPGCore.Statics.com
             }
             else
             {
-                prefixes = removed.EquipmentTraitSocketable.GetPrefixes().ToList();
+                prefixes = new List<string>();
+                for (int i = 0; i < removed.EquipmentTraitSocketable.Count; i++)
+                {
+                    EquipmentTrait trait = removed.EquipmentTraitSocketable[i];
+                    for (int k = 0; k < trait.GetPrefixes().Length; k++)
+                    {
+                        prefixes.Add(trait.GetPrefixes()[k]);
+                    }
+                   
+                }
+
             }
-            List<string> remove = new List<string>();
+
             for (int i = 0; i < front.Count; i++)
             {
                 string currentword = front[i];
@@ -146,14 +170,15 @@ namespace GWLPXL.ARPGCore.Statics.com
         public static void RenameItemWithSocket(Equipment equipment, AffixReaderSO AffixReaderSO, RenameType type, AffixOverrides overrides)
         {
             sb.Clear();
-            List<string> socketaffixes = equipment.GetStats().GetAllSocketAffixes();
-            if (socketaffixes.Count == 0 && overrides != null)
+            int socketaffixes = equipment.GetStats().GetAllSocketAffixes().Count;
+            if (socketaffixes == 0 && overrides != null)
             {
-                socketaffixes.Concat(overrides.Prefixes);
-                socketaffixes.Concat(overrides.Suffixes);
+                socketaffixes += overrides.Prefixes.Count + overrides.Suffixes.Count;
+
+
             }
 
-            if (socketaffixes.Count > 0)//we have none
+            if (socketaffixes > 0)//we have some
             {
                 //get existing
                 string key = equipment.GetBaseItemName().ToLower();
@@ -210,10 +235,7 @@ namespace GWLPXL.ARPGCore.Statics.com
 
                 equipment.SetGeneratedItemName(sb.ToString());
             }
-            else
-            {
-               // equipment.SetGeneratedItemName(newname);
-            }
+           
 
 
 
@@ -231,6 +253,7 @@ namespace GWLPXL.ARPGCore.Statics.com
                 socketpostprefixes = equipment.GetStats().GetAllSocketSuffixes();
 
             }
+
             if (back.Count > 0)
             {
                 string postnoun;
@@ -321,7 +344,9 @@ namespace GWLPXL.ARPGCore.Statics.com
             if (affixes.Count == 0)
             {
                 affixes.Concat(enchant.AffixOverrides.Prefixes);
-                affixes.Concat(enchant.AffixOverrides.Suffixes);//try to see if overrides are set.
+                affixes.Concat(enchant.AffixOverrides.Suffixes);
+  
+
             }
 
 
@@ -366,8 +391,6 @@ namespace GWLPXL.ARPGCore.Statics.com
                             sb.Append(" ");
                             sb.Append(back[i]);
                         }
-                       // sb.Append(" ");
-                       // sb.Append(equipment.GetBaseItemName());
                         break;
                     case RenameType.Suffix:
                         for (int i = 0; i < front.Count; i++)

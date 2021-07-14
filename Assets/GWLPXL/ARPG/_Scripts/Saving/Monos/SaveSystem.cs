@@ -458,17 +458,24 @@ namespace GWLPXL.ARPGCore.Saving.com
             EquipmentSocketable eqsocket = socketable as EquipmentSocketable;
 
             EquipmentSocketable eqsocketcopy = Instantiate(eqsocket);
-            EquipmentTraitSave toload = _save.SocketedThing;
-            EquipmentTrait archetype = gameDatabase.Traits.FindTraitByID(toload.DatabaseID);
-            if (archetype == null)
+            EquipmentTraitSave[] toload = _save.SocketedThings;
+            List<EquipmentTrait> traits = new List<EquipmentTrait>();
+            for (int i = 0; i < toload.Length; i++)
             {
-                Debug.LogWarning("No Trait found with ID of " + toload.DatabaseID + " Can't load.");
-                return null;
+                EquipmentTraitSave eqsave = toload[i];
+                EquipmentTrait archetype = gameDatabase.Traits.FindTraitByID(eqsave.DatabaseID);
+                if (archetype == null)
+                {
+                    Debug.LogWarning("No Trait found with ID of " + toload[i].DatabaseID + " Can't load.");
+                    return null;
+                }
+                EquipmentTrait trait = ScriptableObject.Instantiate(archetype);
+                int savedvalue = eqsave.SavedValue;
+                trait.SetStaticValue(savedvalue);
+                traits.Add(trait);
+                
             }
-            EquipmentTrait trait = ScriptableObject.Instantiate(archetype);
-            int savedvalue = toload.SavedValue;
-            trait.SetStaticValue(savedvalue);
-            eqsocketcopy.EquipmentTraitSocketable = trait;
+            eqsocketcopy.EquipmentTraitSocketable = traits;
             Socket socket = new Socket(eqsocketcopy, socketype);
             return socket;
         }
@@ -918,14 +925,17 @@ namespace GWLPXL.ARPGCore.Saving.com
                 if (socketedthing == null) continue;//not valid save
                 EquipmentSocketable socketable = sockets[i].SocketedThing as EquipmentSocketable;
                 if (socketable == null) continue;//not vlaid
-                EquipmentTrait sockettrait = socketedthing.EquipmentTraitSocketable;
-                if (sockettrait == null) continue;//not valid
+                List<EquipmentTrait> sockettrait = socketedthing.EquipmentTraitSocketable;
+                if (sockettrait == null || sockettrait.Count == 0) continue;//not valid
 
                 int sockettype = (int)sockets[i].SocketType;
                 int itemID = socketedthing.GetID().ID;
-
-                EquipmentTraitSave _newSave = GetTraitSave(sockettrait);
-                EquipmentSocketSave socketsave = new EquipmentSocketSave(itemID, sockettype, _newSave);
+                EquipmentTraitSave[] eqsaves = new EquipmentTraitSave[sockettrait.Count];
+                for (int k = 0; k < sockettrait.Count; k++)
+                {
+                    eqsaves[k] = GetTraitSave(sockettrait[i]);
+                }
+                EquipmentSocketSave socketsave = new EquipmentSocketSave(itemID, sockettype, eqsaves);
                 socketSaves.Add(socketsave);
 
             }
@@ -1223,11 +1233,11 @@ namespace GWLPXL.ARPGCore.Saving.com
         {
             public int ItemID;
             public int SocketType;
-            public EquipmentTraitSave SocketedThing;
-            public EquipmentSocketSave(int itemID, int type, EquipmentTraitSave traitsave)
+            public EquipmentTraitSave[] SocketedThings;
+            public EquipmentSocketSave(int itemID, int type, EquipmentTraitSave[] traitsave)
             {
                 SocketType = type;
-                SocketedThing = traitsave;
+                SocketedThings = traitsave;
             }
 
         }

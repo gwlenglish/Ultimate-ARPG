@@ -28,5 +28,6 @@ MonoBehaviour:
     StackingAmount: 1
     GeneratedName: 
     Type: 100
-  EquipmentTraitSocketable: {fileID: 11400000, guid: 0b7381c41bfc5e442ae0c40b650956fa,
-    type: 2}
+    Description: Small Dexterity Gem
+  EquipmentTraitSocketable:
+  - {fileID: 11400000, guid: 0b7381c41bfc5e442ae0c40b650956fa, type: 2}

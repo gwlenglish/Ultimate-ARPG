@@ -2996,6 +2996,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Panel_SocketItem_Draggable
       objectReference: {fileID: 0}
+    - target: {fileID: 5954633560396288131, guid: 5f0c87ee63c286847becd54b105742f1,
+        type: 3}
+      propertyPath: DraggableInstance
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f0c87ee63c286847becd54b105742f1, type: 3}
 --- !u!224 &3263356031481948528 stripped

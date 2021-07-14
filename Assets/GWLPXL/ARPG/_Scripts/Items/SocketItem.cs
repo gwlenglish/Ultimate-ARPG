@@ -7,6 +7,10 @@ namespace GWLPXL.ARPGCore.Items.com
     {
         public SocketableVars SocketableVariables;
 
+        public override string GetUserDescription()
+        {
+            return SocketableVariables.Description;
+        }
         public virtual SocketTypes GetSocketType()
         {
             return SocketableVariables.Type;
@@ -52,6 +56,8 @@ namespace GWLPXL.ARPGCore.Items.com
         [UnityEngine.HideInInspector]
         public string GeneratedName = string.Empty;
         public SocketTypes Type = SocketTypes.Any;
+        [UnityEngine.TextArea(3,5)]
+        public string Description = string.Empty;
 
         public SocketableVars(SocketTypes type, string basename, int stacking = 1)
         {

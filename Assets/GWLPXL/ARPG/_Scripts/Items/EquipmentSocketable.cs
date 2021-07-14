@@ -1,28 +1,18 @@
 ﻿using GWLPXL.ARPGCore.Traits.com;
-
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace GWLPXL.ARPGCore.Items.com
 {
     /// <summary>
-    /// in progress
+    /// socket items to be placed in equipment sockets
     /// </summary>
     [CreateAssetMenu(menuName ="GWLPXL/ARPG/Socketables/New Equipment Socketable")]
 
     public class EquipmentSocketable : SocketItem
     {
-        public EquipmentTrait EquipmentTraitSocketable = null;
+        public List<EquipmentTrait> EquipmentTraitSocketable = new List<EquipmentTrait>();
 
 
-        public override string GetUserDescription()
-        {
-            string generated = GetGeneratedItemName();
-            if (string.IsNullOrEmpty(generated) == false)
-            {
-                return GetGeneratedItemName() + EquipmentTraitSocketable.GetTraitUIDescription();
-            }
-
-            return GetBaseItemName() + EquipmentTraitSocketable.GetTraitUIDescription();
-        }
     }
 }

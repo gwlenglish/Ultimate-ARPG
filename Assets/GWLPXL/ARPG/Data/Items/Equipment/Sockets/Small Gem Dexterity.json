@@ -1,6 +1,6 @@
 {
     "config": {
-        "instanceID": 0
+        "instanceID": 16776
     },
     "itemID": {
         "Name": "Small Gem Dexterity",
@@ -17,7 +17,7 @@
         "instanceID": 0
     },
     "sprite": {
-        "instanceID": 16776
+        "instanceID": 16778
     },
     "purchaseCost": 10,
     "sellCost": 5,
@@ -25,9 +25,12 @@
         "BaseName": "Small Dexterity ",
         "StackingAmount": 1,
         "GeneratedName": "",
-        "Type": 100
+        "Type": 100,
+        "Description": "Small Dexterity Gem"
     },
-    "EquipmentTraitSocketable": {
-        "instanceID": 16778
-    }
+    "EquipmentTraitSocketable": [
+        {
+            "instanceID": 16780
+        }
+    ]
 }
