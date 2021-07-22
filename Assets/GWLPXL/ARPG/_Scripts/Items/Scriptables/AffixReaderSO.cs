@@ -186,8 +186,8 @@ namespace GWLPXL.ARPGCore.Items.com
             }
         }
     }
+#endif
+    #endregion
 }
 
-#endif
 
-#endregion
