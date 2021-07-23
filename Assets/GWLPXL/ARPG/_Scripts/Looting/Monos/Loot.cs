@@ -15,7 +15,7 @@ namespace GWLPXL.ARPGCore.Looting.com
         public Item DroppedItem { get; set; }
         public float DelayBeforeActive = 1f;
         public bool AutoPickupCurrency = true;
-
+        public bool AutoPickupItem = false;
         public LootOptions(Item dropped, float delay)
         {
             DroppedItem = dropped;
@@ -46,18 +46,30 @@ namespace GWLPXL.ARPGCore.Looting.com
         public Transform GetInstance() => this.transform;
 
         public LootOptions GetLootOptions() => LootOptions;
-    
 
 
+        public float GetDefaultDelay()
+        {
+            return LootOptions.DelayBeforeActive;
+        }
+        public void IniLoot(Item _forItem, float _delay)
+        {
+            LootOptions = new LootOptions(_forItem, _delay);
+        }
 
 
         public void DoTick()//on first tick, make active. the tick is dependant on the timer
         {
+            ActivateLoot();
+        }
+
+        protected virtual void ActivateLoot()
+        {
             if (LootOptions.CanPickUp) return;
             LootOptions.CanPickUp = true;
 
-                DungeonMaster.Instance.GetLootCanvas().CreateLootTextUI(this);
-            
+            DungeonMaster.Instance.GetLootCanvas().CreateLootTextUI(this);
+
             lootEvents.SceneEvents.OnLootActive.Invoke();
         }
 
@@ -68,17 +80,15 @@ namespace GWLPXL.ARPGCore.Looting.com
        
      
         
-        public float GetDefaultDelay()
-        {
-            return LootOptions.DelayBeforeActive;
-        }
-        public void IniLoot(Item _forItem, float _delay)
-        {
-            LootOptions = new LootOptions(_forItem, _delay);
-        }
+      
      
 
-        private void Start()
+        protected virtual void Start()
+        {
+            Setup();
+        }
+
+        protected virtual void Setup()
         {
             GetComponent<SphereCollider>().center = sphereColliderOffset;
             GameObject visual = LootOptions.DroppedItem.CreateMeshInstance(MeshHolder);
@@ -92,13 +102,12 @@ namespace GWLPXL.ARPGCore.Looting.com
             {
                 MeshLight.enabled = false;
             }
- 
+
             lootEvents.SceneEvents.OnLootDropped.Invoke(this);
             AddTicker();
         }
 
-      
-        private void OnDestroy()
+        protected virtual void OnDestroy()
         {
             DungeonMaster.Instance.GetLootCanvas().RemoveLootText(this);
             RemoveTicker();
@@ -109,6 +118,11 @@ namespace GWLPXL.ARPGCore.Looting.com
 
       
         public bool DoInteraction(GameObject obj)
+        {
+            return CheckInteraction(obj);
+        }
+
+        protected virtual bool CheckInteraction(GameObject obj)
         {
             if (LootOptions.CanPickUp == false) return false;
             if (pickedUp == true) return false;//if we already picked this up, don't pick it up again.
@@ -128,49 +142,62 @@ namespace GWLPXL.ARPGCore.Looting.com
 
             return pickedUp;
         }
-    
 
         public bool IsInRange(GameObject invUser)
+        {
+            return CheckRange(invUser);
+        }
+
+        protected virtual bool CheckRange(GameObject invUser)
         {
             Vector3 diff = (invUser.transform.position - this.transform.position);
             float sqrdmag = diff.sqrMagnitude;
             if (sqrdmag <= interactDistance * interactDistance)//if we are, we can pick it up
             {
-              
+
                 return true;
             }
             return false;
         }
 
-
-        private void OnTriggerEnter(Collider other)
+        protected virtual void OnTriggerEnter(Collider other)
         {
-            if (LootOptions.AutoPickupCurrency && LootOptions.DroppedItem is Currency)
+            AutoPickupChecks(other);
+
+        }
+
+        protected virtual void AutoPickupChecks(Collider other)
+        {
+            if (LootOptions.DroppedItem is Currency)
             {
-                Player player = other.GetComponent<Player>();
-                if (player != null)
+                if (LootOptions.AutoPickupCurrency)
                 {
-                    DoInteraction(player.gameObject);
+                    Player player = other.GetComponent<Player>();
+                    if (player != null)
+                    {
+                        DoInteraction(player.gameObject);
+                    }
+                }
+            }
+            else if (LootOptions.DroppedItem is Item)
+            {
+                if (LootOptions.AutoPickupItem)
+                {
+                    Player player = other.GetComponent<Player>();
+                    if (player != null)
+                    {
+                        DoInteraction(player.gameObject);
+                    }
                 }
             }
         }
+
 
 #if UNITY_EDITOR
         private void OnDrawGizmosSelected()
         {
             Gizmos.DrawWireSphere(this.transform.position, interactDistance);
         }
-
-   
-
-
-
-
-
-
-
-
-
 
 #endif
     }

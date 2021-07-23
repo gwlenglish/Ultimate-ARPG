@@ -1,23 +1,23 @@
 {
     "config": {
-        "instanceID": 16726
+        "instanceID": 16740
     },
     "itemID": {
         "Name": "",
         "ID": 5,
         "Item": {
-            "instanceID": 16590
+            "instanceID": 16604
         }
     },
     "autoName": true,
     "rarity": {
-        "instanceID": 16648
+        "instanceID": 16662
     },
     "meshPrefab": {
-        "instanceID": 16694
+        "instanceID": 16708
     },
     "sprite": {
-        "instanceID": 16696
+        "instanceID": 16710
     },
     "purchaseCost": 10,
     "sellCost": 5,
@@ -30,12 +30,12 @@
             "ILevelMulti": 1.0,
             "MaxNumberOfTraitsPerTier": 4,
             "PossibleTierDrops": {
-                "instanceID": 16652
+                "instanceID": 16666
             }
         }
     ],
     "stats": {
-        "baseName": "Starting Axe",
+        "baseName": "Axe",
         "baseType": 1,
         "baseStatMinValue": 25,
         "baseStateILevelMulti": 0.4390000104904175,
@@ -43,7 +43,7 @@
         "sockets": []
     },
     "wearablePefab": {
-        "instanceID": 16698
+        "instanceID": 16712
     },
     "enchantable": true,
     "weaponType": 2

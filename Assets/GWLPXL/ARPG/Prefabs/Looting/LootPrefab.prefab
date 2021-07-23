@@ -183,6 +183,7 @@ MonoBehaviour:
   LootOptions:
     DelayBeforeActive: 1
     AutoPickupCurrency: 1
+    AutoPickupItem: 1
   interactDistance: 2
   MeshHolder: {fileID: 2926258618054850021}
   MeshLight: {fileID: 1364868193723772011}
