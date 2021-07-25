@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 32376
+        "instanceID": 32388
     },
     "ID": {
-        "Name": "",
-        "ID": 0,
+        "Name": "Demo Questchain 01 2D",
+        "ID": 1,
         "Questchain": {
-            "instanceID": 0
+            "instanceID": 32300
         }
     },
     "questChainName": "Demo Questchain 01",
@@ -14,7 +14,7 @@
     "StartType": 1,
     "questStartTemplates": [
         {
-            "instanceID": 32294
+            "instanceID": 32228
         }
     ],
     "requirements": [],
@@ -29,7 +29,7 @@
                 {
                     "DescriptiveName": "Quest Giver 2D",
                     "Actor": {
-                        "instanceID": 32294
+                        "instanceID": 32228
                     },
                     "QuestGiverText": "Will you kill those two enemies over there for me?"
                 }
@@ -46,7 +46,7 @@
                 {
                     "DescriptiveName": "Quest Giver 2D",
                     "Actor": {
-                        "instanceID": 32294
+                        "instanceID": 32228
                     },
                     "QuestGiverText": "Will you kill those two enemies over there for me?"
                 }
@@ -74,18 +74,18 @@
     ],
     "quests": [
         {
-            "instanceID": 32336
+            "instanceID": 32302
         }
     ],
     "rewardType": 0,
     "questGiverTemplates": [
         {
-            "instanceID": 32294
+            "instanceID": 32228
         }
     ],
     "chainRewards": [
         {
-            "instanceID": 17912
+            "instanceID": 16986
         }
     ]
 }

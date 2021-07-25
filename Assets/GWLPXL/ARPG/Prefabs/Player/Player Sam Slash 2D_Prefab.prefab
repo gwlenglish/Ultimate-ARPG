@@ -1100,7 +1100,6 @@ MonoBehaviour:
   interactLayer:
     serializedVersion: 2
     m_Bits: 16777216
-  rayDistance: 100
 --- !u!1 &8505780201766613970
 GameObject:
   m_ObjectHideFlags: 0
@@ -1144,7 +1143,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa6298ca8d3b29740a9f1a028be1159b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  combatHandler: {fileID: 0}
   receiverEvents:
     SceneEvent:
       OnRegenResource:
@@ -1177,6 +1175,8 @@ GameObject:
   - component: {fileID: 6349759006101148695}
   - component: {fileID: 6847170806850548572}
   - component: {fileID: 392070075659061949}
+  - component: {fileID: 2657340746595038214}
+  - component: {fileID: 3578258212802913674}
   m_Layer: 0
   m_Name: CanvasSystem
   m_TagString: Untagged
@@ -1300,6 +1300,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerActionBarPrefab: {fileID: 7480626038917429534, guid: 8f70fa7e9b5eee64d808d5333268c7a1,
     type: 3}
+--- !u!114 &2657340746595038214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8521928562493376709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8c026783e011504db1126137064c9ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3578258212802913674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8521928562493376709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25ae7a85ff964714195e2ea60f1d2b6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8874546354041888184
 GameObject:
   m_ObjectHideFlags: 0

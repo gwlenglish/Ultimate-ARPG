@@ -1,18 +1,18 @@
 {
     "config": {
-        "instanceID": 17532
+        "instanceID": 25352
     },
     "id": {
         "Name": "",
-        "ID": 1,
+        "ID": 3,
         "Instance": {
-            "instanceID": 17348
+            "instanceID": 32298
         }
     },
     "ProjectileVars": {
-        "descriptiveName": "Bullet",
-        "description": "Normal bullet.",
-        "speed": 55.0,
+        "descriptiveName": "Magic",
+        "description": "Magic ball shoots forward",
+        "speed": 15.0,
         "disableOnTouch": true,
         "friendlyFire": false,
         "lifetime": 10.0,

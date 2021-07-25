@@ -1,18 +1,18 @@
 {
     "config": {
-        "instanceID": 24678
+        "instanceID": 32316
     },
     "EquipEvent": {
-        "instanceID": 18062
+        "instanceID": 16540
     },
     "UnEquipEvent": {
-        "instanceID": 18064
+        "instanceID": 16542
     },
     "ID": {
         "Name": "PlayerInvDefault",
         "ID": 4,
         "SOReference": {
-            "instanceID": 24514
+            "instanceID": 32266
         }
     },
     "inventoryName": "Inventory",
@@ -20,24 +20,33 @@
     "currentCurrency": 100,
     "startingEquipment": [
         {
-            "instanceID": 24658
+            "instanceID": 32284
         }
     ],
     "startingItems": [
         {
-            "instanceID": 18068
+            "instanceID": 16546
         },
         {
-            "instanceID": 18068
+            "instanceID": 16546
         },
         {
-            "instanceID": 18068
+            "instanceID": 16546
         },
         {
-            "instanceID": 18068
+            "instanceID": 16546
         },
         {
-            "instanceID": 18068
+            "instanceID": 16546
+        },
+        {
+            "instanceID": 16564
+        },
+        {
+            "instanceID": 16562
+        },
+        {
+            "instanceID": 16562
         }
     ],
     "startingGold": 0

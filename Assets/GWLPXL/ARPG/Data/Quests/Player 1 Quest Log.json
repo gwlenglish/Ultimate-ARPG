@@ -3,10 +3,10 @@
         "instanceID": 23728
     },
     "logID": {
-        "Name": "Player Hchu",
-        "ID": 3,
+        "Name": "Player 1 Quest Log",
+        "ID": 2,
         "QuestLog": {
-            "instanceID": 23586
+            "instanceID": 32306
         }
     }
 }

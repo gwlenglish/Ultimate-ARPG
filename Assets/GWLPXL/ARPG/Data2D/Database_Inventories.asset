@@ -15,12 +15,6 @@ MonoBehaviour:
   searchFolders:
   - Assets/GWLPXL/ARPG/Data2D
   slots:
-  - DescriptiveName: Shop Keeper 2D Inventory
-    ID:
-      Name: 
-      ID: 0
-      SOReference: {fileID: 0}
-    ActorInv: {fileID: 11400000, guid: e9336b6a4e2407a43a7bdfbf9b40ea15, type: 2}
   - DescriptiveName: EnemyFodder_Inventory_2D_Demo
     ID:
       Name: PlayerInvDefault
@@ -33,3 +27,9 @@ MonoBehaviour:
       ID: 4
       SOReference: {fileID: 11400000, guid: 36c5b3277290ec14bbdc3c2656c26ccf, type: 2}
     ActorInv: {fileID: 11400000, guid: 36c5b3277290ec14bbdc3c2656c26ccf, type: 2}
+  - DescriptiveName: Shop Keeper 2D Inventory
+    ID:
+      Name: Shop Keeper 2D Inventory
+      ID: 5
+      SOReference: {fileID: 11400000, guid: e9336b6a4e2407a43a7bdfbf9b40ea15, type: 2}
+    ActorInv: {fileID: 11400000, guid: e9336b6a4e2407a43a7bdfbf9b40ea15, type: 2}

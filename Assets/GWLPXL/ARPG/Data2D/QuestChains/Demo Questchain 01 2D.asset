@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 4900000, guid: a0ce47821b7b6514d8fb6dbbf4067011, type: 3}
   ID:
-    Name: 
-    ID: 0
-    Questchain: {fileID: 0}
+    Name: Demo Questchain 01 2D
+    ID: 1
+    Questchain: {fileID: 11400000}
   questChainName: Demo Questchain 01
   isRepeatable: 0
   StartType: 1

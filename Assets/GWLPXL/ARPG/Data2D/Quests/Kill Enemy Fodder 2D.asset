@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 4900000, guid: 2ed2c748e3c8b4443a8bcc6ce07d255a, type: 3}
   ID:
-    Name: 
-    ID: 0
-    Quest: {fileID: 0}
+    Name: Kill Enemy Fodder 2D
+    ID: 1
+    Quest: {fileID: 11400000}
   questName: Kill Enemy Fodder
   startType: 1
   questStartTemplates:

@@ -42,6 +42,7 @@ MonoBehaviour:
         StatusEffects: []
         AmountPerTick: -1
         Duration: 5
+        ClampStatusEffectToDuration: 0
         TickRate: 1
         StackAmount: 5
       damageRate: 1

@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 4900000, guid: e572928ea14feba4e882f6563012574e, type: 3}
   id:
-    Name: 
-    ID: 0
+    Name: Basic Attack
+    ID: 11
     Ability: {fileID: 11400000}
   autoName: 0
   Data:

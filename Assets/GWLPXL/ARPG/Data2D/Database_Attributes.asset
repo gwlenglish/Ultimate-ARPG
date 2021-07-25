@@ -15,12 +15,6 @@ MonoBehaviour:
   searchFolders:
   - Assets/GWLPXL/ARPG/Data2D
   slots:
-  - DescriptiveName: Enemy Fodder 2D
-    ID:
-      Name: Rockie
-      ID: 0
-      ActorStats: {fileID: 11400000, guid: cf6a3c60c7e811a4b9c3d898f77bee98, type: 2}
-    ActorStats: {fileID: 11400000, guid: cf6a3c60c7e811a4b9c3d898f77bee98, type: 2}
   - DescriptiveName: Player Hchu 2D
     ID:
       Name: Player Warrior
@@ -33,15 +27,21 @@ MonoBehaviour:
       ID: 3
       ActorStats: {fileID: 0}
     ActorStats: {fileID: 11400000, guid: 782f0a952e29deb499b56a0fbe8adf4e, type: 2}
-  - DescriptiveName: Generic Breakable 2D
-    ID:
-      Name: 
-      ID: 4
-      ActorStats: {fileID: 0}
-    ActorStats: {fileID: 11400000, guid: c84383a7d0e67534a905e9f9c341acc5, type: 2}
   - DescriptiveName: Shop Keeper 2D
     ID:
       Name: 
       ID: 4
       ActorStats: {fileID: 0}
     ActorStats: {fileID: 11400000, guid: 1893ef3cdb30bff4b979f6388ca68033, type: 2}
+  - DescriptiveName: Enemy Fodder 2D
+    ID:
+      Name: EnemyFodder_Attributes_Fodder_2D_Demo
+      ID: 5
+      ActorStats: {fileID: 11400000, guid: cf6a3c60c7e811a4b9c3d898f77bee98, type: 2}
+    ActorStats: {fileID: 11400000, guid: cf6a3c60c7e811a4b9c3d898f77bee98, type: 2}
+  - DescriptiveName: Generic Breakable 2D
+    ID:
+      Name: Generic Breakable 2D
+      ID: 6
+      ActorStats: {fileID: 11400000, guid: c84383a7d0e67534a905e9f9c341acc5, type: 2}
+    ActorStats: {fileID: 11400000, guid: c84383a7d0e67534a905e9f9c341acc5, type: 2}

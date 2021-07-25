@@ -1,19 +1,19 @@
 {
     "config": {
-        "instanceID": 17524
+        "instanceID": 25430
     },
     "id": {
-        "Name": "Flamethrower",
-        "ID": 12,
+        "Name": "Iceball",
+        "ID": 6,
         "Instance": {
-            "instanceID": 17350
+            "instanceID": 32246
         }
     },
     "DamageVar": {
         "combatHandler": {
             "instanceID": 17192
         },
-        "descriptiveName": "Flamethrower",
+        "descriptiveName": "Iceball",
         "damageOptions": {
             "physdmg": false,
             "elemdg": true,
@@ -21,15 +21,15 @@
         },
         "damageMultipliers": {
             "physicalMultipler": {
-                "baseDamageAmount": 0,
+                "baseDamageAmount": 5,
                 "percentOfCasterAttack": 0.0
             },
             "elementMultipliers": [
                 {
-                    "editorDescription": "Fire",
-                    "damageType": 1,
-                    "baseElementDamageAmount": 1,
-                    "percentOfCasterElement": 0.0
+                    "editorDescription": "Cold",
+                    "damageType": 2,
+                    "baseElementDamageAmount": 10,
+                    "percentOfCasterElement": 0.10000000149011612
                 }
             ]
         },
@@ -39,13 +39,13 @@
             "additionalSOTs": [
                 {
                     "Type": 0,
-                    "ElementDamage": 1,
+                    "ElementDamage": 2,
                     "StatusEffects": [],
                     "AmountPerTick": -1,
-                    "Duration": 3.0,
+                    "Duration": 5.0,
                     "ClampStatusEffectToDuration": false,
                     "TickRate": 1.0,
-                    "StackAmount": 3
+                    "StackAmount": 5
                 }
             ],
             "damageRate": 1.0,

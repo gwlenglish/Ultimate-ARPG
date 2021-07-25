@@ -3,10 +3,10 @@
         "instanceID": 17194
     },
     "id": {
-        "Name": "Default",
+        "Name": "Default 2D",
         "ID": 1,
         "Instance": {
-            "instanceID": 17006
+            "instanceID": 32290
         }
     },
     "MeleeVars": {

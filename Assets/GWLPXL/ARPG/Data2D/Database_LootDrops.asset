@@ -15,9 +15,9 @@ MonoBehaviour:
   searchFolders:
   - Assets/GWLPXL/ARPG/Data2D
   slots:
-  - DescriptiveName: 2D Drop Table
+  - DescriptiveName: 2D DropTable
     ID:
-      Name: 2D Drop Table
-      ID: 0
+      Name: 2D DropTable
+      ID: 1
       LootDrops: {fileID: 11400000, guid: 486f3eb623b25b34a8f4acbfeb3b7520, type: 2}
     LootDrops: {fileID: 11400000, guid: 486f3eb623b25b34a8f4acbfeb3b7520, type: 2}

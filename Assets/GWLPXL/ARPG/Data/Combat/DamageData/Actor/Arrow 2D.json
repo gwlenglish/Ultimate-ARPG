@@ -1,22 +1,22 @@
 {
     "config": {
-        "instanceID": 17574
+        "instanceID": 17538
     },
     "id": {
-        "Name": "Pistol",
-        "ID": 7,
+        "Name": "Arrow 2D",
+        "ID": 9,
         "Instance": {
-            "instanceID": 17346
+            "instanceID": 32234
         }
     },
     "DamageVar": {
         "combatHandler": {
             "instanceID": 17192
         },
-        "descriptiveName": "Pistol",
+        "descriptiveName": "Arrow",
         "damageOptions": {
             "physdmg": true,
-            "elemdg": false,
+            "elemdg": true,
             "sotmod": false
         },
         "damageMultipliers": {

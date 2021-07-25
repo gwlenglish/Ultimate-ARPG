@@ -15,12 +15,6 @@ MonoBehaviour:
   searchFolders:
   - Assets/GWLPXL/ARPG/Data2D
   slots:
-  - DescriptiveName: Arrow 2D
-    ID:
-      Name: Arrow
-      ID: 0
-      Instance: {fileID: 11400000, guid: 001aba796fc27334e8991e2ef26b1ccf, type: 2}
-    Instance: {fileID: 11400000, guid: 001aba796fc27334e8991e2ef26b1ccf, type: 2}
   - DescriptiveName: Axe 2D
     ID:
       Name: Axe
@@ -69,3 +63,9 @@ MonoBehaviour:
       ID: 8
       Instance: {fileID: 11400000, guid: 096e2f91d15ffdd4c8d5472f3af3d427, type: 2}
     Instance: {fileID: 11400000, guid: 096e2f91d15ffdd4c8d5472f3af3d427, type: 2}
+  - DescriptiveName: Arrow 2D
+    ID:
+      Name: Arrow 2D
+      ID: 9
+      Instance: {fileID: 11400000, guid: 001aba796fc27334e8991e2ef26b1ccf, type: 2}
+    Instance: {fileID: 11400000, guid: 001aba796fc27334e8991e2ef26b1ccf, type: 2}

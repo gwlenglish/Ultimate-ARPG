@@ -32,11 +32,19 @@ MonoBehaviour:
     PossibleTierDrops: {fileID: 11400000, guid: 561977db253f2fd44bc7100c58bab747,
       type: 2}
   stats:
-    baseName: Necro Sword 2D
+    baseName: Sword
     baseType: 1
     baseStatMinValue: 1
     baseStateILevelMulti: 1
     nativeTraits: []
+    sockets:
+    - SocketedThing: {fileID: 0}
+      SocketType: 102
+    - SocketedThing: {fileID: 0}
+      SocketType: 102
+    - SocketedThing: {fileID: 0}
+      SocketType: 102
   wearablePefab: {fileID: 1679260081053658311, guid: 7a77a9a57bfb515469033f7b1022518e,
     type: 3}
+  enchantable: 1
   weaponType: 1

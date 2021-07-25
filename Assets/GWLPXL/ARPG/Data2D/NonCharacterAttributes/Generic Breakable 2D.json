@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 32344
+        "instanceID": 32314
     },
     "databaseID": {
-        "Name": "",
-        "ID": 4,
+        "Name": "Generic Breakable 2D",
+        "ID": 6,
         "ActorStats": {
-            "instanceID": 0
+            "instanceID": 32230
         }
     },
     "LevelUpEvent": {

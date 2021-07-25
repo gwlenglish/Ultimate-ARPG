@@ -15,18 +15,24 @@ MonoBehaviour:
   searchFolders:
   - Assets/GWLPXL/ARPG/Data2D
   slots:
-  - DescriptiveName: Slash
-    ID:
-      Name: 
-      ID: 0
-      Ability: {fileID: 11400000, guid: 032f25d605c9e3641b75ed83fd2fc3e0, type: 2}
-    Ability: {fileID: 11400000, guid: 032f25d605c9e3641b75ed83fd2fc3e0, type: 2}
   - DescriptiveName: Fireball
     ID:
       Name: 
       ID: 2
       Ability: {fileID: 11400000, guid: fe3d06911b6ad3d4ca8fa410a01e6057, type: 2}
     Ability: {fileID: 11400000, guid: fe3d06911b6ad3d4ca8fa410a01e6057, type: 2}
+  - DescriptiveName: Slash
+    ID:
+      Name: 
+      ID: 4
+      Ability: {fileID: 11400000, guid: 9f8d8ce755a624d4bbfcb35de51ba4d4, type: 2}
+    Ability: {fileID: 11400000, guid: 9f8d8ce755a624d4bbfcb35de51ba4d4, type: 2}
+  - DescriptiveName: Roll
+    ID:
+      Name: 
+      ID: 5
+      Ability: {fileID: 11400000, guid: b9752cb2c385f6844b87522e0bea7024, type: 2}
+    Ability: {fileID: 11400000, guid: b9752cb2c385f6844b87522e0bea7024, type: 2}
   - DescriptiveName: Basic Melee
     ID:
       Name: Basic Melee HChu
@@ -41,13 +47,7 @@ MonoBehaviour:
     Ability: {fileID: 11400000, guid: 5737f3392dcb1ea4d995c74901cc9c1b, type: 2}
   - DescriptiveName: Slash
     ID:
-      Name: 
-      ID: 4
-      Ability: {fileID: 11400000, guid: 9f8d8ce755a624d4bbfcb35de51ba4d4, type: 2}
-    Ability: {fileID: 11400000, guid: 9f8d8ce755a624d4bbfcb35de51ba4d4, type: 2}
-  - DescriptiveName: Roll
-    ID:
-      Name: 
-      ID: 5
-      Ability: {fileID: 11400000, guid: b9752cb2c385f6844b87522e0bea7024, type: 2}
-    Ability: {fileID: 11400000, guid: b9752cb2c385f6844b87522e0bea7024, type: 2}
+      Name: Basic Attack
+      ID: 11
+      Ability: {fileID: 11400000, guid: 032f25d605c9e3641b75ed83fd2fc3e0, type: 2}
+    Ability: {fileID: 11400000, guid: 032f25d605c9e3641b75ed83fd2fc3e0, type: 2}

@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 4900000, guid: 77255167dad03c54c86eae7fb1179aa1, type: 3}
   itemID:
-    Name: 
-    ID: 0
+    Name: 2_Damage_Necro Sword 2D_Common_Sword
+    ID: 14
     Item: {fileID: 11400000}
   autoName: 1
   rarity: {fileID: 11400000, guid: 4df0bc156be553c4c9f8f3217ab8189b, type: 2}
@@ -32,11 +32,15 @@ MonoBehaviour:
     PossibleTierDrops: {fileID: 11400000, guid: 561977db253f2fd44bc7100c58bab747,
       type: 2}
   stats:
-    baseName: Necro Sword 2D
+    baseName: Sword
     baseType: 1
     baseStatMinValue: 1
     baseStateILevelMulti: 1
     nativeTraits: []
+    sockets:
+    - SocketedThing: {fileID: 0}
+      SocketType: 100
   wearablePefab: {fileID: 1679260081053658311, guid: 7a77a9a57bfb515469033f7b1022518e,
     type: 3}
+  enchantable: 1
   weaponType: 1

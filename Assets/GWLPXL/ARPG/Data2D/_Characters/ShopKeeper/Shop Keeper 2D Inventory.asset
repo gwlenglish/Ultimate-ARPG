@@ -16,9 +16,9 @@ MonoBehaviour:
   EquipEvent: {fileID: 0}
   UnEquipEvent: {fileID: 0}
   ID:
-    Name: 
-    ID: 0
-    SOReference: {fileID: 0}
+    Name: Shop Keeper 2D Inventory
+    ID: 5
+    SOReference: {fileID: 11400000}
   inventoryName: Shop Keeper 2D
   ItemInventorySize: 25
   currentCurrency: 100

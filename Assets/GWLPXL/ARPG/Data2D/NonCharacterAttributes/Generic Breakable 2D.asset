@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 4900000, guid: c686e09ea04b08a4d8bd72b59659d829, type: 3}
   databaseID:
-    Name: 
-    ID: 4
-    ActorStats: {fileID: 0}
+    Name: Generic Breakable 2D
+    ID: 6
+    ActorStats: {fileID: 11400000}
   LevelUpEvent: {fileID: 0}
   myLevel: 15
   restoreOnLevel: 1

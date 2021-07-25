@@ -20,11 +20,11 @@ namespace GWLPXL.ARPGCore.PlayerInput.com
         IActorHub hub;
        
         //inputs
-        private void Start()
+        protected virtual void Start()
         {
             AddTicker();
         }
-        private void OnDestroy()
+        protected virtual void OnDestroy()
         {
             RemoveTicker();
         }
@@ -36,7 +36,7 @@ namespace GWLPXL.ARPGCore.PlayerInput.com
 
         public bool GetForceAbility() =>abilityInputs.ModiferKeys.ForceAbility.Active;
 
-        bool SetForceAbility()
+        protected virtual bool SetForceAbility()
         {
             if (allowed == false) return allowed;
 

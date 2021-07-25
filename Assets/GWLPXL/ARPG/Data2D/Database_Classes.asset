@@ -17,19 +17,19 @@ MonoBehaviour:
   slots:
   - DescriptiveName: Mage
     ID:
-      Name: Mage
-      ID: 0
+      Name: Mage_class
+      ID: 4
       SOReference: {fileID: 11400000, guid: 525d3a75d71958c4e909047728768025, type: 2}
     ActorClass: {fileID: 11400000, guid: 525d3a75d71958c4e909047728768025, type: 2}
   - DescriptiveName: NONE
     ID:
-      Name: NONE
-      ID: 1
+      Name: NONE_class
+      ID: 5
       SOReference: {fileID: 11400000, guid: 3e487d3b304f83b46842ad7c3c3d80f6, type: 2}
     ActorClass: {fileID: 11400000, guid: 3e487d3b304f83b46842ad7c3c3d80f6, type: 2}
   - DescriptiveName: Warrior
     ID:
-      Name: Warrior
-      ID: 2
+      Name: Warrior_class
+      ID: 6
       SOReference: {fileID: 11400000, guid: a8cc2dc3ca090ff48818eb7fcddf1a38, type: 2}
     ActorClass: {fileID: 11400000, guid: a8cc2dc3ca090ff48818eb7fcddf1a38, type: 2}

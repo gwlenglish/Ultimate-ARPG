@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 4900000, guid: a8f19d2902e49ab44aa5be7df41ab637, type: 3}
   id:
-    Name: 
-    ID: 0
+    Name: Arrow 2D
+    ID: 4
     Instance: {fileID: 11400000}
   ProjectileVars:
     descriptiveName: Arrow
@@ -24,3 +24,7 @@ MonoBehaviour:
     disableOnTouch: 1
     friendlyFire: 0
     lifetime: 10
+    blockingLayers:
+      serializedVersion: 2
+      m_Bits: 0
+    block: 1

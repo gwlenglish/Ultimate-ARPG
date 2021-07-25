@@ -17,24 +17,24 @@ namespace GWLPXL.ARPGCore.Abilities.com
     {
         [SerializeField]
         [Tooltip("Scene specific events")]
-        ActorAbilityEvents abilityEvents = new ActorAbilityEvents();
+        protected ActorAbilityEvents abilityEvents = new ActorAbilityEvents();
 
         [SerializeField]
-        AbilityController abilityControllerTemplate = null;
+        protected AbilityController abilityControllerTemplate = null;
 
         [SerializeField]
-        bool syncAnimationSpeedWithAbility = true;
+        protected bool syncAnimationSpeedWithAbility = true;
 
         [SerializeField]
         [Tooltip("If using the Player State Machine 2D or another animation system, turn this off.")]
-        bool triggerAnimations = true;
-        AbilityController runtime = null;
-        Ability lastIntended = null;
-        Transform me;
+        protected bool triggerAnimations = true;
+        protected AbilityController runtime = null;
+        protected Ability lastIntended = null;
+        protected Transform me;
 
-        IActorHub actorhub = null;
-        Ability charged = null;
-        private void Awake()
+        protected IActorHub actorhub = null;
+        protected Ability charged = null;
+        protected virtual void Awake()
         {
             me = GetComponent<Transform>();
 
@@ -52,7 +52,7 @@ namespace GWLPXL.ARPGCore.Abilities.com
 
        
         //subscribe events
-        public void SubscribeEvents()
+        public virtual void SubscribeEvents()
         {
             GetRuntimeController().OnAbilityStart += AbilityStartEvent;
             GetRuntimeController().OnLearnedAbility += AbilityLearnEvent;
@@ -61,7 +61,7 @@ namespace GWLPXL.ARPGCore.Abilities.com
 
         }
 
-        public void UnSubscribeEvents()
+        public virtual void UnSubscribeEvents()
         {
             GetRuntimeController().OnAbilityStart -= AbilityStartEvent;
             GetRuntimeController().OnLearnedAbility -= AbilityLearnEvent;
@@ -70,19 +70,19 @@ namespace GWLPXL.ARPGCore.Abilities.com
 
         }
 
-        void AbiltiyEndEvent(Ability ability)
+        protected virtual void AbiltiyEndEvent(Ability ability)
         {
             abilityEvents.SceneEvents.OnAbilityEnd.Invoke(ability);
         }
-        void AbilityForgetEvent(Ability ability, int slot)
+        protected virtual void AbilityForgetEvent(Ability ability, int slot)
         {
             abilityEvents.SceneEvents.OnAbilityForgot.Invoke(ability);
         }
-        void AbilityLearnEvent(Ability ability, int slot)
+        protected virtual void AbilityLearnEvent(Ability ability, int slot)
         {
             abilityEvents.SceneEvents.OnAbilityLearned.Invoke(ability);
         }
-        void AbilityStartEvent(Ability ability)
+        protected virtual void AbilityStartEvent(Ability ability)
         {
             abilityEvents.SceneEvents.OnAbilityTriggered.Invoke(ability);
         }
@@ -156,7 +156,7 @@ namespace GWLPXL.ARPGCore.Abilities.com
 
         }
 
-        private void TriggerAbilityAnimation(Ability toCast)
+        protected virtual void TriggerAbilityAnimation(Ability toCast)
         {
             if (actorhub.MyAnimator != null && triggerAnimations == true)
             {
@@ -165,7 +165,7 @@ namespace GWLPXL.ARPGCore.Abilities.com
 
            
         }
-        void ResetAnimator(Ability ability)
+        protected virtual void ResetAnimator(Ability ability)
         {
             actorhub.MyAnimator.speed = 1;
             GetRuntimeController().OnAbilityEnd -= ResetAnimator;

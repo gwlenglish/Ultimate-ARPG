@@ -17,7 +17,7 @@ MonoBehaviour:
   slots:
   - DescriptiveName: Kill Enemy Fodder
     ID:
-      Name: 
-      ID: 0
-      Quest: {fileID: 0}
+      Name: Kill Enemy Fodder 2D
+      ID: 1
+      Quest: {fileID: 11400000, guid: 55dbe0b2bcca02143a243cf1348c0a8b, type: 2}
     Quest: {fileID: 11400000, guid: 55dbe0b2bcca02143a243cf1348c0a8b, type: 2}

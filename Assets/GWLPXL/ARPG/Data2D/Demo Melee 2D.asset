@@ -17,7 +17,7 @@ MonoBehaviour:
   slots:
   - DescriptiveName: Default 2D
     ID:
-      Name: Default
-      ID: 0
+      Name: Default 2D
+      ID: 1
       Instance: {fileID: 11400000, guid: 9832f6fe59512f64c9fe52469c7e43b0, type: 2}
     Instance: {fileID: 11400000, guid: 9832f6fe59512f64c9fe52469c7e43b0, type: 2}

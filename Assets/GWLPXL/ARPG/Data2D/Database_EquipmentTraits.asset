@@ -111,12 +111,12 @@ MonoBehaviour:
       ID: 19
       Trait: {fileID: 11400000, guid: db4bfadab29def742842255d949d3ed8, type: 2}
     Trait: {fileID: 11400000, guid: db4bfadab29def742842255d949d3ed8, type: 2}
-  - DescriptiveName: Intelligence
+  - DescriptiveName: Ice Attack
     ID:
-      Name: Intelligence
+      Name: Ice Attack
       ID: 20
-      Trait: {fileID: 11400000, guid: 2a3c5386d6bef3e4c889637f7fe5c034, type: 2}
-    Trait: {fileID: 11400000, guid: 2a3c5386d6bef3e4c889637f7fe5c034, type: 2}
+      Trait: {fileID: 11400000, guid: 84f59f0b97accc145b5eddbaca954be7, type: 2}
+    Trait: {fileID: 11400000, guid: 84f59f0b97accc145b5eddbaca954be7, type: 2}
   - DescriptiveName: Minor Mana
     ID:
       Name: Minor Mana
@@ -135,21 +135,33 @@ MonoBehaviour:
       ID: 23
       Trait: {fileID: 11400000, guid: 124279744ed16fc4fbe133d910ff3715, type: 2}
     Trait: {fileID: 11400000, guid: 124279744ed16fc4fbe133d910ff3715, type: 2}
-  - DescriptiveName: Ice Attack
+  - DescriptiveName: Intelligence
     ID:
-      Name: Ice Attack
-      ID: 20
-      Trait: {fileID: 11400000, guid: 84f59f0b97accc145b5eddbaca954be7, type: 2}
-    Trait: {fileID: 11400000, guid: 84f59f0b97accc145b5eddbaca954be7, type: 2}
+      Name: Intelligence_StatTrait_100%
+      ID: 24
+      Trait: {fileID: 11400000, guid: 2a3c5386d6bef3e4c889637f7fe5c034, type: 2}
+    Trait: {fileID: 11400000, guid: 2a3c5386d6bef3e4c889637f7fe5c034, type: 2}
   - DescriptiveName: Strength
     ID:
-      Name: Strength
-      ID: 21
+      Name: Strength_StatTrait_100%
+      ID: 25
       Trait: {fileID: 11400000, guid: 95d3d133a553ab04eb8e5dc5c6e4772e, type: 2}
     Trait: {fileID: 11400000, guid: 95d3d133a553ab04eb8e5dc5c6e4772e, type: 2}
   - DescriptiveName: Vitality
     ID:
-      Name: Vitality
-      ID: 22
+      Name: Vitality_StatTrait_100%
+      ID: 26
       Trait: {fileID: 11400000, guid: 547fcfcca22f54842a6f7005b5c0cc6b, type: 2}
     Trait: {fileID: 11400000, guid: 547fcfcca22f54842a6f7005b5c0cc6b, type: 2}
+  - DescriptiveName: Large Gem Dexterity
+    ID:
+      Name: Large Gem Dexterity_StatTrait_100%
+      ID: 27
+      Trait: {fileID: 11400000, guid: af425b251addcc2449bd9a523dad841b, type: 2}
+    Trait: {fileID: 11400000, guid: af425b251addcc2449bd9a523dad841b, type: 2}
+  - DescriptiveName: Dexterity
+    ID:
+      Name: Small Gem Dexterity
+      ID: 28
+      Trait: {fileID: 11400000, guid: 0b7381c41bfc5e442ae0c40b650956fa, type: 2}
+    Trait: {fileID: 11400000, guid: 0b7381c41bfc5e442ae0c40b650956fa, type: 2}

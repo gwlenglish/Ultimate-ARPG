@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 4900000, guid: 540a7a693779d7b48ad518dec2817a78, type: 3}
   id:
-    Name: Default
-    ID: 0
+    Name: Default 2D
+    ID: 1
     Instance: {fileID: 11400000}
   MeleeVars:
     descriptiveName: Default

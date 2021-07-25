@@ -1,27 +1,27 @@
 {
     "config": {
-        "instanceID": 17530
+        "instanceID": 17574
     },
     "id": {
-        "Name": "Shotgun",
-        "ID": 8,
+        "Name": "Pistol",
+        "ID": 7,
         "Instance": {
-            "instanceID": 17360
+            "instanceID": 32248
         }
     },
     "DamageVar": {
         "combatHandler": {
             "instanceID": 17192
         },
-        "descriptiveName": "Shotgun",
+        "descriptiveName": "Pistol",
         "damageOptions": {
             "physdmg": true,
-            "elemdg": true,
+            "elemdg": false,
             "sotmod": false
         },
         "damageMultipliers": {
             "physicalMultipler": {
-                "baseDamageAmount": 5,
+                "baseDamageAmount": 2,
                 "percentOfCasterAttack": 0.0
             },
             "elementMultipliers": []

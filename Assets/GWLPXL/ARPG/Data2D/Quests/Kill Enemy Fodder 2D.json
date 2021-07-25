@@ -1,33 +1,33 @@
 {
     "config": {
-        "instanceID": 32378
+        "instanceID": 32390
     },
     "ID": {
-        "Name": "",
-        "ID": 0,
+        "Name": "Kill Enemy Fodder 2D",
+        "ID": 1,
         "Quest": {
-            "instanceID": 0
+            "instanceID": 32302
         }
     },
     "questName": "Kill Enemy Fodder",
     "startType": 1,
     "questStartTemplates": [
         {
-            "instanceID": 32294
+            "instanceID": 32228
         }
     ],
     "questStates": [
         {
             "StateName": "Available",
             "QuestTemplate": {
-                "instanceID": 32336
+                "instanceID": 32302
             },
             "State": 0,
             "Lines": [
                 {
                     "DescriptiveName": "Quest Giver 2D",
                     "Actor": {
-                        "instanceID": 32294
+                        "instanceID": 32228
                     },
                     "QuestGiverText": "Take care of these enemies for me. "
                 }
@@ -37,14 +37,14 @@
         {
             "StateName": "InProgress",
             "QuestTemplate": {
-                "instanceID": 32336
+                "instanceID": 32302
             },
             "State": 1,
             "Lines": [
                 {
                     "DescriptiveName": "Quest Giver 2D",
                     "Actor": {
-                        "instanceID": 32294
+                        "instanceID": 32228
                     },
                     "QuestGiverText": "Can you count to two?"
                 }
@@ -61,7 +61,7 @@
                 {
                     "DescriptiveName": "Quest Giver 2D",
                     "Actor": {
-                        "instanceID": 32294
+                        "instanceID": 32228
                     },
                     "QuestGiverText": "Thanks."
                 }
@@ -78,7 +78,7 @@
                 {
                     "DescriptiveName": "Quest Giver 2D",
                     "Actor": {
-                        "instanceID": 32294
+                        "instanceID": 32228
                     },
                     "QuestGiverText": "I already gave you your rewards."
                 }
@@ -88,16 +88,16 @@
     ],
     "QuestRewards": [
         {
-            "instanceID": 17912
+            "instanceID": 16986
         }
     ],
     "rewardType": 0,
     "rewardGiverTemplate": [
         {
-            "instanceID": 32294
+            "instanceID": 32228
         }
     ],
     "logic": {
-        "instanceID": 32380
+        "instanceID": 32392
     }
 }

@@ -32,11 +32,17 @@ MonoBehaviour:
     PossibleTierDrops: {fileID: 11400000, guid: 561977db253f2fd44bc7100c58bab747,
       type: 2}
   stats:
-    baseName: Battle Axe 2D
+    baseName: Axe
     baseType: 1
     baseStatMinValue: 1
     baseStateILevelMulti: 0.5
     nativeTraits: []
+    sockets:
+    - SocketedThing: {fileID: 0}
+      SocketType: 100
+    - SocketedThing: {fileID: 0}
+      SocketType: 100
   wearablePefab: {fileID: 2598528842552093559, guid: bc9b5303ccc87c74caeead586ba3ed59,
     type: 3}
+  enchantable: 1
   weaponType: 2

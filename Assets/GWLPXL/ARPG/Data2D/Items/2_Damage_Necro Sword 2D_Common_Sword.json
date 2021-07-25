@@ -1,23 +1,23 @@
 {
     "config": {
-        "instanceID": 25886
+        "instanceID": 32356
     },
     "itemID": {
-        "Name": "",
-        "ID": 0,
+        "Name": "2_Damage_Necro Sword 2D_Common_Sword",
+        "ID": 14,
         "Item": {
-            "instanceID": 24660
+            "instanceID": 32268
         }
     },
     "autoName": true,
     "rarity": {
-        "instanceID": 18152
+        "instanceID": 16646
     },
     "meshPrefab": {
-        "instanceID": 25888
+        "instanceID": 32358
     },
     "sprite": {
-        "instanceID": 25890
+        "instanceID": 32360
     },
     "purchaseCost": 10,
     "sellCost": 5,
@@ -30,19 +30,28 @@
             "ILevelMulti": 1.0,
             "MaxNumberOfTraitsPerTier": 4,
             "PossibleTierDrops": {
-                "instanceID": 18156
+                "instanceID": 16650
             }
         }
     ],
     "stats": {
-        "baseName": "Necro Sword 2D",
+        "baseName": "Sword",
         "baseType": 1,
         "baseStatMinValue": 1,
         "baseStateILevelMulti": 1.0,
-        "nativeTraits": []
+        "nativeTraits": [],
+        "sockets": [
+            {
+                "SocketedThing": {
+                    "instanceID": 0
+                },
+                "SocketType": 100
+            }
+        ]
     },
     "wearablePefab": {
-        "instanceID": 25892
+        "instanceID": 32362
     },
+    "enchantable": true,
     "weaponType": 1
 }

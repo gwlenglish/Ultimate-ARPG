@@ -1,19 +1,19 @@
 {
     "config": {
-        "instanceID": 25352
+        "instanceID": 17540
     },
     "id": {
-        "Name": "Magic Orb",
-        "ID": 7,
+        "Name": "Arrow 2D",
+        "ID": 4,
         "Instance": {
-            "instanceID": 24986
+            "instanceID": 32292
         }
     },
     "ProjectileVars": {
-        "descriptiveName": "Orb",
-        "description": "Magic ball shoots forward",
-        "speed": 5.0,
-        "disableOnTouch": false,
+        "descriptiveName": "Arrow",
+        "description": "Normal arrow. ",
+        "speed": 35.0,
+        "disableOnTouch": true,
         "friendlyFire": false,
         "lifetime": 10.0,
         "blockingLayers": {

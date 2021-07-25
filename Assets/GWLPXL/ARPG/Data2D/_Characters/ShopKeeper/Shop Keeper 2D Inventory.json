@@ -1,6 +1,6 @@
 {
     "config": {
-        "instanceID": 32372
+        "instanceID": 32342
     },
     "EquipEvent": {
         "instanceID": 0
@@ -9,10 +9,10 @@
         "instanceID": 0
     },
     "ID": {
-        "Name": "",
-        "ID": 0,
+        "Name": "Shop Keeper 2D Inventory",
+        "ID": 5,
         "SOReference": {
-            "instanceID": 0
+            "instanceID": 32262
         }
     },
     "inventoryName": "Shop Keeper 2D",
@@ -21,10 +21,10 @@
     "startingEquipment": [],
     "startingItems": [
         {
-            "instanceID": 24658
+            "instanceID": 32284
         },
         {
-            "instanceID": 24660
+            "instanceID": 32268
         }
     ],
     "startingGold": 1000

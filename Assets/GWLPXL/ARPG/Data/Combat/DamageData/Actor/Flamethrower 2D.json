@@ -1,19 +1,19 @@
 {
     "config": {
-        "instanceID": 25334
+        "instanceID": 17524
     },
     "id": {
-        "Name": "Fireball",
-        "ID": 10,
+        "Name": "Flamethrower",
+        "ID": 5,
         "Instance": {
-            "instanceID": 24936
+            "instanceID": 32244
         }
     },
     "DamageVar": {
         "combatHandler": {
             "instanceID": 17192
         },
-        "descriptiveName": "Fireball",
+        "descriptiveName": "Flamethrower",
         "damageOptions": {
             "physdmg": false,
             "elemdg": true,
@@ -21,15 +21,15 @@
         },
         "damageMultipliers": {
             "physicalMultipler": {
-                "baseDamageAmount": 5,
+                "baseDamageAmount": 0,
                 "percentOfCasterAttack": 0.0
             },
             "elementMultipliers": [
                 {
                     "editorDescription": "Fire",
                     "damageType": 1,
-                    "baseElementDamageAmount": 15,
-                    "percentOfCasterElement": 0.10000000149011612
+                    "baseElementDamageAmount": 1,
+                    "percentOfCasterElement": 0.0
                 }
             ]
         },
@@ -41,11 +41,11 @@
                     "Type": 0,
                     "ElementDamage": 1,
                     "StatusEffects": [],
-                    "AmountPerTick": -3,
+                    "AmountPerTick": -1,
                     "Duration": 3.0,
                     "ClampStatusEffectToDuration": false,
                     "TickRate": 1.0,
-                    "StackAmount": 2
+                    "StackAmount": 3
                 }
             ],
             "damageRate": 1.0,

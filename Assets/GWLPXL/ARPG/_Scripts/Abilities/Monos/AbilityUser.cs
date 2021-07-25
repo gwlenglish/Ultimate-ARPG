@@ -25,7 +25,7 @@ namespace GWLPXL.ARPGCore.Abilities.com
         IActorHub actorhub;
         bool basicattack = false;
         Ability charged = null;
-        private void Awake()
+        protected    virtual void Awake()
         {
             me = GetComponent<Transform>();
 
@@ -41,18 +41,9 @@ namespace GWLPXL.ARPGCore.Abilities.com
         }
 
 
-        private void Update()
-        {
-            //if (UnityEngine.Input.GetKeyDown(KeyCode.Escape))
-            //{
-            //    GetRuntimeController().InterruptAllAbilities();
-            //    actorhub.MyAnim.SetAnimatorSpeed(1);
-            //    actorhub.MyAnim.GetAnimator().Play("Movement");
-
-            //}
-        }
+      
         //subscribe events
-        public void SubscribeEvents()
+        public virtual void SubscribeEvents()
         {
             GetRuntimeController().OnAbilityStart += AbilityStartEvent;
             GetRuntimeController().OnLearnedAbility += AbilityLearnEvent;
@@ -61,7 +52,7 @@ namespace GWLPXL.ARPGCore.Abilities.com
 
         }
 
-        public void UnSubscribeEvents()
+        public virtual  void UnSubscribeEvents()
         {
             GetRuntimeController().OnAbilityStart -= AbilityStartEvent;
             GetRuntimeController().OnLearnedAbility -= AbilityLearnEvent;
@@ -162,12 +153,12 @@ namespace GWLPXL.ARPGCore.Abilities.com
         }
 
      
-      void ResetAnimator(Ability ability)
+      protected virtual void ResetAnimator(Ability ability)
         {
             actorhub.MyAnim.SetAnimatorSpeed(1);
             GetRuntimeController().OnAbilityEnd -= ResetAnimator;
         }
-        private void TriggerAbilityAnimation(Ability toCast)
+        protected virtual void TriggerAbilityAnimation(Ability toCast)
         {
 
             if (actorhub.MyAnim != null)
@@ -186,17 +177,17 @@ namespace GWLPXL.ARPGCore.Abilities.com
             }
         }
 
-        public bool GetInCooldown()
+        public virtual bool GetInCooldown()
         {
             AbilityDurationTimer timer = GetRuntimeController().GetTimer(GetLastIntendedAbility());
             return timer != null;
         }
-        public Ability GetLastIntendedAbility()
+        public virtual Ability GetLastIntendedAbility()
         {
             return lastIntended;
         }
 
-        public void SetIntendedAbility(Ability ability)
+        public virtual void SetIntendedAbility(Ability ability)
         {
             if (ability == null)
             {
@@ -225,7 +216,7 @@ namespace GWLPXL.ARPGCore.Abilities.com
             lastIntended = ability;
         }
 
-        public void SetIntendedAbility(int equippedAbilitySlot)
+        public virtual void SetIntendedAbility(int equippedAbilitySlot)
         {
             Ability ability = runtime.GetEquippedAbility(equippedAbilitySlot);
             if (ability == GetLastIntendedAbility()) return;//same thing, dont bother looking it up
@@ -245,17 +236,17 @@ namespace GWLPXL.ARPGCore.Abilities.com
           
         }
 
-        public AbilityController GetRuntimeController()
+        public virtual AbilityController GetRuntimeController()
         {
             return runtime;
         }
 
-        public AbilityController GetTemplate()
+        public virtual AbilityController GetTemplate()
         {
             return abilityControllerTemplate;
         }
 
-        public void SetRuntimeController(AbilityController abilityController)
+        public virtual void SetRuntimeController(AbilityController abilityController)
         {
             if (runtime != null)
             {
@@ -269,7 +260,7 @@ namespace GWLPXL.ARPGCore.Abilities.com
             }
         }
 
-        public void SetIntendedBasicAttack()
+        public virtual void SetIntendedBasicAttack()
         {
             Ability ability = GetRuntimeController().GetBasicAttack(actorhub);
             if (ability == GetLastIntendedAbility()) return;//same thing, dont bother looking it up
@@ -294,7 +285,7 @@ namespace GWLPXL.ARPGCore.Abilities.com
         /// call into to modify the ability speed.
         /// </summary>
         /// <param name="byAmount"></param>
-        public void ModifyAbilityMulti(float byAmount)//modifiables
+        public virtual void ModifyAbilityMulti(float byAmount)//modifiables
         {
            
             GetRuntimeController().ModifyAbilityMulti(byAmount);

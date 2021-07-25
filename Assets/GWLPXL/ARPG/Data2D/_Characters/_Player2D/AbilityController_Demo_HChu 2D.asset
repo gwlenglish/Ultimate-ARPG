@@ -15,14 +15,14 @@ MonoBehaviour:
   config: {fileID: 4900000, guid: f2f710ed1538ca146a2ae89084094915, type: 3}
   id:
     Name: Hchu
-    ID: 0
+    ID: 3
     AbilityController: {fileID: 11400000}
   Data:
     AutoName: 1
     AutoAssignUniqueID: 0
     Name: Demo_HChu 2D
     Description: For the Demo Scene, 2D version
-    UniqueID: 0
+    UniqueID: 3
   BasicAttacks:
   - {fileID: 11400000, guid: 33aa978971d83934a99559f84a4b2490, type: 2}
   StartingAbilities:

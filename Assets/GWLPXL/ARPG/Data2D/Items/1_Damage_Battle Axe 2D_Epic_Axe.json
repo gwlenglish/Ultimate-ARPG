@@ -1,23 +1,23 @@
 {
     "config": {
-        "instanceID": 25908
+        "instanceID": 32386
     },
     "itemID": {
         "Name": "",
         "ID": 13,
         "Item": {
-            "instanceID": 24676
+            "instanceID": 32286
         }
     },
     "autoName": true,
     "rarity": {
-        "instanceID": 18172
+        "instanceID": 16666
     },
     "meshPrefab": {
-        "instanceID": 25880
+        "instanceID": 32374
     },
     "sprite": {
-        "instanceID": 25882
+        "instanceID": 32376
     },
     "purchaseCost": 10,
     "sellCost": 5,
@@ -30,19 +30,40 @@
             "ILevelMulti": 1.0,
             "MaxNumberOfTraitsPerTier": 4,
             "PossibleTierDrops": {
-                "instanceID": 18156
+                "instanceID": 16650
             }
         }
     ],
     "stats": {
-        "baseName": "Battle Axe 2D",
+        "baseName": "Axe",
         "baseType": 1,
         "baseStatMinValue": 1,
         "baseStateILevelMulti": 0.5,
-        "nativeTraits": []
+        "nativeTraits": [],
+        "sockets": [
+            {
+                "SocketedThing": {
+                    "instanceID": 0
+                },
+                "SocketType": 100
+            },
+            {
+                "SocketedThing": {
+                    "instanceID": 0
+                },
+                "SocketType": 102
+            },
+            {
+                "SocketedThing": {
+                    "instanceID": 0
+                },
+                "SocketType": 100
+            }
+        ]
     },
     "wearablePefab": {
-        "instanceID": 25884
+        "instanceID": 32378
     },
+    "enchantable": true,
     "weaponType": 2
 }

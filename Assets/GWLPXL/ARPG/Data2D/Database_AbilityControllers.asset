@@ -15,14 +15,6 @@ MonoBehaviour:
   searchFolders:
   - Assets/GWLPXL/ARPG/Data2D
   slots:
-  - DescriptiveName: Demo_HChu 2D
-    ID:
-      Name: Hchu
-      ID: 0
-      AbilityController: {fileID: 11400000, guid: c90205f50e94af94080eb5438dd1a454,
-        type: 2}
-    AbilityController: {fileID: 11400000, guid: c90205f50e94af94080eb5438dd1a454,
-      type: 2}
   - DescriptiveName: Enemy Fodder
     ID:
       Name: EnemyFodder
@@ -38,4 +30,12 @@ MonoBehaviour:
       AbilityController: {fileID: 11400000, guid: 524f39ac185ba1b4d87ffa492480ebe3,
         type: 2}
     AbilityController: {fileID: 11400000, guid: 524f39ac185ba1b4d87ffa492480ebe3,
+      type: 2}
+  - DescriptiveName: Demo_HChu 2D
+    ID:
+      Name: Hchu
+      ID: 3
+      AbilityController: {fileID: 11400000, guid: c90205f50e94af94080eb5438dd1a454,
+        type: 2}
+    AbilityController: {fileID: 11400000, guid: c90205f50e94af94080eb5438dd1a454,
       type: 2}

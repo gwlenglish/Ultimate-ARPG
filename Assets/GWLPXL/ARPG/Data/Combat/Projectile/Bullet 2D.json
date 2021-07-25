@@ -1,18 +1,18 @@
 {
     "config": {
-        "instanceID": 17540
+        "instanceID": 17532
     },
     "id": {
-        "Name": "Arrow",
-        "ID": 5,
+        "Name": "",
+        "ID": 1,
         "Instance": {
-            "instanceID": 17382
+            "instanceID": 32294
         }
     },
     "ProjectileVars": {
-        "descriptiveName": "Arrow",
-        "description": "Normal arrow. ",
-        "speed": 35.0,
+        "descriptiveName": "Bullet",
+        "description": "Normal bullet.",
+        "speed": 55.0,
         "disableOnTouch": true,
         "friendlyFire": false,
         "lifetime": 10.0,

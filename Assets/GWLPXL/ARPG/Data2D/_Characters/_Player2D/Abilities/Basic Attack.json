@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 32384
+        "instanceID": 26206
     },
     "id": {
-        "Name": "",
-        "ID": 4,
+        "Name": "Basic Attack",
+        "ID": 11,
         "Ability": {
-            "instanceID": 413228
+            "instanceID": 25362
         }
     },
     "autoName": false,
@@ -14,14 +14,14 @@
         "Name": "Slash",
         "Description": "Slash with the sword direction of the facing",
         "DamageMultiplier": 1.0,
-        "Range": 2.0,
+        "Range": 1.0,
         "ResourceCost": 0.0,
         "ResourceType": 20,
         "AnimationTrigger": "",
         "AnimationIndex": 0,
         "Logics": [
             {
-                "instanceID": 23786
+                "instanceID": 23966
             }
         ],
         "UniqueID": 0,
@@ -31,7 +31,7 @@
     },
     "category": 1,
     "AddCooldown": true,
-    "CoolDownRate": 1.0,
+    "CoolDownRate": 0.0,
     "Duration": 0.30000001192092898,
     "CanLoop": false,
     "AddDelay": false,
@@ -45,7 +45,7 @@
         "InterruptEffects": [],
         "Abilities": [
             {
-                "instanceID": 32282
+                "instanceID": 25360
             }
         ]
     }

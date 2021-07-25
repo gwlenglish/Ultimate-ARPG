@@ -15,8 +15,8 @@ MonoBehaviour:
   config: {fileID: 4900000, guid: 1f6ea07c3261a1843ad9805e78b610db, type: 3}
   lootPrefabOverride: {fileID: 0}
   ID:
-    Name: 2D Drop Table
-    ID: 0
+    Name: 2D DropTable
+    ID: 1
     LootDrops: {fileID: 11400000}
   AllPossibleItems:
   - {fileID: 11400000, guid: b0123bd7d93516847ada320fb394dc47, type: 2}
@@ -32,62 +32,62 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b2c69e58fb1f8814b9ee24ec4d66ede5, type: 2}
   - {fileID: 11400000, guid: f3be29cd5fc4326498e8cd415b2a3ad0, type: 2}
   LootTable:
-  - Description: Necro Sword 2D_1.086957
+  - Description: _1.086957
     RelativePercent: 1.0869565
     RangeFrom: 210
     RangeTo: 215
     Item: {fileID: 11400000, guid: 7f68a6aa175f52546a0dba2f710f8ce8, type: 2}
-  - Description: Battle Axe 2D_1.086957
+  - Description: _1.086957
     RelativePercent: 1.0869565
     RangeFrom: 440
     RangeTo: 445
     Item: {fileID: 11400000, guid: b2c69e58fb1f8814b9ee24ec4d66ede5, type: 2}
-  - Description: Necro Sword 2D_3.26087
+  - Description: _3.26087
     RelativePercent: 3.2608695
     RangeFrom: 215
     RangeTo: 230
     Item: {fileID: 11400000, guid: d71c8f86f719c6648a07830b37962865, type: 2}
-  - Description: Battle Axe 2D_3.26087
+  - Description: _3.26087
     RelativePercent: 3.2608695
     RangeFrom: 445
     RangeTo: 460
     Item: {fileID: 11400000, guid: f3be29cd5fc4326498e8cd415b2a3ad0, type: 2}
-  - Description: Necro Sword 2D_7.608696
+  - Description: _7.608696
     RelativePercent: 7.6086955
     RangeFrom: 175
     RangeTo: 210
     Item: {fileID: 11400000, guid: acfaf24d764478346b785c51c5a5fb6f, type: 2}
-  - Description: Battle Axe 2D_7.608696
+  - Description: _7.608696
     RelativePercent: 7.6086955
     RangeFrom: 405
     RangeTo: 440
     Item: {fileID: 11400000, guid: e7946d12e998add4ca005463cb329dde, type: 2}
-  - Description: Battle Axe 2D_10.86957
+  - Description: _10.86957
     RelativePercent: 10.869565
     RangeFrom: 0
     RangeTo: 50
     Item: {fileID: 11400000, guid: b0123bd7d93516847ada320fb394dc47, type: 2}
-  - Description: Necro Sword 2D_10.86957
+  - Description: _10.86957
     RelativePercent: 10.869565
     RangeFrom: 50
     RangeTo: 100
     Item: {fileID: 11400000, guid: a0604c043727fbb43b81dd8eb5a367e0, type: 2}
-  - Description: Necro Sword 2D_10.86957
+  - Description: _10.86957
     RelativePercent: 10.869565
     RangeFrom: 230
     RangeTo: 280
     Item: {fileID: 11400000, guid: a0604c043727fbb43b81dd8eb5a367e0, type: 2}
-  - Description: Battle Axe 2D_10.86957
+  - Description: _10.86957
     RelativePercent: 10.869565
     RangeFrom: 280
     RangeTo: 330
     Item: {fileID: 11400000, guid: b0123bd7d93516847ada320fb394dc47, type: 2}
-  - Description: Necro Sword 2D_16.30435
+  - Description: _16.30435
     RelativePercent: 16.304348
     RangeFrom: 100
     RangeTo: 175
     Item: {fileID: 11400000, guid: 47b4e8f7ca5bb8440bf031a20b00ff71, type: 2}
-  - Description: Battle Axe 2D_16.30435
+  - Description: _16.30435
     RelativePercent: 16.304348
     RangeFrom: 330
     RangeTo: 405

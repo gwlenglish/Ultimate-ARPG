@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 32360
+        "instanceID": 32330
     },
     "id": {
         "Name": "EnemyFodder",
         "ID": 1,
         "AbilityController": {
-            "instanceID": 32284
+            "instanceID": 32220
         }
     },
     "Data": {
@@ -18,12 +18,12 @@
     },
     "BasicAttacks": [
         {
-            "instanceID": 413228
+            "instanceID": 25454
         }
     ],
     "StartingAbilities": [
         {
-            "instanceID": 25224
+            "instanceID": 32212
         }
     ],
     "EquippedCap": 1,

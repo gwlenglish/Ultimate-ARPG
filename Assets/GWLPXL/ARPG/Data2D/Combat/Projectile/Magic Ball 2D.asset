@@ -24,3 +24,7 @@ MonoBehaviour:
     disableOnTouch: 1
     friendlyFire: 0
     lifetime: 10
+    blockingLayers:
+      serializedVersion: 2
+      m_Bits: 0
+    block: 1
