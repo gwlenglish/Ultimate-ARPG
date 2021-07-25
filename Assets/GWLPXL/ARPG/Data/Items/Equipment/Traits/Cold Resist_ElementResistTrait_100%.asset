@@ -24,10 +24,12 @@ MonoBehaviour:
   - Frozen
   - Chilling
   TraitSuffixes:
-  - of Iciness
-  - of Ice
-  - of the Tundra
-  TraitNouns: []
+  - Icey
+  - Frozen
+  - Chilling
+  TraitNouns:
+  - Ice
+  - Iciness
   myValue: 1
   myLevelMulti: 100
   weight: 5
