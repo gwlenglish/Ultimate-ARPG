@@ -28,7 +28,7 @@ namespace GWLPXL.ARPGCore.Items.com
 
         public override ItemType GetItemType()
         {
-            return ItemType.Socketable;
+            return ItemType.EquipmentSocketable;
         }
 
         public override int GetStackingAmount()

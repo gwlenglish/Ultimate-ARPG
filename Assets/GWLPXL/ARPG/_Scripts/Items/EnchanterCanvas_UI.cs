@@ -33,7 +33,8 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
     {
         public bool FreezeDungeon = true;
         public Transform MainPanel = null;
-        public EnchantUIEvents SceneEvents;
+        public EnchantUIEvents Events;
+        [Tooltip("Whether to add the Enchants in the Native Traits slots or Random Traits slots.")]
         public bool IsNative = true;
         [Header("Dragging Input")]
         [SerializeField]
@@ -223,7 +224,9 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
         protected virtual void EnchantSuccess(Equipment enchanted)
         {
-            SceneEvents.OnEnchantSuccess?.Invoke(enchanted);
+          
+            Events.OnEnchantSuccess?.Invoke(enchanted);
+            Events.SceneEvents.OnEnchantSuccess?.Invoke(enchanted);
         }
         protected virtual void SetupUI()
         {
@@ -251,7 +254,8 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                 if (DraggableEnchantInstance.GetComponent<RectTransform>().rect.Overlaps(EnchantPreviewInstance.GetComponent<RectTransform>().rect))
                 {
                     EnchantPreviewInstance.GetComponent<IEnchantUIElement>().SetEnchant(draggableEnchant.GetEnchant());
-                    SceneEvents.OnPreviewSetEnchant?.Invoke();
+                    Events.SceneEvents.OnPreviewSetEnchant?.Invoke(draggableEnchant.GetEnchant());
+                    Events.OnPreviewSetEnchant?.Invoke(draggableEnchant.GetEnchant());
                 }
 
                 DraggableEnchantInstance.transform.position = homeposition;
@@ -283,7 +287,8 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         {
             draggableEnchant.SetEnchant(enchant);
             if (enchant == null) return;
-            SceneEvents.OnStartDragEnchant?.Invoke();
+            Events.SceneEvents.OnStartDragEnchant?.Invoke(enchant);
+            Events.OnStartDragEnchant?.Invoke(enchant);
         }
         
         protected virtual void CheckDraggingOnEnchantable()
@@ -328,7 +333,8 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                 {
                     //placed
                     enchantablePreview.SetItemStack(draggableenchantable.GetEnchantable());
-                    SceneEvents.OnPreviewSetEnchantable?.Invoke();
+                    Events.SceneEvents.OnPreviewSetEnchantable?.Invoke(draggableenchantable.GetEnchantable());
+                    Events.OnPreviewSetEnchantable?.Invoke(draggableenchantable.GetEnchantable());
                 }
 
             }
@@ -340,7 +346,8 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             draggableenchantable.SetEnchantableItem(item.SlotID, station.UserInventory);
             if (item == null) return;
             draggingEnchantable = true;
-            SceneEvents.OnStartDragEnchantable?.Invoke();
+            Events.SceneEvents.OnStartDragEnchantable?.Invoke(item);
+            Events.OnStartDragEnchantable?.Invoke(item);
         }
 
         protected virtual void CloseDown()

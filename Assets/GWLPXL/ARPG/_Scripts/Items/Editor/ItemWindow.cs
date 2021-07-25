@@ -6,6 +6,7 @@ using UnityEditor;
 using GWLPXL.ARPGCore.Saving.com;
 using GWLPXL.ARPGCore.Statics.com;
 using GWLPXL.ARPGCore.Types.com;
+using GWLPXL.ARPGCore.Traits.com;
 
 namespace GWLPXL.ARPGCore.Items.com
 {
@@ -18,6 +19,8 @@ namespace GWLPXL.ARPGCore.Items.com
         string itemName = string.Empty;
         EquipmentType eqType = EquipmentType.Accessory;
         PotionType potType = PotionType.RestoreResource;
+
+   
         public override void SetDatabase(Object database)
         {
             this.database = database as ItemDatabase;
@@ -71,7 +74,7 @@ namespace GWLPXL.ARPGCore.Items.com
         protected override void NewLayout()
         {
             GUILayout.Space(25);
-           
+            Debug.Log("TYPE " + type.ToString());
             if (GUILayout.Button("Create as New"))
             {
                 string name = itemName;
@@ -81,6 +84,7 @@ namespace GWLPXL.ARPGCore.Items.com
                     temp = null;
                     return;
                 }
+
                 switch (type)
                 {
                     case ItemType.Equipment:
@@ -111,7 +115,12 @@ namespace GWLPXL.ARPGCore.Items.com
                     case ItemType.QuestItem:
                         temp = ScriptableObject.CreateInstance<QuestItem>();
                         break;
+                    case ItemType.EquipmentSocketable:
+                        temp = ScriptableObject.CreateInstance<EquipmentSocketable>();
+
+                        break;
                 }
+
                 if (temp == null)
                 {
                     EditorUtility.DisplayDialog("Type Required", "A name and type is both required.", "Okay");
@@ -120,9 +129,10 @@ namespace GWLPXL.ARPGCore.Items.com
                 }
                 Item item = (Item)temp;
                 item.SetGeneratedItemName(name);
-                TryCreateNew(name, temp);
-
+                Object created = TryCreateNew(name, temp);
                 ReloadDatabase();
+               
+
                 temp = null;
                 itemName = string.Empty;
             }

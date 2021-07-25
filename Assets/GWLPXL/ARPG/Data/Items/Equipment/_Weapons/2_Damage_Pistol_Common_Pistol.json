@@ -1,23 +1,23 @@
 {
     "config": {
-        "instanceID": 16760
+        "instanceID": 16758
     },
     "itemID": {
         "Name": "",
         "ID": 30,
         "Item": {
-            "instanceID": 16560
+            "instanceID": 16558
         }
     },
     "autoName": true,
     "rarity": {
-        "instanceID": 16648
+        "instanceID": 16646
     },
     "meshPrefab": {
-        "instanceID": 16762
+        "instanceID": 16760
     },
     "sprite": {
-        "instanceID": 16764
+        "instanceID": 16762
     },
     "purchaseCost": 10,
     "sellCost": 5,
@@ -30,7 +30,7 @@
             "ILevelMulti": 1.0,
             "MaxNumberOfTraitsPerTier": 4,
             "PossibleTierDrops": {
-                "instanceID": 16652
+                "instanceID": 16650
             }
         }
     ],
@@ -43,7 +43,7 @@
         "sockets": []
     },
     "wearablePefab": {
-        "instanceID": 16766
+        "instanceID": 16764
     },
     "enchantable": true,
     "weaponType": 101

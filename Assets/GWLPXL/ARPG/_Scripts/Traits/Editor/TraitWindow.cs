@@ -6,6 +6,7 @@ using UnityEditor;
 using GWLPXL.ARPGCore.Statics.com;
 using GWLPXL.ARPGCore.Types.com;
 
+
 namespace GWLPXL.ARPGCore.Traits.com
 {
 
@@ -78,6 +79,7 @@ namespace GWLPXL.ARPGCore.Traits.com
                     case TraitType.ElementResist:
                         temp = ScriptableObject.CreateInstance<ElementResistTrait>();
                         break;
+
                     //case TraitType.AbilityMod:
                     //    temp = ScriptableObject.CreateInstance<StatTrait>();//not yet implemented
                     //    break;

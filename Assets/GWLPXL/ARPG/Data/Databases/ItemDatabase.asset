@@ -39,7 +39,7 @@ MonoBehaviour:
       ID: 4
       Item: {fileID: 11400000, guid: 94d683b9a385b3c4a855e843e78ec359, type: 2}
     Item: {fileID: 11400000, guid: 94d683b9a385b3c4a855e843e78ec359, type: 2}
-  - DescriptiveName: Starting Axe
+  - DescriptiveName: Axe
     ID:
       Name: 
       ID: 5
@@ -63,7 +63,7 @@ MonoBehaviour:
       ID: 8
       Item: {fileID: 11400000, guid: 5cd931fb8c634864891d3c4407c6aef4, type: 2}
     Item: {fileID: 11400000, guid: 5cd931fb8c634864891d3c4407c6aef4, type: 2}
-  - DescriptiveName: Starting Axe Left Hand
+  - DescriptiveName: Axe
     ID:
       Name: 
       ID: 9

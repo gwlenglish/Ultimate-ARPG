@@ -1,23 +1,23 @@
 {
     "config": {
-        "instanceID": 16734
+        "instanceID": 16732
     },
     "itemID": {
         "Name": "",
         "ID": 1,
         "Item": {
-            "instanceID": 16592
+            "instanceID": 16590
         }
     },
     "autoName": true,
     "rarity": {
-        "instanceID": 16648
+        "instanceID": 16646
     },
     "meshPrefab": {
-        "instanceID": 16736
+        "instanceID": 16734
     },
     "sprite": {
-        "instanceID": 16738
+        "instanceID": 16736
     },
     "purchaseCost": 10,
     "sellCost": 5,

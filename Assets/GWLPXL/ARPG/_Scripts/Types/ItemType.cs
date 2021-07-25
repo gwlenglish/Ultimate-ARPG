@@ -10,7 +10,7 @@ namespace GWLPXL.ARPGCore.Types.com
         Equipment = 0,
         Potions = 1,
         QuestItem = 100,
-        Socketable = 101,
+        EquipmentSocketable = 101,
         Currency = 200
 
     }

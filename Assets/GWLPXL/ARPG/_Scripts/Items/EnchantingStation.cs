@@ -25,6 +25,9 @@ namespace GWLPXL.ARPGCore.Items.com
         ActorInventory userInventory;
 
         #region ini cycle
+        /// <summary>
+        /// shutdown of the enchanting station
+        /// </summary>
         public virtual void CloseStation()
         {
             this.enchants.Clear();
@@ -32,6 +35,14 @@ namespace GWLPXL.ARPGCore.Items.com
             OnStationClosed?.Invoke(this);
 
         }
+        /// <summary>
+        /// initialization of the enchanting station
+        /// </summary>
+        /// <param name="userInventory"></param>
+        /// <param name="enchants"></param>
+        /// <param name="affixreader"></param>
+        /// <param name="rename"></param>
+        /// <param name="type"></param>
         public virtual void SetupStation(ActorInventory userInventory, List<EquipmentEnchant> enchants, AffixReaderSO affixreader = null, bool rename = true, RenameType type = RenameType.Suffix)
         {
             this.enchants = enchants;
@@ -45,37 +56,18 @@ namespace GWLPXL.ARPGCore.Items.com
         #endregion
 
         #region getters
-        public virtual List<Equipment> GetEquippedEquipment()
-        {
-            Dictionary<Types.com.EquipmentSlotsType, EquipmentSlot> temp = userInventory.GetEquippedEquipment();
-            List<Equipment> _temp = new List<Equipment>();
-            foreach (var kvp in temp)
-            {
-                if (kvp.Value.EquipmentInSlots == null) continue;
-                if (_temp.Contains(kvp.Value.EquipmentInSlots) == false)//check so we dont double add 2handers and such
-                {
-                    _temp.Add(kvp.Value.EquipmentInSlots);
-                }
-            }
-            return _temp;
-        }
-        public virtual List<Equipment> GetEquipmentInInventory()
-        {
-            List<ItemStack> stack = userInventory.GetAllUniqueStacks();
-            List<Equipment> _temp = new List<Equipment>();
-            for (int i = 0; i < stack.Count; i++)
-            {
-                if (stack[i].Item is Equipment)
-                {
-                    _temp.Add(stack[i].Item as Equipment);
-                }
-            }
-            return _temp;
-        }
+        /// <summary>
+        /// Returns all enchants
+        /// </summary>
+        /// <returns></returns>
         public virtual List<EquipmentEnchant> GetAllEnchants()
         {
             return enchants;
         }
+        /// <summary>
+        /// Returns a list of names
+        /// </summary>
+        /// <returns></returns>
         public virtual List<string> GetAllEnchantsNames()
         {
             List<string> names = new List<string>();
@@ -188,13 +180,7 @@ namespace GWLPXL.ARPGCore.Items.com
         }
 
 
-        public virtual void RenameItemWithEnchant(Equipment equipment, EquipmentEnchant enchant)
-        {
-
-            EquipmentDescription.RenameItemWithEnchant(equipment, enchant, AffixReaderSO, RenameType);
-            
-
-        }
+     
         #endregion
     }
 }

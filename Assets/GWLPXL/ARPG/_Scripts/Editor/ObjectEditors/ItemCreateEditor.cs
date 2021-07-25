@@ -64,6 +64,9 @@ namespace GWLPXL.ARPG._Scripts.Editor.ObjectEditors.com
                     case ItemType.QuestItem:
                         temp = CreateInstance<QuestItem>();
                         break;
+                    case ItemType.EquipmentSocketable:
+                        temp = CreateInstance<EquipmentSocketable>();
+                        break;
                 }
                 
                 if (temp == null)

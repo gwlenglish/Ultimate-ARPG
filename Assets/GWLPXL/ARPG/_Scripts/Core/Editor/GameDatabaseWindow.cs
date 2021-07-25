@@ -110,7 +110,7 @@ namespace GWLPXL.ARPGCore.com
         TypeOptions armormaterialtypes = new TypeOptions();
         string[] equipmentslots = new string[0];
         TypeOptions equipmentslottypeoptions = new TypeOptions();
-
+        TypeOptions socketItemtypeOptions = new TypeOptions();
         TypeOptions traits = new TypeOptions();
         int typeselection = 0;
         protected virtual void ReloadMessage()

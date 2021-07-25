@@ -1,5 +1,5 @@
 ﻿using GWLPXL.ARPGCore.com;
-
+using GWLPXL.ARPGCore.DebugHelpers.com;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -53,7 +53,7 @@ namespace GWLPXL.ARPGCore.Items.com
             EnchanterVars. EnchantingStation.OnStationClosed += StationClosed;
         }
 
-        protected    virtual void OnDestroy()
+        protected  virtual void OnDestroy()
         {
             EnchanterVars.EnchantingStation.OnEnchanted -= Enchanted;
             EnchanterVars.EnchantingStation.OnStationSetup -= StationReady;
@@ -61,21 +61,26 @@ namespace GWLPXL.ARPGCore.Items.com
         }
         #endregion
 
+        protected virtual void DebugMessage(string message, UnityEngine.Object ctx)
+        {
+            ARPGDebugger.DebugMessage(message, ctx);
+        }
         #region scene events
         protected virtual void StationClosed(EnchantingStation station)
         {
             EnchantEvents.SceneEvents.OnStationClosed?.Invoke(station);
-            Debug.Log("Station Closed");
+
+            DebugMessage("Station Closed", this.gameObject);
         }
         protected virtual void StationReady(EnchantingStation station)
         {
             EnchantEvents.SceneEvents.OnStationSetup?.Invoke(station);
-            Debug.Log("Station Ready");
+            DebugMessage("Station Ready", this.gameObject);
         }
         protected virtual void Enchanted(Equipment equipment)
         {
             EnchantEvents.SceneEvents.OnEquipmentEnchanted?.Invoke(equipment);
-            Debug.Log("Item Enchanted " + equipment.GetGeneratedItemName());
+            DebugMessage("Item Enchanted " + equipment.GetGeneratedItemName(), this.gameObject);
         }
         #endregion
         protected virtual IUseEnchanterCanvas CheckPreconditions(GameObject obj)
@@ -83,7 +88,7 @@ namespace GWLPXL.ARPGCore.Items.com
             IActorHub actor = obj.GetComponent<IActorHub>();
             if (actor == null || actor.PlayerControlled == null || actor.PlayerControlled.CanvasHub.EnchanterCanvas == null)
             {
-                ARPGCore.DebugHelpers.com.ARPGDebugger.DebugMessage("Can't enchant without an inventory", this);
+                DebugMessage("Can't enchant without an inventory", this);
                 return null;
             }
             return actor.PlayerControlled.CanvasHub.EnchanterCanvas;
