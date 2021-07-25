@@ -23,6 +23,9 @@ namespace GWLPXL.ARPG._Scripts.Editor.ObjectEditors.com
                 case ItemType.Potions:
                     obj.potType = (PotionType)EditorGUILayout.EnumPopup("Potion type to create: ", obj.potType);
                     break;
+                case ItemType.EquipmentSocketable:
+                   // obj.socketType = (SocketTypes)EditorGUILayout.EnumPopup("Socket type to create: ", obj.potType);
+                    break;
 
             }
             
@@ -66,6 +69,8 @@ namespace GWLPXL.ARPG._Scripts.Editor.ObjectEditors.com
                         break;
                     case ItemType.EquipmentSocketable:
                         temp = CreateInstance<EquipmentSocketable>();
+                        EquipmentSocketable socketable = temp as EquipmentSocketable;
+                        socketable.SocketableVariables = new SocketableVars(SocketTypes.Any, obj.itemName);
                         break;
                 }
                 

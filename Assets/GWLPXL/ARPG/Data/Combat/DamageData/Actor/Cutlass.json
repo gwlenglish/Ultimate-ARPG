@@ -1,17 +1,17 @@
 {
     "config": {
-        "instanceID": 25530
+        "instanceID": 25532
     },
     "id": {
         "Name": "Cutlass",
         "ID": 2,
         "Instance": {
-            "instanceID": 24924
+            "instanceID": 24926
         }
     },
     "DamageVar": {
         "combatHandler": {
-            "instanceID": 17190
+            "instanceID": 17192
         },
         "descriptiveName": "Cutlass",
         "damageOptions": {

@@ -1,18 +1,18 @@
 {
     "config": {
-        "instanceID": 16998
+        "instanceID": 17000
     },
     "EquipEvent": {
-        "instanceID": 16542
+        "instanceID": 16540
     },
     "UnEquipEvent": {
-        "instanceID": 16544
+        "instanceID": 16542
     },
     "ID": {
         "Name": "PlayerWarriorInventory",
         "ID": 1,
         "SOReference": {
-            "instanceID": 16800
+            "instanceID": 16802
         }
     },
     "inventoryName": "Inventory",
@@ -20,24 +20,24 @@
     "currentCurrency": 100,
     "startingEquipment": [
         {
-            "instanceID": 16590
+            "instanceID": 16588
         }
     ],
     "startingItems": [
         {
-            "instanceID": 16548
+            "instanceID": 16546
         },
         {
-            "instanceID": 16548
+            "instanceID": 16546
         },
         {
-            "instanceID": 16548
+            "instanceID": 16546
         },
         {
-            "instanceID": 16548
+            "instanceID": 16546
         },
         {
-            "instanceID": 16548
+            "instanceID": 16546
         }
     ],
     "startingGold": 0

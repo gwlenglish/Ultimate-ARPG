@@ -1,13 +1,13 @@
 {
     "config": {
-        "instanceID": 22764
+        "instanceID": 22766
     },
     "AutoName": true,
     "traitID": {
         "Name": "Skillmod Test 1",
         "ID": 22,
         "Trait": {
-            "instanceID": 22644
+            "instanceID": 22646
         }
     },
     "traitName": "Skillmod Test 1",

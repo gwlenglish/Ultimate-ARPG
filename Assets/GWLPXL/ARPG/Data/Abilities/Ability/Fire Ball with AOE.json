@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 25522
+        "instanceID": 25524
     },
     "id": {
         "Name": "Fire Ball with AOE",
         "ID": 26,
         "Ability": {
-            "instanceID": 24910
+            "instanceID": 24912
         }
     },
     "autoName": false,
@@ -21,10 +21,10 @@
         "AnimationIndex": 2,
         "Logics": [
             {
-                "instanceID": 23974
+                "instanceID": 23976
             },
             {
-                "instanceID": 25514
+                "instanceID": 25516
             }
         ],
         "UniqueID": 6,

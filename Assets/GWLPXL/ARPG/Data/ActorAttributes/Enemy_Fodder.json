@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 19684
+        "instanceID": 19686
     },
     "databaseID": {
         "Name": "Enemy_Fodder",
         "ID": 13,
         "ActorStats": {
-            "instanceID": 19682
+            "instanceID": 19684
         }
     },
     "LevelUpEvent": {

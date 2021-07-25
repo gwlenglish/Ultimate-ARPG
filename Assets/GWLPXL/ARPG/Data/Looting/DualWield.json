@@ -1,6 +1,6 @@
 {
     "config": {
-        "instanceID": 19078
+        "instanceID": 19080
     },
     "lootPrefabOverride": {
         "instanceID": 0
@@ -9,12 +9,12 @@
         "Name": "DualWield",
         "ID": 3,
         "LootDrops": {
-            "instanceID": 19064
+            "instanceID": 19066
         }
     },
     "AllPossibleItems": [
         {
-            "instanceID": 16556
+            "instanceID": 16554
         }
     ],
     "LootTable": [
@@ -24,7 +24,7 @@
             "RangeFrom": 0,
             "RangeTo": 50,
             "Item": {
-                "instanceID": 16556
+                "instanceID": 16554
             }
         }
     ]

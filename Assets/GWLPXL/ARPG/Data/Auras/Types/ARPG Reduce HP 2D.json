@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 25542
+        "instanceID": 25544
     },
     "auraID": {
         "Name": "",
         "ID": 6,
         "Aura": {
-            "instanceID": 24944
+            "instanceID": 24946
         }
     },
     "AuraData": {
@@ -15,13 +15,13 @@
         "AuraName": "ARPG Reduce HP 2D",
         "AuraDescription": "Reduce health per second, 2D version",
         "AuraPrefab": {
-            "instanceID": 25534
+            "instanceID": 25536
         },
         "auraCategory": 0,
         "uniqueID": 0,
         "AuraLogics": [
             {
-                "instanceID": 25544
+                "instanceID": 25546
             }
         ],
         "AuraGroups": [

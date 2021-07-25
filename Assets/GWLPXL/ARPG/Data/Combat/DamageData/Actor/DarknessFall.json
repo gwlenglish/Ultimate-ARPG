@@ -1,17 +1,17 @@
 {
     "config": {
-        "instanceID": 25356
+        "instanceID": 25358
     },
     "id": {
         "Name": "Flamethrower",
         "ID": 5,
         "Instance": {
-            "instanceID": 24928
+            "instanceID": 24930
         }
     },
     "DamageVar": {
         "combatHandler": {
-            "instanceID": 17190
+            "instanceID": 17192
         },
         "descriptiveName": "Darkness Fall",
         "damageOptions": {

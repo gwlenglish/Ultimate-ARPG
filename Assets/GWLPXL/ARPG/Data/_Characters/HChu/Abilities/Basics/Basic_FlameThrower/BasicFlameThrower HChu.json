@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 23958
+        "instanceID": 23960
     },
     "id": {
         "Name": "BasicFlameThrower HChu",
         "ID": 21,
         "Ability": {
-            "instanceID": 23670
+            "instanceID": 23672
         }
     },
     "autoName": false,
@@ -21,7 +21,7 @@
         "AnimationIndex": 7,
         "Logics": [
             {
-                "instanceID": 23960
+                "instanceID": 23962
             }
         ],
         "UniqueID": 0,

@@ -359,7 +359,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00018310547, y: 0}
+  m_AnchoredPosition: {x: 0.000061035156, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &5503964962345785826
@@ -1477,46 +1477,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b2f7032decbdf946978ea2b0a6c13aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SceneEvents:
-    OnOpen:
-      m_PersistentCalls:
-        m_Calls: []
-    OnClose:
-      m_PersistentCalls:
-        m_Calls: []
-    OnStartDragSocketHolder:
-      m_PersistentCalls:
-        m_Calls: []
-    OnStopDragSocketHolder:
-      m_PersistentCalls:
-        m_Calls: []
-    OnStartDragSocketItem:
-      m_PersistentCalls:
-        m_Calls: []
-    OnStopDragSocketItem:
-      m_PersistentCalls:
-        m_Calls: []
-    OnStartDragSocketInsert:
-      m_PersistentCalls:
-        m_Calls: []
-    OnSocketInsertSuccess:
-      m_PersistentCalls:
-        m_Calls: []
-    OnSocketInsertReturnedToInventory:
-      m_PersistentCalls:
-        m_Calls: []
-    OnSocketInsertMoveFail:
-      m_PersistentCalls:
-        m_Calls: []
-    OnPreviewSetHolder:
-      m_PersistentCalls:
-        m_Calls: []
-    OnPreviewSetSocketItem:
-      m_PersistentCalls:
-        m_Calls: []
-    OnSocketSuccess:
-      m_PersistentCalls:
-        m_Calls: []
+  Events:
+    SceneEvents:
+      OnOpen:
+        m_PersistentCalls:
+          m_Calls: []
+      OnClose:
+        m_PersistentCalls:
+          m_Calls: []
+      OnStartDragSocketHolder:
+        m_PersistentCalls:
+          m_Calls: []
+      OnStopDragSocketHolder:
+        m_PersistentCalls:
+          m_Calls: []
+      OnStartDragSocketItem:
+        m_PersistentCalls:
+          m_Calls: []
+      OnStopDragSocketItem:
+        m_PersistentCalls:
+          m_Calls: []
+      OnStartDragSocketInsert:
+        m_PersistentCalls:
+          m_Calls: []
+      OnSocketInsertSuccess:
+        m_PersistentCalls:
+          m_Calls: []
+      OnSocketInsertReturnedToInventory:
+        m_PersistentCalls:
+          m_Calls: []
+      OnSocketInsertMoveFail:
+        m_PersistentCalls:
+          m_Calls: []
+      OnPreviewSetHolder:
+        m_PersistentCalls:
+          m_Calls: []
+      OnPreviewSetSocketItem:
+        m_PersistentCalls:
+          m_Calls: []
   MainPanel: {fileID: 6312187504123576310}
   FreezeDungeon: 1
   InteractButton: Fire1
@@ -2294,7 +2292,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4353664500944510256}
   m_HandleRect: {fileID: 8178862162295652519}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

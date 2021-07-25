@@ -1,13 +1,13 @@
 {
     "config": {
-        "instanceID": 17138
+        "instanceID": 17140
     },
     "AutoName": true,
     "traitID": {
         "Name": "Cold Resist",
         "ID": 3,
         "Trait": {
-            "instanceID": 16922
+            "instanceID": 16924
         }
     },
     "traitName": "Cold Resist",

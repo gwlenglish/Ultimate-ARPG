@@ -1,13 +1,13 @@
 {
     "config": {
-        "instanceID": 17058
+        "instanceID": 17060
     },
     "AutoName": true,
     "traitID": {
         "Name": "Minor Health",
         "ID": 16,
         "Trait": {
-            "instanceID": 16886
+            "instanceID": 16888
         }
     },
     "traitName": "Minor Health",
@@ -17,11 +17,15 @@
         "Invigorating"
     ],
     "TraitSuffixes": [
-        "of Vitality",
-        "of Invigoration",
-        "of Nourishment"
+        "Healthy",
+        "Vital",
+        "Invigorating"
     ],
-    "TraitNouns": [],
+    "TraitNouns": [
+        "Vitality",
+        "Invigoration",
+        "Nourishment"
+    ],
     "myValue": 1,
     "myLevelMulti": 100,
     "weight": 10,

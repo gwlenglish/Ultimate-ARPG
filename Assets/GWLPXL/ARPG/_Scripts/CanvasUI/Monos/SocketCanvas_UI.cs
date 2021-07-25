@@ -35,7 +35,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         #endregion
         public SocketStation Station => station;
 
-        public SocketUIEvents SceneEvents = new SocketUIEvents();
+        public SocketUIEvents Events = new SocketUIEvents();
         public GameObject MainPanel = default;
         public bool FreezeDungeon = true;
         [Header("Interaction")]
@@ -254,7 +254,8 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                         socketInsert.SetSocket(kvp.Value.Interface.GetSocket(), kvp.Value.Interface.GetHolder());
                         Debug.Log("Drag Start Success");
                         state = DraggingState.SocketInsert;
-                        SceneEvents.OnStartDragSocketInsert?.Invoke();
+                        Events.OnStartDragSocketInsert?.Invoke(kvp.Value.Interface.GetSocket(), kvp.Value.Interface.GetHolder());
+                        Events.SceneEvents.OnStartDragSocketInsert?.Invoke(kvp.Value.Interface.GetSocket(), kvp.Value.Interface.GetHolder());
                         break;
 
 
@@ -287,7 +288,8 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                     else
                     {
                         //reset
-                        SceneEvents.OnSocketInsertMoveFail?.Invoke();
+                        Events.OnSocketInsertMoveFail?.Invoke(insert.GetSocket(), insert.GetHolder());
+                        Events.SceneEvents.OnSocketInsertMoveFail?.Invoke(insert.GetSocket(), insert.GetHolder()); ;
                         Debug.Log("Return to Insert");
                     }
                     break;
@@ -364,10 +366,12 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                                 bool added = station.AddSocketable(eq, socketitem, index, station.Rename);
                                 if (added)
                                 {
+                                    Events.OnSocketInsertSuccess?.Invoke(socketInsert.GetSocket(), socketinsert.GetHolder());
+                                    Events.SceneEvents.OnSocketInsertSuccess?.Invoke(socketInsert.GetSocket(), socketinsert.GetHolder());
                                     socketItemDraggable.UpdateItem();
                                     socketinsert.UpdateSocket();
                                     previewholder.SetSockets(eq);
-                                    SceneEvents.OnSocketInsertSuccess?.Invoke();
+                   
                                     break;
                                 }
                             }
@@ -382,10 +386,12 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                                 bool added = station.AddSocketable(eq, socketitem, index, station.Rename);
                                 if (added)
                                 {
+                                    Events.OnSocketInsertSuccess?.Invoke(socketinsert.GetSocket(), socketinsert.GetHolder());
+                                    Events.SceneEvents.OnSocketInsertSuccess?.Invoke(socketinsert.GetSocket(), socketinsert.GetHolder());
                                     socketItemDraggable.UpdateItem();
                                     socketinsert.UpdateSocket();
                                     previewholder.SetSockets(eq);
-                                    SceneEvents.OnSocketInsertSuccess?.Invoke();
+                      
                                     break;
                                 }
 
@@ -396,7 +402,8 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                     }
                     else
                     {
-                        SceneEvents.OnSocketInsertMoveFail?.Invoke();
+                        Events.OnSocketInsertMoveFail?.Invoke(socketinsert.GetSocket(), socketinsert.GetHolder());
+                        Events.SceneEvents.OnSocketInsertMoveFail?.Invoke(socketinsert.GetSocket(), socketinsert.GetHolder());
                     }
 
 
@@ -404,6 +411,9 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
 
             }
+
+            Events.OnStopDragSocketItem?.Invoke(socketItemDraggable.GetSocketItem());
+            Events.SceneEvents.OnStopDragSocketItem?.Invoke(socketItemDraggable.GetSocketItem());
             SocketItemDraggableInstance.position = homePosition;
             state = DraggingState.None;
 
@@ -424,7 +434,8 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                     {
                         ItemStack stack = kvp.Value.Interface.GetSocketItem();
                         socketItemDraggable.SetSocketItem(stack.SlotID, station.Inventory);
-                        SceneEvents.OnStartDragSocketItem?.Invoke();
+                        Events.OnStartDragSocketItem?.Invoke(stack);
+                        Events.SceneEvents.OnStartDragSocketItem?.Invoke(stack);
                         state = DraggingState.SocketItem;
                         break;
                     }
@@ -451,8 +462,12 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             {
                 //placed
                 previewholder.SetSockets(socketHolderDraggable.GetSocketHolder());
-                SceneEvents.OnPreviewSetHolder?.Invoke();
+                Events.OnPreviewSetHolder?.Invoke(socketHolderDraggable.GetSocketHolder());
+                Events.SceneEvents.OnPreviewSetHolder?.Invoke(socketHolderDraggable.GetSocketHolder());
             }
+
+            Events.OnStopDragSocketHolder?.Invoke(socketHolderDraggable.GetSocketHolder());
+            Events.SceneEvents.OnStopDragSocketHolder?.Invoke(socketHolderDraggable.GetSocketHolder());
 
             SocketHolderDraggableInstance.position = homePosition;
             state = DraggingState.None;
@@ -473,7 +488,8 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                         if (kvp.Value.Interface.GetSocketHolder() == null) continue;
                         Item item = kvp.Value.Interface.GetSocketHolder();
                         socketHolderDraggable.SetSockets(item as Equipment);
-                        SceneEvents.OnStartDragSocketHolder?.Invoke();
+                        Events.OnStartDragSocketHolder?.Invoke(item as Equipment);
+                        Events.SceneEvents.OnStartDragSocketHolder?.Invoke(item as Equipment);
                         state = DraggingState.SocketHolder;
                         break;
 
@@ -517,7 +533,8 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             slotPerUIDic.Clear();
             socketholdersdic.Clear();
 
-
+            Events.OnClose?.Invoke(user);
+            Events.SceneEvents.OnClose?.Invoke(user);
             station = null;
             user = null;
 
@@ -589,6 +606,9 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                 DungeonMaster.Instance.GetDungeonUISceneRef().SetDungeonState(0);
             }
             station.OnSmithOpen?.Invoke();
+
+            Events.SceneEvents.OnOpen?.Invoke(user);
+            Events.OnOpen?.Invoke(user);
         }
 
         protected virtual void CreateUISocketElement(ItemStack itemStack)
@@ -660,7 +680,8 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             previewholder.SetSockets(previewholder.GetSocketHolder());
             //needs to create its own ui element or add to existing...
             Debug.Log("Return to Inventory");
-            SceneEvents.OnSocketInsertReturnedToInventory?.Invoke();
+            Events.OnSocketInsertReturnedToInventory?.Invoke(socketInsert.GetSocket(), socketInsert.GetHolder());
+            Events.SceneEvents.OnSocketInsertReturnedToInventory?.Invoke(socketInsert.GetSocket(), socketInsert.GetHolder());
         }
         #endregion
 

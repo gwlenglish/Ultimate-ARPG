@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 25440
+        "instanceID": 25442
     },
     "id": {
         "Name": "Chain Lightning",
         "ID": 4,
         "Instance": {
-            "instanceID": 24980
+            "instanceID": 24982
         }
     },
     "ProjectileVars": {

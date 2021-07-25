@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 22548
+        "instanceID": 22550
     },
     "ID": {
         "Name": "Test Repeatable",
         "ID": 4,
         "Questchain": {
-            "instanceID": 16086
+            "instanceID": 16084
         }
     },
     "questChainName": "Test Repeatable",
@@ -14,15 +14,15 @@
     "StartType": 1,
     "questStartTemplates": [
         {
-            "instanceID": 16082
+            "instanceID": 16080
         }
     ],
     "requirements": [
         {
-            "instanceID": 20956
+            "instanceID": 20958
         },
         {
-            "instanceID": 20958
+            "instanceID": 20960
         }
     ],
     "states": [
@@ -36,7 +36,7 @@
                 {
                     "DescriptiveName": "Quest Giver 2",
                     "Actor": {
-                        "instanceID": 22550
+                        "instanceID": 22552
                     },
                     "QuestGiverText": "Test Repeatable: State Available. This is an example of a quest chain that is repeatable. "
                 }
@@ -53,7 +53,7 @@
                 {
                     "DescriptiveName": "Quest Giver 2",
                     "Actor": {
-                        "instanceID": 22550
+                        "instanceID": 22552
                     },
                     "QuestGiverText": "Test Repeatable: State Complete. "
                 }
@@ -70,7 +70,7 @@
                 {
                     "DescriptiveName": "Quest Giver 2",
                     "Actor": {
-                        "instanceID": 22550
+                        "instanceID": 22552
                     },
                     "QuestGiverText": "Test Repeatable: State Rewards Collected. "
                 }
@@ -80,24 +80,24 @@
     ],
     "quests": [
         {
-            "instanceID": 19680
+            "instanceID": 19682
         }
     ],
     "rewardType": 0,
     "questGiverTemplates": [
         {
-            "instanceID": 22550
+            "instanceID": 22552
         }
     ],
     "chainRewards": [
         {
-            "instanceID": 16982
-        },
-        {
             "instanceID": 16984
         },
         {
-            "instanceID": 19688
+            "instanceID": 16986
+        },
+        {
+            "instanceID": 19690
         }
     ]
 }

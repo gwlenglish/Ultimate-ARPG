@@ -1,16 +1,16 @@
 {
     "config": {
-        "instanceID": 25526
+        "instanceID": 25528
     },
     "databaseID": {
         "Name": "Player Warrior",
         "ID": 10,
         "ActorStats": {
-            "instanceID": 24920
+            "instanceID": 24922
         }
     },
     "LevelUpEvent": {
-        "instanceID": 23648
+        "instanceID": 23650
     },
     "myLevel": 1,
     "restoreOnLevel": true,

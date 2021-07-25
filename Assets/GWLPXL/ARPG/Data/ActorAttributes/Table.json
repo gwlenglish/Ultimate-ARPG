@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 19070
+        "instanceID": 19072
     },
     "databaseID": {
         "Name": "Table breakable",
         "ID": 4,
         "ActorStats": {
-            "instanceID": 18738
+            "instanceID": 18740
         }
     },
     "LevelUpEvent": {

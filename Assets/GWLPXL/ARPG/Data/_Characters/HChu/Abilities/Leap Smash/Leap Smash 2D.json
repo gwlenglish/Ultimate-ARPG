@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 24006
+        "instanceID": 24008
     },
     "id": {
         "Name": "Leap Smash 2D",
         "ID": 24,
         "Ability": {
-            "instanceID": 24908
+            "instanceID": 24910
         }
     },
     "autoName": false,
@@ -21,18 +21,18 @@
         "AnimationIndex": 1,
         "Logics": [
             {
-                "instanceID": 24008
-            },
-            {
-                "instanceID": 23964
-            },
-            {
                 "instanceID": 24010
+            },
+            {
+                "instanceID": 23966
+            },
+            {
+                "instanceID": 24012
             }
         ],
         "UniqueID": 7,
         "Sprite": {
-            "instanceID": 25508
+            "instanceID": 25510
         }
     },
     "category": 1,

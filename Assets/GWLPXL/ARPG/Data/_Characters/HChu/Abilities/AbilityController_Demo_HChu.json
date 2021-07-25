@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 23662
+        "instanceID": 23664
     },
     "id": {
         "Name": "Hchu",
         "ID": 3,
         "AbilityController": {
-            "instanceID": 23612
+            "instanceID": 23614
         }
     },
     "Data": {
@@ -18,9 +18,6 @@
     },
     "BasicAttacks": [
         {
-            "instanceID": 23664
-        },
-        {
             "instanceID": 23666
         },
         {
@@ -31,12 +28,12 @@
         },
         {
             "instanceID": 23672
+        },
+        {
+            "instanceID": 23674
         }
     ],
     "StartingAbilities": [
-        {
-            "instanceID": 23674
-        },
         {
             "instanceID": 23676
         },
@@ -57,6 +54,9 @@
         },
         {
             "instanceID": 23688
+        },
+        {
+            "instanceID": 23690
         }
     ],
     "EquippedCap": 2,

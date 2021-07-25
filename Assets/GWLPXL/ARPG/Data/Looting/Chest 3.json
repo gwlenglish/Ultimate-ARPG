@@ -1,6 +1,6 @@
 {
     "config": {
-        "instanceID": 25552
+        "instanceID": 25554
     },
     "lootPrefabOverride": {
         "instanceID": 0
@@ -9,12 +9,12 @@
         "Name": "Chest 3",
         "ID": 2,
         "LootDrops": {
-            "instanceID": 24962
+            "instanceID": 24964
         }
     },
     "AllPossibleItems": [
         {
-            "instanceID": 22638
+            "instanceID": 22640
         }
     ],
     "LootTable": [
@@ -24,7 +24,7 @@
             "RangeFrom": 0,
             "RangeTo": 5,
             "Item": {
-                "instanceID": 22638
+                "instanceID": 22640
             }
         }
     ]

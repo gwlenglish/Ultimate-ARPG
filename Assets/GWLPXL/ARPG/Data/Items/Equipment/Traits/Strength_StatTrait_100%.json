@@ -1,13 +1,13 @@
 {
     "config": {
-        "instanceID": 17104
+        "instanceID": 17106
     },
     "AutoName": true,
     "traitID": {
         "Name": "Strength_StatTrait_100%",
         "ID": 25,
         "Trait": {
-            "instanceID": 16892
+            "instanceID": 16894
         }
     },
     "traitName": "Strength",

@@ -1,17 +1,17 @@
 {
     "config": {
-        "instanceID": 25348
+        "instanceID": 25350
     },
     "id": {
         "Name": "Fireball",
         "ID": 11,
         "Instance": {
-            "instanceID": 24936
+            "instanceID": 24938
         }
     },
     "DamageVar": {
         "combatHandler": {
-            "instanceID": 17190
+            "instanceID": 17192
         },
         "descriptiveName": "MagicOrb",
         "damageOptions": {

@@ -1,23 +1,23 @@
 {
     "config": {
-        "instanceID": 16938
+        "instanceID": 16940
     },
     "AutoName": true,
     "traitID": {
         "Name": "Large Gem Dexterity_StatTrait_100%",
         "ID": 27,
         "Trait": {
-            "instanceID": 16780
+            "instanceID": 16782
         }
     },
     "traitName": "Large Gem Dexterity",
     "TraitPrefixes": [
-        "Agile",
-        "Nimble"
+        "Gem-Studded",
+        "Murdering"
     ],
     "TraitSuffixes": [
-        "Agile",
-        "Nimble"
+        "Gem-Studded",
+        "Murdering"
     ],
     "TraitNouns": [
         "Dexterity",

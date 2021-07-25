@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 16620
+        "instanceID": 16618
     },
     "auraID": {
         "Name": "ARPG Max HP Increase",
         "ID": 8,
         "Aura": {
-            "instanceID": 16604
+            "instanceID": 16602
         }
     },
     "AuraData": {
@@ -15,13 +15,13 @@
         "AuraName": "ARPG Max HP Increase",
         "AuraDescription": "Increases Max HP by 25",
         "AuraPrefab": {
-            "instanceID": 16622
+            "instanceID": 16620
         },
         "auraCategory": 0,
         "uniqueID": 0,
         "AuraLogics": [
             {
-                "instanceID": 16624
+                "instanceID": 16622
             }
         ],
         "AuraGroups": [

@@ -22,7 +22,7 @@ namespace GWLPXL.ARPGCore.Items.com
 
         public SocketStation Station = new SocketStation();
         public float InteractRange = 3;
-//
+        [HideInInspector]
         public SocketTypeReaderSO SocketReader = null;//not used at the moment.
         public AffixReaderSO AffixReader = null;
         public bool RenameItemsOnSocketChanged = true;

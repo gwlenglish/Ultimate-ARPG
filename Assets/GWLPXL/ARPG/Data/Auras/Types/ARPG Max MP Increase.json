@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 25442
+        "instanceID": 25444
     },
     "auraID": {
         "Name": "",
         "ID": 5,
         "Aura": {
-            "instanceID": 24942
+            "instanceID": 24944
         }
     },
     "AuraData": {
@@ -15,13 +15,13 @@
         "AuraName": "ARPG Max MP Increase",
         "AuraDescription": "Increases Max MP by 25",
         "AuraPrefab": {
-            "instanceID": 25444
+            "instanceID": 25446
         },
         "auraCategory": 0,
         "uniqueID": 0,
         "AuraLogics": [
             {
-                "instanceID": 25446
+                "instanceID": 25448
             }
         ],
         "AuraGroups": [

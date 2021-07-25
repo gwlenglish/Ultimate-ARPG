@@ -1,6 +1,6 @@
 {
     "config": {
-        "instanceID": 19072
+        "instanceID": 19074
     },
     "lootPrefabOverride": {
         "instanceID": 0
@@ -9,10 +9,13 @@
         "Name": "Shop Keeper Demo Loot",
         "ID": 12,
         "LootDrops": {
-            "instanceID": 18922
+            "instanceID": 18924
         }
     },
     "AllPossibleItems": [
+        {
+            "instanceID": 16568
+        },
         {
             "instanceID": 16570
         },
@@ -26,10 +29,10 @@
             "instanceID": 16576
         },
         {
-            "instanceID": 16578
+            "instanceID": 16550
         },
         {
-            "instanceID": 16552
+            "instanceID": 16578
         },
         {
             "instanceID": 16580
@@ -38,13 +41,13 @@
             "instanceID": 16582
         },
         {
+            "instanceID": 16544
+        },
+        {
+            "instanceID": 16552
+        },
+        {
             "instanceID": 16584
-        },
-        {
-            "instanceID": 16546
-        },
-        {
-            "instanceID": 16554
         },
         {
             "instanceID": 16586
@@ -53,13 +56,10 @@
             "instanceID": 16588
         },
         {
+            "instanceID": 16546
+        },
+        {
             "instanceID": 16590
-        },
-        {
-            "instanceID": 16548
-        },
-        {
-            "instanceID": 16592
         }
     ],
     "LootTable": [
@@ -69,7 +69,7 @@
             "RangeFrom": 555,
             "RangeTo": 560,
             "Item": {
-                "instanceID": 16588
+                "instanceID": 16586
             }
         },
         {
@@ -78,7 +78,7 @@
             "RangeFrom": 175,
             "RangeTo": 190,
             "Item": {
-                "instanceID": 16576
+                "instanceID": 16574
             }
         },
         {
@@ -87,7 +87,7 @@
             "RangeFrom": 540,
             "RangeTo": 555,
             "Item": {
-                "instanceID": 16586
+                "instanceID": 16584
             }
         },
         {
@@ -96,7 +96,7 @@
             "RangeFrom": 0,
             "RangeTo": 50,
             "Item": {
-                "instanceID": 16570
+                "instanceID": 16568
             }
         },
         {
@@ -105,7 +105,7 @@
             "RangeFrom": 125,
             "RangeTo": 175,
             "Item": {
-                "instanceID": 16574
+                "instanceID": 16572
             }
         },
         {
@@ -114,7 +114,7 @@
             "RangeFrom": 190,
             "RangeTo": 240,
             "Item": {
-                "instanceID": 16578
+                "instanceID": 16576
             }
         },
         {
@@ -123,7 +123,7 @@
             "RangeFrom": 240,
             "RangeTo": 290,
             "Item": {
-                "instanceID": 16552
+                "instanceID": 16550
             }
         },
         {
@@ -132,7 +132,7 @@
             "RangeFrom": 290,
             "RangeTo": 340,
             "Item": {
-                "instanceID": 16580
+                "instanceID": 16578
             }
         },
         {
@@ -141,7 +141,7 @@
             "RangeFrom": 340,
             "RangeTo": 390,
             "Item": {
-                "instanceID": 16582
+                "instanceID": 16580
             }
         },
         {
@@ -150,7 +150,7 @@
             "RangeFrom": 390,
             "RangeTo": 440,
             "Item": {
-                "instanceID": 16584
+                "instanceID": 16582
             }
         },
         {
@@ -159,7 +159,7 @@
             "RangeFrom": 440,
             "RangeTo": 490,
             "Item": {
-                "instanceID": 16546
+                "instanceID": 16544
             }
         },
         {
@@ -168,7 +168,7 @@
             "RangeFrom": 490,
             "RangeTo": 540,
             "Item": {
-                "instanceID": 16554
+                "instanceID": 16552
             }
         },
         {
@@ -177,7 +177,7 @@
             "RangeFrom": 560,
             "RangeTo": 610,
             "Item": {
-                "instanceID": 16590
+                "instanceID": 16588
             }
         },
         {
@@ -186,7 +186,7 @@
             "RangeFrom": 610,
             "RangeTo": 660,
             "Item": {
-                "instanceID": 16548
+                "instanceID": 16546
             }
         },
         {
@@ -195,7 +195,7 @@
             "RangeFrom": 660,
             "RangeTo": 710,
             "Item": {
-                "instanceID": 16592
+                "instanceID": 16590
             }
         },
         {
@@ -204,7 +204,7 @@
             "RangeFrom": 50,
             "RangeTo": 125,
             "Item": {
-                "instanceID": 16572
+                "instanceID": 16570
             }
         }
     ]

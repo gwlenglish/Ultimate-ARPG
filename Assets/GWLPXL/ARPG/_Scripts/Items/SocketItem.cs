@@ -44,6 +44,7 @@ namespace GWLPXL.ARPGCore.Items.com
 
         public override void SetGeneratedItemName(string newName)
         {
+
             SocketableVariables.GeneratedName = newName;
         }
     }

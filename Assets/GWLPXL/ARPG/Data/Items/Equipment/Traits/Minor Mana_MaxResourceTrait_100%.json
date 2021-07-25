@@ -1,13 +1,13 @@
 {
     "config": {
-        "instanceID": 17060
+        "instanceID": 17062
     },
     "AutoName": true,
     "traitID": {
         "Name": "Minor Mana",
         "ID": 17,
         "Trait": {
-            "instanceID": 16884
+            "instanceID": 16886
         }
     },
     "traitName": "Minor Mana",

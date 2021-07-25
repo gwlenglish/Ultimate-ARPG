@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 16980
+        "instanceID": 16982
     },
     "ID": {
         "Name": "The Key and Oil",
         "ID": 8,
         "Quest": {
-            "instanceID": 16636
+            "instanceID": 16634
         }
     },
     "questName": "Find the Key and Oil",
@@ -16,14 +16,14 @@
         {
             "StateName": "InProgress",
             "QuestTemplate": {
-                "instanceID": 16636
+                "instanceID": 16634
             },
             "State": 1,
             "Lines": [
                 {
                     "DescriptiveName": "Quest Giver 1",
                     "Actor": {
-                        "instanceID": 16082
+                        "instanceID": 16080
                     },
                     "QuestGiverText": "Uh, skeleton key and oil?"
                 }
@@ -33,14 +33,14 @@
         {
             "StateName": "Completed",
             "QuestTemplate": {
-                "instanceID": 16636
+                "instanceID": 16634
             },
             "State": 10,
             "Lines": [
                 {
                     "DescriptiveName": "Quest Giver 1",
                     "Actor": {
-                        "instanceID": 16082
+                        "instanceID": 16080
                     },
                     "QuestGiverText": "Nice. Thanks. "
                 }
@@ -50,19 +50,19 @@
     ],
     "QuestRewards": [
         {
-            "instanceID": 16982
+            "instanceID": 16984
         },
         {
-            "instanceID": 16984
+            "instanceID": 16986
         }
     ],
     "rewardType": 0,
     "rewardGiverTemplate": [
         {
-            "instanceID": 16082
+            "instanceID": 16080
         }
     ],
     "logic": {
-        "instanceID": 16986
+        "instanceID": 16988
     }
 }

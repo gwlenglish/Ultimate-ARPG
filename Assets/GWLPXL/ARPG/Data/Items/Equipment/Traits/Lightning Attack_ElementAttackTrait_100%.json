@@ -1,13 +1,13 @@
 {
     "config": {
-        "instanceID": 17056
+        "instanceID": 17058
     },
     "AutoName": true,
     "traitID": {
         "Name": "Lightning Attack",
         "ID": 13,
         "Trait": {
-            "instanceID": 16876
+            "instanceID": 16878
         }
     },
     "traitName": "Lightning Attack",
@@ -16,10 +16,13 @@
         "Zapping"
     ],
     "TraitSuffixes": [
-        "of Lightning",
-        "of Spark"
+        "Electric",
+        "Zapping"
     ],
-    "TraitNouns": [],
+    "TraitNouns": [
+        "Spark",
+        "Lightning"
+    ],
     "myValue": 1,
     "myLevelMulti": 100,
     "weight": 5,
