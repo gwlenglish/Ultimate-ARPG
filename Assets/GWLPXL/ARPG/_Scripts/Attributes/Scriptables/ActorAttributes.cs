@@ -7,7 +7,7 @@ using GWLPXL.ARPGCore.GameEvents.com;
 using UnityEngine;
 using GWLPXL.ARPGCore.Statics.com;
 using GWLPXL.ARPGCore.Abilities.com;
-
+using GWLPXL.NoFrills.Modifiers.com;
 
 namespace GWLPXL.ARPGCore.Attributes.com
 {
@@ -19,6 +19,26 @@ namespace GWLPXL.ARPGCore.Attributes.com
 
     public class ActorAttributes : ScriptableObject, ISaveJsonConfig
     {
+        public Modifiable Modifiable = new Modifiable();
+
+   
+        public virtual void AddMods(BaseModHolder[] mods)
+        {
+            Modifiable.AddModifiers(mods);
+        }
+        public virtual void AddMod(BaseModHolder mod)
+        {
+            Modifiable.AddModifier(mod);
+        }
+        public virtual void RemoveMod(BaseModHolder remove)
+        {
+            Modifiable.RemoveModifier(remove);
+        }
+        public virtual void RemoveMods(BaseModHolder[] mods)
+        {
+            Modifiable.RemoveModifiers(mods);
+        }
+
         #region actions to subscribe
         public System.Action OnLevelUpBegin;
         public System.Action OnLevelUpEnd;
@@ -462,7 +482,7 @@ namespace GWLPXL.ARPGCore.Attributes.com
             }
         }
 
-        public virtual int GetStatNowValue(StatType typeToGet)
+        public virtual int GetStatWithMods(StatType typeToGet)
         {
             Attribute[] value = GetAttributes(AttributeType.Stat);
             for (int i = 0; i < value.Length; i++)
@@ -470,7 +490,54 @@ namespace GWLPXL.ARPGCore.Attributes.com
                 Stat stat = (Stat)value[i];
                 if (stat.Type == typeToGet)
                 {
-                    return stat.NowValue;
+
+                    int now = stat.NowValue;
+                    int mods = Modifiable.GetModValue((int)stat.GetAttributeType(), stat.GetSubType(), stat.NowValue);
+                    Debug.Log("Now Stat: " + now);
+                    Debug.Log("Mods Stat: " + mods);
+                    Debug.Log("Combined Stat = " + now + mods);
+                    return now + mods;
+                }
+            }
+            return 0;
+        }
+
+        public virtual int GetAttributeValueWithMods(int attributeType, int subtype)
+        {
+            Attribute[] value = GetAttributes((AttributeType)attributeType);
+            for (int i = 0; i < value.Length; i++)
+            {
+                if (value[i].GetSubType() == subtype)
+                {
+                    int now = value[i].NowValue;
+                    int mods = Modifiable.GetModValue(attributeType, subtype, now);
+                    Debug.Log("Now Stat: " + now);
+                    Debug.Log("Mods Stat: " + mods);
+                    int combined = now + mods;
+                    Debug.Log("Combined Stat = " + combined);
+                    return combined;
+                }
+            }
+            return 0;
+        }
+        public virtual int GetStatNowValue(StatType typeToGet)
+        {
+            return GetAttributeValueWithMods((int)AttributeType.Stat, (int)typeToGet);
+
+            Attribute[] value = GetAttributes(AttributeType.Stat);
+            for (int i = 0; i < value.Length; i++)
+            {
+                Stat stat = (Stat)value[i];
+                if (stat.Type == typeToGet)
+                {
+
+                    int now = stat.NowValue;
+                    int mods = Modifiable.GetModValue((int)stat.GetAttributeType(), stat.GetSubType(), stat.NowValue);
+                    Debug.Log("Now Stat: " + now);
+                    Debug.Log("Mods Stat: " + mods);
+                    int combined = now + mods;
+                    Debug.Log("Combined Stat = " + combined);
+                    return combined;
                 }
             }
             return 0;

@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05e3c1fcda47de944b5c7b02b034e61d, type: 3}
+  m_Name: '%10_StrVit'
+  m_EditorClassIdentifier: 
+  config: {fileID: 4900000, guid: 9ce809f6b623adf47af89b6e67d66f34, type: 3}
+  modifierData:
+    AutoName: 0
+    AutoAssignUniqueID: 1
+    Name: 
+    Description: '+10% to Strength AND Vitality. Repeatable.
+
+      Click Add/Remove to see results. '
+    UniqueID: 10538
+  Type: 0
+  Mods:
+  - Amount: 10
+    type: 1
+    AttributeKey: 0
+  - Amount: 10
+    type: 1
+    AttributeKey: 1

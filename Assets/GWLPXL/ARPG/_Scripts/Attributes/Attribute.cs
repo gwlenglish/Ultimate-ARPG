@@ -1,7 +1,8 @@
 ﻿
 using GWLPXL.ARPGCore.Types.com;
+using GWLPXL.NoFrills.Modifiers.com;
 using UnityEngine;
-
+using System.Collections.Generic;
 namespace GWLPXL.ARPGCore.Attributes.com
 {
     /// <summary>
@@ -10,6 +11,7 @@ namespace GWLPXL.ARPGCore.Attributes.com
     [System.Serializable]
     public abstract class Attribute
     {
+       
 
         public int NowValue = 0;
         public int Level1Value = 0;
@@ -20,6 +22,8 @@ namespace GWLPXL.ARPGCore.Attributes.com
         public abstract int GetSubType();
         public abstract string GetDescriptiveName();
         public abstract string GetFullDescription();
+
+       
         protected virtual int GetLeveledValue(int forLevel, int myMaxLevel)
         {
             float leveledStat = Mathf.Lerp(Level1Value, Level99Max, (float)forLevel / (float)myMaxLevel); //default is linear lerp
@@ -29,14 +33,13 @@ namespace GWLPXL.ARPGCore.Attributes.com
                 leveledStat = Mathf.Lerp((float)Level1Value, (float)Level99Max, percent);//find the new stat on the curve
             }
             int rounded = Mathf.FloorToInt(leveledStat);//this is returning back, rounded down
-
             return rounded;
         }
         public virtual void Level(int newLevel, int maxLevel)
         {
-            int current = NowValue;
             int newvalue = GetLeveledValue(newLevel, maxLevel);
-            ModifyNowValue(newvalue + -current);
+            SetNowValue(newvalue);
+          //  ModifyNowValue(newvalue + -current);
         }
 
         public virtual void ModifyNowValue(int byHowMuch)
