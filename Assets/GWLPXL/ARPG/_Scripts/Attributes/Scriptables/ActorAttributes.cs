@@ -445,8 +445,10 @@ namespace GWLPXL.ARPGCore.Attributes.com
             SetStatNowValue(whichOne, newValue);
 
         }
+        
 
-        private void ResourceLinkAdditional(StatType whichOne, int byHowMuch)
+
+        protected virtual void ResourceLinkAdditional(StatType whichOne, int byHowMuch)
         {
             for (int i = 0; i < resourceLinks.Length; i++)
             {
