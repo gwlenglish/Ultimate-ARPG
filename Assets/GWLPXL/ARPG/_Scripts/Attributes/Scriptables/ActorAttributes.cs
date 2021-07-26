@@ -22,21 +22,40 @@ namespace GWLPXL.ARPGCore.Attributes.com
         public Modifiable Modifiable = new Modifiable();
 
    
-        public virtual void AddMods(BaseModHolder[] mods)
+        public virtual void AddMods(IList<BaseModHolder> mods)
         {
-            Modifiable.AddModifiers(mods);
+            for (int i = 0; i < mods.Count; i++)
+            {
+                AddMod(mods[i]);
+            }
+
         }
         public virtual void AddMod(BaseModHolder mod)
         {
             Modifiable.AddModifier(mod);
+            IList<ModBase> mods = mod.GetAllModifiers();
+            for (int i = 0; i < mods.Count; i++)
+            {
+                GetAttributeValueWithMods(mod.GetAttributeType(), mods[i].GetAttributeToModify());
+            }
+           
         }
         public virtual void RemoveMod(BaseModHolder remove)
         {
             Modifiable.RemoveModifier(remove);
+            IList<ModBase> mods = remove.GetAllModifiers();
+            for (int i = 0; i < mods.Count; i++)
+            {
+                GetAttributeValueWithMods(remove.GetAttributeType(), mods[i].GetAttributeToModify());
+            }
         }
-        public virtual void RemoveMods(BaseModHolder[] mods)
+        public virtual void RemoveMods(IList<BaseModHolder> mods)
         {
-            Modifiable.RemoveModifiers(mods);
+            for (int i = 0; i < mods.Count; i++)
+            {
+                RemoveMod(mods[i]);
+            }
+
         }
 
         #region actions to subscribe
@@ -141,10 +160,6 @@ namespace GWLPXL.ARPGCore.Attributes.com
                         break;
                 }
                 if (value == null) value = new Attribute[0];
-                for (int i = 0; i < value.Length; i++)
-                {
-                    value[i].Level(myLevel, maxLevel);
-                }
                 allAttributes[byType] = value;
             }
             return value;
@@ -225,8 +240,16 @@ namespace GWLPXL.ARPGCore.Attributes.com
                 if (kvp.Value == null) continue;
                 for (int i = 0; i < kvp.Value.Length; i++)
                 {
-
                     kvp.Value[i].Level(myLevel, maxLevel);
+                    int key = (int)kvp.Key;
+
+                    Attribute[] att = kvp.Value;
+                    for (int j = 0; j < att.Length; j++)
+                    {
+                        Attribute attribute = att[j];
+                        attribute.NowValue = GetAttributeValueWithMods(key, attribute.GetSubType());
+                    }
+   
 
                 }
             }
@@ -335,7 +358,7 @@ namespace GWLPXL.ARPGCore.Attributes.com
                 {
                     //we found it
                     int newValue = resource.NowValue + byHowMuch;
-                    resource.SetNowValue(newValue);
+                    resource.SetBaseValue(newValue);
                 }
             }
         }
@@ -365,6 +388,7 @@ namespace GWLPXL.ARPGCore.Attributes.com
                 if (typeToGet == resource.Type)
                 {
                     //we found it
+                    resource.CapValue = GetAttributeValueWithMods((int)AttributeType.Resource, resource.GetSubType());
                     return resource.CapValue;
                 }
             }
@@ -382,7 +406,7 @@ namespace GWLPXL.ARPGCore.Attributes.com
                 if (whichOne == resource.Type)
                 {
                     //we found it
-                    resource.ModifyNowValue(byHowMuch);
+                    resource.ModifyBaseValue(byHowMuch);
                     OnResourceChanged?.Invoke((int)whichOne);
 
                 }
@@ -417,6 +441,8 @@ namespace GWLPXL.ARPGCore.Attributes.com
 
         public virtual int GetOtherAttributeNowValue(OtherAttributeType type)
         {
+            return GetAttributeValueWithMods((int)AttributeType.Other, (int)type);
+
             Attribute[] value = GetAttributes(AttributeType.Other);
             for (int i = 0; i < value.Length; i++)
             {
@@ -430,7 +456,11 @@ namespace GWLPXL.ARPGCore.Attributes.com
         }
 
 
-
+        /// <summary>
+        /// change to its own mod
+        /// </summary>
+        /// <param name="whichCombatStat"></param>
+        /// <returns></returns>
         public virtual int GetStatForCombat(CombatStatType whichCombatStat)
         {
             int statValue = 1;
@@ -444,7 +474,7 @@ namespace GWLPXL.ARPGCore.Attributes.com
                         Stat stat = (Stat)value[j];
                         if (stat.Type == combatLinks[i].Stat)
                         {
-                            int statPoints = stat.NowValue;
+                            int statPoints = GetAttributeValueWithMods((int)AttributeType.Stat, (int)stat.Type);
                             int curvedValue = statPoints * combatLinks[i].ValuePerStat;//25 * 1 = 25
                             statValue += curvedValue;
                         }
@@ -467,7 +497,11 @@ namespace GWLPXL.ARPGCore.Attributes.com
         }
         
 
-
+        /// <summary>
+        /// change to its own mod
+        /// </summary>
+        /// <param name="whichOne"></param>
+        /// <param name="byHowMuch"></param>
         protected virtual void ResourceLinkAdditional(StatType whichOne, int byHowMuch)
         {
             for (int i = 0; i < resourceLinks.Length; i++)
@@ -482,25 +516,7 @@ namespace GWLPXL.ARPGCore.Attributes.com
             }
         }
 
-        public virtual int GetStatWithMods(StatType typeToGet)
-        {
-            Attribute[] value = GetAttributes(AttributeType.Stat);
-            for (int i = 0; i < value.Length; i++)
-            {
-                Stat stat = (Stat)value[i];
-                if (stat.Type == typeToGet)
-                {
-
-                    int now = stat.NowValue;
-                    int mods = Modifiable.GetModValue((int)stat.GetAttributeType(), stat.GetSubType(), stat.NowValue);
-                    Debug.Log("Now Stat: " + now);
-                    Debug.Log("Mods Stat: " + mods);
-                    Debug.Log("Combined Stat = " + now + mods);
-                    return now + mods;
-                }
-            }
-            return 0;
-        }
+      
 
         public virtual int GetAttributeValueWithMods(int attributeType, int subtype)
         {
@@ -509,7 +525,7 @@ namespace GWLPXL.ARPGCore.Attributes.com
             {
                 if (value[i].GetSubType() == subtype)
                 {
-                    int now = value[i].NowValue;
+                    int now = value[i].Basevalue;
                     int mods = Modifiable.GetModValue(attributeType, subtype, now);
                     Debug.Log("Now Stat: " + now);
                     Debug.Log("Mods Stat: " + mods);
@@ -524,23 +540,6 @@ namespace GWLPXL.ARPGCore.Attributes.com
         {
             return GetAttributeValueWithMods((int)AttributeType.Stat, (int)typeToGet);
 
-            Attribute[] value = GetAttributes(AttributeType.Stat);
-            for (int i = 0; i < value.Length; i++)
-            {
-                Stat stat = (Stat)value[i];
-                if (stat.Type == typeToGet)
-                {
-
-                    int now = stat.NowValue;
-                    int mods = Modifiable.GetModValue((int)stat.GetAttributeType(), stat.GetSubType(), stat.NowValue);
-                    Debug.Log("Now Stat: " + now);
-                    Debug.Log("Mods Stat: " + mods);
-                    int combined = now + mods;
-                    Debug.Log("Combined Stat = " + combined);
-                    return combined;
-                }
-            }
-            return 0;
 
         }
 
@@ -550,6 +549,7 @@ namespace GWLPXL.ARPGCore.Attributes.com
         #region public skills
         public int GetAbilityMod(Ability ability)
         {
+           
             Attribute[] value = GetAttributes(AttributeType.AbilityMod);
 
             for (int i = 0; i < value.Length; i++)
@@ -571,7 +571,7 @@ namespace GWLPXL.ARPGCore.Attributes.com
                 AbilityMod mod = (AbilityMod)value[i];
                 if (mod.Ability == ability)
                 {
-                    mod.ModifyNowValue(byAmount);
+                    mod.ModifyBaseValue(byAmount);
                 }
             }
 
@@ -583,11 +583,12 @@ namespace GWLPXL.ARPGCore.Attributes.com
 
         public virtual int GetAllElementAttackValues()
         {
+
             int attack = 0;
             Attribute[] value = GetAttributes(AttributeType.ElementAttack);
             for (int i = 0; i < value.Length; i++)
             {
-                attack += value[i].NowValue;
+                attack += GetAttributeValueWithMods((int)AttributeType.ElementAttack, value[i].GetSubType());
             }
             return attack;
         }
@@ -599,7 +600,7 @@ namespace GWLPXL.ARPGCore.Attributes.com
                 ElementResist resist = (ElementResist)value[i];
                 if (resist.Type == type)
                 {
-                    return resist.NowValue;
+                    return GetAttributeValueWithMods((int)AttributeType.ElementResist, resist.GetSubType());
                 }
             }
             return 0;
@@ -608,30 +609,30 @@ namespace GWLPXL.ARPGCore.Attributes.com
         Dictionary<ElementType, ElementAttack> eleAttackDic = new Dictionary<ElementType, ElementAttack>();
         public virtual int GetElementAttack(ElementType type)
         {
-            eleAttackDic.TryGetValue(type, out ElementAttack attackvalue);
-            if (attackvalue == null)
-            {
-                Attribute[] value = GetAttributes(AttributeType.ElementAttack);
+            Attribute[] value = GetAttributes(AttributeType.ElementAttack);
+
+       
                 for (int i = 0; i < value.Length; i++)
                 {
+
                     ElementAttack attack = (ElementAttack)value[i];
-                    if (attack.Type == type)
+                    if (value[i].GetSubType() == (int)type)
                     {
-                        attackvalue = attack;
+                       return GetAttributeValueWithMods((int)AttributeType.ElementAttack, attack.GetSubType());
+           
                     }
                 }
 
-                if (attackvalue == null)
-                {
-                    attackvalue = new ElementAttack(type);
-                }
-            }
-            eleAttackDic[type] = attackvalue;
-            return attackvalue.NowValue;
+                
+            
+
+            return 0;
+
           
         }
         public virtual void ModifyElementAttackNowValue(ElementType type, int modifyAmount)
         {
+
             eleAttackDic.TryGetValue(type, out ElementAttack attackvalue);
             if (attackvalue == null)
             {
@@ -648,10 +649,10 @@ namespace GWLPXL.ARPGCore.Attributes.com
                 if (attackvalue == null)
                 {
                     attackvalue = new ElementAttack(type);
-                    attackvalue.SetNowValue(0);
+                    attackvalue.SetBaseValue(0);
                 }
             }
-            attackvalue.ModifyNowValue(modifyAmount);
+            attackvalue.ModifyBaseValue(modifyAmount);
             eleAttackDic[type] = attackvalue;
 
         }
@@ -665,7 +666,7 @@ namespace GWLPXL.ARPGCore.Attributes.com
                 ElementResist resist = (ElementResist)value[i];
                 if (resist.Type == type)
                 {
-                    resist.ModifyNowValue(modifyAmount);
+                    resist.ModifyBaseValue(modifyAmount);
                     break;
                 }
             }
@@ -685,7 +686,7 @@ namespace GWLPXL.ARPGCore.Attributes.com
                 Stat stat = (Stat)value[i];
                 if (stat.Type == typeToSet)
                 {
-                    stat.SetNowValue(newValue);
+                    stat.SetBaseValue(newValue);
                     break;
                 }
             }

@@ -16,10 +16,10 @@ MonoBehaviour:
   modifierData:
     AutoName: 0
     AutoAssignUniqueID: 0
-    Name: 
-    Description: 
+    Name: Intelligence
+    Description: Flat +10 to Intelligence
     UniqueID: 0
   StatMods:
-  - Amount: 25
-    type: 1
-    AttributeKey: 0
+  - Amount: 10
+    type: 0
+    attributeKey: 1

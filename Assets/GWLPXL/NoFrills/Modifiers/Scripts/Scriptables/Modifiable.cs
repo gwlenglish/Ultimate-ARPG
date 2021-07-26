@@ -65,7 +65,10 @@ namespace GWLPXL.NoFrills.Modifiers.com
             }
 
             value.ModHoldersDic.Remove(newMod);
+            
             modifiabledictionaries[(int)newMod.GetAttributeType()] = value;
+  
+            value.Dirty = true;
             return true;
 
         }
@@ -128,6 +131,7 @@ namespace GWLPXL.NoFrills.Modifiers.com
             //update the dictionaries.
             //value.held.Add(newMod);
             value.ModHoldersDic.Add(newMod, copy);
+            value.Dirty = true;
             modifiabledictionaries[(int)newMod.GetAttributeType()] = value;
 
             return true;
@@ -141,6 +145,10 @@ namespace GWLPXL.NoFrills.Modifiers.com
         /// <returns></returns>
         protected virtual int GetModValue(ModifiableDictionary inDic, int whichEnum, int baseValue)
         {
+            if (inDic.Dirty == false && inDic.QuickValuesDic.ContainsKey(whichEnum))
+            {
+                return inDic.QuickValuesDic[whichEnum];
+            }
             long moddedValue = 0;//using 64bit long for an easy way to catch limits, wont play nicely with 32bit.
             List<ModBase> valueList = GetMods(whichEnum, inDic);
             Debug.Log("Mod List Count " + valueList.Count);
@@ -160,6 +168,8 @@ namespace GWLPXL.NoFrills.Modifiers.com
             }
             int cappedMod = (int)moddedValue;
             Debug.Log("Applied value " + moddedValue);
+            inDic.QuickValuesDic[whichEnum] = cappedMod;
+            inDic.Dirty = false;
             return cappedMod;
 
         }
@@ -205,12 +215,15 @@ namespace GWLPXL.NoFrills.Modifiers.com
         /// </summary>
         public Dictionary<BaseModHolder, BaseModHolder> ModHoldersDic = new Dictionary<BaseModHolder, BaseModHolder>();//orignal template, heldcopy
         public Dictionary<int, List<ModBase>> ModifiersDic = new Dictionary<int, List<ModBase>>();//list of mods on each enum / stat
+        public Dictionary<int, int> QuickValuesDic = new Dictionary<int, int>();
+        public bool Dirty = true;
 
         public ModifiableDictionary()
         {
             //held = new List<BaseModHolder>();
             ModHoldersDic = new Dictionary<BaseModHolder, BaseModHolder>();//unique ID, modholder
             ModifiersDic = new Dictionary<int, List<ModBase>>();//list of mods on each enum / stat
+            QuickValuesDic = new Dictionary<int, int>();//saved enum/value so doens't recalculate if not dirty
 
         }
     }

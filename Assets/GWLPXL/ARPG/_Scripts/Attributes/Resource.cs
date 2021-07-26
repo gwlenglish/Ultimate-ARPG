@@ -12,16 +12,16 @@ namespace GWLPXL.ARPGCore.Attributes.com
         readonly string divisor = " / ";
         public override void Level(int newLevel, int maxLevel)
         {
-            int current = NowValue;
+            int current = Basevalue;
             int oldMax = CapValue;
             int difference = oldMax - current;
             int newvalue = GetLeveledValue(newLevel, maxLevel);
             SetCapValue(newvalue + difference);
             base.Level(newLevel, maxLevel);
         }
-        public override void ModifyNowValue(int byHowMuch)
+        public override void ModifyBaseValue(int byHowMuch)
         {
-            base.ModifyNowValue(byHowMuch);
+            base.ModifyBaseValue(byHowMuch);
             if (NowValue > CapValue)
             {
                 NowValue = CapValue;

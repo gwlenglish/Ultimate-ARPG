@@ -11,9 +11,9 @@ namespace GWLPXL.ARPGCore.Attributes.com
     [System.Serializable]
     public abstract class Attribute
     {
-       
 
         public int NowValue = 0;
+        public int Basevalue = 0;
         public int Level1Value = 0;
         [Tooltip("Stats and Resources use this, Elements currently do not")]
         public AnimationCurve LevelCurve = default;
@@ -33,29 +33,32 @@ namespace GWLPXL.ARPGCore.Attributes.com
                 leveledStat = Mathf.Lerp((float)Level1Value, (float)Level99Max, percent);//find the new stat on the curve
             }
             int rounded = Mathf.FloorToInt(leveledStat);//this is returning back, rounded down
+
             return rounded;
         }
         public virtual void Level(int newLevel, int maxLevel)
         {
+            int current = Basevalue;
             int newvalue = GetLeveledValue(newLevel, maxLevel);
-            SetNowValue(newvalue);
-          //  ModifyNowValue(newvalue + -current);
+            SetBaseValue(newvalue);
+            ModifyBaseValue(newvalue + -current);
         }
 
-        public virtual void ModifyNowValue(int byHowMuch)
+        public virtual void ModifyBaseValue(int byHowMuch)
         {
-            int newValue = NowValue + byHowMuch;
+            int newValue = Basevalue + byHowMuch;
             //Debug.Log("new value, modify value" + newValue + " " + byHowMuch);
-            SetNowValue(newValue);
+            SetBaseValue(newValue);
         }
 
 
 
-        public virtual void SetNowValue(int newValue)
+        public virtual void SetBaseValue(int newValue)
         {
 
-            NowValue = newValue;
+            Basevalue = newValue;
 
+            //update now value
 
 
         }

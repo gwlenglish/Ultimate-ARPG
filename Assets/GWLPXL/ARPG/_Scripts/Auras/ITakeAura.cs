@@ -14,6 +14,7 @@ namespace GWLPXL.ARPGCore.Auras.com
         GameObject GetGameObjectInstance();
         AuraTargetGroup[] GetAuraGroups();
         void SetActorHub(IActorHub newHub);
+        IActorHub GetActorHub();
         #endregion
 
         #region modify and extend, these can be removed/changed 

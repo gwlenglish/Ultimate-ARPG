@@ -12,6 +12,7 @@ namespace GWLPXL.ARPGCore.Types.com
         ElementAttack = 2,
         ElementResist = 3,
         AbilityMod = 4,
-        SocketItem = 5
+        SocketItem = 5,
+        ModTrait = 6
     }
 }

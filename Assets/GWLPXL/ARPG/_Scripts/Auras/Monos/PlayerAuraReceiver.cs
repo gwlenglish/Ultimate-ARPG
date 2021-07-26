@@ -62,5 +62,7 @@ namespace GWLPXL.ARPGCore.Auras.com
 
         public void SetActorHub(IActorHub newHub) => hub = newHub;
 
+        public IActorHub GetActorHub() => hub;
+ 
     }
 }
