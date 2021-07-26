@@ -20,7 +20,7 @@ namespace GWLPXL.ARPGCore.Traits.com
         
         public override void ApplyTrait(IAttributeUser toActor)
         {
-            toActor.GetRuntimeAttributes().AddModifierElementResist(Type, new AttributeModifier(GetLeveledValue(), StatModType.Flat));
+            toActor.GetRuntimeAttributes().AddModifierElementResist(Type, new AttributeModifier(GetLeveledValue(), AttributeModifierType.Flat));
             // toActor.GetRuntimeAttributes().ModifyElementResistBaseValue(Type, GetLeveledValue());
         }
 
@@ -34,7 +34,7 @@ namespace GWLPXL.ARPGCore.Traits.com
 
         public override void RemoveTrait(IAttributeUser toActor)
         {
-            toActor.GetRuntimeAttributes().RemoveModifierElementResist(Type, new AttributeModifier(GetLeveledValue(), StatModType.Flat));
+            toActor.GetRuntimeAttributes().RemoveModifierElementResist(Type, new AttributeModifier(GetLeveledValue(), AttributeModifierType.Flat));
             //toActor.GetRuntimeAttributes().ModifyElementResistBaseValue(Type, -GetLeveledValue());
         }
 

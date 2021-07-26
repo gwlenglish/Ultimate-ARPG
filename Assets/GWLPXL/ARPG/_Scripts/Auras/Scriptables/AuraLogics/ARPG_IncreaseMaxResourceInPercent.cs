@@ -7,7 +7,7 @@ namespace GWLPXL.ARPGCore.Auras.com
     [CreateAssetMenu(menuName = "GWLPXL/ARPG/Auras/Logic/NEW ARPG Increase Max Resource In Percent")]
     public class ARPG_IncreaseMaxResourceInPercent : AuraLogic
     {
-        public AttributeModifier attributeModifier = new AttributeModifier(1, StatModType.PercentAdd);
+        public AttributeModifier attributeModifier = new AttributeModifier(1, AttributeModifierType.PercentAdd);
         [SerializeField]
         ResourceType type = ResourceType.Health;
         public override bool DoApplyLogic(ITakeAura onUser)

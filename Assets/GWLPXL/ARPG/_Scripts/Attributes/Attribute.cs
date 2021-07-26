@@ -124,21 +124,21 @@ namespace GWLPXL.ARPGCore.Attributes.com
 			{
 				AttributeModifier mod = StatModifiers[i];
 
-				if (mod.Type == StatModType.Flat)
+				if (mod.Type == AttributeModifierType.Flat)
 				{
 					finalValue += mod.Value;
 				}
-				else if (mod.Type == StatModType.PercentAdd)
+				else if (mod.Type == AttributeModifierType.PercentAdd)
 				{
 					sumPercentAdd += mod.Value;
 
-					if (i + 1 >= StatModifiers.Count || StatModifiers[i + 1].Type != StatModType.PercentAdd)
+					if (i + 1 >= StatModifiers.Count || StatModifiers[i + 1].Type != AttributeModifierType.PercentAdd)
 					{
 						finalValue *= 1 + sumPercentAdd;
 						sumPercentAdd = 0;
 					}
 				}
-				else if (mod.Type == StatModType.PercentMult)
+				else if (mod.Type == AttributeModifierType.PercentMult)
 				{
 					finalValue *= 1 + mod.Value;
 				}
