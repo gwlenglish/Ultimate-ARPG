@@ -18,7 +18,7 @@ namespace GWLPXL.ARPGCore.Traits.com
 
         public override void ApplyTrait(IAttributeUser toActor)
         {
-            toActor.GetRuntimeAttributes().ModifyNowStatValue(Type, GetLeveledValue());
+            toActor.GetRuntimeAttributes().ModifyBaseStatValue(Type, GetLeveledValue());
             //ARPGDebugger.DebugMessage(GetTraitUIDescription());
 
         }
@@ -34,7 +34,7 @@ namespace GWLPXL.ARPGCore.Traits.com
 
         public override void RemoveTrait(IAttributeUser toActor)
         {
-            toActor.GetRuntimeAttributes().ModifyNowStatValue(Type, -GetLeveledValue());
+            toActor.GetRuntimeAttributes().ModifyBaseStatValue(Type, -GetLeveledValue());
         }
 
 

@@ -21,7 +21,7 @@ MonoBehaviour:
     ID: 4
     ControllerRef: {fileID: 11400000}
   startingAuras:
-  - {fileID: 11400000, guid: bb6dcd1d393469143b67582bfbd92847, type: 2}
+  - {fileID: 11400000, guid: aceeb76bc36e41644ab36a69ae7d9dc1, type: 2}
   - {fileID: 11400000, guid: 78cb56050a00f5e4b903166385cff27b, type: 2}
   - {fileID: 11400000, guid: 0f4f3db756d630d438b0d68ef94b8ff5, type: 2}
   equippedcap: 3

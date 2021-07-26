@@ -212,7 +212,7 @@ namespace GWLPXL.ARPGCore.Statics.com
                 //Debug.Log(rounded + "element attack");
                 BuffedActor buffedA = new BuffedActor(vars.Element, rounded, currentD);
                 Buffed[target] = buffedA;
-                target.MyStats.GetRuntimeAttributes().ModifyElementAttackNowValue(vars.Element, rounded);
+                target.MyStats.GetRuntimeAttributes().ModifyElementAttackBaseValue(vars.Element, rounded);
                 //Debug.Log("Modfiy element " + getNewElementAttack);
             }
 
@@ -225,7 +225,7 @@ namespace GWLPXL.ARPGCore.Statics.com
             Buffed.TryGetValue(target, out BuffedActor value);
             if (value != null)
             {
-                target.MyStats.GetRuntimeAttributes().ModifyElementAttackNowValue(value.Type, -value.Amount);
+                target.MyStats.GetRuntimeAttributes().ModifyElementAttackBaseValue(value.Type, -value.Amount);
                 Buffed.Remove(target);
             }
         }
@@ -238,7 +238,7 @@ namespace GWLPXL.ARPGCore.Statics.com
             Buffed.TryGetValue(stats, out int value);
             if (value == 0)
             {
-                stats.ModifyElementAttackNowValue(vars.Element, vars.BuffAmount);
+                stats.ModifyElementAttackBaseValue(vars.Element, vars.BuffAmount);
                 Buffed[stats] = vars.BuffAmount;
 
             }
@@ -251,7 +251,7 @@ namespace GWLPXL.ARPGCore.Statics.com
             Buffed.TryGetValue(stats, out int value);
             if (value != 0)
             {
-                stats.ModifyElementAttackNowValue(vars.Element, -value);
+                stats.ModifyElementAttackBaseValue(vars.Element, -value);
                 Buffed.Remove(stats);
             }
             ARPGDebugger.DebugMessage("removed " + vars.Element + " " + -vars.BuffAmount + stats.ActorName, stats);
@@ -267,7 +267,7 @@ namespace GWLPXL.ARPGCore.Statics.com
             Buffed.TryGetValue(stats, out int value);
             if (value == 0)
             {
-                stats.ModifyNowStatValue(vars.Type, vars.Amount);
+                stats.ModifyBaseStatValue(vars.Type, vars.Amount);
                 Buffed[stats] = vars.Amount;
             }
         }
@@ -279,7 +279,7 @@ namespace GWLPXL.ARPGCore.Statics.com
             Buffed.TryGetValue(stats, out int value);
             if (value != 0)
             {
-                stats.ModifyNowStatValue(vars.Type, -vars.Amount);
+                stats.ModifyBaseStatValue(vars.Type, -vars.Amount);
                 Buffed.Remove(stats);
             }
         }
@@ -294,7 +294,7 @@ namespace GWLPXL.ARPGCore.Statics.com
                 float increaseAmount = stats.GetStatNowValue(vars.Stat) * vars.ByPercent;
                 int rounded = Mathf.FloorToInt(increaseAmount);
 
-                stats.ModifyNowStatValue(vars.Stat, rounded);
+                stats.ModifyBaseStatValue(vars.Stat, rounded);
                 StatIncreased increased = new StatIncreased(vars.Stat, rounded);
                 Buffed[stats] = increased;
             }
@@ -307,7 +307,7 @@ namespace GWLPXL.ARPGCore.Statics.com
             Buffed.TryGetValue(stats, out StatIncreased value);
             if (value != null)
             {
-                stats.ModifyNowStatValue(value.Stat, -value.ByAmount);
+                stats.ModifyBaseStatValue(value.Stat, -value.ByAmount);
                 Buffed.Remove(stats);
             }
         }

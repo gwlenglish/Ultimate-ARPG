@@ -18,13 +18,13 @@ namespace GWLPXL.ARPGCore.Traits.com
         public override void ApplyTrait(IAttributeUser toActor)
         {
             addedvalue = GetLeveledValue();
-            toActor.GetRuntimeAttributes().ModifyElementAttackNowValue(Type, addedvalue);
+            toActor.GetRuntimeAttributes().ModifyElementAttackBaseValue(Type, addedvalue);
 
         }
 
         public override void RemoveTrait(IAttributeUser toActor)
         {
-            toActor.GetRuntimeAttributes().ModifyElementAttackNowValue(Type, -addedvalue);
+            toActor.GetRuntimeAttributes().ModifyElementAttackBaseValue(Type, -addedvalue);
             addedvalue = 0;
 
         }

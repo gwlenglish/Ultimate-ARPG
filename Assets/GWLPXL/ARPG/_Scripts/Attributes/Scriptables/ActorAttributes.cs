@@ -1,7 +1,9 @@
 ﻿
 
+using System;
 using GWLPXL.ARPGCore.Types.com;
 using System.Collections.Generic;
+using GWLPXL.ARPG._Scripts.Attributes.com;
 using GWLPXL.ARPGCore.GameEvents.com;
 
 using UnityEngine;
@@ -247,7 +249,7 @@ namespace GWLPXL.ARPGCore.Attributes.com
             for (int i = 0; i < resources.Length; i++)
             {
                 Resource resource = (Resource)resources[i];
-                ModifyNowResource(resource.Type, resource.CapValue);
+                ModifyNowResource(resource.Type, resource.NowValue);
             }
         }
 
@@ -261,7 +263,177 @@ namespace GWLPXL.ARPGCore.Attributes.com
             float current = GetResourceNowValue(type);
             return current >= costAmount;
         }
-        public virtual void SetAtttributeMaxValue(ResourceType type, int newValue)
+
+        #region modifiers
+
+        private ElementAttack FindElementAttack(ElementType type)
+        {
+            eleAttackDic.TryGetValue(type, out ElementAttack attackvalue);
+            if (attackvalue == null)
+            {
+                Attribute[] value = GetAttributes(AttributeType.ElementAttack);
+                for (int i = 0; i < value.Length; i++)
+                {
+                    ElementAttack attack = (ElementAttack)value[i];
+                    if (attack.Type == type)
+                    {
+                        attackvalue = attack;
+                    }
+                }
+
+                if (attackvalue == null)
+                {
+                    attackvalue = new ElementAttack(type);
+                    attackvalue.SetBaseValue(0);
+                }
+            }
+            eleAttackDic[type] = attackvalue;
+            return attackvalue;
+        }
+        public virtual void AddModifierElementAttack(ElementType type, AttributeModifier modifier)
+        {
+            FindElementAttack(type).AddModifier(modifier);
+        }
+        public virtual bool RemoveModifierElementAttack(ElementType type, AttributeModifier modifier)
+        {
+            return FindElementAttack(type).RemoveModifier(modifier);
+        }
+        public virtual bool RemoveSourceModifierElementAttack(ElementType type, object source)
+        {
+            return FindElementAttack(type).RemoveAllModifiersFromSource(source);
+        }
+
+        private ElementResist FindElementResist(ElementType type)
+        {
+            Attribute[] value = GetAttributes(AttributeType.ElementResist);
+            for (int i = 0; i < value.Length; i++)
+            {
+                ElementResist resist = (ElementResist)value[i];
+                if (resist.Type == type)
+                {
+                    return resist;
+                }
+            }
+
+            return null;
+        }
+
+        public virtual void AddModifierElementResist(ElementType type, AttributeModifier modifier)
+        {
+            FindElementResist(type)?.AddModifier(modifier);
+        }
+        public virtual void RemoveModifierElementResist(ElementType type, AttributeModifier modifier)
+        {
+            FindElementResist(type)?.RemoveModifier(modifier);
+        }
+        public virtual void RemoveSourceModifierElementResist(ElementType type, object source)
+        {
+            FindElementResist(type)?.RemoveAllModifiersFromSource(source);
+        }
+
+        private Resource FindResource(ResourceType whichOne)
+        {
+            Attribute[] value = GetAttributes(AttributeType.Resource);
+            for (int i = 0; i < value.Length; i++)
+            {
+                Resource resource = (Resource)value[i];
+                if (whichOne == resource.Type)
+                {
+                    return resource;
+                }
+            }
+
+            return null;
+        }
+        public virtual void AddModifierResource(ResourceType whichOne, AttributeModifier modifier)
+        {
+            var resource = FindResource(whichOne);
+            if (resource == null) return;
+            resource.AddModifier(modifier);
+            OnResourceChanged?.Invoke((int)whichOne);
+        }
+        public virtual void RemoveModifierResource(ResourceType whichOne, AttributeModifier modifier)
+        {
+            var resource = FindResource(whichOne);
+            if (resource == null) return;
+            resource.RemoveModifier(modifier);
+            OnResourceChanged?.Invoke((int)whichOne);
+        }
+        public virtual void RemoveSourceModifierResource(ResourceType whichOne, object source)
+        {
+            var resource = FindResource(whichOne);
+            if (resource == null) return;
+            resource.RemoveAllModifiersFromSource(source);
+            OnResourceChanged?.Invoke((int)whichOne);
+        }
+
+        private AbilityMod FindAbilityMod(Ability ability)
+        {
+            Attribute[] value = GetAttributes(AttributeType.AbilityMod);
+            for (int i = 0; i < value.Length; i++)
+            {
+                AbilityMod mod = (AbilityMod)value[i];
+                if (mod.Ability == ability)
+                {
+                    return mod;
+                }
+            }
+
+            return null;
+        }
+        
+        public virtual void AddModifierAbilityMod(Ability ability, AttributeModifier modifier)
+        {
+            FindAbilityMod(ability)?.AddModifier(modifier);
+        }
+        public virtual void RemoveModifierAbilityMod(Ability ability, AttributeModifier modifier)
+        {
+            FindAbilityMod(ability)?.RemoveModifier(modifier);
+        }
+        public virtual void RemoveSourceModifierAbilityMod(Ability ability, object source)
+        {
+            FindAbilityMod(ability)?.RemoveAllModifiersFromSource(source);
+        }
+
+        private Stat FindStat(StatType whichOne)
+        {
+            Attribute[] value = GetAttributes(AttributeType.Stat);
+            for (int i = 0; i < value.Length; i++)
+            {
+                Stat stat = (Stat)value[i];
+                if (stat.Type == whichOne)
+                {
+                    return stat;
+                }
+            }
+
+            return null;
+        }
+
+        private void ChangeStat(StatType whichOne, Action<Stat> action)
+        {
+            var oldValue = GetStatNowValue(whichOne);
+            action(FindStat(whichOne));
+            var newValue = GetStatNowValue(whichOne);
+            ResourceLinkAdditional(whichOne, newValue - oldValue);
+        }
+        public virtual void AddModifierStat(StatType whichOne, AttributeModifier modifier)
+        {
+            ChangeStat(whichOne, stat => stat.AddModifier(modifier));
+        }
+        public virtual void RemoveModifierStat(StatType whichOne, AttributeModifier modifier)
+        {
+            ChangeStat(whichOne, stat => stat.RemoveModifier(modifier));
+        }
+        public virtual void RemoveSourceModifierStat(StatType whichOne, object source)
+        {
+            ChangeStat(whichOne, stat => stat.RemoveAllModifiersFromSource(source));
+        }
+
+        #endregion
+        
+        
+        public virtual void SetAttributeMaxBaseValue(ResourceType type, int newValue)
         {
             Attribute[] value = GetAttributes(AttributeType.Resource);
             for (int i = 0; i < value.Length; i++)
@@ -270,7 +442,7 @@ namespace GWLPXL.ARPGCore.Attributes.com
                 if (resource.Type == type)
                 {
                     //we found it
-                    resource.SetCapValue(newValue);
+                    resource.SetBaseValue(newValue);
                 }
             }
         }
@@ -285,7 +457,7 @@ namespace GWLPXL.ARPGCore.Attributes.com
                 if (resource.Type == typeToGet)
                 {
                     //we found it
-                    return resource.CapValue;
+                    return resource.NowValue;
                 }
             }
             return 0;
@@ -300,12 +472,12 @@ namespace GWLPXL.ARPGCore.Attributes.com
                 if (resource.Type == typeToGet)
                 {
                     //we found it
-                    return resource.NowValue;
+                    return resource.ResourceNowValue;
                 }
             }
             return 0;
         }
-        public virtual void ModifyNowAttribute(ResourceType whichOne, int byHowMuch)
+        public virtual void ModifyBaseAttribute(ResourceType whichOne, int byHowMuch)
         {
             Attribute[] value = GetAttributes(AttributeType.Resource);
             for (int i = 0; i < value.Length; i++)
@@ -313,9 +485,7 @@ namespace GWLPXL.ARPGCore.Attributes.com
                 Resource resource = (Resource)value[i];
                 if (resource.Type == whichOne)
                 {
-                    //we found it
-                    int newValue = resource.NowValue + byHowMuch;
-                    resource.SetNowValue(newValue);
+                    resource.ModifyBaseValue(byHowMuch);
                 }
             }
         }
@@ -330,7 +500,7 @@ namespace GWLPXL.ARPGCore.Attributes.com
                 if (typeToGet == resource.Type)
                 {
                     //we found it
-                    return resource.NowValue;
+                    return resource.ResourceNowValue;
                 }
             }
 
@@ -345,7 +515,7 @@ namespace GWLPXL.ARPGCore.Attributes.com
                 if (typeToGet == resource.Type)
                 {
                     //we found it
-                    return resource.CapValue;
+                    return resource.NowValue;
                 }
             }
 
@@ -362,14 +532,13 @@ namespace GWLPXL.ARPGCore.Attributes.com
                 if (whichOne == resource.Type)
                 {
                     //we found it
-                    resource.ModifyNowValue(byHowMuch);
+                    resource.ModifyResourceValue(byHowMuch);
                     OnResourceChanged?.Invoke((int)whichOne);
 
                 }
             }
-
-
         }
+        
         public virtual void ModifyMaxResource(ResourceType whichOne, int byHowMuch)
         {
             Attribute[] value = GetAttributes(AttributeType.Resource);
@@ -380,7 +549,7 @@ namespace GWLPXL.ARPGCore.Attributes.com
                 if (whichOne == resource.Type)
                 {
                     //we found it
-                    resource.ModifyCapValue(byHowMuch);
+                    resource.ModifyBaseValue(byHowMuch);
                     OnResourceChanged?.Invoke((int)whichOne);
                 }
             }
@@ -395,6 +564,20 @@ namespace GWLPXL.ARPGCore.Attributes.com
             currentXP = current;
         }
 
+        public virtual int GetOtherAttributeBaseValue(OtherAttributeType type)
+        {
+            Attribute[] value = GetAttributes(AttributeType.Other);
+            for (int i = 0; i < value.Length; i++)
+            {
+                Other other = (Other)value[i];
+                if (other.Type == type)
+                {
+                    return other.BaseValue;
+                }
+            }
+            return 0;
+        }
+        
         public virtual int GetOtherAttributeNowValue(OtherAttributeType type)
         {
             Attribute[] value = GetAttributes(AttributeType.Other);
@@ -436,14 +619,16 @@ namespace GWLPXL.ARPGCore.Attributes.com
             return statValue;
         }
 
-        public virtual void ModifyNowStatValue(StatType whichOne, int byHowMuch)
+        public virtual void ModifyBaseStatValue(StatType whichOne, int byHowMuch)
         {
-            int current = GetStatNowValue(whichOne);
-            int newValue = current + byHowMuch;
+            int oldValue = GetStatNowValue(whichOne);
+            
+            int newValue = GetStatBaseValue(whichOne) + byHowMuch;
+            SetStatBaseValue(whichOne, newValue);
 
-            ResourceLinkAdditional(whichOne, byHowMuch);
-            SetStatNowValue(whichOne, newValue);
+            int nowValue = GetStatNowValue(whichOne);
 
+            ResourceLinkAdditional(whichOne, nowValue - oldValue);
         }
 
         private void ResourceLinkAdditional(StatType whichOne, int byHowMuch)
@@ -474,6 +659,20 @@ namespace GWLPXL.ARPGCore.Attributes.com
             return 0;
 
         }
+        
+        public virtual int GetStatBaseValue(StatType typeToGet)
+        {
+            Attribute[] value = GetAttributes(AttributeType.Stat);
+            for (int i = 0; i < value.Length; i++)
+            {
+                Stat stat = (Stat)value[i];
+                if (stat.Type == typeToGet)
+                {
+                    return stat.BaseValue;
+                }
+            }
+            return 0;
+        }
 
         #endregion
 
@@ -502,7 +701,7 @@ namespace GWLPXL.ARPGCore.Attributes.com
                 AbilityMod mod = (AbilityMod)value[i];
                 if (mod.Ability == ability)
                 {
-                    mod.ModifyNowValue(byAmount);
+                    mod.ModifyBaseValue(byAmount);
                 }
             }
 
@@ -561,7 +760,7 @@ namespace GWLPXL.ARPGCore.Attributes.com
             return attackvalue.NowValue;
           
         }
-        public virtual void ModifyElementAttackNowValue(ElementType type, int modifyAmount)
+        public virtual void ModifyElementAttackBaseValue(ElementType type, int modifyAmount)
         {
             eleAttackDic.TryGetValue(type, out ElementAttack attackvalue);
             if (attackvalue == null)
@@ -579,16 +778,16 @@ namespace GWLPXL.ARPGCore.Attributes.com
                 if (attackvalue == null)
                 {
                     attackvalue = new ElementAttack(type);
-                    attackvalue.SetNowValue(0);
+                    attackvalue.SetBaseValue(0);
                 }
             }
-            attackvalue.ModifyNowValue(modifyAmount);
+            attackvalue.ModifyBaseValue(modifyAmount);
             eleAttackDic[type] = attackvalue;
 
         }
 
 
-        public virtual void ModifyElementResistNowValue(ElementType type, int modifyAmount)
+        public virtual void ModifyElementResistBaseValue(ElementType type, int modifyAmount)
         {
             Attribute[] value = GetAttributes(AttributeType.ElementResist);
             for (int i = 0; i < value.Length; i++)
@@ -596,7 +795,7 @@ namespace GWLPXL.ARPGCore.Attributes.com
                 ElementResist resist = (ElementResist)value[i];
                 if (resist.Type == type)
                 {
-                    resist.ModifyNowValue(modifyAmount);
+                    resist.ModifyBaseValue(modifyAmount);
                     break;
                 }
             }
@@ -608,7 +807,7 @@ namespace GWLPXL.ARPGCore.Attributes.com
         #endregion
 
 
-        protected virtual void SetStatNowValue(StatType typeToSet, int newValue)
+        protected virtual void SetStatBaseValue(StatType typeToSet, int newValue)
         {
             Attribute[] value = GetAttributes(AttributeType.Stat);
             for (int i = 0; i < value.Length; i++)
@@ -616,7 +815,7 @@ namespace GWLPXL.ARPGCore.Attributes.com
                 Stat stat = (Stat)value[i];
                 if (stat.Type == typeToSet)
                 {
-                    stat.SetNowValue(newValue);
+                    stat.SetBaseValue(newValue);
                     break;
                 }
             }

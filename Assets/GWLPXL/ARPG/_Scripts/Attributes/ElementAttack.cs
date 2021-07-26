@@ -1,5 +1,4 @@
-﻿
-using GWLPXL.ARPGCore.Types.com;
+﻿using GWLPXL.ARPGCore.Types.com;
 
 namespace GWLPXL.ARPGCore.Attributes.com
 {

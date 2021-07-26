@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+using GWLPXL.ARPG._Scripts.Attributes.com;
 using GWLPXL.ARPGCore.Attributes.com;
 using GWLPXL.ARPGCore.com;
 using GWLPXL.ARPGCore.Types.com;
@@ -15,12 +17,11 @@ namespace GWLPXL.ARPGCore.Traits.com
         public ElementType Type;
 
         protected TraitType type = TraitType.ElementResist;
-
-
-
+        
         public override void ApplyTrait(IAttributeUser toActor)
         {
-            toActor.GetRuntimeAttributes().ModifyElementResistNowValue(Type, GetLeveledValue());
+            toActor.GetRuntimeAttributes().AddModifierElementResist(Type, new AttributeModifier(GetLeveledValue(), StatModType.Flat));
+            // toActor.GetRuntimeAttributes().ModifyElementResistBaseValue(Type, GetLeveledValue());
         }
 
 
@@ -33,7 +34,8 @@ namespace GWLPXL.ARPGCore.Traits.com
 
         public override void RemoveTrait(IAttributeUser toActor)
         {
-            toActor.GetRuntimeAttributes().ModifyElementResistNowValue(Type, -GetLeveledValue());
+            toActor.GetRuntimeAttributes().RemoveModifierElementResist(Type, new AttributeModifier(GetLeveledValue(), StatModType.Flat));
+            //toActor.GetRuntimeAttributes().ModifyElementResistBaseValue(Type, -GetLeveledValue());
         }
 
 
