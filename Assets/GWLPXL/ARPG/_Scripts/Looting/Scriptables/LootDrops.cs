@@ -30,7 +30,7 @@ namespace GWLPXL.ARPGCore.Looting.com
         
 
        
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             CreateLootTable();
 
@@ -39,7 +39,7 @@ namespace GWLPXL.ARPGCore.Looting.com
         
         /// <param name="ofLevel"></param>
         /// <returns></returns>
-        public Item GetRandomDrop(int ofLevel)
+        public virtual Item GetRandomDrop(int ofLevel)
         {
             Item item = DetermineRarity();
             if (item is Equipment)
@@ -52,7 +52,7 @@ namespace GWLPXL.ARPGCore.Looting.com
             }
             return item;
         }
-        public GameObject GetRandomDrop(Vector3 atLocation, int ofLevel)
+        public virtual GameObject GetRandomDrop(Vector3 atLocation, int ofLevel)
         {
             GameObject prefab = null;
 
@@ -80,7 +80,7 @@ namespace GWLPXL.ARPGCore.Looting.com
         }
 
 
-        Item DetermineRarity()
+        protected virtual Item DetermineRarity()
         {
             Item item = RandomRoll();
             Item itemCopy = Instantiate(item);
@@ -91,7 +91,7 @@ namespace GWLPXL.ARPGCore.Looting.com
             return itemCopy;
         }
         //use this for the item trait drops
-        Item RandomRoll()
+        protected virtual Item RandomRoll()
         {
             Item dropped = null;
             int roll = Random.Range(0, currentProbabilityWeightMaximum);
@@ -111,7 +111,7 @@ namespace GWLPXL.ARPGCore.Looting.com
                 roll = Random.Range(0, currentProbabilityWeightMaximum);
                 for (int i = 0; i < LootTable.Count; i++)
                 {
-                    if (roll > LootTable[i].RangeFrom && roll <= LootTable[i].RangeTo)
+                    if (roll >= LootTable[i].RangeFrom && roll < LootTable[i].RangeTo)
                     {
                         dropped = LootTable[i].Item;
                         return dropped;
@@ -128,7 +128,7 @@ namespace GWLPXL.ARPGCore.Looting.com
         }
 
 
-        public void CreateLootTable()
+        public virtual void CreateLootTable()
         {
             if (AllPossibleItems != null && AllPossibleItems.Count > 0)
             {
@@ -166,7 +166,7 @@ namespace GWLPXL.ARPGCore.Looting.com
                 LootTable.Sort((p1, p2) => p1.RelativePercent.CompareTo(p2.RelativePercent));
             }
         }
-        public void AddItemToDropList(Item newitem)
+        public virtual void AddItemToDropList(Item newitem)
         {
             if (AllPossibleItems.Contains(newitem) == false)
             {
