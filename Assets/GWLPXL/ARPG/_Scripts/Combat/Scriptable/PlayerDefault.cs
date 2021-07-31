@@ -86,45 +86,31 @@ namespace GWLPXL.ARPGCore.Combat.com
 
         public override int GetTotalAttackDamage(IAttributeUser playerStats, IInventoryUser playerInv, IAbilityUser playerAbilities)
         {
-            int baseStatFactor;
-            float baseWpnFactor;
-            float critFactor;
+
+
 
             //base stat factor * base damage factor * crit factor * skill factor
             ActorAttributes stats = playerStats.GetRuntimeAttributes();
 
             //not implemented meaningfully yet
             #region crits
-            //crits
-            float baseCrit = stats.GetOtherAttributeNowValue(OtherAttributeType.CriticalHitChance);
-            baseCrit = baseCrit / Formulas.Hundred;
-            float critdamage = stats.GetOtherAttributeNowValue(OtherAttributeType.CriticalHitDamage);
-            critdamage = critdamage / Formulas.Hundred;
-            critFactor = 1 + (baseCrit * critdamage);//this seems wrong, but work on it later
-            // Debug.Log(baseCrit + " base crit");
-            //Debug.Log(critdamage + " crit dmg");
-            //Debug.Log(critFactor + "critfactor");
+
+            float critFactor = 1;
             int critRando = Random.Range(0, 101);
-            float critChance = stats.GetOtherAttributeNowValue(OtherAttributeType.CriticalHitChance);
-            if (critRando <= (critChance * Formulas.Hundred))
+            int critChance = stats.GetOtherAttributeNowValue(OtherAttributeType.CriticalHitChance);
+            if (critRando <= (critChance))
             {
+
+                int critdamage = stats.GetOtherAttributeNowValue(OtherAttributeType.CriticalHitDamage);
+
+                critFactor = 1 + (((float)critChance * (float)critdamage))/Formulas.Hundred;
+
                 //we crit;
                 //ARPGDebugger.DebugMessage("Crit!");
             }
-            // Debug.Log("Crit Rando: " + critRando);
-            //  Debug.Log("crit chance: " + critChance);
-            //   Debug.Log("Converted: " + critChance * hundred);
+
             #endregion
 
-            //from primary stat
-            //baseStatFactor = baseStatFactor / Hundred;
-
-            //from equipment
-            //Debug.Log(baseStatFactor + " Base stat factor");
-
-            //resolve
-
-            //from abilities
             float baseSkill = 0;
             float skillMods = 0;
             //ability mods
@@ -144,13 +130,18 @@ namespace GWLPXL.ARPGCore.Combat.com
             //from elements
             float elementMods = stats.GetAllElementAttackValues();
             elementMods = elementMods / Formulas.Hundred;
-            baseStatFactor = stats.GetStatForCombat(CombatStatType.Damage);//current base stat value divide by 100
-            baseWpnFactor = playerInv.GetInventoryRuntime().GetDamageFromEquipment();
+            int baseStatFactor = stats.GetStatForCombat(CombatStatType.Damage);//current base stat value divide by 100
+            float baseWpnFactor = playerInv.GetInventoryRuntime().GetDamageFromEquipment();
 
 
-            float result = (baseWpnFactor) + baseStatFactor + (1 * (float)skillMods) + (1 * (float)elementMods);//main dmg formula
+            float result = ((baseWpnFactor) + baseStatFactor + (1 * (float)skillMods) + (1 * (float)elementMods)) * critFactor;//main dmg formula
             int rounded = Mathf.FloorToInt(result);
 
+            if (critFactor > 1)
+            {
+                //was crit
+                CritHelper.Crits.Add(new CritLog(playerStats, rounded));//since we're just passing values around, this class will save whose crit this was so we can tell the UI
+            }
             return rounded;
         }
 

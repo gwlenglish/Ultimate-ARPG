@@ -9,7 +9,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
     {
 
         Vector3 GetHPBarOffset();
-        void CreateUIDamageText(string message, ElementType type);
+        void CreateUIDamageText(string message, ElementType type, bool isCritical = false);
         void CreateUIDoTText(string message, ElementType type);
         void CreateUIRegenText(string message, ResourceType type);
         void SetActorHub(IActorHub newhub);

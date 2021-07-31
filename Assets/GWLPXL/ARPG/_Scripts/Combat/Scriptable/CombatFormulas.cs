@@ -295,7 +295,6 @@ namespace GWLPXL.ARPGCore.Combat.com
             for (int i = 0; i < damageOverTimeOptions.Length; i++)
             {
                 SoTHelper.AddDoT(target, damageOverTimeOptions[i]);
-                //target.MyStatusEffects.AddDoT(damageOverTimeOptions[i]);
             }
             return true;
         }
@@ -328,6 +327,13 @@ namespace GWLPXL.ARPGCore.Combat.com
         {
             int phys = GetTotalActorDamage(attacker.MyTransform.gameObject);//get total
             phys += mod.GetPhysicalDamageAmount(attacker);//apply physical mod
+            for (int i = 0; i < CritHelper.Crits.Count; i++)
+            {
+                if (attacker.MyStats == CritHelper.Crits[i].Attacker)
+                {
+                    CritHelper.Crits[i].Amount = phys;
+                }
+            }
             return DefaultPhysicalDamageBehavior(attacker, damageTarget, phys);
         }
 
@@ -444,5 +450,46 @@ namespace GWLPXL.ARPGCore.Combat.com
         
     }
 
+    public class CritLog
+    {
+        public IAttributeUser Attacker;
+        public int Amount;
+        public CritLog(IAttributeUser attacker, int amount)
+        {
+            Amount = amount;
+            Attacker = attacker;
+        }
+    }
+    /// <summary>
+    /// used to record critical hits to pass that info on to whoever needs it, such as the UI
+    /// </summary>
+    public static class CritHelper
+    {
+        public static List<CritLog> Crits = new List<CritLog>();
 
+       
+        /// <summary>
+        /// Removes crit from log if returned true.
+        /// </summary>
+        /// <param name="attacker"></param>
+        /// <param name="amount"></param>
+        /// <returns></returns>
+        public static bool WasCrit(IAttributeUser attacker, int amount, bool removeOnTrue = true)
+        {
+            for (int i = 0; i < Crits.Count; i++)
+            {
+                CritLog crit = Crits[i];
+                if (crit.Amount == amount && crit.Attacker == attacker)
+                {
+                    if (removeOnTrue)
+                    {
+                        Crits.RemoveAt(i);
+                    }
+
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
 }

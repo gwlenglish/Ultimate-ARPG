@@ -17,9 +17,9 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
         #region public interface
 
-        public void CreateUIDamageText(string message, ElementType type)
+        public void CreateUIDamageText(string message, ElementType type, bool isCritical)
         {
-            DefaultDamageText(message, type);
+            DefaultDamageText(message, type, isCritical);
         }
 
         public Vector3 GetHPBarOffset()
@@ -57,9 +57,9 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             DungeonMaster.Instance.GetFloatTextCanvas().CreateRegenText(hub.MyHealth, message, transform.position + GetHPBarOffset(), type);
         }
 
-        protected virtual void DefaultDamageText(string message, ElementType type)
+        protected virtual void DefaultDamageText(string message, ElementType type, bool isCritical)
         {
-            DungeonMaster.Instance.GetFloatTextCanvas().CreateDamagedText(hub.MyHealth, transform.position, message, type);
+            DungeonMaster.Instance.GetFloatTextCanvas().CreateDamagedText(hub.MyHealth, transform.position, message, type, isCritical);
         }
         #endregion
     }

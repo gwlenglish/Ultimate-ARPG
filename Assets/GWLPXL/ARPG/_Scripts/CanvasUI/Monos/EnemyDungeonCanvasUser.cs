@@ -25,9 +25,9 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         }
 
 
-        public void CreateUIDamageText(string message, ElementType type)
+        public void CreateUIDamageText(string message, ElementType type, bool isCritical)
         {
-            DefaultDamageText(message, type);
+            DefaultDamageText(message, type, isCritical);
         }
 
         public void CreateUIRegenText(string message, ResourceType type)
@@ -59,10 +59,12 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             DungeonMaster.Instance.GetFloatTextCanvas().CreateRegenText(hub.MyHealth, message, transform.position + floatingTextOffset, type);
         }
 
-        protected virtual void DefaultDamageText(string message, ElementType type)
+        protected virtual void DefaultDamageText(string message, ElementType type, bool isCritical)
         {
-            DungeonMaster.Instance.GetFloatTextCanvas().CreateDamagedText(hub.MyHealth, transform.position + floatingTextOffset, message, type);
+            DungeonMaster.Instance.GetFloatTextCanvas().CreateDamagedText(hub.MyHealth, transform.position + floatingTextOffset, message, type, isCritical);
         }
+
+       
         #endregion
     }
 }

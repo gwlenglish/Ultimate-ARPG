@@ -121,7 +121,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         
         public virtual void CreateDamagedText(IReceiveDamage damageTaker, Vector3 position, string text, ElementType type, bool isCritical = false)
         {
-            DefaultDamageText(damageTaker, position, text, type);
+            DefaultDamageText(damageTaker, position, text, type, isCritical);
 
         }
 
@@ -156,7 +156,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             }
         }
 
-        protected virtual void DefaultDamageText(IReceiveDamage damageTaker, Vector3 position, string text, ElementType type)
+        protected virtual void DefaultDamageText(IReceiveDamage damageTaker, Vector3 position, string text, ElementType type, bool isCritical)
         {
             for (int i = 0; i < damageOptions.ElementUI.Length; i++)
             {
@@ -164,7 +164,12 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                 {
 
                     ElementUI elementUI = damageOptions.ElementUI[i];
+                    if (isCritical)
+                    {
+                        text += " Crit!";
+                    }
                     FloatingText ftext = GetUI(elementUI, position, text);
+                    
                     AddToQueue(allQueuedDamage, damageTaker, ftext);
                     break;
                 }

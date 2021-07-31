@@ -42,6 +42,7 @@ namespace GWLPXL.ARPGCore.com
         protected IKillTracked[] killedTracked = new IKillTracked[0];
         protected IUseFloatingText dungeoncanvas = null;
         protected IActorHub lastcharacterHitMe = null;
+        protected int lastNonMitagatedHitAmount = 0;
         protected IActorHub owner = null;
         [SerializeField]
         protected bool immortal = false;
@@ -220,7 +221,8 @@ namespace GWLPXL.ARPGCore.com
         {
             if (isDead) return;
             if (canBeAttacked == false) return;
-
+            lastNonMitagatedHitAmount = damageAmount;
+            SetCharacterThatHitMe(damageDealer);
 
             int wpndmg = combatHandler.GetReducedPhysical(owner.MyStats, damageAmount);
             if (wpndmg > 0)
@@ -234,7 +236,7 @@ namespace GWLPXL.ARPGCore.com
                 TakeDamage(kvp.Value.Damage, kvp.Key);
             }
 
-            SetCharacterThatHitMe(damageDealer);
+ 
 
 
             OnDamagedMe?.Invoke(damageDealer);
@@ -268,7 +270,14 @@ namespace GWLPXL.ARPGCore.com
         protected virtual void NotifyUI(ElementType type, int damage)
         {
             if (dungeoncanvas == null) return;
-            dungeoncanvas.CreateUIDamageText("-" + damage.ToString(), type);
+
+            bool crit = CritHelper.WasCrit(lastcharacterHitMe.MyStats, lastNonMitagatedHitAmount);
+            if (crit)
+            {
+                lastNonMitagatedHitAmount = 0;
+            }
+            Debug.Log("Crit " + crit);
+            dungeoncanvas.CreateUIDamageText("-" + damage.ToString(), type, crit);
 
         }
 
