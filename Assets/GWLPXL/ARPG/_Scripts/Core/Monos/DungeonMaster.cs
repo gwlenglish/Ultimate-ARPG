@@ -99,15 +99,15 @@ namespace GWLPXL.ARPGCore.com
 
 
         [SerializeField]
-        GameObject loadingCanvasPrefab = null;
+        protected GameObject loadingCanvasPrefab = null;
         [SerializeField]
-        GameObject dungeonCanvasPrefab = null;
+        protected GameObject dungeonCanvasPrefab = null;
         [SerializeField]
-        GameObject lootCanvasPrefab = null;
+        protected GameObject lootCanvasPrefab = null;
         [SerializeField]
-        GameObject floatingTextCanvasPrefab = null;
+        protected GameObject floatingTextCanvasPrefab = null;
         [SerializeField]
-        GameObject lootPrefab = null;
+        protected GameObject lootPrefab = null;
 
         public string LoadingSceneName = string.Empty;
         public LastScene Last = null;
@@ -117,20 +117,21 @@ namespace GWLPXL.ARPGCore.com
         public static DungeonMaster Instance => _instance;
         private static DungeonMaster _instance;
         public GameObject LoadingCanvas => _instanceCanvas;
-        GameObject _instanceCanvas = null;
+        protected GameObject _instanceCanvas = null;
 
 
 
-        PlayerPersistant[] playerPersistantData = new PlayerPersistant[0];
-        PlayerSceneReference[] sceneReferences = new PlayerSceneReference[0];
-        IDungeonUI dungeonUISceneRef = null;
-        ILootCanvas lootCanvasRef = null;
-        IFloatTextCanvas floatTextRef = null;
-        List<GameObject> canvasObjs = new List<GameObject>();
-        bool sequence = false;
-        bool gameOver = false;
+        protected PlayerPersistant[] playerPersistantData = new PlayerPersistant[0];
+        protected PlayerSceneReference[] sceneReferences = new PlayerSceneReference[0];
+        protected IDungeonUI dungeonUISceneRef = null;
+        protected ILootCanvas lootCanvasRef = null;
+        protected IFloatTextCanvas floatTextRef = null;
+        protected List<GameObject> canvasObjs = new List<GameObject>();
+        protected bool sequence = false;
+        protected bool gameOver = false;
+
         [RuntimeInitializeOnLoadMethod]
-        void Awake()
+        protected virtual void Awake()
         {
             if (_instance != null && _instance != this)
             {
@@ -152,7 +153,7 @@ namespace GWLPXL.ARPGCore.com
         }
 
         #region scene refences
-        void ClearCanvasReferences(Scene scene)
+        protected virtual void ClearCanvasReferences(Scene scene)
         {
             for (int i = 0; i < canvasObjs.Count; i++)
             {
@@ -164,29 +165,29 @@ namespace GWLPXL.ARPGCore.com
             lootCanvasRef = null;
             floatTextRef = null;
         }
-        void CheckDungeonReferences(Scene scene, LoadSceneMode mode)
+        protected virtual void CheckDungeonReferences(Scene scene, LoadSceneMode mode)
         {
             ClearCanvasReferences(scene);
             GetDungeonUISceneRef();
             GetLootCanvas();
             GetFloatTextCanvas();
         }
-        public PlayerSceneReference[] GetAllSceneReferences()
+        public virtual PlayerSceneReference[] GetAllSceneReferences()
         {
             return sceneReferences;
         }
 
-        public void GameOver()
+        public virtual void GameOver()
         {
             gameOver = true;
            
         }
-        public void ReloadScene()
+        public virtual void ReloadScene()
         {
             string activeScene = SceneManager.GetActiveScene().name;
             LoadNewDungeonScene(activeScene, false);
         }
-        void AddNewSceneRef(Player forPlayer, PlayerPersistant data)
+        protected virtual void AddNewSceneRef(Player forPlayer, PlayerPersistant data)
         {
             bool alreadyadded = false;
             for (int i = 0; i < sceneReferences.Length; i++)
@@ -212,7 +213,7 @@ namespace GWLPXL.ARPGCore.com
         /// to do, on get, find, if not find, make
         /// </summary>
         /// <returns></returns>
-        public IFloatTextCanvas GetFloatTextCanvas()
+        public virtual IFloatTextCanvas GetFloatTextCanvas()
         {
             if (floatTextRef == null)
             {
@@ -233,7 +234,7 @@ namespace GWLPXL.ARPGCore.com
             }
             return floatTextRef;
         }
-        public ILootCanvas GetLootCanvas()
+        public virtual ILootCanvas GetLootCanvas()
         {
             if (lootCanvasRef == null)
             {
@@ -247,7 +248,7 @@ namespace GWLPXL.ARPGCore.com
         }
        
 
-        public IDungeonUI GetDungeonUISceneRef()
+        public virtual IDungeonUI GetDungeonUISceneRef()
         {
             if (dungeonUISceneRef == null)
             {
@@ -270,11 +271,11 @@ namespace GWLPXL.ARPGCore.com
   
             return dungeonUISceneRef;
         }
-        public void SetLotoSceneRef(ILootCanvas canvas)
+        public virtual void SetLotoSceneRef(ILootCanvas canvas)
         {
             lootCanvasRef = canvas;
         }
-        public void SetDungeonUIScene(IDungeonUI sceneReference)
+        public virtual void SetDungeonUIScene(IDungeonUI sceneReference)
         {
             dungeonUISceneRef = sceneReference;
             if (dungeonUISceneRef != null)
@@ -283,7 +284,7 @@ namespace GWLPXL.ARPGCore.com
             }
 
         }
-        public void SetFloatingTextScene(IFloatTextCanvas scenereference)
+        public virtual void SetFloatingTextScene(IFloatTextCanvas scenereference)
         {
             floatTextRef = scenereference;
         }
@@ -398,7 +399,7 @@ namespace GWLPXL.ARPGCore.com
         /// </summary>
         /// <param name="sceneToLoad"></param>
         /// <param name="waitForLoad"></param>
-        public void LoadNewDungeonScene(string sceneToLoad, bool waitForLoad)
+        public virtual void LoadNewDungeonScene(string sceneToLoad, bool waitForLoad)
         {
             if (Loading == false && sequence == false)
             {
@@ -431,7 +432,7 @@ namespace GWLPXL.ARPGCore.com
 
         }
 
-        IEnumerator LoadingSequence(string sceneToLoad, string currentSceneName, bool isTrans, bool waitForLoad)
+        protected virtual IEnumerator LoadingSequence(string sceneToLoad, string currentSceneName, bool isTrans, bool waitForLoad)
         {
             _instanceCanvas = Instantiate(loadingCanvasPrefab, Instance.transform);
             _instanceCanvas.transform.SetParent(Instance.transform);
@@ -497,7 +498,7 @@ namespace GWLPXL.ARPGCore.com
 
         }
 
-        IEnumerator Load(string sceneToLoad, string sceneToUnload, bool isTransition, bool waitForLoad)
+       protected virtual IEnumerator Load(string sceneToLoad, string sceneToUnload, bool isTransition, bool waitForLoad)
         {
 
             Loading = true;

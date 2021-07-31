@@ -210,9 +210,11 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         }
 
 
-        public void CreateDamagedText(IReceiveDamage damageTaker, Vector3 position, string text, ElementType type)
+        public virtual void CreateDamagedText(IReceiveDamage damageTaker, Vector3 position, string text, ElementType type)
         {
-      
+
+            CombatGroupType[] actortype = damageTaker.GetMyCombatGroup();
+
 
             for (int i = 0; i < damageOptions.ElementUI.Length; i++)
             {

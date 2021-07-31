@@ -26,38 +26,116 @@ namespace GWLPXL.ARPGCore.com
         public System.Action<IActorHub> OnDamagedMe;
         [SerializeField]
         [Tooltip("Null will default to the built in formulas.")]
-        EnemyCombatFormulas combatHandler = null;
+        protected EnemyCombatFormulas combatHandler = null;
         [SerializeField]
         [Tooltip("Scene specific events")]
-        UnityHealthEvents healthEvents = new UnityHealthEvents();
+        protected UnityHealthEvents healthEvents = new UnityHealthEvents();
         [SerializeField]
-        ResourceType healthResource = ResourceType.Health;
+        protected ResourceType healthResource = ResourceType.Health;
         [SerializeField]
-        float iFrameTime = .25f;
+        protected float iFrameTime = .25f;
 
-        CombatGroupType[] combatGroups = new CombatGroupType[1] { CombatGroupType.Enemy };
-        bool isDead = false;
-        bool canBeAttacked = true;
-        IGiveXP giveXp = null;
-        IKillTracked[] killedTracked = new IKillTracked[0];
-        IUseFloatingText dungeoncanvas = null;
-        IActorHub lastcharacterHitMe = null;
-        IActorHub owner = null;
+        protected CombatGroupType[] combatGroups = new CombatGroupType[1] { CombatGroupType.Enemy };
+        protected bool isDead = false;
+        protected  bool canBeAttacked = true;
+        protected  IGiveXP giveXp = null;
+        protected IKillTracked[] killedTracked = new IKillTracked[0];
+        protected IUseFloatingText dungeoncanvas = null;
+        protected IActorHub lastcharacterHitMe = null;
+        protected IActorHub owner = null;
         [SerializeField]
-        bool immortal = false;
+        protected bool immortal = false;
 
-        private void Awake()
+        #region unity calls
+        protected virtual void Awake()
+        {
+            Setup();
+
+        }
+        #endregion
+
+        #region public interfaces
+        public void SetImmortal(bool isImmortal) => immortal = isImmortal;
+
+        public void Die()
+        {
+            DefaultDie();
+
+        }
+        public CombatGroupType[] GetMyCombatGroup()
+        {
+            return combatGroups;
+        }
+
+        public void SetCharacterThatHitMe(IActorHub user)
+        {
+            lastcharacterHitMe = user;
+
+        }
+
+        public void SetUser(IActorHub forUser)
+        {
+            owner = forUser;
+
+
+        }
+        public Transform GetInstance()
+        {
+            return transform;
+        }
+
+        public bool IsDead()
+        {
+            return isDead;
+        }
+        public bool IsHurt()
+        {
+            return !canBeAttacked;
+        }
+
+        public ResourceType GetHealthResource()
+        {
+            return healthResource;
+        }
+        public void SetInvincible(bool isImmoratal) => immortal = isImmoratal;
+        /// <summary>
+        /// doesn't respect the iframe timer
+        /// </summary>
+        /// <param name="damageAmount"></param>
+        /// <param name="type"></param>
+        public void TakeDamage(int damageAmount, ElementType type)
+        {
+            DefaultTakeDamage(damageAmount, type);
+        }
+        /// <summary>
+        /// override to remember who hit last, respects the iframe timer
+        /// </summary>
+        /// <param name="damageAmount"></param>
+        /// <param name="type"></param>
+        /// <param name="owner"></param>
+        //this one has an iframe timer. I wonder if we need that on enemy tho.
+        public void TakeDamage(int damageAmount, IActorHub damageDealer)
+        {
+            DefaultTakeActorDamage(damageAmount, damageDealer);
+
+        }
+        public void CheckDeath()
+        {
+            DefaultCheckDeath();
+
+        }
+        #endregion
+
+        #region protected virtuals
+
+        protected virtual void Setup()
         {
             giveXp = GetComponent<IGiveXP>();
             killedTracked = GetComponents<IKillTracked>();
             dungeoncanvas = GetComponent<IUseFloatingText>();
             if (combatHandler == null) combatHandler = ScriptableObject.CreateInstance<EnemyDefault>();
-
         }
-
-        public void SetImmortal(bool isImmortal) => immortal = isImmortal;
-
-        public void Die()
+        protected virtual void DefaultDie()
         {
             if (isDead) return;
 
@@ -65,7 +143,7 @@ namespace GWLPXL.ARPGCore.com
             {
                 giveXp.GiveXP();
             }
-   
+
 
             gameObject.layer = 0;
             canBeAttacked = false;
@@ -96,9 +174,9 @@ namespace GWLPXL.ARPGCore.com
 
                 }
             }
-            
 
-            
+
+
             if (killedTracked.Length > 0 && lastcharacterHitMe != null)
             {
                 for (int i = 0; i < killedTracked.Length; i++)
@@ -110,10 +188,9 @@ namespace GWLPXL.ARPGCore.com
             OnDeath?.Invoke();
             OnDeathAttacker?.Invoke(lastcharacterHitMe.MyTransform.gameObject);
             healthEvents.OnDie.Invoke();
-
         }
 
-        IEnumerator DropLootSequence(float delay, IDropLoot[] lootdropper)
+        protected virtual IEnumerator DropLootSequence(float delay, IDropLoot[] lootdropper)
         {
             for (int i = 0; i < lootdropper.Length; i++)
             {
@@ -123,22 +200,7 @@ namespace GWLPXL.ARPGCore.com
           
         }
 
-        public Transform GetInstance()
-        {
-            return transform;
-        }
-
-        public bool IsDead()
-        {
-            return isDead;
-        }
-
-        /// <summary>
-        /// doesn't respect the iframe timer
-        /// </summary>
-        /// <param name="damageAmount"></param>
-        /// <param name="type"></param>
-        public void TakeDamage(int damageAmount, ElementType type)
+        protected virtual void DefaultTakeDamage(int damageAmount, ElementType type)
         {
             int damage = combatHandler.GetElementalDamageResistChecks(owner.MyStats, type, damageAmount);
             if (damage > 0 && immortal == false)//prevent dmg if immortal, but show everything else
@@ -153,14 +215,8 @@ namespace GWLPXL.ARPGCore.com
             OnDamagedMe?.Invoke(lastcharacterHitMe);
             CheckDeath();
         }
-        /// <summary>
-        /// override to remember who hit last, respects the iframe timer
-        /// </summary>
-        /// <param name="damageAmount"></param>
-        /// <param name="type"></param>
-        /// <param name="owner"></param>
-        //this one has an iframe timer. I wonder if we need that on enemy tho.
-        public void TakeDamage(int damageAmount, IActorHub damageDealer)
+
+        protected virtual void DefaultTakeActorDamage(int damageAmount, IActorHub damageDealer)
         {
             if (isDead) return;
             if (canBeAttacked == false) return;
@@ -184,41 +240,24 @@ namespace GWLPXL.ARPGCore.com
             OnDamagedMe?.Invoke(damageDealer);
             CheckDeath();
             StartCoroutine(CanBeAttackedCooldown(iFrameTime));//we are invulnerable for a short time
-
-
-
         }
 
-        IEnumerator CanBeAttackedCooldown(float duration)
+        protected virtual IEnumerator CanBeAttackedCooldown(float duration)
         {
             canBeAttacked = false;
             yield return new WaitForSeconds(duration);
             canBeAttacked = true;
         }
 
-        public void CheckDeath()
+        protected virtual void DefaultCheckDeath()
         {
             if (owner.MyStats.GetRuntimeAttributes().GetResourceNowValue(healthResource) <= 0)
             {
                 Die();
             }
-           
         }
 
-      
-        public bool IsHurt()
-        {
-            return !canBeAttacked;
-        }
-
-        public ResourceType GetHealthResource()
-        {
-            return healthResource;
-        }
-
-      
-
-        private void RaiseUnityDamageEvent(int dmg)
+        protected virtual void RaiseUnityDamageEvent(int dmg)
         {
             if (healthEvents.OnDamageTaken != null)
             {
@@ -226,32 +265,14 @@ namespace GWLPXL.ARPGCore.com
             }
         }
 
-        private void NotifyUI(ElementType type, int damage)
+        protected virtual void NotifyUI(ElementType type, int damage)
         {
             if (dungeoncanvas == null) return;
             dungeoncanvas.CreateUIDamageText("-" + damage.ToString(), type);
 
         }
 
-        public CombatGroupType[] GetMyCombatGroup()
-        {
-            return combatGroups;
-        }
+        #endregion
 
-        public void SetCharacterThatHitMe(IActorHub user)
-        {
-            lastcharacterHitMe = user;
-
-        }
-
-        public void SetUser(IActorHub forUser)
-        {
-            owner = forUser;
-           
-          
-        }
-
-        public void SetInvincible(bool isImmoratal) => immortal = isImmoratal;
-       
     }
 }
