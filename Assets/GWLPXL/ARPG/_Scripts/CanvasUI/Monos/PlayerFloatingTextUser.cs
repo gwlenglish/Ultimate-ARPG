@@ -6,7 +6,7 @@ using UnityEngine;
 namespace GWLPXL.ARPGCore.CanvasUI.com
 {
     /// <summary>
-    /// will change in the future, works for now
+    /// class that sends information to the floating text canvas
     /// </summary>
 
     public class PlayerFloatingTextUser : MonoBehaviour, IUseFloatingText
@@ -14,7 +14,8 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
         protected Vector3 hPBarOffset = new Vector3(0, 2, 0);//change the y value to move the hp bar up and down
         protected IActorHub hub;
-     
+
+        #region public interface
 
         public void CreateUIDamageText(string message, ElementType type)
         {
@@ -43,7 +44,9 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             DefaultDoTText(message, type);
 
         }
+        #endregion
 
+        #region protected virtual
         protected virtual void DefaultDoTText(string message, ElementType type)
         {
             DungeonMaster.Instance.GetFloatTextCanvas().CreateDoTText(hub.MyHealth, message, transform.position + GetHPBarOffset(), type);
@@ -58,5 +61,6 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         {
             DungeonMaster.Instance.GetFloatTextCanvas().CreateDamagedText(hub.MyHealth, transform.position, message, type);
         }
+        #endregion
     }
 }

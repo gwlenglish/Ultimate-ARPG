@@ -47,41 +47,132 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         DoTTextOptions dotOptions = new DoTTextOptions();
         public Transform dotTextPanel = default;
 
-        Dictionary<IReceiveDamage, QueueTimer> allQueuedDamage = new Dictionary<IReceiveDamage, QueueTimer>();
-        Dictionary<IReceiveDamage, QueueTimer> allQueuedDots = new Dictionary<IReceiveDamage, QueueTimer>();
-        Dictionary<IReceiveDamage, QueueTimer> allqueuedRegen = new Dictionary<IReceiveDamage, QueueTimer>();
+        protected Dictionary<IReceiveDamage, QueueTimer> allQueuedDamage = new Dictionary<IReceiveDamage, QueueTimer>();
+        protected Dictionary<IReceiveDamage, QueueTimer> allQueuedDots = new Dictionary<IReceiveDamage, QueueTimer>();
+        protected Dictionary<IReceiveDamage, QueueTimer> allqueuedRegen = new Dictionary<IReceiveDamage, QueueTimer>();
 
-        Queue<GameObject> pooledText = new Queue<GameObject>();
-        List<GameObject> destroyable = new List<GameObject>();
-        List<FloatingText> damageTextList = new List<FloatingText>();
-        Vector3 moveDirection;
+        protected Queue<GameObject> pooledText = new Queue<GameObject>();
+        protected List<GameObject> destroyable = new List<GameObject>();
+        protected List<FloatingText> damageTextList = new List<FloatingText>();
+        protected Vector3 moveDirection;
 
-        Camera main;
+        protected Camera main;
 
-        private void Awake()
+        #region unity calls
+        protected virtual void Awake()
         {
             main = Camera.main;
         }
 
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             DungeonMaster.Instance.SetFloatingTextScene(this);
         }
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
             DungeonMaster.Instance.SetFloatingTextScene(null);
 
         }
-        private void Start()
+        protected virtual void Start()
         {
             AddTicker();
         }
 
-        private void OnDestroy()
+        protected virtual void OnDestroy()
         {
             RemoveTicker();
         }
-        void DamageTextQueueing()
+        #endregion
+
+        #region public interfaces
+        public void AddTicker() => TickManager.Instance.AddTicker(this);
+
+
+        public void DoTick()
+        {
+            DamageTextQueueing();
+            DamageTextObjectLifetime();
+        }
+
+        public void RemoveTicker() => TickManager.Instance.RemoveTicker(this);
+
+
+        public float GetTickDuration()
+        {
+            if (UseDeltaTime) return Time.deltaTime;
+            return TickRate;
+        }
+
+        #endregion
+
+        #region public virtual
+        public virtual void CreateDoTText(IReceiveDamage damageTaker, string text, Vector3 position, ElementType type, bool isCritical = false)
+        {
+            DefaultDoTText(damageTaker, text, position, type);
+
+        }
+
+        public virtual void CreateRegenText(IReceiveDamage damageTaker, string text, Vector3 position, ResourceType type, bool isCritical = false)
+        {
+            DefaultRegenText(damageTaker, text, position, type);
+
+        }
+
+        
+        public virtual void CreateDamagedText(IReceiveDamage damageTaker, Vector3 position, string text, ElementType type, bool isCritical = false)
+        {
+            DefaultDamageText(damageTaker, position, text, type);
+
+        }
+
+        #endregion
+
+        #region protected virtual 
+        protected virtual void DefaultDoTText(IReceiveDamage damageTaker, string text, Vector3 position, ElementType type)
+        {
+            for (int i = 0; i < dotOptions.ElementUI.Length; i++)
+            {
+                if (type == dotOptions.ElementUI[i].Type)
+                {
+                    ElementUI elementUI = dotOptions.ElementUI[i];
+                    FloatingText ftext = GetUI(elementUI, position, text);
+                    AddToQueue(allQueuedDots, damageTaker, ftext);
+                }
+            }
+        }
+        protected virtual void DefaultRegenText(IReceiveDamage damageTaker, string text, Vector3 position, ResourceType type)
+        {
+            //a queue system
+
+            for (int i = 0; i < regenOptions.ResourceUI.Length; i++)
+            {
+                if (type == regenOptions.ResourceUI[i].Type)
+                {
+                    ResourceUI resourceUI = regenOptions.ResourceUI[i];
+                    FloatingText ftext = GetUI(resourceUI, position, text);
+                    AddToQueue(allqueuedRegen, damageTaker, ftext);
+                    break;
+                }
+            }
+        }
+
+        protected virtual void DefaultDamageText(IReceiveDamage damageTaker, Vector3 position, string text, ElementType type)
+        {
+            for (int i = 0; i < damageOptions.ElementUI.Length; i++)
+            {
+                if (type == damageOptions.ElementUI[i].Type)
+                {
+
+                    ElementUI elementUI = damageOptions.ElementUI[i];
+                    FloatingText ftext = GetUI(elementUI, position, text);
+                    AddToQueue(allQueuedDamage, damageTaker, ftext);
+                    break;
+                }
+            }
+
+        }
+
+        protected virtual void DamageTextQueueing()
         {
             if (ControlLifetime == false) return;
 
@@ -92,7 +183,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             //}
         }
 
-        private void ControlLifetimeObjs(Dictionary<IReceiveDamage, QueueTimer> queued)
+        protected virtual void ControlLifetimeObjs(Dictionary<IReceiveDamage, QueueTimer> queued)
         {
 
             if (queued.Count == 0) return;
@@ -112,10 +203,10 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                 }
             }
         }
-      
+
 
         //keeps track of the damage text and their alive time
-        void DamageTextObjectLifetime()
+        protected virtual void DamageTextObjectLifetime()
         {
 
             if (ControlLifetime == false) return;
@@ -136,9 +227,9 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
                 damageTextList[i].RunningTimer += GetTickDuration();//if not, add time
 
-             
+
                 MoveFloatText(text);
-                
+
 
 
             }
@@ -155,7 +246,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             destroyable.Clear();
         }
 
-        private void MoveFloatText(FloatingText text)
+        protected virtual void MoveFloatText(FloatingText text)
         {
             if (ControlMovement == false) return;
 
@@ -168,7 +259,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             {
                 moveYMulti = text.YCurve.Evaluate(percent);
             }
-            
+
             if (text.FadeCurve != null)
             {
                 float lerpA = Mathf.Lerp(1, 0, percent);
@@ -179,7 +270,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             moveDirection.x = targetX * moveXMulti;
             moveDirection.y = targetY * moveYMulti;
 
-           
+
             Vector3 newPos = text.TextObj.transform.position + (moveDirection * text.SpeedMultiplier);// * GetTickDuration();// * damageOptions.DamageTextSpeed * Time.deltaTime;//get a new position to move to based on speed
 
             text.TextObj.transform.position = newPos;//udpate oru movement
@@ -191,50 +282,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             }
         }
 
-
-        public void CreateDoTText(IReceiveDamage damageTaker, string text, Vector3 position, ElementType type)
-        {
-   
-            for (int i = 0; i < dotOptions.ElementUI.Length; i++)
-            {
-                if (type == dotOptions.ElementUI[i].Type)
-                {
-                    ElementUI elementUI = dotOptions.ElementUI[i];
-                    FloatingText ftext  = GetUI(elementUI, position, text);
-                    AddToQueue(allQueuedDots, damageTaker, ftext);
-                }
-            }
-
-          
-
-        }
-
-
-        public virtual void CreateDamagedText(IReceiveDamage damageTaker, Vector3 position, string text, ElementType type)
-        {
-
-            CombatGroupType[] actortype = damageTaker.GetMyCombatGroup();
-
-
-            for (int i = 0; i < damageOptions.ElementUI.Length; i++)
-            {
-                if (type == damageOptions.ElementUI[i].Type)
-                {
-                   
-                    ElementUI elementUI = damageOptions.ElementUI[i];
-                    FloatingText ftext = GetUI(elementUI, position, text);
-                    AddToQueue(allQueuedDamage, damageTaker, ftext);
-                    break;
-                }
-            }
-
-            //randomize so low chance of text overlapping
-       
-     
-
-        }
-
-        FloatingText GetUI(ElementUI elementUI, Vector3 atPosition, string text)
+        protected virtual FloatingText GetUI(ElementUI elementUI, Vector3 atPosition, string text)
         {
             int randomYmulti = UnityEngine.Random.Range(-5, 5);
             int randomXmulti = UnityEngine.Random.Range(-5, 5);
@@ -285,7 +333,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             return _damageText;
         }
 
-        FloatingText GetUI(ResourceUI elementUI, Vector3 atPosition, string text)
+        protected virtual FloatingText GetUI(ResourceUI elementUI, Vector3 atPosition, string text)
         {
             float randomYmulti = UnityEngine.Random.Range(1f, 5f);
             float randomXmulti = UnityEngine.Random.Range(1f, 5f);
@@ -334,27 +382,9 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             return _damageText;
         }
 
-        public void CreateRegenText(IReceiveDamage damageTaker, string text, Vector3 position, ResourceType type)
-        {
+      
 
-
-            //a queue system
-        
-            for (int i = 0; i < regenOptions.ResourceUI.Length; i++)
-            {
-                if (type == regenOptions.ResourceUI[i].Type)
-                {
-                    ResourceUI resourceUI = regenOptions.ResourceUI[i];
-                    FloatingText ftext = GetUI(resourceUI, position, text);
-                    AddToQueue(allqueuedRegen, damageTaker, ftext);
-                    break;
-                }
-            }
-          
-
-        }
-
-        private void AddToQueue(Dictionary<IReceiveDamage, QueueTimer> queue, IReceiveDamage damageTaker, FloatingText _damageText)
+        protected virtual void AddToQueue(Dictionary<IReceiveDamage, QueueTimer> queue, IReceiveDamage damageTaker, FloatingText _damageText)
         {
 
             if (ControlLifetime)
@@ -394,25 +424,10 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             }
         }
 
-        public void AddTicker() => TickManager.Instance.AddTicker(this);
-       
-
-        public void DoTick()
-        {
-            DamageTextQueueing();
-            DamageTextObjectLifetime();
-        }
-
-        public void RemoveTicker() => TickManager.Instance.RemoveTicker(this);
+        #endregion
 
 
-        public float GetTickDuration()
-        {
-            if (UseDeltaTime) return Time.deltaTime;
-            return TickRate;
-        }
 
-       
     }
 
     [System.Serializable]
