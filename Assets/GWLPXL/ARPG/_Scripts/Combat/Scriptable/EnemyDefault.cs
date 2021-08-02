@@ -14,6 +14,12 @@ namespace GWLPXL.ARPGCore.Combat.com
     [CreateAssetMenu(menuName ="GWLPXL/ARPG/Combat/EnemyDefaultFormulas")]
     public class EnemyDefault : EnemyCombatFormulas
     {
+        /// <summary>
+        /// simple +- calculation against damage and resist, e.g. 25 damage and 12 resist = 13 result
+        /// </summary>
+        /// <param name="defender"></param>
+        /// <param name="attacker"></param>
+        /// <returns></returns>
         public override Dictionary<ElementType, ElementAttackResults> GetElementalDamageResistChecks(IAttributeUser defender, IAttributeUser attacker)
         {
             Dictionary<ElementType, ElementAttackResults> attackDic = new Dictionary<ElementType, ElementAttackResults>();
@@ -56,6 +62,11 @@ namespace GWLPXL.ARPGCore.Combat.com
             return attackDic;
         }
 
+        /// <summary>
+        /// returns armor combat value on attributes plus if using scaler
+        /// </summary>
+        /// <param name="enemy"></param>
+        /// <returns></returns>
         public override int GetArmor(IAttributeUser enemy)
         {
             int scaled = 1;
@@ -69,7 +80,12 @@ namespace GWLPXL.ARPGCore.Combat.com
             ARPGDebugger.CombatDebugMessage(enemy.GetRuntimeAttributes().ActorName + " Armor Value=" + armorvalue, enemy.GetInstance());
             return armorvalue;
         }
-
+        /// <summary>
+        /// damageamount - armor
+        /// </summary>
+        /// <param name="enemyStats"></param>
+        /// <param name="damageAmount"></param>
+        /// <returns></returns>
         public override int GetReducedPhysical(IAttributeUser enemyStats, int damageAmount)
         {
             int reducedWeaponDamage = GetArmor(enemyStats);
@@ -81,12 +97,22 @@ namespace GWLPXL.ARPGCore.Combat.com
 
             return dmgValue;
         }
-
+        /// <summary>
+        /// get stat for combat damage
+        /// </summary>
+        /// <param name="enemy"></param>
+        /// <returns></returns>
         public override int GetTotalAttackDamage(IAttributeUser enemy)
         {
             return enemy.GetRuntimeAttributes().GetStatForCombat(CombatStatType.Damage);
         }
-
+        /// <summary>
+        /// elementdamage - resist
+        /// </summary>
+        /// <param name="enemy"></param>
+        /// <param name="_type"></param>
+        /// <param name="elementDamage"></param>
+        /// <returns></returns>
         public override int GetElementalDamageResistChecks(IAttributeUser enemy, ElementType _type, int elementDamage)
         {
             int resist = enemy.GetRuntimeAttributes().GetElementResist(_type);
