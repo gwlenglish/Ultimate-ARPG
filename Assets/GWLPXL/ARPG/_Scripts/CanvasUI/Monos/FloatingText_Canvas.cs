@@ -8,6 +8,15 @@ using UnityEngine;
 
 namespace GWLPXL.ARPGCore.CanvasUI.com
 {
+    /// <summary>
+    /// reserve 0 - 100 for ARPG, use any of the rest
+    /// </summary>
+    public enum FloatingTextType
+    {
+        Damage = 0,
+        Regen = 1,
+        DoTs = 2
+    }
 
     [System.Serializable]
     public class DamageTextOptions
@@ -55,13 +64,14 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         protected List<GameObject> destroyable = new List<GameObject>();
         protected List<FloatingText> damageTextList = new List<FloatingText>();
         protected Vector3 moveDirection;
-
+        protected Canvas canvas;
         protected Camera main;
 
         #region unity calls
         protected virtual void Awake()
         {
             main = Camera.main;
+            canvas = GetComponent<Canvas>();
         }
 
         protected virtual void OnEnable()
@@ -106,19 +116,55 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         #endregion
 
         #region public virtual
+        /// <summary>
+        /// DoT text
+        /// </summary>
+        /// <param name="damageTaker"></param>
+        /// <param name="text"></param>
+        /// <param name="position"></param>
+        /// <param name="type"></param>
+        /// <param name="isCritical"></param>
         public virtual void CreateDoTText(IReceiveDamage damageTaker, string text, Vector3 position, ElementType type, bool isCritical = false)
         {
             DefaultDoTText(damageTaker, text, position, type);
 
         }
+        /// <summary>
+        /// user created floating text
+        /// </summary>
+        /// <param name="variables"></param>
+        /// <param name="atPosition"></param>
+        /// <param name="text"></param>
+        /// <returns></returns>
 
+        public virtual void CreateNewFloatingText(IReceiveDamage damageTaker, ElementUI variables, Vector3 atPosition, string text, FloatingTextType type, bool isCritical)
+        {
+            DefaultCreatenew(damageTaker, variables, atPosition, text, type, isCritical);
+        }
+
+       
+        /// <summary>
+        /// reggen text
+        /// </summary>
+        /// <param name="damageTaker"></param>
+        /// <param name="text"></param>
+        /// <param name="position"></param>
+        /// <param name="type"></param>
+        /// <param name="isCritical"></param>
         public virtual void CreateRegenText(IReceiveDamage damageTaker, string text, Vector3 position, ResourceType type, bool isCritical = false)
         {
             DefaultRegenText(damageTaker, text, position, type);
 
         }
 
-        
+        /// <summary>
+        /// damage text
+        /// </summary>
+        /// <param name="damageTaker"></param>
+        /// <param name="position"></param>
+        /// <param name="text"></param>
+        /// <param name="type"></param>
+        /// <param name="isCritical"></param>
         public virtual void CreateDamagedText(IReceiveDamage damageTaker, Vector3 position, string text, ElementType type, bool isCritical = false)
         {
             DefaultDamageText(damageTaker, position, text, type, isCritical);
@@ -128,6 +174,25 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         #endregion
 
         #region protected virtual 
+        protected virtual FloatingText DefaultCreatenew(IReceiveDamage damageTaker, ElementUI variables, Vector3 atPosition, string text, FloatingTextType type, bool isCritical)
+        {
+            FloatingText ftext = GetUI(variables, atPosition, text);
+            switch (type)
+            {
+                case FloatingTextType.Damage:
+                    AddToQueue(allQueuedDamage, damageTaker, ftext);
+                    break;
+                case FloatingTextType.DoTs:
+                    AddToQueue(allQueuedDots, damageTaker, ftext);
+                    break;
+                case FloatingTextType.Regen:
+                    AddToQueue(allqueuedRegen, damageTaker, ftext);
+                    break;
+            }
+            return ftext;
+            
+        }
+
         protected virtual void DefaultDoTText(IReceiveDamage damageTaker, string text, Vector3 position, ElementType type)
         {
             for (int i = 0; i < dotOptions.ElementUI.Length; i++)
@@ -210,7 +275,9 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         }
 
 
-        //keeps track of the damage text and their alive time
+       /// <summary>
+       /// track the floating text object lifetime
+       /// </summary>
         protected virtual void DamageTextObjectLifetime()
         {
 
@@ -251,6 +318,10 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             destroyable.Clear();
         }
 
+        /// <summary>
+        /// control the movement of the floating text
+        /// </summary>
+        /// <param name="text"></param>
         protected virtual void MoveFloatText(FloatingText text)
         {
             if (ControlMovement == false) return;
@@ -287,6 +358,15 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             }
         }
 
+      
+
+        /// <summary>
+        /// gets from pool or creates new floattext
+        /// </summary>
+        /// <param name="elementUI"></param>
+        /// <param name="atPosition"></param>
+        /// <param name="text"></param>
+        /// <returns></returns>
         protected virtual FloatingText GetUI(ElementUI elementUI, Vector3 atPosition, string text)
         {
             int randomYmulti = UnityEngine.Random.Range(-5, 5);
@@ -326,6 +406,8 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                 }
             }
             textu.SetText(text);
+
+            
             newObj.transform.position = main.WorldToScreenPoint(atPosition);
 
             FloatingText _damageText = new FloatingText(newObj, Y, X, randomYmulti, randomXmulti, curve, aliveTime, queueSpacing);//can change the 5 value to influence the angle of the numbers, higher number creates a sharper angle.

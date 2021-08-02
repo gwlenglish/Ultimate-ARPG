@@ -388,7 +388,7 @@ MonoBehaviour:
   abilityMods: []
   others:
   - NowValue: 5
-    Level1Value: 5
+    Level1Value: 25
     LevelCurve:
       serializedVersion: 2
       m_Curve:
@@ -413,7 +413,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 0
-    Level99Max: 25
+    Level99Max: 50
     Type: 1
     DescriptiveName: 
   - NowValue: 5

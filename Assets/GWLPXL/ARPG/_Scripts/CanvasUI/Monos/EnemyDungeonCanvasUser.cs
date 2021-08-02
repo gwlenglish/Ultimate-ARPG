@@ -12,6 +12,15 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
     /// </summary>
     public class EnemyDungeonCanvasUser : MonoBehaviour, IUseFloatingText
     {
+        [Tooltip("Will create custom floating text if enabled")]
+        [SerializeField]
+        protected FloatingTextOverride overrideDmgText;
+        [Tooltip("Will create custom floating text if enabled")]
+        [SerializeField]
+        protected FloatingTextOverride overrideRegenText;
+        [Tooltip("Will create custom floating text if enabled")]
+        [SerializeField]
+        protected FloatingTextOverride overrideDotText;
         [SerializeField]
         [Tooltip("Adjusts the start position of the floating text.")]
         protected Vector3 floatingTextOffset = new Vector3(0, 2, 0);//change the y value to move the hp bar up and down
@@ -51,20 +60,45 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         #region protected virtual 
         protected virtual void DefaultDoTText(string message, ElementType type)
         {
-            DungeonMaster.Instance.GetFloatTextCanvas().CreateDoTText(hub.MyHealth, message, transform.position + floatingTextOffset, type);
+            if (overrideDotText.UseOverride)
+            {
+                DungeonMaster.Instance.GetFloatTextCanvas().CreateNewFloatingText(hub.MyHealth, overrideDotText.Override, transform.position + GetHPBarOffset(), message, FloatingTextType.DoTs);
+            }
+            else
+            {
+                DungeonMaster.Instance.GetFloatTextCanvas().CreateDoTText(hub.MyHealth, message, transform.position + GetHPBarOffset(), type);
+            }
+
         }
 
         protected virtual void DefaultRegenText(string message, ResourceType type)
         {
-            DungeonMaster.Instance.GetFloatTextCanvas().CreateRegenText(hub.MyHealth, message, transform.position + floatingTextOffset, type);
+            if (overrideRegenText.UseOverride)
+            {
+                DungeonMaster.Instance.GetFloatTextCanvas().CreateNewFloatingText(hub.MyHealth, overrideRegenText.Override, transform.position + GetHPBarOffset(), message, FloatingTextType.Regen);
+
+            }
+            else
+            {
+                DungeonMaster.Instance.GetFloatTextCanvas().CreateRegenText(hub.MyHealth, message, transform.position + GetHPBarOffset(), type);
+            }
         }
 
         protected virtual void DefaultDamageText(string message, ElementType type, bool isCritical)
         {
-            DungeonMaster.Instance.GetFloatTextCanvas().CreateDamagedText(hub.MyHealth, transform.position + floatingTextOffset, message, type, isCritical);
+            if (overrideDmgText.UseOverride)
+            {
+                DungeonMaster.Instance.GetFloatTextCanvas().CreateNewFloatingText(hub.MyHealth, overrideDmgText.Override, transform.position + GetHPBarOffset(), message, FloatingTextType.Damage);
+
+            }
+            else
+            {
+                DungeonMaster.Instance.GetFloatTextCanvas().CreateDamagedText(hub.MyHealth, transform.position, message, type, isCritical);
+
+            }
         }
 
-       
+
         #endregion
     }
 }

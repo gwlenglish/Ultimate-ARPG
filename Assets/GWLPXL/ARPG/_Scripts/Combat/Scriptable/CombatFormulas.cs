@@ -450,6 +450,9 @@ namespace GWLPXL.ARPGCore.Combat.com
         
     }
 
+    /// <summary>
+    /// used to track crits, the attacker and amount is the key
+    /// </summary>
     public class CritLog
     {
         public IAttributeUser Attacker;
