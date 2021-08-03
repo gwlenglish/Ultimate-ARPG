@@ -18,6 +18,9 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         {
             GameObject newtext = Instantiate(DamageTextPrefab);
             newtext.transform.position = position;
+            Rigidbody rb = newtext.AddComponent<Rigidbody>();
+            rb.AddForce(Vector3.up * Random.Range(10, 15), ForceMode.Impulse);
+            Destroy(newtext, 3);
         }
 
         public void CreateDoTText(IReceiveDamage damageTaker, string text, Vector3 position, ElementType type, bool isCritical = false)

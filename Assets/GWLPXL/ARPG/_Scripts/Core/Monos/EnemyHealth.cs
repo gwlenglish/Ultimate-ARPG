@@ -204,6 +204,7 @@ namespace GWLPXL.ARPGCore.com
         protected virtual void DefaultTakeDamage(int damageAmount, ElementType type)
         {
             int damage = combatHandler.GetElementalDamageResistChecks(owner.MyStats, type, damageAmount);
+            
             if (damage > 0 && immortal == false)//prevent dmg if immortal, but show everything else
             {
                 owner.MyStats.GetRuntimeAttributes().ModifyNowResource(healthResource, -damage);
@@ -270,8 +271,11 @@ namespace GWLPXL.ARPGCore.com
         protected virtual void NotifyUI(ElementType type, int damage)
         {
             if (dungeoncanvas == null) return;
-
-            bool crit = CritHelper.WasCrit(lastcharacterHitMe.MyStats, lastNonMitagatedHitAmount);
+            bool crit = false;
+            if (lastcharacterHitMe != null)
+            {
+                crit = CritHelper.WasCrit(lastcharacterHitMe.MyStats, lastNonMitagatedHitAmount);
+            }
             if (crit)
             {
                 lastNonMitagatedHitAmount = 0;
