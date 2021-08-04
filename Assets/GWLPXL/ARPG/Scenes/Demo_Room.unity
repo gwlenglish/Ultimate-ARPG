@@ -7534,12 +7534,6 @@ PrefabInstance:
       propertyPath: useTextCanvas
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9106405784661955894, guid: ee53c08d43b19b34ea3872f1abaf89ec,
-        type: 3}
-      propertyPath: floatingTextCanvasPrefab
-      value: 
-      objectReference: {fileID: 8063862101523124153, guid: 86a4e2dc12f50294ba5d572f9ac51831,
-        type: 3}
     - target: {fileID: 9106405784661955895, guid: ee53c08d43b19b34ea3872f1abaf89ec,
         type: 3}
       propertyPath: m_Name

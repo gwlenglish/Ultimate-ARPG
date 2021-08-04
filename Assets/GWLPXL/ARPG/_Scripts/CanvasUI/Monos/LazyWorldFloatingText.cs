@@ -4,7 +4,7 @@ using GWLPXL.ARPGCore.Types.com;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 namespace GWLPXL.ARPGCore.CanvasUI.com
 {
 
@@ -16,17 +16,14 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         public GameObject RegenTextPrefab = default;
         public void CreateDamagedText(IReceiveDamage damageTaker, Vector3 position, string text, ElementType type, bool isCritical = false)
         {
-            GameObject newtext = Instantiate(DamageTextPrefab);
-            newtext.transform.position = position;
-            Rigidbody rb = newtext.AddComponent<Rigidbody>();
-            rb.AddForce(Vector3.up * Random.Range(10, 15), ForceMode.Impulse);
-            Destroy(newtext, 3);
+            DefaultMakeText(DamageTextPrefab, position, text);
         }
+
+      
 
         public void CreateDoTText(IReceiveDamage damageTaker, string text, Vector3 position, ElementType type, bool isCritical = false)
         {
-            GameObject newtext = Instantiate(DoTTextPrefab);
-            newtext.transform.position = position;
+            DefaultMakeText(DoTTextPrefab, position, text);
         }
 
         public void CreateNewFloatingText(IReceiveDamage damageTaker, ElementUI variables, Vector3 atPosition, string text, FloatingTextType type, bool isCritical = false)
@@ -47,10 +44,18 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
         public void CreateRegenText(IReceiveDamage damageTaker, string text, Vector3 position, ResourceType type, bool isCritical = false)
         {
-            GameObject newtext = Instantiate(RegenTextPrefab);
-            newtext.transform.position = position;
+            DefaultMakeText(RegenTextPrefab, position, text);
         }
 
+        protected virtual void DefaultMakeText(GameObject textPrefab, Vector3 position, string text)
+        {
+            GameObject newtext = Instantiate(textPrefab);
+            newtext.transform.position = position;
+            newtext.GetComponent<TextMeshPro>().SetText(text);
+            Rigidbody rb = newtext.AddComponent<Rigidbody>();
+            rb.AddForce(Vector3.up * Random.Range(10, 15), ForceMode.Impulse);
+            Destroy(newtext, 3);
+        }
 
     }
 }
