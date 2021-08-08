@@ -20,6 +20,8 @@ namespace GWLPXL.ARPGCore.Attributes.com
         
         public int NowValue = 0;
 
+        private object LevelSourceHook = new object();
+
         private List<AttributeModifier> _statModifiers;
         public List<AttributeModifier> StatModifiers
         {
@@ -48,12 +50,13 @@ namespace GWLPXL.ARPGCore.Attributes.com
             return rounded;
         }
         
-        // todo Yashik: needs check, if base value is modified by another source, we can get negative-value levelup
 		public virtual void Level(int newLevel, int maxLevel)
 		{
 			int current = BaseValue;
 			int newvalue = GetLeveledValue(newLevel, maxLevel);
-			ModifyBaseValue(newvalue + -current);
+
+			RemoveAllModifiersFromSource(LevelSourceHook);
+			AddModifier(new AttributeModifier(newvalue, AttributeModifierType.Flat, AttributeModifierOrderType.Level, LevelSourceHook));
 		}
 		
 		public virtual void ModifyBaseValue(int byHowMuch)

@@ -14,7 +14,7 @@ namespace GWLPXL.ARPGCore.Attributes.com
         public int ResourceNowValue { get; set; }
         readonly string colon = ": ";
         readonly string divisor = " / ";
-        // todo check this (Yashik)
+        
         public override void Level(int newLevel, int maxLevel)
         {
             base.Level(newLevel, maxLevel);

@@ -1,5 +1,5 @@
 using System;
-using UnityEngine;
+using GWLPXL.ARPGCore.Types.com;
 
 namespace GWLPXL.ARPG._Scripts.Attributes.com
 {
@@ -14,27 +14,39 @@ namespace GWLPXL.ARPG._Scripts.Attributes.com
 	[Serializable]
 	public struct AttributeModifier
 	{
-		[SerializeField] private float _value;
-		[SerializeField] private AttributeModifierType _type;
-		[SerializeField] private int _order;
-		private object _source;
-		public float Value => _value;
-		public AttributeModifierType Type => _type;
-		public int Order => _order;
-		public object Source => _source;
+		public float Value;
+		public AttributeModifierType Type;
+		public AttributeModifierOrderType Order;
+		public object Source;
 
-		public AttributeModifier(float value, AttributeModifierType type, int order, object source)
+		public AttributeModifier(float value, AttributeModifierType type, AttributeModifierOrderType order, object source)
 		{
-			_value = value;
-			_type = type;
-			_order = order;
-			_source = source;
+			Value = value;
+			Type = type;
+			Order = order;
+			Source = source;
 		}
 
-		public AttributeModifier(float value, AttributeModifierType type) : this(value, type, (int)type, null) { }
+		public AttributeModifier(float value, AttributeModifierType type) : this(value, type, (AttributeModifierOrderType)type, null) { }
 
-		public AttributeModifier(float value, AttributeModifierType type, int order) : this(value, type, order, null) { }
+		public AttributeModifier(float value, AttributeModifierType type, AttributeModifierOrderType order) : this(value, type, order, null) { }
 
-		public AttributeModifier(float value, AttributeModifierType type, object source) : this(value, type, (int)type, source) { }
+		public AttributeModifier(float value, AttributeModifierType type, object source) : this(value, type, (AttributeModifierOrderType)type, source) { }
+	}
+
+	/// <summary>
+	/// Value is set runtime by code, used in traits with GetLeveledValue()
+	/// </summary>
+	[Serializable]
+	public struct AttributeModifierManaged
+	{
+		public AttributeModifierType Type;
+		public AttributeModifierOrderType Order;
+		public object Source;
+
+		public AttributeModifier Convert(float value)
+		{
+			return new AttributeModifier(value, Type, Order, Source);
+		}
 	}
 }
