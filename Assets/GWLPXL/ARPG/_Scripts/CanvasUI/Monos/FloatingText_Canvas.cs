@@ -338,7 +338,8 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
             if (text.FadeCurve != null)
             {
-                float lerpA = Mathf.Lerp(1, 0, percent);
+                float lerpA = text.FadeCurve.Evaluate(percent);
+                //float lerpA = Mathf.Lerp(1, 0, percent);
                 text.Color.a = lerpA;
                 text.TextObj.GetComponent<IFloatingText>().SetColor(text.Color);
             }

@@ -17,6 +17,12 @@ namespace GWLPXL.ARPGCore.Combat.com
 
     public class PlayerDefault : PlayerCombatFormulas
     {
+        /// <summary>
+        /// simple +- calculation against damage and resist, e.g. 25 damage and 12 resist = 13 result
+        /// </summary>
+        /// <param name="defender"></param>
+        /// <param name="attacker"></param>
+        /// <returns></returns>
         public override Dictionary<ElementType, ElementAttackResults> GetElementalDamageResistChecks(IAttributeUser defender, IAttributeUser attacker)
         {
             Dictionary<ElementType, ElementAttackResults> attackDic = new Dictionary<ElementType, ElementAttackResults>();
@@ -59,8 +65,12 @@ namespace GWLPXL.ARPGCore.Combat.com
             return attackDic;
         }
 
-
-
+        /// <summary>
+        /// get stat armor, get armor on equipment, return summed result
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="playerInv"></param>
+        /// <returns></returns>
         public override int GetArmor(IAttributeUser player, IInventoryUser playerInv)
         {
             int armorAmount = 0;
@@ -68,7 +78,15 @@ namespace GWLPXL.ARPGCore.Combat.com
             armorAmount += playerInv.GetInventoryRuntime().GetArmorFromEquipment();
             return armorAmount;
         }
-
+        /// <summary>
+        ///  float DR = GetArmor(playerStats, playerInv) / (mobMulti * enemyLevel + GetArmor(playerStats, playerInv));
+        ///  return rounded int
+        /// </summary>
+        /// <param name="playerStats"></param>
+        /// <param name="playerInv"></param>
+        /// <param name="enemyLevel"></param>
+        /// <param name="fullDamageAmount"></param>
+        /// <returns></returns>
         public override int GetReducedPhysical(IAttributeUser playerStats, IInventoryUser playerInv, int enemyLevel, float fullDamageAmount)
         {
             float mobMulti = Formulas.MobLevelMultiplier;
@@ -83,11 +101,16 @@ namespace GWLPXL.ARPGCore.Combat.com
         
             return rounded;
         }
-
+        /// <summary>
+        //float result = ((baseWpnFactor) + baseStatFactor + (1 * (float)skillMods) + (1 * (float)elementMods)) * critFactor;//main dmg formula
+        //return rounded int
+        /// </summary>
+        /// <param name="playerStats"></param>
+        /// <param name="playerInv"></param>
+        /// <param name="playerAbilities"></param>
+        /// <returns></returns>
         public override int GetTotalAttackDamage(IAttributeUser playerStats, IInventoryUser playerInv, IAbilityUser playerAbilities)
         {
-
-
 
             //base stat factor * base damage factor * crit factor * skill factor
             ActorAttributes stats = playerStats.GetRuntimeAttributes();
@@ -144,7 +167,14 @@ namespace GWLPXL.ARPGCore.Combat.com
             }
             return rounded;
         }
-
+        /// <summary>
+        /// elementDamage - resist
+        /// return floored int
+        /// </summary>
+        /// <param name="enemy"></param>
+        /// <param name="_type"></param>
+        /// <param name="elementDamage"></param>
+        /// <returns></returns>
         public override int GetElementalDamageResistChecks(IAttributeUser enemy, ElementType _type, int elementDamage)
         {
             int resist = enemy.GetRuntimeAttributes().GetElementResist(_type);
