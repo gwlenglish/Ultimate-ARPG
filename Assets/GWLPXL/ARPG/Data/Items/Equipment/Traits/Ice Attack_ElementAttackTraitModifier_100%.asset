@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3775624cd6c84a67894bdee3c92aa1de, type: 3}
-  m_Name: Ice Attack_ElementAttackTrait_Modifier_200%
+  m_Name: Ice Attack_ElementAttackTraitModifier_100%
   m_EditorClassIdentifier: 
   config: {fileID: 0}
   AutoName: 1
@@ -18,12 +18,15 @@ MonoBehaviour:
     Name: 
     ID: 0
     Trait: {fileID: 0}
-  traitName: 
+  traitName: Ice Attack
   TraitPrefixes: []
   TraitSuffixes: []
   TraitNouns: []
   myValue: 1
-  myLevelMulti: 1
-  weight: 1
+  myLevelMulti: 100
+  weight: 5
   sprite: {fileID: 0}
-  Type: 0
+  attributeModifier:
+    Type: 100
+    Order: 100
+  Type: 2
