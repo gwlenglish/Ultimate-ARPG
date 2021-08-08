@@ -855,9 +855,9 @@ namespace GWLPXL.ARPGCore.Saving.com
         private void SaveResource(List<ResourceSave> _temp, Resource resource)
         {
             int enumValue = (int)resource.Type;
-            int current = resource.NowValue;
+            int current = resource.ResourceNowValue;
             int starting = resource.Level1Value;
-            int max = resource.CapValue;
+            int max = resource.NowValue;
             ResourceSave _newSave = new ResourceSave(enumValue, max, current, starting, resource);
             _temp.Add(_newSave);
         }

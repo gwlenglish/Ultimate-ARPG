@@ -44,7 +44,7 @@ namespace GWLPXL.ARPGCore.StatusEffects.com
                 Destroy(this);
                 return;
             }
-            statUser.GetRuntimeAttributes().ModifyNowStatValue(ModStatType.Type, ModStatType.ModAmount);
+            statUser.GetRuntimeAttributes().ModifyBaseStatValue(ModStatType.Type, ModStatType.ModAmount);
             ini = true;
         }
         public void AddTicker()
@@ -60,7 +60,7 @@ namespace GWLPXL.ARPGCore.StatusEffects.com
             if (timer >= ModStatType.Duration)
             {
                 //remove and destroy
-                statUser.GetRuntimeAttributes().ModifyNowStatValue(ModStatType.Type, -ModStatType.ModAmount);
+                statUser.GetRuntimeAttributes().ModifyBaseStatValue(ModStatType.Type, -ModStatType.ModAmount);
                 Destroy(this);
                 ini = false;
             }
@@ -70,7 +70,7 @@ namespace GWLPXL.ARPGCore.StatusEffects.com
         {
             if (ini == true)//havent run out the timer yet but destroying, so remove
             {
-                statUser.GetRuntimeAttributes().ModifyNowStatValue(ModStatType.Type, -ModStatType.ModAmount);
+                statUser.GetRuntimeAttributes().ModifyBaseStatValue(ModStatType.Type, -ModStatType.ModAmount);
             }
         }
         public float GetTickDuration()

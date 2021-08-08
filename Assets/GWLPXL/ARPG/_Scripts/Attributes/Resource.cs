@@ -1,54 +1,38 @@
-﻿
-using GWLPXL.ARPGCore.Types.com;
+﻿using GWLPXL.ARPGCore.Types.com;
+using UnityEngine;
+
 namespace GWLPXL.ARPGCore.Attributes.com
 {
-
+    /// <summary>
+    /// In resources NowValue - is just Cap for resource. We can buff with modifiers only CAP value
+    /// example: 38/120 hp, 38 - ResourceNowValue, 120 - NowValue (can be buffed, instead of ResourceNowValue)
+    /// </summary>
     [System.Serializable]
     public class Resource : Attribute
     {
         public ResourceType Type;
-        public int CapValue { get; set; }
+        public int ResourceNowValue { get; set; }
         readonly string colon = ": ";
         readonly string divisor = " / ";
+        
         public override void Level(int newLevel, int maxLevel)
         {
-            int current = NowValue;
-            int oldMax = CapValue;
-            int difference = oldMax - current;
-            int newvalue = GetLeveledValue(newLevel, maxLevel);
-            SetCapValue(newvalue + difference);
             base.Level(newLevel, maxLevel);
+            ResourceNowValue = Mathf.Clamp(ResourceNowValue, 0, NowValue);
         }
-        public override void ModifyNowValue(int byHowMuch)
+        public override void ModifyBaseValue(int byHowMuch)
         {
-            base.ModifyNowValue(byHowMuch);
-            if (NowValue > CapValue)
-            {
-                NowValue = CapValue;
-            }
-            else if (NowValue < 0)
-            {
-                NowValue = 0;
-            }
+            base.ModifyBaseValue(byHowMuch);
+            ResourceNowValue = Mathf.Clamp(ResourceNowValue, 0, NowValue);
         }
         public override AttributeType GetAttributeType()
         {
             return AttributeType.Resource;
         }
 
-        public virtual void SetCapValue(int newValue)
+        public void ModifyResourceValue(int byHowMuch)
         {
-            CapValue = newValue;
-            if (NowValue > newValue)
-            {
-                NowValue = newValue;
-            }
-        }
-
-        public virtual void ModifyCapValue(int byHowMuch)
-        {
-            int newValue = CapValue + byHowMuch;
-            SetCapValue(newValue);
+            ResourceNowValue = Mathf.Clamp(ResourceNowValue + byHowMuch, 0, NowValue);
         }
 
         public override string GetDescriptiveName()
@@ -58,10 +42,9 @@ namespace GWLPXL.ARPGCore.Attributes.com
 
         public override string GetFullDescription()
         {
-            return GetDescriptiveName() + colon + NowValue.ToString() + divisor + CapValue.ToString();
+            return GetDescriptiveName() + colon + ResourceNowValue.ToString() + divisor + NowValue.ToString();
         }
 
         public override int GetSubType() => (int)Type;
-       
     }
 }

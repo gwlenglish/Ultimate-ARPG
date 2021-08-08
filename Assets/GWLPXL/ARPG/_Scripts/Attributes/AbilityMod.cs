@@ -1,5 +1,4 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
 using GWLPXL.ARPGCore.Types.com;
 using GWLPXL.ARPGCore.Abilities.com;

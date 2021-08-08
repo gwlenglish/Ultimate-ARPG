@@ -9,33 +9,29 @@ using UnityEngine;
 namespace GWLPXL.ARPGCore.Traits.com
 {
 
-    [CreateAssetMenu(menuName = "GWLPXL/ARPG/Equipment/Traits/NEW_ElementResistTrait")]
+    [CreateAssetMenu(menuName = "GWLPXL/ARPG/Equipment/Traits/NEW_ElementResistTraitModifier")]
 
     [System.Serializable]
-    public class ElementResistTrait : EquipmentTrait
+    public class ElementResistTraitModifier : EquipmentTrait
     {
+        public AttributeModifierManaged attributeModifier;
         public ElementType Type;
 
         protected TraitType type = TraitType.ElementResist;
         
         public override void ApplyTrait(IAttributeUser toActor)
         {
-            toActor.GetRuntimeAttributes().ModifyElementResistBaseValue(Type, GetLeveledValue());
+            toActor.GetRuntimeAttributes().AddModifierElementResist(Type, attributeModifier.Convert(GetLeveledValue()));
         }
-
-
 
         public override TraitType GetTraitType()
         {
             return type;
         }
-
-
+        
         public override void RemoveTrait(IAttributeUser toActor)
         {
-            toActor.GetRuntimeAttributes().ModifyElementResistBaseValue(Type, -GetLeveledValue());
+            toActor.GetRuntimeAttributes().RemoveModifierElementResist(Type, attributeModifier.Convert(GetLeveledValue()));
         }
-
-
     }
 }

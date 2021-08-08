@@ -1,4 +1,5 @@
-﻿using GWLPXL.ARPGCore.com;
+﻿using GWLPXL.ARPG._Scripts.Attributes.com;
+using GWLPXL.ARPGCore.com;
 using GWLPXL.ARPGCore.Types.com;
 using UnityEngine;
 
@@ -21,6 +22,13 @@ namespace GWLPXL.ARPGCore.Auras.com
         void AuraModifyMaxResource(int resourceType, int byAmount);
         void AuraModifyCurrentResource(int resourceType, int byAmount);
         void AuraBuffSat(int statType, int byAmount);
+        void AuraApplyModifierResource(int resourceType, AttributeModifier modifier);
+        void AuraRemoveModifierResource(int resourceType, AttributeModifier modifier);
+        void AuraRemoveSourceModifierResource(int resourceType, object source);
+        void AuraApplyModifierStat(int statType, AttributeModifier modifier);
+        void AuraRemoveModifierStat(int statType, AttributeModifier modifier);
+        void AuraRemoveSourceModifierStat(int statType, object source);
+
         #endregion
     }
 }
