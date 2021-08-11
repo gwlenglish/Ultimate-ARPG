@@ -13,15 +13,76 @@ MonoBehaviour:
   m_Name: Level 1 Values
   m_EditorClassIdentifier: 
   PossibleTraits:
-  - {fileID: 11400000, guid: 0ff7dea6379235a468cdc6b20d3ba90d, type: 2}
-  - {fileID: 11400000, guid: 2376d2dbfa820594e9b67574051a465d, type: 2}
-  - {fileID: 11400000, guid: c876999be317fe541a8a45889aa6fb52, type: 2}
-  - {fileID: 11400000, guid: b1d0c0d224daeb349a69cc8dd1798069, type: 2}
-  - {fileID: 11400000, guid: 3bb2f48400540364a8b86fcb5f74e27b, type: 2}
-  - {fileID: 11400000, guid: 1da6e88061cb63447a8ee7dcef92afa3, type: 2}
-  - {fileID: 11400000, guid: 2b70c8bd170bbdd4e8499d267e114f4d, type: 2}
-  - {fileID: 11400000, guid: db4bfadab29def742842255d949d3ed8, type: 2}
-  - {fileID: 11400000, guid: 2a3c5386d6bef3e4c889637f7fe5c034, type: 2}
-  - {fileID: 11400000, guid: 95d3d133a553ab04eb8e5dc5c6e4772e, type: 2}
-  - {fileID: 11400000, guid: 547fcfcca22f54842a6f7005b5c0cc6b, type: 2}
-  TraitTable: []
+  - {fileID: 11400000, guid: 3d887db43c9426d4fa41f556c33826fb, type: 2}
+  - {fileID: 11400000, guid: da55f038dc9fc4a44869e68769ee8c12, type: 2}
+  - {fileID: 11400000, guid: 4406eb2816f912748a324c4d5960fe5d, type: 2}
+  - {fileID: 11400000, guid: 30613a4aa9ed73246a08e1d10085336a, type: 2}
+  - {fileID: 11400000, guid: 08f1646a35db93a4fa00f20789497692, type: 2}
+  - {fileID: 11400000, guid: 5863c39db13aa4c4a8ef28165e9eecfe, type: 2}
+  - {fileID: 11400000, guid: 3659cc3de806d78439dc409bd4a932fd, type: 2}
+  - {fileID: 11400000, guid: 7fb9d87b04f45d74f93c83497e5f7271, type: 2}
+  - {fileID: 11400000, guid: 6ed7c687ea88f634bb9c187512f7e546, type: 2}
+  - {fileID: 11400000, guid: 63998ee0ed7fe6d43a6a5280f129a0dc, type: 2}
+  - {fileID: 11400000, guid: 0725caa6157bf8b4f9b2b6437874da00, type: 2}
+  - {fileID: 11400000, guid: 1bcdbb19dfe6ba044a774e73d104544b, type: 2}
+  TraitTable:
+  - Description: Fire Attack_8.333334
+    RelativePercent: 8.333334
+    RangeFrom: 0
+    RangeTo: 1
+    Trait: {fileID: 11400000, guid: 3d887db43c9426d4fa41f556c33826fb, type: 2}
+  - Description: Ice Attack_8.333334
+    RelativePercent: 8.333334
+    RangeFrom: 1
+    RangeTo: 2
+    Trait: {fileID: 11400000, guid: da55f038dc9fc4a44869e68769ee8c12, type: 2}
+  - Description: Lightning Attack_8.333334
+    RelativePercent: 8.333334
+    RangeFrom: 2
+    RangeTo: 3
+    Trait: {fileID: 11400000, guid: 4406eb2816f912748a324c4d5960fe5d, type: 2}
+  - Description: Cold Resist_8.333334
+    RelativePercent: 8.333334
+    RangeFrom: 3
+    RangeTo: 4
+    Trait: {fileID: 11400000, guid: 30613a4aa9ed73246a08e1d10085336a, type: 2}
+  - Description: Fire Resist_8.333334
+    RelativePercent: 8.333334
+    RangeFrom: 4
+    RangeTo: 5
+    Trait: {fileID: 11400000, guid: 08f1646a35db93a4fa00f20789497692, type: 2}
+  - Description: Lightning Resist_8.333334
+    RelativePercent: 8.333334
+    RangeFrom: 5
+    RangeTo: 6
+    Trait: {fileID: 11400000, guid: 5863c39db13aa4c4a8ef28165e9eecfe, type: 2}
+  - Description: Minor Health_8.333334
+    RelativePercent: 8.333334
+    RangeFrom: 6
+    RangeTo: 7
+    Trait: {fileID: 11400000, guid: 3659cc3de806d78439dc409bd4a932fd, type: 2}
+  - Description: Minor Mana_8.333334
+    RelativePercent: 8.333334
+    RangeFrom: 7
+    RangeTo: 8
+    Trait: {fileID: 11400000, guid: 7fb9d87b04f45d74f93c83497e5f7271, type: 2}
+  - Description: Dexterity_8.333334
+    RelativePercent: 8.333334
+    RangeFrom: 8
+    RangeTo: 9
+    Trait: {fileID: 11400000, guid: 6ed7c687ea88f634bb9c187512f7e546, type: 2}
+  - Description: Intelligence_8.333334
+    RelativePercent: 8.333334
+    RangeFrom: 9
+    RangeTo: 10
+    Trait: {fileID: 11400000, guid: 63998ee0ed7fe6d43a6a5280f129a0dc, type: 2}
+  - Description: Strength_8.333334
+    RelativePercent: 8.333334
+    RangeFrom: 10
+    RangeTo: 11
+    Trait: {fileID: 11400000, guid: 0725caa6157bf8b4f9b2b6437874da00, type: 2}
+  - Description: Vitality_8.333334
+    RelativePercent: 8.333334
+    RangeFrom: 11
+    RangeTo: 12
+    Trait: {fileID: 11400000, guid: 1bcdbb19dfe6ba044a774e73d104544b, type: 2}
