@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e67e68529a7b4a48a05b37eaff60e0a8, type: 3}
   m_Name: Fire Resist_ElementResistTraitModifier_100%
   m_EditorClassIdentifier: 
-  config: {fileID: 0}
+  config: {fileID: 4900000, guid: 8d07f833c92f0b64eada8233924e3b22, type: 3}
   AutoName: 1
   traitID:
-    Name: 
-    ID: 0
-    Trait: {fileID: 0}
+    Name: Fire Resist_ElementResistTraitModifier_100%
+    ID: 6
+    Trait: {fileID: 11400000}
   traitName: Fire Resist
   TraitPrefixes: []
   TraitSuffixes: []

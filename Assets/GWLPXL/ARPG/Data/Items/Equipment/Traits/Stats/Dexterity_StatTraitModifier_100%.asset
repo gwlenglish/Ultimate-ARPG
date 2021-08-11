@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 912cd669e59d470d866cee250d6b1a48, type: 3}
   m_Name: Dexterity_StatTraitModifier_100%
   m_EditorClassIdentifier: 
-  config: {fileID: 0}
+  config: {fileID: 4900000, guid: f297b42e893bea849ab1eac9bae5048a, type: 3}
   AutoName: 1
   traitID:
-    Name: 
-    ID: 0
-    Trait: {fileID: 0}
+    Name: Dexterity_StatTraitModifier_100%
+    ID: 10
+    Trait: {fileID: 11400000}
   traitName: Dexterity
   TraitPrefixes: []
   TraitSuffixes: []

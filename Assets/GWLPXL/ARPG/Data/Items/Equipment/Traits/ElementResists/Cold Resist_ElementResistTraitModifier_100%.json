@@ -1,0 +1,28 @@
+{
+    "config": {
+        "instanceID": 70186
+    },
+    "AutoName": true,
+    "traitID": {
+        "Name": "Cold Resist_ElementResistTraitModifier_100%",
+        "ID": 5,
+        "Trait": {
+            "instanceID": 37194
+        }
+    },
+    "traitName": "Cold Resist",
+    "TraitPrefixes": [],
+    "TraitSuffixes": [],
+    "TraitNouns": [],
+    "myValue": 1,
+    "myLevelMulti": 100,
+    "weight": 1,
+    "sprite": {
+        "instanceID": 0
+    },
+    "attributeModifier": {
+        "Type": 300,
+        "Order": 300
+    },
+    "Type": 2
+}

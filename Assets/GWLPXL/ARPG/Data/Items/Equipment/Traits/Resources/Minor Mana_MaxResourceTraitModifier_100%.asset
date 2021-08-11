@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10c73cac35f84dfb8103b17a2048a2b3, type: 3}
   m_Name: Minor Mana_MaxResourceTraitModifier_100%
   m_EditorClassIdentifier: 
-  config: {fileID: 0}
+  config: {fileID: 4900000, guid: 66ad3fd0bffb09041a477cd27002e42e, type: 3}
   AutoName: 1
   traitID:
-    Name: 
-    ID: 0
-    Trait: {fileID: 0}
+    Name: Minor Mana_MaxResourceTraitModifier_100%
+    ID: 9
+    Trait: {fileID: 11400000}
   traitName: Minor Mana
   TraitPrefixes: []
   TraitSuffixes: []

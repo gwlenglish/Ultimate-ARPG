@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 912cd669e59d470d866cee250d6b1a48, type: 3}
   m_Name: Large Gem_StatTraitModifier_100%
   m_EditorClassIdentifier: 
-  config: {fileID: 0}
+  config: {fileID: 4900000, guid: 79a5fe6e8b3a7f243a8e84f29fd6405f, type: 3}
   AutoName: 1
   traitID:
-    Name: 
-    ID: 0
-    Trait: {fileID: 0}
+    Name: Large Gem_StatTraitModifier_100%
+    ID: 12
+    Trait: {fileID: 11400000}
   traitName: Large Gem
   TraitPrefixes: []
   TraitSuffixes: []

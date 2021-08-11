@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3775624cd6c84a67894bdee3c92aa1de, type: 3}
   m_Name: Ice Attack_ElementAttackTraitModifier_100%
   m_EditorClassIdentifier: 
-  config: {fileID: 0}
+  config: {fileID: 4900000, guid: f6e1a31d5fda2134ea0094c78abee5f9, type: 3}
   AutoName: 1
   traitID:
-    Name: 
-    ID: 0
-    Trait: {fileID: 0}
+    Name: Ice Attack_ElementAttackTraitModifier_100%
+    ID: 3
+    Trait: {fileID: 11400000}
   traitName: Ice Attack
   TraitPrefixes: []
   TraitSuffixes: []
@@ -29,4 +29,4 @@ MonoBehaviour:
   attributeModifier:
     Type: 300
     Order: 300
-  Type: 1
+  Type: 2

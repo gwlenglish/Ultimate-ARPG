@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d590c2913469463da90d4e650984114a, type: 3}
   m_Name: Ability Mod 1_AbilityModTraitModifier_1%
   m_EditorClassIdentifier: 
-  config: {fileID: 0}
+  config: {fileID: 4900000, guid: 9511ddac81f54614c97dad9a786dc45c, type: 3}
   AutoName: 1
   traitID:
-    Name: 
-    ID: 0
-    Trait: {fileID: 0}
+    Name: Ability Mod 1_AbilityModTraitModifier_1%
+    ID: 1
+    Trait: {fileID: 11400000}
   traitName: Ability Mod 1
   TraitPrefixes: []
   TraitSuffixes: []

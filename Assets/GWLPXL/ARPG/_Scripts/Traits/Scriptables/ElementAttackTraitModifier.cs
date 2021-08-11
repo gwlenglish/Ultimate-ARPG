@@ -27,7 +27,7 @@ namespace GWLPXL.ARPGCore.Traits.com
 
         public override void RemoveTrait(IAttributeUser toActor)
         {
-            toActor.GetRuntimeAttributes().AddModifierElementAttack(Type, attributeModifier.Convert(addedvalue));
+            toActor.GetRuntimeAttributes().RemoveModifierElementAttack(Type, attributeModifier.Convert(addedvalue));
             addedvalue = 0;
         }
         

@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10c73cac35f84dfb8103b17a2048a2b3, type: 3}
   m_Name: Minor Health_MaxResourceTraitModifier_100%
   m_EditorClassIdentifier: 
-  config: {fileID: 0}
+  config: {fileID: 4900000, guid: 54f9d04a59100c34a85ad7f26e50f17b, type: 3}
   AutoName: 1
   traitID:
-    Name: 
-    ID: 0
-    Trait: {fileID: 0}
+    Name: Minor Health_MaxResourceTraitModifier_100%
+    ID: 8
+    Trait: {fileID: 11400000}
   traitName: Minor Health
   TraitPrefixes: []
   TraitSuffixes: []

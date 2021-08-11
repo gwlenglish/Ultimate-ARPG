@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3775624cd6c84a67894bdee3c92aa1de, type: 3}
   m_Name: Fire Attack_ElementAttackTraitModifier_100%
   m_EditorClassIdentifier: 
-  config: {fileID: 0}
+  config: {fileID: 4900000, guid: 885f708719a572246aeb1a5e949c9ba6, type: 3}
   AutoName: 1
   traitID:
-    Name: 
-    ID: 0
-    Trait: {fileID: 0}
+    Name: Fire Attack_ElementAttackTraitModifier_100%
+    ID: 2
+    Trait: {fileID: 11400000}
   traitName: Fire Attack
   TraitPrefixes: []
   TraitSuffixes: []

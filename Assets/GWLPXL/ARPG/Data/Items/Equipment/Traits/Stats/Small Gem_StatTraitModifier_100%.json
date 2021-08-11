@@ -1,0 +1,28 @@
+{
+    "config": {
+        "instanceID": 0
+    },
+    "AutoName": true,
+    "traitID": {
+        "Name": "Small Gem_StatTraitModifier_100%",
+        "ID": 13,
+        "Trait": {
+            "instanceID": 37340
+        }
+    },
+    "traitName": "Small Gem",
+    "TraitPrefixes": [],
+    "TraitSuffixes": [],
+    "TraitNouns": [],
+    "myValue": 10,
+    "myLevelMulti": 100,
+    "weight": 1,
+    "sprite": {
+        "instanceID": 0
+    },
+    "attributeModifier": {
+        "Type": 100,
+        "Order": 100
+    },
+    "Type": 2
+}

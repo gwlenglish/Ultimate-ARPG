@@ -1,0 +1,28 @@
+{
+    "config": {
+        "instanceID": 70202
+    },
+    "AutoName": true,
+    "traitID": {
+        "Name": "Minor Mana_MaxResourceTraitModifier_100%",
+        "ID": 9,
+        "Trait": {
+            "instanceID": 37330
+        }
+    },
+    "traitName": "Minor Mana",
+    "TraitPrefixes": [],
+    "TraitSuffixes": [],
+    "TraitNouns": [],
+    "myValue": 1,
+    "myLevelMulti": 100,
+    "weight": 1,
+    "sprite": {
+        "instanceID": 0
+    },
+    "attributeModifier": {
+        "Type": 300,
+        "Order": 300
+    },
+    "Type": 1
+}

@@ -15,153 +15,93 @@ MonoBehaviour:
   searchFolders:
   - Assets/GWLPXL/ARPG/Data
   slots:
-  - DescriptiveName: Lightning Attack
+  - DescriptiveName: Ability Mod 1
     ID:
-      Name: Lightning Attack
+      Name: Ability Mod 1_AbilityModTraitModifier_1%
       ID: 1
-      Trait: {fileID: 11400000, guid: 4222c3b0d6dfea24ab67d0f98b071e22, type: 2}
-    Trait: {fileID: 11400000, guid: 4222c3b0d6dfea24ab67d0f98b071e22, type: 2}
-  - DescriptiveName: Cold Resist
-    ID:
-      Name: Cold Resist
-      ID: 3
-      Trait: {fileID: 11400000, guid: ae269f999dcdecc49a4d8fc1612e59f2, type: 2}
-    Trait: {fileID: 11400000, guid: ae269f999dcdecc49a4d8fc1612e59f2, type: 2}
-  - DescriptiveName: Fire Resist
-    ID:
-      Name: Fire Resist
-      ID: 4
-      Trait: {fileID: 11400000, guid: 8fbedc754ee5a214f8a9f57aab54305a, type: 2}
-    Trait: {fileID: 11400000, guid: 8fbedc754ee5a214f8a9f57aab54305a, type: 2}
-  - DescriptiveName: Minor Health
-    ID:
-      Name: Minor Health
-      ID: 6
-      Trait: {fileID: 11400000, guid: 6b8bf447345b94c478938dd15a0dba73, type: 2}
-    Trait: {fileID: 11400000, guid: 6b8bf447345b94c478938dd15a0dba73, type: 2}
-  - DescriptiveName: Dexterity
-    ID:
-      Name: Dexterity
-      ID: 7
-      Trait: {fileID: 11400000, guid: 7200269a6f10e5748b5b2f5b965c503e, type: 2}
-    Trait: {fileID: 11400000, guid: 7200269a6f10e5748b5b2f5b965c503e, type: 2}
-  - DescriptiveName: Intelligence
-    ID:
-      Name: Intelligence
-      ID: 8
-      Trait: {fileID: 11400000, guid: a93c4cf1213150947ab5a9466dcbd930, type: 2}
-    Trait: {fileID: 11400000, guid: a93c4cf1213150947ab5a9466dcbd930, type: 2}
-  - DescriptiveName: Vitality
-    ID:
-      Name: Vitality
-      ID: 10
-      Trait: {fileID: 11400000, guid: 09961ec57a7fde747a9ca4e273f6e564, type: 2}
-    Trait: {fileID: 11400000, guid: 09961ec57a7fde747a9ca4e273f6e564, type: 2}
-  - DescriptiveName: Ice Attack
-    ID:
-      Name: Ice Attack
-      ID: 11
-      Trait: {fileID: 11400000, guid: 0ff7dea6379235a468cdc6b20d3ba90d, type: 2}
-    Trait: {fileID: 11400000, guid: 0ff7dea6379235a468cdc6b20d3ba90d, type: 2}
+      Trait: {fileID: 11400000, guid: d972a0d74d16a6e4681f64cd96795fbb, type: 2}
+    Trait: {fileID: 11400000, guid: d972a0d74d16a6e4681f64cd96795fbb, type: 2}
   - DescriptiveName: Fire Attack
     ID:
-      Name: Fire Attack
-      ID: 12
-      Trait: {fileID: 11400000, guid: c876999be317fe541a8a45889aa6fb52, type: 2}
-    Trait: {fileID: 11400000, guid: c876999be317fe541a8a45889aa6fb52, type: 2}
-  - DescriptiveName: Lightning Attack
-    ID:
-      Name: Lightning Attack
-      ID: 13
-      Trait: {fileID: 11400000, guid: 2376d2dbfa820594e9b67574051a465d, type: 2}
-    Trait: {fileID: 11400000, guid: 2376d2dbfa820594e9b67574051a465d, type: 2}
-  - DescriptiveName: Cold Resist
-    ID:
-      Name: Cold Resist
-      ID: 14
-      Trait: {fileID: 11400000, guid: b1d0c0d224daeb349a69cc8dd1798069, type: 2}
-    Trait: {fileID: 11400000, guid: b1d0c0d224daeb349a69cc8dd1798069, type: 2}
-  - DescriptiveName: Fire Resist
-    ID:
-      Name: Fire Resist
-      ID: 15
-      Trait: {fileID: 11400000, guid: 3bb2f48400540364a8b86fcb5f74e27b, type: 2}
-    Trait: {fileID: 11400000, guid: 3bb2f48400540364a8b86fcb5f74e27b, type: 2}
-  - DescriptiveName: Minor Health
-    ID:
-      Name: Minor Health
-      ID: 16
-      Trait: {fileID: 11400000, guid: 2b70c8bd170bbdd4e8499d267e114f4d, type: 2}
-    Trait: {fileID: 11400000, guid: 2b70c8bd170bbdd4e8499d267e114f4d, type: 2}
-  - DescriptiveName: Minor Mana
-    ID:
-      Name: Minor Mana
-      ID: 17
-      Trait: {fileID: 11400000, guid: 1da6e88061cb63447a8ee7dcef92afa3, type: 2}
-    Trait: {fileID: 11400000, guid: 1da6e88061cb63447a8ee7dcef92afa3, type: 2}
-  - DescriptiveName: Skillmod Test 1
-    ID:
-      Name: Skillmod Test 1
-      ID: 18
-      Trait: {fileID: 11400000, guid: f4d5b4f4387d5174fb5435a97d8ae2d7, type: 2}
-    Trait: {fileID: 11400000, guid: f4d5b4f4387d5174fb5435a97d8ae2d7, type: 2}
-  - DescriptiveName: Dexterity
-    ID:
-      Name: Dexterity
-      ID: 19
-      Trait: {fileID: 11400000, guid: db4bfadab29def742842255d949d3ed8, type: 2}
-    Trait: {fileID: 11400000, guid: db4bfadab29def742842255d949d3ed8, type: 2}
+      Name: Fire Attack_ElementAttackTraitModifier_100%
+      ID: 2
+      Trait: {fileID: 11400000, guid: 3d887db43c9426d4fa41f556c33826fb, type: 2}
+    Trait: {fileID: 11400000, guid: 3d887db43c9426d4fa41f556c33826fb, type: 2}
   - DescriptiveName: Ice Attack
     ID:
-      Name: Ice Attack
-      ID: 20
-      Trait: {fileID: 11400000, guid: 84f59f0b97accc145b5eddbaca954be7, type: 2}
-    Trait: {fileID: 11400000, guid: 84f59f0b97accc145b5eddbaca954be7, type: 2}
+      Name: Ice Attack_ElementAttackTraitModifier_100%
+      ID: 3
+      Trait: {fileID: 11400000, guid: da55f038dc9fc4a44869e68769ee8c12, type: 2}
+    Trait: {fileID: 11400000, guid: da55f038dc9fc4a44869e68769ee8c12, type: 2}
+  - DescriptiveName: Lightning Attack
+    ID:
+      Name: Lightning Attack_ElementAttackTraitModifier_100%
+      ID: 4
+      Trait: {fileID: 11400000, guid: 4406eb2816f912748a324c4d5960fe5d, type: 2}
+    Trait: {fileID: 11400000, guid: 4406eb2816f912748a324c4d5960fe5d, type: 2}
+  - DescriptiveName: Cold Resist
+    ID:
+      Name: Cold Resist_ElementResistTraitModifier_100%
+      ID: 5
+      Trait: {fileID: 11400000, guid: 30613a4aa9ed73246a08e1d10085336a, type: 2}
+    Trait: {fileID: 11400000, guid: 30613a4aa9ed73246a08e1d10085336a, type: 2}
+  - DescriptiveName: Fire Resist
+    ID:
+      Name: Fire Resist_ElementResistTraitModifier_100%
+      ID: 6
+      Trait: {fileID: 11400000, guid: 08f1646a35db93a4fa00f20789497692, type: 2}
+    Trait: {fileID: 11400000, guid: 08f1646a35db93a4fa00f20789497692, type: 2}
+  - DescriptiveName: Lightning Resist
+    ID:
+      Name: Lightning Resist_ElementResistTraitModifier_100%
+      ID: 7
+      Trait: {fileID: 11400000, guid: 5863c39db13aa4c4a8ef28165e9eecfe, type: 2}
+    Trait: {fileID: 11400000, guid: 5863c39db13aa4c4a8ef28165e9eecfe, type: 2}
+  - DescriptiveName: Minor Health
+    ID:
+      Name: Minor Health_MaxResourceTraitModifier_100%
+      ID: 8
+      Trait: {fileID: 11400000, guid: 3659cc3de806d78439dc409bd4a932fd, type: 2}
+    Trait: {fileID: 11400000, guid: 3659cc3de806d78439dc409bd4a932fd, type: 2}
   - DescriptiveName: Minor Mana
     ID:
-      Name: Minor Mana
-      ID: 21
-      Trait: {fileID: 11400000, guid: ddce3df950a9640429c9fbaee70f04ff, type: 2}
-    Trait: {fileID: 11400000, guid: ddce3df950a9640429c9fbaee70f04ff, type: 2}
-  - DescriptiveName: Skillmod Test 1
-    ID:
-      Name: Skillmod Test 1
-      ID: 22
-      Trait: {fileID: 11400000, guid: ef830c292ebe41d4084c9cde101c5d68, type: 2}
-    Trait: {fileID: 11400000, guid: ef830c292ebe41d4084c9cde101c5d68, type: 2}
-  - DescriptiveName: Strength
-    ID:
-      Name: Strength
-      ID: 23
-      Trait: {fileID: 11400000, guid: 124279744ed16fc4fbe133d910ff3715, type: 2}
-    Trait: {fileID: 11400000, guid: 124279744ed16fc4fbe133d910ff3715, type: 2}
-  - DescriptiveName: Intelligence
-    ID:
-      Name: Intelligence_StatTrait_100%
-      ID: 24
-      Trait: {fileID: 11400000, guid: 2a3c5386d6bef3e4c889637f7fe5c034, type: 2}
-    Trait: {fileID: 11400000, guid: 2a3c5386d6bef3e4c889637f7fe5c034, type: 2}
-  - DescriptiveName: Strength
-    ID:
-      Name: Strength_StatTrait_100%
-      ID: 25
-      Trait: {fileID: 11400000, guid: 95d3d133a553ab04eb8e5dc5c6e4772e, type: 2}
-    Trait: {fileID: 11400000, guid: 95d3d133a553ab04eb8e5dc5c6e4772e, type: 2}
-  - DescriptiveName: Vitality
-    ID:
-      Name: Vitality_StatTrait_100%
-      ID: 26
-      Trait: {fileID: 11400000, guid: 547fcfcca22f54842a6f7005b5c0cc6b, type: 2}
-    Trait: {fileID: 11400000, guid: 547fcfcca22f54842a6f7005b5c0cc6b, type: 2}
-  - DescriptiveName: Large Gem Dexterity
-    ID:
-      Name: Large Gem Dexterity_StatTrait_100%
-      ID: 27
-      Trait: {fileID: 11400000, guid: af425b251addcc2449bd9a523dad841b, type: 2}
-    Trait: {fileID: 11400000, guid: af425b251addcc2449bd9a523dad841b, type: 2}
+      Name: Minor Mana_MaxResourceTraitModifier_100%
+      ID: 9
+      Trait: {fileID: 11400000, guid: 7fb9d87b04f45d74f93c83497e5f7271, type: 2}
+    Trait: {fileID: 11400000, guid: 7fb9d87b04f45d74f93c83497e5f7271, type: 2}
   - DescriptiveName: Dexterity
     ID:
-      Name: Small Gem Dexterity
-      ID: 28
-      Trait: {fileID: 11400000, guid: 0b7381c41bfc5e442ae0c40b650956fa, type: 2}
-    Trait: {fileID: 11400000, guid: 0b7381c41bfc5e442ae0c40b650956fa, type: 2}
+      Name: Dexterity_StatTraitModifier_100%
+      ID: 10
+      Trait: {fileID: 11400000, guid: 6ed7c687ea88f634bb9c187512f7e546, type: 2}
+    Trait: {fileID: 11400000, guid: 6ed7c687ea88f634bb9c187512f7e546, type: 2}
+  - DescriptiveName: Intelligence
+    ID:
+      Name: Intelligence_StatTraitModifier_100%
+      ID: 11
+      Trait: {fileID: 11400000, guid: 63998ee0ed7fe6d43a6a5280f129a0dc, type: 2}
+    Trait: {fileID: 11400000, guid: 63998ee0ed7fe6d43a6a5280f129a0dc, type: 2}
+  - DescriptiveName: Large Gem
+    ID:
+      Name: Large Gem_StatTraitModifier_100%
+      ID: 12
+      Trait: {fileID: 11400000, guid: acaf1f37edda33348aa12203150d7f95, type: 2}
+    Trait: {fileID: 11400000, guid: acaf1f37edda33348aa12203150d7f95, type: 2}
+  - DescriptiveName: Small Gem
+    ID:
+      Name: Small Gem_StatTraitModifier_100%
+      ID: 13
+      Trait: {fileID: 11400000, guid: df8bcee85c551cf4ca5f4cd158051090, type: 2}
+    Trait: {fileID: 11400000, guid: df8bcee85c551cf4ca5f4cd158051090, type: 2}
+  - DescriptiveName: Strength
+    ID:
+      Name: Strength_StatTraitModifier_100%
+      ID: 14
+      Trait: {fileID: 11400000, guid: 0725caa6157bf8b4f9b2b6437874da00, type: 2}
+    Trait: {fileID: 11400000, guid: 0725caa6157bf8b4f9b2b6437874da00, type: 2}
+  - DescriptiveName: Vitality
+    ID:
+      Name: Vitality_StatTraitModifier_100%
+      ID: 15
+      Trait: {fileID: 11400000, guid: 1bcdbb19dfe6ba044a774e73d104544b, type: 2}
+    Trait: {fileID: 11400000, guid: 1bcdbb19dfe6ba044a774e73d104544b, type: 2}

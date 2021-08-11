@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 912cd669e59d470d866cee250d6b1a48, type: 3}
   m_Name: Intelligence_StatTraitModifier_100%
   m_EditorClassIdentifier: 
-  config: {fileID: 0}
+  config: {fileID: 4900000, guid: d39453501010af44ba8c6e8333e7d4d9, type: 3}
   AutoName: 1
   traitID:
-    Name: 
-    ID: 0
-    Trait: {fileID: 0}
+    Name: Intelligence_StatTraitModifier_100%
+    ID: 11
+    Trait: {fileID: 11400000}
   traitName: Intelligence
   TraitPrefixes: []
   TraitSuffixes: []
