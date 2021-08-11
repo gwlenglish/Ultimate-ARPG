@@ -7,8 +7,10 @@ using UnityEngine;
 namespace GWLPXL.ARPGCore.Traits.com
 {
 
-    [CreateAssetMenu(menuName = "GWLPXL/ARPG/Equipment/Traits/NEW_ResourceTrait")]
-
+    /// <summary>
+    /// use MaxResourceTraitModifier
+    /// </summary>
+    [System.Obsolete]
     [System.Serializable]
     public class MaxResourceTrait : EquipmentTrait
     {

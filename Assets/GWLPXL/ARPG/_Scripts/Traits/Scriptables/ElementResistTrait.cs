@@ -9,8 +9,10 @@ using UnityEngine;
 namespace GWLPXL.ARPGCore.Traits.com
 {
 
-    [CreateAssetMenu(menuName = "GWLPXL/ARPG/Equipment/Traits/NEW_ElementResistTrait")]
-
+    /// <summary>
+    /// Use EleemntResistTraitModifier instead
+    /// </summary>
+    [System.Obsolete]
     [System.Serializable]
     public class ElementResistTrait : EquipmentTrait
     {

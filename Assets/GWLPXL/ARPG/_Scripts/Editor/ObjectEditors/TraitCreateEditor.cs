@@ -32,16 +32,16 @@ namespace GWLPXL.ARPG._Scripts.Editor.ObjectEditors.com
                 switch (obj.type)
                 {
                     case TraitType.Stat:
-                        temp = ScriptableObject.CreateInstance<StatTrait>();
+                        temp = ScriptableObject.CreateInstance<StatTraitModifier>();
                         break;
                     case TraitType.Resource:
-                        temp = ScriptableObject.CreateInstance<MaxResourceTrait>();
+                        temp = ScriptableObject.CreateInstance<MaxResourceTraitModifier>();
                         break;
                     case TraitType.ElementAttack:
-                        temp = ScriptableObject.CreateInstance<ElementAttackTrait>();
+                        temp = ScriptableObject.CreateInstance<ElementAttackTraitModifier>();
                         break;
                     case TraitType.ElementResist:
-                        temp = ScriptableObject.CreateInstance<ElementResistTrait>();
+                        temp = ScriptableObject.CreateInstance<ElementResistTraitModifier>();
                         break;
                     case TraitType.AbilityMod:
                         EditorUtility.DisplayDialog("Not Implemented", "TraitType.AbilityMod is not implemented yet", "Okay");

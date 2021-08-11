@@ -1,13 +1,13 @@
 {
     "config": {
-        "instanceID": 70206
+        "instanceID": 17108
     },
     "AutoName": true,
     "traitID": {
         "Name": "Dexterity_StatTraitModifier_100%",
         "ID": 10,
         "Trait": {
-            "instanceID": -8146
+            "instanceID": 16912
         }
     },
     "traitName": "Dexterity",

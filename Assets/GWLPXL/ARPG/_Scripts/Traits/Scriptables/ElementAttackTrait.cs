@@ -7,9 +7,13 @@ using UnityEngine;
 namespace GWLPXL.ARPGCore.Traits.com
 {
 
-    [CreateAssetMenu(menuName = "GWLPXL/ARPG/Equipment/Traits/NEW_ElementAttackTrait")]
 
+    /// <summary>
+    /// Obsolete, use ElementAttackTraitModifier
+    /// </summary>
+    [System.Obsolete]
     [System.Serializable]
+    
     public class ElementAttackTrait : EquipmentTrait
     {
         public ElementType Type;

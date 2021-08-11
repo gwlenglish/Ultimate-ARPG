@@ -1,13 +1,13 @@
 {
     "config": {
-        "instanceID": 70210
+        "instanceID": 17110
     },
     "AutoName": true,
     "traitID": {
         "Name": "Intelligence_StatTraitModifier_100%",
         "ID": 11,
         "Trait": {
-            "instanceID": 37234
+            "instanceID": 16914
         }
     },
     "traitName": "Intelligence",

@@ -967,23 +967,23 @@ namespace GWLPXL.ARPGCore.Saving.com
             switch (random.GetTraitType())
             {
                 case TraitType.ElementAttack:
-                    ElementAttackTrait attack = random as ElementAttackTrait;
+                    ElementAttackTraitModifier attack = random as ElementAttackTraitModifier;
                     subEnum = (int)attack.Type;
                     break;
                 case TraitType.ElementResist:
-                    ElementResistTrait resist = random as ElementResistTrait;
+                    ElementResistTraitModifier resist = random as ElementResistTraitModifier;
                     subEnum = (int)resist.Type;
                     break;
                 case TraitType.Resource:
-                    MaxResourceTrait resource = random as MaxResourceTrait;
+                    MaxResourceTraitModifier resource = random as MaxResourceTraitModifier;
                     subEnum = (int)resource.Type;
                     break;
                 case TraitType.AbilityMod:
-                    AbilityModTrait skillMod = random as AbilityModTrait;
+                    AbilityModTraitModifier skillMod = random as AbilityModTraitModifier;
                     //subEnum = (int)attack.Type;//this needs to eb something entirely different?...in references teh actual skill, so need to find it at runtime.
                     break;
                 case TraitType.Stat:
-                    StatTrait stat = random as StatTrait;
+                    StatTraitModifier stat = random as StatTraitModifier;
                     subEnum = (int)stat.Type;
                     break;
 

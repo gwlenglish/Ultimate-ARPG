@@ -4,11 +4,17 @@ using GWLPXL.ARPGCore.Abilities.com;
 using GWLPXL.ARPGCore.Types.com;
 using UnityEngine;
 using GWLPXL.ARPGCore.Attributes.com;
+using System;
 
 namespace GWLPXL.ARPGCore.Traits.com
 {
-    [CreateAssetMenu(menuName = "GWLPXL/ARPG/Equipment/Traits/NEW_AbilityModTrait")]
 
+
+    /// <summary>
+    /// obsolute, use the AbilityModTraitModifier
+    /// </summary>
+    /// 
+    [Obsolete]
     public class AbilityModTrait : EquipmentTrait
     {
         public Ability AbilityToMod;
