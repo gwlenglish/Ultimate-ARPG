@@ -54,8 +54,8 @@ MonoBehaviour:
       Sprite: {fileID: 3977366460457049894, guid: d274d7b6131b1094fb3cf06d40b14134,
         type: 3}
       EnchantTraits:
-      - {fileID: 11400000, guid: c876999be317fe541a8a45889aa6fb52, type: 2}
-      - {fileID: 11400000, guid: 0ff7dea6379235a468cdc6b20d3ba90d, type: 2}
+      - {fileID: 0}
+      - {fileID: 0}
       AffixOverrides:
         Prefixes: []
         Suffixes: []
@@ -66,7 +66,7 @@ MonoBehaviour:
       Sprite: {fileID: 2450015216007869224, guid: d274d7b6131b1094fb3cf06d40b14134,
         type: 3}
       EnchantTraits:
-      - {fileID: 11400000, guid: 2376d2dbfa820594e9b67574051a465d, type: 2}
+      - {fileID: 0}
       AffixOverrides:
         Prefixes: []
         Suffixes: []
@@ -77,8 +77,8 @@ MonoBehaviour:
       Sprite: {fileID: 3909212269490177266, guid: d274d7b6131b1094fb3cf06d40b14134,
         type: 3}
       EnchantTraits:
-      - {fileID: 11400000, guid: 2b70c8bd170bbdd4e8499d267e114f4d, type: 2}
-      - {fileID: 11400000, guid: 1da6e88061cb63447a8ee7dcef92afa3, type: 2}
+      - {fileID: 0}
+      - {fileID: 0}
       AffixOverrides:
         Prefixes: []
         Suffixes: []
@@ -259,7 +259,7 @@ MonoBehaviour:
   ZeroLookRotY: 1
   ZOffset: 0
   XOffset: 0
-  YOffset: 1
+  YOffset: 0
 --- !u!1 &8060683767272358926
 GameObject:
   m_ObjectHideFlags: 0

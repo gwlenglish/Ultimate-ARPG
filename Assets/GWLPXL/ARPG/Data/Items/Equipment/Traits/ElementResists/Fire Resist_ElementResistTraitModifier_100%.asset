@@ -19,9 +19,13 @@ MonoBehaviour:
     ID: 6
     Trait: {fileID: 11400000}
   traitName: Fire Resist
-  TraitPrefixes: []
-  TraitSuffixes: []
-  TraitNouns: []
+  TraitPrefixes:
+  - Fiery
+  - Blazing
+  TraitSuffixes:
+  - Blazing
+  TraitNouns:
+  - Flame
   myValue: 1
   myLevelMulti: 100
   weight: 1

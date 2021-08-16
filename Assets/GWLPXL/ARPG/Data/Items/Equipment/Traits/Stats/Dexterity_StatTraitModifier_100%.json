@@ -1,19 +1,27 @@
 {
     "config": {
-        "instanceID": 17108
+        "instanceID": 15102
     },
     "AutoName": true,
     "traitID": {
         "Name": "Dexterity_StatTraitModifier_100%",
         "ID": 10,
         "Trait": {
-            "instanceID": 16912
+            "instanceID": 15088
         }
     },
     "traitName": "Dexterity",
-    "TraitPrefixes": [],
-    "TraitSuffixes": [],
-    "TraitNouns": [],
+    "TraitPrefixes": [
+        "Agile",
+        "Nimble"
+    ],
+    "TraitSuffixes": [
+        "Agile",
+        "Nimble"
+    ],
+    "TraitNouns": [
+        "Dexterity"
+    ],
     "myValue": 1,
     "myLevelMulti": 100,
     "weight": 1,

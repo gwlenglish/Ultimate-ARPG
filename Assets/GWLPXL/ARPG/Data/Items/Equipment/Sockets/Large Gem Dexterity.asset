@@ -30,4 +30,4 @@ MonoBehaviour:
     Type: 102
     Description: Large Dexterity Gem
   EquipmentTraitSocketable:
-  - {fileID: 11400000, guid: 0725caa6157bf8b4f9b2b6437874da00, type: 2}
+  - {fileID: 11400000, guid: 6ed7c687ea88f634bb9c187512f7e546, type: 2}

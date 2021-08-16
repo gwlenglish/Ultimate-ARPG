@@ -1,19 +1,27 @@
 {
     "config": {
-        "instanceID": 17060
+        "instanceID": 15094
     },
     "AutoName": true,
     "traitID": {
         "Name": "Ice Attack_ElementAttackTraitModifier_100%",
         "ID": 3,
         "Trait": {
-            "instanceID": 16898
+            "instanceID": 15080
         }
     },
     "traitName": "Ice Attack",
-    "TraitPrefixes": [],
-    "TraitSuffixes": [],
-    "TraitNouns": [],
+    "TraitPrefixes": [
+        "Chilling",
+        "Frozen"
+    ],
+    "TraitSuffixes": [
+        "Icey"
+    ],
+    "TraitNouns": [
+        "Ice",
+        "Iciness"
+    ],
     "myValue": 1,
     "myLevelMulti": 100,
     "weight": 1,

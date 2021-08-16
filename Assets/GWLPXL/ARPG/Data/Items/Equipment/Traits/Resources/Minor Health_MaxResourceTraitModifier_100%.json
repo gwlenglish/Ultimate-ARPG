@@ -1,19 +1,27 @@
 {
     "config": {
-        "instanceID": 17064
+        "instanceID": 15002
     },
     "AutoName": true,
     "traitID": {
         "Name": "Minor Health_MaxResourceTraitModifier_100%",
         "ID": 8,
         "Trait": {
-            "instanceID": 16908
+            "instanceID": 15000
         }
     },
     "traitName": "Minor Health",
-    "TraitPrefixes": [],
-    "TraitSuffixes": [],
-    "TraitNouns": [],
+    "TraitPrefixes": [
+        "Healthy",
+        "Vital"
+    ],
+    "TraitSuffixes": [
+        "Invigorating"
+    ],
+    "TraitNouns": [
+        "Nourishment",
+        "Invigoration"
+    ],
     "myValue": 1,
     "myLevelMulti": 100,
     "weight": 1,

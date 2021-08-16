@@ -19,9 +19,12 @@ MonoBehaviour:
     ID: 12
     Trait: {fileID: 11400000}
   traitName: Large Gem
-  TraitPrefixes: []
-  TraitSuffixes: []
-  TraitNouns: []
+  TraitPrefixes:
+  - Sharpened
+  TraitSuffixes:
+  - Sharpened
+  TraitNouns:
+  - Dexterity
   myValue: 20
   myLevelMulti: 100
   weight: 1

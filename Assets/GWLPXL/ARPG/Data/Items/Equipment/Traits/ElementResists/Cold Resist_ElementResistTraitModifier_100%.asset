@@ -19,9 +19,13 @@ MonoBehaviour:
     ID: 5
     Trait: {fileID: 11400000}
   traitName: Cold Resist
-  TraitPrefixes: []
-  TraitSuffixes: []
-  TraitNouns: []
+  TraitPrefixes:
+  - Chilling
+  - Frozen
+  TraitSuffixes:
+  - Icey
+  TraitNouns:
+  - Ice
   myValue: 1
   myLevelMulti: 100
   weight: 1

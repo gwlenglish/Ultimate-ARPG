@@ -19,9 +19,12 @@ MonoBehaviour:
     ID: 13
     Trait: {fileID: 11400000}
   traitName: Small Gem
-  TraitPrefixes: []
-  TraitSuffixes: []
-  TraitNouns: []
+  TraitPrefixes:
+  - Edged
+  TraitSuffixes:
+  - Edged
+  TraitNouns:
+  - Dexterity
   myValue: 10
   myLevelMulti: 100
   weight: 1

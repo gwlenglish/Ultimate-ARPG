@@ -1,19 +1,27 @@
 {
     "config": {
-        "instanceID": 17114
+        "instanceID": 15104
     },
     "AutoName": true,
     "traitID": {
         "Name": "Vitality_StatTraitModifier_100%",
         "ID": 15,
         "Trait": {
-            "instanceID": 16918
+            "instanceID": 15090
         }
     },
     "traitName": "Vitality",
-    "TraitPrefixes": [],
-    "TraitSuffixes": [],
-    "TraitNouns": [],
+    "TraitPrefixes": [
+        "Healthy",
+        "Vital"
+    ],
+    "TraitSuffixes": [
+        "Nourishing"
+    ],
+    "TraitNouns": [
+        "Health",
+        "Vitality"
+    ],
     "myValue": 1,
     "myLevelMulti": 100,
     "weight": 1,

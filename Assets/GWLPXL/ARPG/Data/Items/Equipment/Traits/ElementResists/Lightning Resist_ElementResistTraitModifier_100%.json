@@ -1,19 +1,26 @@
 {
     "config": {
-        "instanceID": 17106
+        "instanceID": 15098
     },
     "AutoName": true,
     "traitID": {
         "Name": "Lightning Resist_ElementResistTraitModifier_100%",
         "ID": 7,
         "Trait": {
-            "instanceID": 16906
+            "instanceID": 15084
         }
     },
     "traitName": "Lightning Resist",
-    "TraitPrefixes": [],
-    "TraitSuffixes": [],
-    "TraitNouns": [],
+    "TraitPrefixes": [
+        "Electric",
+        "Brilliant"
+    ],
+    "TraitSuffixes": [
+        "Zapping"
+    ],
+    "TraitNouns": [
+        "Spark"
+    ],
     "myValue": 1,
     "myLevelMulti": 100,
     "weight": 1,

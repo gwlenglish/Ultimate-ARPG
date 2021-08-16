@@ -19,9 +19,14 @@ MonoBehaviour:
     ID: 15
     Trait: {fileID: 11400000}
   traitName: Vitality
-  TraitPrefixes: []
-  TraitSuffixes: []
-  TraitNouns: []
+  TraitPrefixes:
+  - Healthy
+  - Vital
+  TraitSuffixes:
+  - Nourishing
+  TraitNouns:
+  - Health
+  - Vitality
   myValue: 1
   myLevelMulti: 100
   weight: 1

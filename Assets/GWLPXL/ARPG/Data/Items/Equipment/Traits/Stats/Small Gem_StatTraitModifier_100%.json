@@ -1,19 +1,25 @@
 {
     "config": {
-        "instanceID": 22754
+        "instanceID": 15160
     },
     "AutoName": true,
     "traitID": {
         "Name": "Small Gem_StatTraitModifier_100%",
         "ID": 13,
         "Trait": {
-            "instanceID": 22632
+            "instanceID": 15156
         }
     },
     "traitName": "Small Gem",
-    "TraitPrefixes": [],
-    "TraitSuffixes": [],
-    "TraitNouns": [],
+    "TraitPrefixes": [
+        "Edged"
+    ],
+    "TraitSuffixes": [
+        "Edged"
+    ],
+    "TraitNouns": [
+        "Dexterity"
+    ],
     "myValue": 10,
     "myLevelMulti": 100,
     "weight": 1,

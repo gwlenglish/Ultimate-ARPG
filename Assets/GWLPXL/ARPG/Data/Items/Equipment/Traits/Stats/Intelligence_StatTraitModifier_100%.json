@@ -1,19 +1,25 @@
 {
     "config": {
-        "instanceID": 17110
+        "instanceID": 14936
     },
     "AutoName": true,
     "traitID": {
         "Name": "Intelligence_StatTraitModifier_100%",
         "ID": 11,
         "Trait": {
-            "instanceID": 16914
+            "instanceID": 14934
         }
     },
     "traitName": "Intelligence",
-    "TraitPrefixes": [],
-    "TraitSuffixes": [],
-    "TraitNouns": [],
+    "TraitPrefixes": [
+        "Clever"
+    ],
+    "TraitSuffixes": [
+        "Clever"
+    ],
+    "TraitNouns": [
+        "Intelligence"
+    ],
     "myValue": 1,
     "myLevelMulti": 100,
     "weight": 1,

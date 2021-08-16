@@ -7,24 +7,15 @@
         "Name": "Strength_StatTraitModifier_100%",
         "ID": 14,
         "Trait": {
-            "instanceID": 14868
+            "instanceID": 58600
         }
     },
-    "traitName": "Strength",
-    "TraitPrefixes": [
-        "Strong",
-        "Powerful"
-    ],
-    "TraitSuffixes": [
-        "Solid"
-    ],
-    "TraitNouns": [
-        "Strength",
-        "Power",
-        "Ox"
-    ],
+    "traitName": "Dexterity",
+    "TraitPrefixes": [],
+    "TraitSuffixes": [],
+    "TraitNouns": [],
     "myValue": 1,
-    "myLevelMulti": 100,
+    "myLevelMulti": 50,
     "weight": 1,
     "sprite": {
         "instanceID": 0
@@ -33,5 +24,5 @@
         "Type": 300,
         "Order": 300
     },
-    "Type": 0
+    "Type": 2
 }

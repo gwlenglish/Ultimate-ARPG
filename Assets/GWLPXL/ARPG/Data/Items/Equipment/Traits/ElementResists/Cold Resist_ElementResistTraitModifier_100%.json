@@ -1,19 +1,26 @@
 {
     "config": {
-        "instanceID": 17102
+        "instanceID": 14856
     },
     "AutoName": true,
     "traitID": {
         "Name": "Cold Resist_ElementResistTraitModifier_100%",
         "ID": 5,
         "Trait": {
-            "instanceID": 16902
+            "instanceID": 14854
         }
     },
     "traitName": "Cold Resist",
-    "TraitPrefixes": [],
-    "TraitSuffixes": [],
-    "TraitNouns": [],
+    "TraitPrefixes": [
+        "Chilling",
+        "Frozen"
+    ],
+    "TraitSuffixes": [
+        "Icey"
+    ],
+    "TraitNouns": [
+        "Ice"
+    ],
     "myValue": 1,
     "myLevelMulti": 100,
     "weight": 1,

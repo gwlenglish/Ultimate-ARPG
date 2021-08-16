@@ -337,7 +337,7 @@ MonoBehaviour:
   ZeroLookRotY: 1
   ZOffset: 0
   XOffset: 0
-  YOffset: 1
+  YOffset: 0
 --- !u!1 &4003853464507855270
 GameObject:
   m_ObjectHideFlags: 0

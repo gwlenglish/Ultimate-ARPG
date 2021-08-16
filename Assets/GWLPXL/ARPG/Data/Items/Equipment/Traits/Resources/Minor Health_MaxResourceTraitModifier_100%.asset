@@ -19,9 +19,14 @@ MonoBehaviour:
     ID: 8
     Trait: {fileID: 11400000}
   traitName: Minor Health
-  TraitPrefixes: []
-  TraitSuffixes: []
-  TraitNouns: []
+  TraitPrefixes:
+  - Healthy
+  - Vital
+  TraitSuffixes:
+  - Invigorating
+  TraitNouns:
+  - Nourishment
+  - Invigoration
   myValue: 1
   myLevelMulti: 100
   weight: 1

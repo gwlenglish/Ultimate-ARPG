@@ -9,27 +9,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3775624cd6c84a67894bdee3c92aa1de, type: 3}
-  m_Name: Fire Attack_ElementAttackTraitModifier_100%
+  m_Script: {fileID: 11500000, guid: 912cd669e59d470d866cee250d6b1a48, type: 3}
+  m_Name: Dexterity_StatTraitModifier_50%
   m_EditorClassIdentifier: 
-  config: {fileID: 4900000, guid: 885f708719a572246aeb1a5e949c9ba6, type: 3}
+  config: {fileID: 4900000, guid: fbd6df6b220421140a8bbbeef34bc795, type: 3}
   AutoName: 1
   traitID:
-    Name: Fire Attack_ElementAttackTraitModifier_100%
-    ID: 2
+    Name: Strength_StatTraitModifier_100%
+    ID: 14
     Trait: {fileID: 11400000}
-  traitName: Fire Attack
-  TraitPrefixes:
-  - Fiery
-  - Blazing
+  traitName: Dexterity
+  TraitPrefixes: []
   TraitSuffixes: []
-  TraitNouns:
-  - Hellfire
+  TraitNouns: []
   myValue: 1
-  myLevelMulti: 100
+  myLevelMulti: 50
   weight: 1
   sprite: {fileID: 0}
   attributeModifier:
     Type: 300
     Order: 300
-  Type: 1
+  Type: 2

@@ -7,24 +7,15 @@
         "Name": "Strength_StatTraitModifier_100%",
         "ID": 14,
         "Trait": {
-            "instanceID": 14868
+            "instanceID": 14996
         }
     },
     "traitName": "Strength",
-    "TraitPrefixes": [
-        "Strong",
-        "Powerful"
-    ],
-    "TraitSuffixes": [
-        "Solid"
-    ],
-    "TraitNouns": [
-        "Strength",
-        "Power",
-        "Ox"
-    ],
+    "TraitPrefixes": [],
+    "TraitSuffixes": [],
+    "TraitNouns": [],
     "myValue": 1,
-    "myLevelMulti": 100,
+    "myLevelMulti": 50,
     "weight": 1,
     "sprite": {
         "instanceID": 0

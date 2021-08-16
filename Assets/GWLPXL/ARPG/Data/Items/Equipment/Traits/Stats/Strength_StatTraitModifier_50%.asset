@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 912cd669e59d470d866cee250d6b1a48, type: 3}
   m_Name: Strength_StatTraitModifier_50%
   m_EditorClassIdentifier: 
-  config: {fileID: 4900000, guid: fbd6df6b220421140a8bbbeef34bc795, type: 3}
+  config: {fileID: 4900000, guid: b882bae1d31703e4aadefe9b10b1fb37, type: 3}
   AutoName: 1
   traitID:
     Name: Strength_StatTraitModifier_100%

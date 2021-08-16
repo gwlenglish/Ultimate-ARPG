@@ -1,19 +1,26 @@
 {
     "config": {
-        "instanceID": 17104
+        "instanceID": 15096
     },
     "AutoName": true,
     "traitID": {
         "Name": "Fire Resist_ElementResistTraitModifier_100%",
         "ID": 6,
         "Trait": {
-            "instanceID": 16904
+            "instanceID": 15082
         }
     },
     "traitName": "Fire Resist",
-    "TraitPrefixes": [],
-    "TraitSuffixes": [],
-    "TraitNouns": [],
+    "TraitPrefixes": [
+        "Fiery",
+        "Blazing"
+    ],
+    "TraitSuffixes": [
+        "Blazing"
+    ],
+    "TraitNouns": [
+        "Flame"
+    ],
     "myValue": 1,
     "myLevelMulti": 100,
     "weight": 1,

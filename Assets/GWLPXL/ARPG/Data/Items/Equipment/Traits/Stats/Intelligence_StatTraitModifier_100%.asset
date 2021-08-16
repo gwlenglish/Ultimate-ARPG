@@ -19,9 +19,12 @@ MonoBehaviour:
     ID: 11
     Trait: {fileID: 11400000}
   traitName: Intelligence
-  TraitPrefixes: []
-  TraitSuffixes: []
-  TraitNouns: []
+  TraitPrefixes:
+  - Clever
+  TraitSuffixes:
+  - Clever
+  TraitNouns:
+  - Intelligence
   myValue: 1
   myLevelMulti: 100
   weight: 1

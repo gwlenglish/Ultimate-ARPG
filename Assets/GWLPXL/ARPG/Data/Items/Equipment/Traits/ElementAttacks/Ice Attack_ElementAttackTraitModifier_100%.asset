@@ -19,9 +19,14 @@ MonoBehaviour:
     ID: 3
     Trait: {fileID: 11400000}
   traitName: Ice Attack
-  TraitPrefixes: []
-  TraitSuffixes: []
-  TraitNouns: []
+  TraitPrefixes:
+  - Chilling
+  - Frozen
+  TraitSuffixes:
+  - Icey
+  TraitNouns:
+  - Ice
+  - Iciness
   myValue: 1
   myLevelMulti: 100
   weight: 1

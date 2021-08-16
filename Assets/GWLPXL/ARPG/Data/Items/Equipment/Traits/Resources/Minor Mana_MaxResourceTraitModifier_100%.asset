@@ -19,9 +19,15 @@ MonoBehaviour:
     ID: 9
     Trait: {fileID: 11400000}
   traitName: Minor Mana
-  TraitPrefixes: []
-  TraitSuffixes: []
-  TraitNouns: []
+  TraitPrefixes:
+  - Mystical
+  - Refreshing
+  TraitSuffixes:
+  - Magical
+  TraitNouns:
+  - Magic
+  - Mana
+  - Mysticism
   myValue: 1
   myLevelMulti: 100
   weight: 1
