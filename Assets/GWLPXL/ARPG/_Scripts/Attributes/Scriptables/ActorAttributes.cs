@@ -352,6 +352,7 @@ namespace GWLPXL.ARPGCore.Attributes.com
             resource.AddModifier(modifier);
             OnResourceChanged?.Invoke((int)whichOne);
         }
+
         public virtual void RemoveModifierResource(ResourceType whichOne, AttributeModifier modifier)
         {
             var resource = FindResource(whichOne);
@@ -359,6 +360,7 @@ namespace GWLPXL.ARPGCore.Attributes.com
             resource.RemoveModifier(modifier);
             OnResourceChanged?.Invoke((int)whichOne);
         }
+
         public virtual void RemoveSourceModifierResource(ResourceType whichOne, object source)
         {
             var resource = FindResource(whichOne);

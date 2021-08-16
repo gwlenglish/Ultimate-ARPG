@@ -29,15 +29,15 @@ namespace GWLPXL.ARPGCore.Attributes.com
             return GetDescriptiveName() + attack + NowValue.ToString();
         }
 
-        //do nothing, elements don't level.
+
         public override void Level(int newLevel, int maxLevel)
         {
-            //do nothing, elements don't level.
+            base.Level(newLevel, maxLevel);
         }
-        //do nothing, elements don't level.
+
         protected override int GetLeveledValue(int forLevel, int myMaxLevel)
         {
-            return NowValue;
+            return base.GetLeveledValue(forLevel, myMaxLevel);
         }
 
         public override int GetSubType() => (int)Type;
