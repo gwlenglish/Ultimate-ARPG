@@ -4,8 +4,11 @@ using GWLPXL.ARPGCore.Types.com;
 
 namespace GWLPXL.ARPGCore.Auras.com
 {
+    /// <summary>
+    /// obsolete, use BuffStatModifier
+    /// </summary>
+    [System.Obsolete]
 
-    [CreateAssetMenu(menuName = "GWLPXL/ARPG/Auras/Logic/NEW Buff Stat")]
     public class ARPG_BuffStat : AuraLogic
     {
         [SerializeField]

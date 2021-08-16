@@ -1,27 +1,27 @@
 {
     "config": {
-        "instanceID": 17538
+        "instanceID": 17176
     },
     "id": {
-        "Name": "Arrow 2D",
-        "ID": 9,
+        "Name": "Axe",
+        "ID": 1,
         "Instance": {
-            "instanceID": 32234
+            "instanceID": 17008
         }
     },
     "DamageVar": {
         "combatHandler": {
-            "instanceID": 17192
+            "instanceID": 17178
         },
-        "descriptiveName": "Arrow",
+        "descriptiveName": "Axe",
         "damageOptions": {
             "physdmg": true,
-            "elemdg": true,
+            "elemdg": false,
             "sotmod": false
         },
         "damageMultipliers": {
             "physicalMultipler": {
-                "baseDamageAmount": 2,
+                "baseDamageAmount": 10,
                 "percentOfCasterAttack": 0.0
             },
             "elementMultipliers": []

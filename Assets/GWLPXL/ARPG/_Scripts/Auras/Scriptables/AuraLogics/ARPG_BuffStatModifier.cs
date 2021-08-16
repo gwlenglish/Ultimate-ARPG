@@ -4,6 +4,8 @@ using UnityEngine;
 
 namespace GWLPXL.ARPGCore.Auras.com
 {
+
+
     [CreateAssetMenu(menuName = "GWLPXL/ARPG/Auras/Logic/NEW ARPG Buff Stat Modifier")]
     public class ARPG_BuffStatModifier : AuraLogic
     {

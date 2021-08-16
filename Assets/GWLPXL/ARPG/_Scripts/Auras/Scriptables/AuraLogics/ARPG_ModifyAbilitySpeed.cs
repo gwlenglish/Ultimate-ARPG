@@ -6,7 +6,9 @@ using GWLPXL.ARPGCore.Abilities.com;
 
 namespace GWLPXL.ARPGCore.Auras.com
 {
-
+    /// <summary>
+    /// should really be tagged to a stat that conrols the multi for the speed, but this directly influences it without the stat
+    /// </summary>
     [CreateAssetMenu(menuName = "GWLPXL/ARPG/Auras/Logic/NEW ARPG Increase Ability Speed")]
     public class ARPG_ModifyAbilitySpeed : AuraLogic
     {

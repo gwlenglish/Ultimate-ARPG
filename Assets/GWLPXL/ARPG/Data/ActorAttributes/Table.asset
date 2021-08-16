@@ -24,7 +24,7 @@ MonoBehaviour:
   maxLevel: 99
   baseStat: 0
   Resources:
-  - NowValue: 1
+  - BaseValue: 0
     Level1Value: 1
     LevelCurve:
       serializedVersion: 2
@@ -51,6 +51,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 0
     Level99Max: 10
+    NowValue: 1
     Type: 0
   Stats: []
   resourceLinks: []

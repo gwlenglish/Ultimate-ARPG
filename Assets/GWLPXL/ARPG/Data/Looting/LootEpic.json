@@ -1,6 +1,6 @@
 {
     "config": {
-        "instanceID": 19076
+        "instanceID": 19062
     },
     "lootPrefabOverride": {
         "instanceID": 0
@@ -9,12 +9,12 @@
         "Name": "Loot Epic",
         "ID": 9,
         "LootDrops": {
-            "instanceID": 18982
+            "instanceID": 18968
         }
     },
     "AllPossibleItems": [
         {
-            "instanceID": 16584
+            "instanceID": 16610
         }
     ],
     "LootTable": [
@@ -24,7 +24,7 @@
             "RangeFrom": 0,
             "RangeTo": 15,
             "Item": {
-                "instanceID": 16584
+                "instanceID": 16610
             }
         }
     ]

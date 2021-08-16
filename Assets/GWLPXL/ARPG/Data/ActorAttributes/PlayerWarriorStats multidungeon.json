@@ -1,16 +1,16 @@
 {
     "config": {
-        "instanceID": 25528
+        "instanceID": 25520
     },
     "databaseID": {
         "Name": "Player Warrior",
         "ID": 10,
         "ActorStats": {
-            "instanceID": 24922
+            "instanceID": 24910
         }
     },
     "LevelUpEvent": {
-        "instanceID": 23650
+        "instanceID": 23638
     },
     "myLevel": 1,
     "restoreOnLevel": true,
@@ -19,7 +19,7 @@
     "baseStat": 0,
     "Resources": [
         {
-            "NowValue": 118,
+            "BaseValue": 0,
             "Level1Value": 100,
             "LevelCurve": {
                 "serializedVersion": "2",
@@ -52,10 +52,11 @@
                 "m_RotationOrder": 4
             },
             "Level99Max": 1000,
+            "NowValue": 118,
             "Type": 0
         },
         {
-            "NowValue": 51,
+            "BaseValue": 0,
             "Level1Value": 50,
             "LevelCurve": {
                 "serializedVersion": "2",
@@ -88,12 +89,13 @@
                 "m_RotationOrder": 4
             },
             "Level99Max": 100,
+            "NowValue": 51,
             "Type": 1
         }
     ],
     "Stats": [
         {
-            "NowValue": 23,
+            "BaseValue": 0,
             "Level1Value": 20,
             "LevelCurve": {
                 "serializedVersion": "2",
@@ -126,10 +128,11 @@
                 "m_RotationOrder": 4
             },
             "Level99Max": 200,
+            "NowValue": 23,
             "Type": 0
         },
         {
-            "NowValue": 23,
+            "BaseValue": 0,
             "Level1Value": 20,
             "LevelCurve": {
                 "serializedVersion": "2",
@@ -162,10 +165,11 @@
                 "m_RotationOrder": 4
             },
             "Level99Max": 200,
+            "NowValue": 23,
             "Type": 1
         },
         {
-            "NowValue": 18,
+            "BaseValue": 0,
             "Level1Value": 10,
             "LevelCurve": {
                 "serializedVersion": "2",
@@ -198,10 +202,11 @@
                 "m_RotationOrder": 4
             },
             "Level99Max": 450,
+            "NowValue": 18,
             "Type": 2
         },
         {
-            "NowValue": 23,
+            "BaseValue": 0,
             "Level1Value": 20,
             "LevelCurve": {
                 "serializedVersion": "2",
@@ -234,6 +239,7 @@
                 "m_RotationOrder": 4
             },
             "Level99Max": 200,
+            "NowValue": 23,
             "Type": 3
         }
     ],
@@ -271,7 +277,7 @@
     ],
     "ElementAttacks": [
         {
-            "NowValue": 0,
+            "BaseValue": 0,
             "Level1Value": 0,
             "LevelCurve": {
                 "serializedVersion": "2",
@@ -304,10 +310,11 @@
                 "m_RotationOrder": 0
             },
             "Level99Max": 125,
+            "NowValue": 0,
             "Type": 1
         },
         {
-            "NowValue": 0,
+            "BaseValue": 0,
             "Level1Value": 0,
             "LevelCurve": {
                 "serializedVersion": "2",
@@ -340,10 +347,11 @@
                 "m_RotationOrder": 0
             },
             "Level99Max": 125,
+            "NowValue": 0,
             "Type": 2
         },
         {
-            "NowValue": 0,
+            "BaseValue": 0,
             "Level1Value": 0,
             "LevelCurve": {
                 "serializedVersion": "2",
@@ -376,12 +384,13 @@
                 "m_RotationOrder": 0
             },
             "Level99Max": 125,
+            "NowValue": 0,
             "Type": 3
         }
     ],
     "ElementResists": [
         {
-            "NowValue": 0,
+            "BaseValue": 0,
             "Level1Value": 0,
             "LevelCurve": {
                 "serializedVersion": "2",
@@ -414,10 +423,11 @@
                 "m_RotationOrder": 0
             },
             "Level99Max": 95,
+            "NowValue": 0,
             "Type": 1
         },
         {
-            "NowValue": 0,
+            "BaseValue": 0,
             "Level1Value": 0,
             "LevelCurve": {
                 "serializedVersion": "2",
@@ -450,10 +460,11 @@
                 "m_RotationOrder": 0
             },
             "Level99Max": 95,
+            "NowValue": 0,
             "Type": 2
         },
         {
-            "NowValue": 0,
+            "BaseValue": 0,
             "Level1Value": 0,
             "LevelCurve": {
                 "serializedVersion": "2",
@@ -486,13 +497,14 @@
                 "m_RotationOrder": 0
             },
             "Level99Max": 95,
+            "NowValue": 0,
             "Type": 3
         }
     ],
     "abilityMods": [],
     "others": [
         {
-            "NowValue": 5,
+            "BaseValue": 0,
             "Level1Value": 5,
             "LevelCurve": {
                 "serializedVersion": "2",
@@ -525,11 +537,12 @@
                 "m_RotationOrder": 0
             },
             "Level99Max": 15,
+            "NowValue": 5,
             "Type": 1,
             "DescriptiveName": ""
         },
         {
-            "NowValue": 5,
+            "BaseValue": 0,
             "Level1Value": 5,
             "LevelCurve": {
                 "serializedVersion": "2",
@@ -562,6 +575,7 @@
                 "m_RotationOrder": 0
             },
             "Level99Max": 15,
+            "NowValue": 5,
             "Type": 2,
             "DescriptiveName": ""
         }

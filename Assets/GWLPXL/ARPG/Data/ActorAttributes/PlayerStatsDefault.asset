@@ -24,7 +24,7 @@ MonoBehaviour:
   maxLevel: 101
   baseStat: 0
   Resources:
-  - NowValue: 50
+  - BaseValue: 0
     Level1Value: 50
     LevelCurve:
       serializedVersion: 2
@@ -51,8 +51,9 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     Level99Max: 100
+    NowValue: 50
     Type: 0
-  - NowValue: 50
+  - BaseValue: 0
     Level1Value: 50
     LevelCurve:
       serializedVersion: 2
@@ -79,9 +80,10 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     Level99Max: 100
+    NowValue: 50
     Type: 1
   Stats:
-  - NowValue: 11
+  - BaseValue: 0
     Level1Value: 10
     LevelCurve:
       serializedVersion: 2
@@ -108,8 +110,9 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     Level99Max: 100
+    NowValue: 11
     Type: 0
-  - NowValue: 11
+  - BaseValue: 0
     Level1Value: 10
     LevelCurve:
       serializedVersion: 2
@@ -136,8 +139,9 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     Level99Max: 100
+    NowValue: 11
     Type: 1
-  - NowValue: 18
+  - BaseValue: 0
     Level1Value: 10
     LevelCurve:
       serializedVersion: 2
@@ -182,8 +186,9 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     Level99Max: 450
+    NowValue: 18
     Type: 2
-  - NowValue: 11
+  - BaseValue: 0
     Level1Value: 10
     LevelCurve:
       serializedVersion: 2
@@ -210,6 +215,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     Level99Max: 100
+    NowValue: 11
     Type: 3
   resourceLinks:
   - StatName: Intelligence

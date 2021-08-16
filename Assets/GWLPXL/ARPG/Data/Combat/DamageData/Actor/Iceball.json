@@ -1,17 +1,17 @@
 {
     "config": {
-        "instanceID": 25430
+        "instanceID": 25420
     },
     "id": {
         "Name": "Iceball",
         "ID": 6,
         "Instance": {
-            "instanceID": 32246
+            "instanceID": 24920
         }
     },
     "DamageVar": {
         "combatHandler": {
-            "instanceID": 17192
+            "instanceID": 17178
         },
         "descriptiveName": "Iceball",
         "damageOptions": {

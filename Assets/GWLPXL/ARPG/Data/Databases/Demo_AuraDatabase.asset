@@ -15,12 +15,6 @@ MonoBehaviour:
   searchFolders:
   - Assets/GWLPXL/ARPG/Data
   slots:
-  - DescriptiveName: ARPG Max MP Increase 2D
-    ID:
-      Name: 
-      ID: 1
-      Aura: {fileID: 11400000, guid: 86dd86820ac96474ab72832ad3ca32dd, type: 2}
-    Aura: {fileID: 11400000, guid: 86dd86820ac96474ab72832ad3ca32dd, type: 2}
   - DescriptiveName: ARPG Regen HP
     ID:
       Name: 
@@ -43,8 +37,8 @@ MonoBehaviour:
     ID:
       Name: 
       ID: 5
-      Aura: {fileID: 11400000, guid: 337ad0f9e447770479236d6a959eb191, type: 2}
-    Aura: {fileID: 11400000, guid: 337ad0f9e447770479236d6a959eb191, type: 2}
+      Aura: {fileID: 11400000, guid: 86dd86820ac96474ab72832ad3ca32dd, type: 2}
+    Aura: {fileID: 11400000, guid: 86dd86820ac96474ab72832ad3ca32dd, type: 2}
   - DescriptiveName: ARPG Reduce HP 2D
     ID:
       Name: 
@@ -57,9 +51,15 @@ MonoBehaviour:
       ID: 7
       Aura: {fileID: 11400000, guid: 8393e4da3a5c6ee49ba3ee6bb413ae90, type: 2}
     Aura: {fileID: 11400000, guid: 8393e4da3a5c6ee49ba3ee6bb413ae90, type: 2}
-  - DescriptiveName: ARPG Max HP Increase
+  - DescriptiveName: ARPG Max MP +80%
     ID:
       Name: ARPG Max HP Increase
       ID: 8
       Aura: {fileID: 11400000, guid: bb6dcd1d393469143b67582bfbd92847, type: 2}
     Aura: {fileID: 11400000, guid: bb6dcd1d393469143b67582bfbd92847, type: 2}
+  - DescriptiveName: ARPG Max HP +80%
+    ID:
+      Name: ARPG Max HP +80%
+      ID: 9
+      Aura: {fileID: 11400000, guid: aceeb76bc36e41644ab36a69ae7d9dc1, type: 2}
+    Aura: {fileID: 11400000, guid: aceeb76bc36e41644ab36a69ae7d9dc1, type: 2}

@@ -1,17 +1,17 @@
 {
     "config": {
-        "instanceID": 17524
+        "instanceID": 17510
     },
     "id": {
         "Name": "Flamethrower",
-        "ID": 5,
+        "ID": 12,
         "Instance": {
-            "instanceID": 32244
+            "instanceID": 17336
         }
     },
     "DamageVar": {
         "combatHandler": {
-            "instanceID": 17192
+            "instanceID": 17178
         },
         "descriptiveName": "Flamethrower",
         "damageOptions": {

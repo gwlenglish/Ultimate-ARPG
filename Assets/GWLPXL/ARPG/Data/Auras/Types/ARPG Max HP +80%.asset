@@ -25,7 +25,7 @@ MonoBehaviour:
     AuraPrefab: {fileID: 2800619502281628294, guid: 1e55d55ab2f3c6148b1d8b1a843ef197,
       type: 3}
     auraCategory: 0
-    uniqueID: -2231096
+    uniqueID: 16628
     AuraLogics:
     - {fileID: 11400000, guid: 2b53d621dbe758241adfbb9c2d1a1866, type: 2}
     AuraGroups: 01000000

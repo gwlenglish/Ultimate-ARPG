@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 19072
+        "instanceID": 19058
     },
     "databaseID": {
         "Name": "Table breakable",
         "ID": 4,
         "ActorStats": {
-            "instanceID": 18740
+            "instanceID": 18726
         }
     },
     "LevelUpEvent": {
@@ -19,7 +19,7 @@
     "baseStat": 0,
     "Resources": [
         {
-            "NowValue": 1,
+            "BaseValue": 0,
             "Level1Value": 1,
             "LevelCurve": {
                 "serializedVersion": "2",
@@ -52,6 +52,7 @@
                 "m_RotationOrder": 0
             },
             "Level99Max": 10,
+            "NowValue": 1,
             "Type": 0
         }
     ],

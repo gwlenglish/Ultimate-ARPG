@@ -1,12 +1,12 @@
 {
     "Config": {
-        "instanceID": 25434
+        "instanceID": 25424
     },
     "classID": {
         "Name": "Warrior",
         "ID": 2,
         "SOReference": {
-            "instanceID": 24956
+            "instanceID": 24946
         }
     },
     "classAttributes": {

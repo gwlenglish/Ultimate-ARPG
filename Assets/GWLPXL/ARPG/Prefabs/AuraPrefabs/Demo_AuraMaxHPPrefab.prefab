@@ -43,7 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46d5315384de51f4bb99c921a159b43f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ForAura: {fileID: 11400000, guid: bb6dcd1d393469143b67582bfbd92847, type: 2}
+  ForAura: {fileID: 11400000, guid: aceeb76bc36e41644ab36a69ae7d9dc1, type: 2}
+  LineMat: {fileID: 0}
   Duration: 1
   LineWidth: 0.25
   Segments: 360

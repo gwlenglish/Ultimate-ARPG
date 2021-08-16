@@ -1,32 +1,32 @@
 {
     "config": {
-        "instanceID": 16628
+        "instanceID": 16648
     },
     "itemID": {
         "Name": "",
         "ID": 25,
         "Item": {
-            "instanceID": 16594
+            "instanceID": 16620
         }
     },
     "autoName": true,
     "rarity": {
-        "instanceID": 16630
+        "instanceID": 16650
     },
     "meshPrefab": {
         "instanceID": 0
     },
     "sprite": {
-        "instanceID": 16632
+        "instanceID": 16652
     },
     "purchaseCost": 10,
     "sellCost": 5,
     "forQuests": [
         {
-            "instanceID": 16634
+            "instanceID": 16654
         },
         {
-            "instanceID": 16636
+            "instanceID": 16656
         }
     ],
     "itemName": "Skeleton Key",

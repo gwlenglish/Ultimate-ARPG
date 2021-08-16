@@ -9,8 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1eb4afa8878a5943abda36d1814b44e, type: 3}
-  m_Name: Increase Max Vitality_5
+  m_Script: {fileID: 11500000, guid: c276ddfab500446ab1c219cb547b340e, type: 3}
+  m_Name: Increase Max Mana 80%
   m_EditorClassIdentifier: 
-  amount: 5
-  type: 3
+  attributeModifier:
+  - Value: 0.8
+    Type: 200
+    Order: 200
+  type: 1

@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 25340
+        "instanceID": 25336
     },
     "id": {
         "Name": "",
         "ID": 2,
         "AbilityController": {
-            "instanceID": 24914
+            "instanceID": 24902
         }
     },
     "Data": {
@@ -18,21 +18,21 @@
     },
     "BasicAttacks": [
         {
-            "instanceID": 23814
+            "instanceID": 23802
         }
     ],
     "StartingAbilities": [
         {
-            "instanceID": 24904
+            "instanceID": 24892
         },
         {
-            "instanceID": 24478
+            "instanceID": 24466
         },
         {
-            "instanceID": 24912
+            "instanceID": 24900
         },
         {
-            "instanceID": 24906
+            "instanceID": 24894
         }
     ],
     "EquippedCap": 2,

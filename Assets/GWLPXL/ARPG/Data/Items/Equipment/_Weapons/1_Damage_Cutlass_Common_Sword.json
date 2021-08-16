@@ -1,23 +1,23 @@
 {
     "config": {
-        "instanceID": 16698
+        "instanceID": 16718
     },
     "itemID": {
         "Name": "",
         "ID": 12,
         "Item": {
-            "instanceID": 16552
+            "instanceID": 16578
         }
     },
     "autoName": true,
     "rarity": {
-        "instanceID": 16646
+        "instanceID": 16666
     },
     "meshPrefab": {
-        "instanceID": 16700
+        "instanceID": 16720
     },
     "sprite": {
-        "instanceID": 16702
+        "instanceID": 16722
     },
     "purchaseCost": 10,
     "sellCost": 5,
@@ -30,21 +30,21 @@
             "ILevelMulti": 1.0,
             "MaxNumberOfTraitsPerTier": 4,
             "PossibleTierDrops": {
-                "instanceID": 16658
+                "instanceID": 16678
             }
         },
         {
             "ILevelMulti": 0.800000011920929,
             "MaxNumberOfTraitsPerTier": 2,
             "PossibleTierDrops": {
-                "instanceID": 16658
+                "instanceID": 16678
             }
         },
         {
             "ILevelMulti": 0.6000000238418579,
             "MaxNumberOfTraitsPerTier": 1,
             "PossibleTierDrops": {
-                "instanceID": 16658
+                "instanceID": 16678
             }
         }
     ],
@@ -70,7 +70,7 @@
         ]
     },
     "wearablePefab": {
-        "instanceID": 16704
+        "instanceID": 16724
     },
     "enchantable": true,
     "weaponType": 1

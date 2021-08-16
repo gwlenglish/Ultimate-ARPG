@@ -4,7 +4,9 @@ using GWLPXL.ARPGCore.Types.com;
 
 namespace GWLPXL.ARPGCore.Auras.com
 {
-
+    /// <summary>
+    /// like for damage or health auras
+    /// </summary>
     [CreateAssetMenu(menuName = "GWLPXL/ARPG/Auras/Logic/NEW Modify Resource")]
     public class ARPG_ModifyResource : AuraLogic
     {

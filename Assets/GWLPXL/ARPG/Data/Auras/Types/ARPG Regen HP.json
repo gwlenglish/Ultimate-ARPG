@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 16784
+        "instanceID": 16810
     },
     "auraID": {
         "Name": "",
         "ID": 2,
         "Aura": {
-            "instanceID": 16606
+            "instanceID": 16632
         }
     },
     "AuraData": {
@@ -15,13 +15,13 @@
         "AuraName": "ARPG Regen HP",
         "AuraDescription": "Regen MP ",
         "AuraPrefab": {
-            "instanceID": 16640
+            "instanceID": 16660
         },
         "auraCategory": 0,
         "uniqueID": 0,
         "AuraLogics": [
             {
-                "instanceID": 16786
+                "instanceID": 37182
             }
         ],
         "AuraGroups": [

@@ -3,16 +3,16 @@
         "instanceID": 17526
     },
     "id": {
-        "Name": "",
-        "ID": 2,
+        "Name": "Arrow",
+        "ID": 5,
         "Instance": {
-            "instanceID": 32296
+            "instanceID": 17368
         }
     },
     "ProjectileVars": {
-        "descriptiveName": "Flame",
-        "description": "Fire burst",
-        "speed": 1.0,
+        "descriptiveName": "Arrow",
+        "description": "Normal arrow. ",
+        "speed": 35.0,
         "disableOnTouch": true,
         "friendlyFire": false,
         "lifetime": 10.0,

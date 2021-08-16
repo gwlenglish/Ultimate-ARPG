@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 24000
+        "instanceID": 23988
     },
     "id": {
         "Name": "",
         "ID": 18,
         "Ability": {
-            "instanceID": 23686
+            "instanceID": 23674
         }
     },
     "autoName": false,
@@ -21,18 +21,18 @@
         "AnimationIndex": 1,
         "Logics": [
             {
-                "instanceID": 24002
+                "instanceID": 23990
             },
             {
-                "instanceID": 24004
+                "instanceID": 23992
             },
             {
-                "instanceID": 23966
+                "instanceID": 23954
             }
         ],
         "UniqueID": 7,
         "Sprite": {
-            "instanceID": 24006
+            "instanceID": 23994
         }
     },
     "category": 1,

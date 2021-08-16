@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 23952
+        "instanceID": 23940
     },
     "id": {
         "Name": "",
         "ID": 7,
         "Ability": {
-            "instanceID": 23668
+            "instanceID": 23656
         }
     },
     "autoName": false,
@@ -21,7 +21,7 @@
         "AnimationIndex": 5,
         "Logics": [
             {
-                "instanceID": 23954
+                "instanceID": 23942
             }
         ],
         "UniqueID": 8,

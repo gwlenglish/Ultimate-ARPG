@@ -27,7 +27,7 @@ MonoBehaviour:
     auraCategory: 0
     uniqueID: 0
     AuraLogics:
-    - {fileID: 11400000, guid: 1cd6156f3ce26444d9fc57729b5f8026, type: 2}
+    - {fileID: 11400000, guid: 1ec2c2b8275970b49b4afa748e270e1b, type: 2}
     AuraGroups: 01000000
     Pulses: 0
     PulseRate: 0

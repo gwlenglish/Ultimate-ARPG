@@ -1,23 +1,23 @@
 {
     "config": {
-        "instanceID": 16774
+        "instanceID": 16794
     },
     "itemID": {
         "Name": "Small Gem Dexterity",
         "ID": 33,
         "Item": {
-            "instanceID": 16562
+            "instanceID": 16588
         }
     },
     "autoName": true,
     "rarity": {
-        "instanceID": 16646
+        "instanceID": 16666
     },
     "meshPrefab": {
         "instanceID": 0
     },
     "sprite": {
-        "instanceID": 16776
+        "instanceID": 16796
     },
     "purchaseCost": 10,
     "sellCost": 5,
@@ -30,7 +30,7 @@
     },
     "EquipmentTraitSocketable": [
         {
-            "instanceID": 16778
+            "instanceID": 38214
         }
     ]
 }

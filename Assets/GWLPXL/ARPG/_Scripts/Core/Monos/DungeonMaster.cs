@@ -152,6 +152,12 @@ namespace GWLPXL.ARPGCore.com
 
         }
 
+
+        protected virtual void OnDestroy()
+        {
+            SceneManager.sceneLoaded -= CheckDungeonReferences;
+        }
+
         #region scene refences
         protected virtual void ClearCanvasReferences(Scene scene)
         {

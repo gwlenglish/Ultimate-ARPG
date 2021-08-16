@@ -1,18 +1,18 @@
 {
     "config": {
-        "instanceID": 16538
+        "instanceID": 16564
     },
     "EquipEvent": {
-        "instanceID": 16540
+        "instanceID": 16566
     },
     "UnEquipEvent": {
-        "instanceID": 16542
+        "instanceID": 16568
     },
     "ID": {
         "Name": "Player_HChu_Inventory",
         "ID": 4,
         "SOReference": {
-            "instanceID": 16532
+            "instanceID": 16558
         }
     },
     "inventoryName": "Inventory",
@@ -20,54 +20,54 @@
     "currentCurrency": 100,
     "startingEquipment": [
         {
-            "instanceID": 16544
+            "instanceID": 16570
         }
     ],
     "startingItems": [
         {
-            "instanceID": 16546
+            "instanceID": 16572
         },
         {
-            "instanceID": 16546
+            "instanceID": 16572
         },
         {
-            "instanceID": 16546
+            "instanceID": 16572
         },
         {
-            "instanceID": 16546
+            "instanceID": 16572
         },
         {
-            "instanceID": 16546
+            "instanceID": 16572
         },
         {
-            "instanceID": 16548
+            "instanceID": 16574
         },
         {
-            "instanceID": 16550
+            "instanceID": 16576
         },
         {
-            "instanceID": 16552
+            "instanceID": 16578
         },
         {
-            "instanceID": 16554
+            "instanceID": 16580
         },
         {
-            "instanceID": 16556
+            "instanceID": 16582
         },
         {
-            "instanceID": 16558
+            "instanceID": 16584
         },
         {
-            "instanceID": 16560
+            "instanceID": 16586
         },
         {
-            "instanceID": 16562
+            "instanceID": 16588
         },
         {
-            "instanceID": 16564
+            "instanceID": 16590
         },
         {
-            "instanceID": 16562
+            "instanceID": 16588
         }
     ],
     "startingGold": 0

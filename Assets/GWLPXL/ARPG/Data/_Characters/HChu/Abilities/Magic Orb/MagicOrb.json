@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 23980
+        "instanceID": 23968
     },
     "id": {
         "Name": "MagicOrb",
         "ID": 25,
         "Ability": {
-            "instanceID": 23680
+            "instanceID": 23668
         }
     },
     "autoName": false,
@@ -21,12 +21,12 @@
         "AnimationIndex": 1,
         "Logics": [
             {
-                "instanceID": 23982
+                "instanceID": 23970
             }
         ],
         "UniqueID": 7,
         "Sprite": {
-            "instanceID": 23984
+            "instanceID": 23972
         }
     },
     "category": 1,

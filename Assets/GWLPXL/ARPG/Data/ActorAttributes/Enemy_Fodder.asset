@@ -24,7 +24,7 @@ MonoBehaviour:
   maxLevel: 100
   baseStat: 0
   Resources:
-  - NowValue: 297
+  - BaseValue: 0
     Level1Value: 100
     LevelCurve:
       serializedVersion: 2
@@ -51,8 +51,9 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     Level99Max: 10000
+    NowValue: 297
     Type: 0
-  - NowValue: 297
+  - BaseValue: 0
     Level1Value: 100
     LevelCurve:
       serializedVersion: 2
@@ -79,9 +80,10 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     Level99Max: 10000
+    NowValue: 297
     Type: 1
   Stats:
-  - NowValue: 11
+  - BaseValue: 0
     Level1Value: 10
     LevelCurve:
       serializedVersion: 2
@@ -108,8 +110,9 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     Level99Max: 100
+    NowValue: 11
     Type: 0
-  - NowValue: 11
+  - BaseValue: 0
     Level1Value: 10
     LevelCurve:
       serializedVersion: 2
@@ -136,8 +139,9 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     Level99Max: 100
+    NowValue: 11
     Type: 1
-  - NowValue: 11
+  - BaseValue: 0
     Level1Value: 10
     LevelCurve:
       serializedVersion: 2
@@ -164,8 +168,9 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     Level99Max: 100
+    NowValue: 11
     Type: 2
-  - NowValue: 11
+  - BaseValue: 0
     Level1Value: 10
     LevelCurve:
       serializedVersion: 2
@@ -192,6 +197,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     Level99Max: 100
+    NowValue: 11
     Type: 3
   resourceLinks: []
   combatLinks:
@@ -209,7 +215,7 @@ MonoBehaviour:
   ElementResists: []
   abilityMods: []
   others:
-  - NowValue: 100
+  - BaseValue: 0
     Level1Value: 80
     LevelCurve:
       serializedVersion: 2
@@ -236,5 +242,6 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 0
     Level99Max: 80
+    NowValue: 100
     Type: 101
     DescriptiveName: 

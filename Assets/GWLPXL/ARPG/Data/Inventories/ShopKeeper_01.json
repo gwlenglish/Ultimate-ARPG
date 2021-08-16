@@ -1,6 +1,6 @@
 {
     "config": {
-        "instanceID": 21196
+        "instanceID": 21180
     },
     "EquipEvent": {
         "instanceID": 0
@@ -20,18 +20,18 @@
     "currentCurrency": 100,
     "startingEquipment": [
         {
-            "instanceID": 16554
+            "instanceID": 16580
         },
         {
-            "instanceID": 16588
+            "instanceID": 16614
         }
     ],
     "startingItems": [
         {
-            "instanceID": 16546
+            "instanceID": 16572
         },
         {
-            "instanceID": 16590
+            "instanceID": 16616
         }
     ],
     "startingGold": 5000

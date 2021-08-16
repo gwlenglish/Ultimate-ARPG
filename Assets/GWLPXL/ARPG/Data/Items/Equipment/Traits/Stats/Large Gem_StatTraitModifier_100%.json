@@ -1,13 +1,13 @@
 {
     "config": {
-        "instanceID": 0
+        "instanceID": 22752
     },
     "AutoName": true,
     "traitID": {
         "Name": "Large Gem_StatTraitModifier_100%",
         "ID": 12,
         "Trait": {
-            "instanceID": 37300
+            "instanceID": 22630
         }
     },
     "traitName": "Large Gem",

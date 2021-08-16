@@ -1,6 +1,6 @@
 {
     "config": {
-        "instanceID": 25560
+        "instanceID": 25552
     },
     "lootPrefabOverride": {
         "instanceID": 0
@@ -9,15 +9,15 @@
         "Name": "Loot from Demo",
         "ID": 8,
         "LootDrops": {
-            "instanceID": 24972
+            "instanceID": 24962
         }
     },
     "AllPossibleItems": [
         {
-            "instanceID": 16568
+            "instanceID": 16594
         },
         {
-            "instanceID": 16544
+            "instanceID": 16570
         }
     ],
     "LootTable": [
@@ -27,7 +27,7 @@
             "RangeFrom": 0,
             "RangeTo": 50,
             "Item": {
-                "instanceID": 16568
+                "instanceID": 16594
             }
         },
         {
@@ -36,7 +36,7 @@
             "RangeFrom": 50,
             "RangeTo": 100,
             "Item": {
-                "instanceID": 16544
+                "instanceID": 16570
             }
         }
     ]

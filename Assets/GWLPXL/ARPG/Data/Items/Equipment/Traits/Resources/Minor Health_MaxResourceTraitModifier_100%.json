@@ -1,13 +1,13 @@
 {
     "config": {
-        "instanceID": 70198
+        "instanceID": 17064
     },
     "AutoName": true,
     "traitID": {
         "Name": "Minor Health_MaxResourceTraitModifier_100%",
         "ID": 8,
         "Trait": {
-            "instanceID": -13840
+            "instanceID": 16908
         }
     },
     "traitName": "Minor Health",

@@ -1,17 +1,17 @@
 {
     "config": {
-        "instanceID": 17530
+        "instanceID": 17516
     },
     "id": {
         "Name": "Shotgun",
         "ID": 8,
         "Instance": {
-            "instanceID": 32250
+            "instanceID": 17346
         }
     },
     "DamageVar": {
         "combatHandler": {
-            "instanceID": 17192
+            "instanceID": 17178
         },
         "descriptiveName": "Shotgun",
         "damageOptions": {

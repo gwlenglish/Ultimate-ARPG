@@ -4,8 +4,12 @@ using GWLPXL.ARPGCore.Types.com;
 
 namespace GWLPXL.ARPGCore.Auras.com
 {
+    /// <summary>
+    /// obsolete, use IncreaseMaxResourceModifier
+    /// </summary>
+    [System.Obsolete]
+    
 
-    [CreateAssetMenu(menuName = "GWLPXL/ARPG/Auras/Logic/NEW ARPG Increase Max Resource")]
     public class ARPG_IncreaseMaxResource : AuraLogic
     {
         [SerializeField]

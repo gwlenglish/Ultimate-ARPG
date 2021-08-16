@@ -1,28 +1,28 @@
 {
     "config": {
-        "instanceID": 25534
+        "instanceID": 17524
     },
     "id": {
-        "Name": "Fist",
-        "ID": 4,
+        "Name": "Arrow",
+        "ID": 13,
         "Instance": {
-            "instanceID": 32242
+            "instanceID": 17366
         }
     },
     "DamageVar": {
         "combatHandler": {
-            "instanceID": 17192
+            "instanceID": 17178
         },
-        "descriptiveName": "Fist",
+        "descriptiveName": "Arrow",
         "damageOptions": {
             "physdmg": true,
-            "elemdg": false,
+            "elemdg": true,
             "sotmod": false
         },
         "damageMultipliers": {
             "physicalMultipler": {
-                "baseDamageAmount": 1,
-                "percentOfCasterAttack": 0.20000000298023225
+                "baseDamageAmount": 2,
+                "percentOfCasterAttack": 0.0
             },
             "elementMultipliers": []
         },

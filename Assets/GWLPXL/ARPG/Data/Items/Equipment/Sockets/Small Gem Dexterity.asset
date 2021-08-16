@@ -30,4 +30,4 @@ MonoBehaviour:
     Type: 100
     Description: Small Dexterity Gem
   EquipmentTraitSocketable:
-  - {fileID: 11400000, guid: 0b7381c41bfc5e442ae0c40b650956fa, type: 2}
+  - {fileID: 11400000, guid: a420abcda4f8b644f9ac9c3bdb540237, type: 2}

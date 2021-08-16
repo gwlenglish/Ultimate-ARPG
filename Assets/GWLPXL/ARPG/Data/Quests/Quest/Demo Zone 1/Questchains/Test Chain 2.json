@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 23452
+        "instanceID": 23440
     },
     "ID": {
         "Name": "Test Chain 2",
         "ID": 3,
         "Questchain": {
-            "instanceID": 16086
+            "instanceID": 16110
         }
     },
     "questChainName": "Test Chain 2",
@@ -14,15 +14,15 @@
     "StartType": 1,
     "questStartTemplates": [
         {
-            "instanceID": 16080
+            "instanceID": 16104
         }
     ],
     "requirements": [
         {
-            "instanceID": 20958
+            "instanceID": 20942
         },
         {
-            "instanceID": 20960
+            "instanceID": 20944
         }
     ],
     "states": [
@@ -36,7 +36,7 @@
                 {
                     "DescriptiveName": "Quest Giver 1",
                     "Actor": {
-                        "instanceID": 16080
+                        "instanceID": 16104
                     },
                     "QuestGiverText": "Test Chain 2 Status Available. This is an example chain with two quests to complete and you return the quests in to a different quest giver."
                 }
@@ -53,7 +53,7 @@
                 {
                     "DescriptiveName": "Quest Giver 1",
                     "Actor": {
-                        "instanceID": 16080
+                        "instanceID": 16104
                     },
                     "QuestGiverText": "Test Chain 2 Status Complete. "
                 }
@@ -70,7 +70,7 @@
                 {
                     "DescriptiveName": "Quest Giver 1",
                     "Actor": {
-                        "instanceID": 16080
+                        "instanceID": 16104
                     },
                     "QuestGiverText": "Test Chain 2 Status Rewards Collected."
                 }
@@ -80,27 +80,27 @@
     ],
     "quests": [
         {
-            "instanceID": 19680
+            "instanceID": 19666
         },
         {
-            "instanceID": 16634
+            "instanceID": 16654
         }
     ],
     "rewardType": 0,
     "questGiverTemplates": [
         {
-            "instanceID": 16080
+            "instanceID": 16104
         }
     ],
     "chainRewards": [
         {
+            "instanceID": 16982
+        },
+        {
             "instanceID": 16984
         },
         {
-            "instanceID": 16986
-        },
-        {
-            "instanceID": 19690
+            "instanceID": 19676
         }
     ]
 }

@@ -1,6 +1,6 @@
 {
     "config": {
-        "instanceID": 25558
+        "instanceID": 25550
     },
     "lootPrefabOverride": {
         "instanceID": 0
@@ -9,7 +9,7 @@
         "Name": "King Head",
         "ID": 5,
         "LootDrops": {
-            "instanceID": 24968
+            "instanceID": 24958
         }
     },
     "AllPossibleItems": [

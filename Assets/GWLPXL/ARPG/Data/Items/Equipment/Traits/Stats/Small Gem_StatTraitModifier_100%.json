@@ -1,13 +1,13 @@
 {
     "config": {
-        "instanceID": 0
+        "instanceID": 22754
     },
     "AutoName": true,
     "traitID": {
         "Name": "Small Gem_StatTraitModifier_100%",
         "ID": 13,
         "Trait": {
-            "instanceID": 37340
+            "instanceID": 22632
         }
     },
     "traitName": "Small Gem",
