@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 25348
+        "instanceID": 25338
     },
     "id": {
         "Name": "Magic Orb",
         "ID": 7,
         "Instance": {
-            "instanceID": 24976
+            "instanceID": 24972
         }
     },
     "ProjectileVars": {
