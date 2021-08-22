@@ -33,6 +33,16 @@ namespace GWLPXL.ARPGCore.Items.com
         [SerializeField]
         protected bool enchantable = true;
 
+        protected int[] uiSlotsID = new int[0];
+        protected override int[] GetEquipUIID()
+        {
+            uiSlotsID = new int[slots.Length];
+            for (int i = 0; i < uiSlotsID.Length; i++)
+            {
+                uiSlotsID[i] = (int)slots[i];
+            }
+            return uiSlotsID;
+        }
         public abstract string GetMaterialDescription();
         public abstract EquipmentType GetEquipmentType();
         public override bool CanEnchant()

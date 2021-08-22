@@ -2,10 +2,11 @@
 using GWLPXL.ARPGCore.com;
 using GWLPXL.ARPGCore.Statics.com;
 using GWLPXL.ARPGCore.Types.com;
+using GWLPXL.InventoryGrid;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
-
+using System.Collections.Generic;
 namespace GWLPXL.ARPGCore.Items.com
 {
 
@@ -13,6 +14,24 @@ namespace GWLPXL.ARPGCore.Items.com
 
     public abstract class Item : ScriptableObject, ISaveJsonConfig
     {
+        #region inventory grid interface
+
+        public PatternHolder UIPattern = null;
+
+        public int[] EquipmentIdentifier { get => GetEquipUIID(); set => uiEquipID = value; }
+
+        protected int[] uiEquipID = new int[0];
+        #endregion
+
+
+        protected virtual int[] GetEquipUIID()
+        {
+            return uiEquipID;
+        }
+
+       
+       
+
         [SerializeField]
         TextAsset config = null;
         [Header("Item Info")]
@@ -34,6 +53,9 @@ namespace GWLPXL.ARPGCore.Items.com
         protected int sellCost = 5;
         string savedName = string.Empty;
         protected bool canEnchant = false;
+
+
+
         public abstract string GetBaseItemName();
         public abstract string GetGeneratedItemName();
         public abstract void SetGeneratedItemName(string newName);

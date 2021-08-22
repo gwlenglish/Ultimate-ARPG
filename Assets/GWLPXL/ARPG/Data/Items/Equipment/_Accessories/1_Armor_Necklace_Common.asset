@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63c7b136752a1d94d969b39744b0dd7a, type: 3}
   m_Name: 1_Armor_Necklace_Common
   m_EditorClassIdentifier: 
+  UIPattern: {fileID: 11400000, guid: 7b6bd6a184dad8f4689b030bd5fca214, type: 2}
   config: {fileID: 4900000, guid: d4f68d6c1ac0347418c90d885d2cda53, type: 3}
   itemID:
     Name: 
