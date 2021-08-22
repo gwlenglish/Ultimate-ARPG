@@ -6910,7 +6910,7 @@ PrefabInstance:
         type: 3}
       propertyPath: InvCanvasPrefab
       value: 
-      objectReference: {fileID: 6473654284765185611, guid: a7af1a7c9fa3cd848bdc5307aa14e048,
+      objectReference: {fileID: 5388698434707790677, guid: d7e573a08785f894da6377fe844953ec,
         type: 3}
     - target: {fileID: 5710349179592715451, guid: 3265ee1c6ac2d4a46801109d947df153,
         type: 3}
