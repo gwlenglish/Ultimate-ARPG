@@ -18,7 +18,7 @@ namespace GWLPXL.InventoryGrid
         public System.Action<IInventoryPiece, IInventoryPiece> OnSwappedPiece;
         public GridInventory_UI InventoryUI;
         [SerializeField]
-        protected EquippedGear gear = new EquippedGear();
+        protected EquippedGearARPG gear = new EquippedGearARPG();
 
         #region unity virtual calls
         protected virtual void OnEnable()
@@ -102,12 +102,12 @@ namespace GWLPXL.InventoryGrid
 
                 for (int i = 0; i < slots.Count; i++)
                 {
-                    slots[i].SlotInstance.GetComponent<Image>().color = Color.green;
+                    slots[i].SlotInstance.GetComponentInParent<Image>().color = Color.green;
                 }
 
                 for (int i = 0; i < illegal.Count; i++)
                 {
-                    illegal[i].SlotInstance.GetComponent<Image>().color = Color.red;
+                    illegal[i].SlotInstance.GetComponentInParent<Image>().color = Color.red;
                 }
 
                 
@@ -118,7 +118,7 @@ namespace GWLPXL.InventoryGrid
         {
             foreach (var kvp in gear.GearSlotIDDic)
             {
-                kvp.Value.SlotInstance.GetComponent<Image>().color = Color.white;
+                kvp.Value.SlotInstance.GetComponentInParent<Image>().color = Color.white;
 
             }
 

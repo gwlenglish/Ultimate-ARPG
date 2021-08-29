@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using GWLPXL.ARPGCore.Types.com;
+using UnityEngine;
 
 namespace GWLPXL.InventoryGrid
 {
@@ -30,5 +31,26 @@ namespace GWLPXL.InventoryGrid
         }
 
 
+    }
+
+    [System.Serializable]
+    public class ARPGGearSlot : IGearSlot
+    {
+        public GameObject SlotInstance { get => slotInstance; set => slotInstance = value; }
+        public int Identifier { get => (int)identifier; set => identifier = (EquipmentSlotsType)value; }
+        public IInventoryPiece Piece { get => piece; set => piece = value; }
+
+        [SerializeField]
+        protected GameObject slotInstance = default;
+        [SerializeField]
+        protected EquipmentSlotsType identifier = EquipmentSlotsType.None;
+        protected IInventoryPiece piece = null;
+
+       
+        public ARPGGearSlot(GameObject iteminstance, int identifier)
+        {
+            slotInstance = iteminstance;
+            this.identifier = (EquipmentSlotsType)identifier;
+        }
     }
 }

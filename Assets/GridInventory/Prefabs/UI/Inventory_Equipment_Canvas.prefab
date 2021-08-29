@@ -238,7 +238,7 @@ MonoBehaviour:
   DefaultPattern: {fileID: 11400000, guid: 7b6bd6a184dad8f4689b030bd5fca214, type: 2}
   FreezeDungeon: 1
   TheBoard:
-    Slots: []
+    slots: []
     Rows: 6
     Columns: 9
   GearUI: {fileID: 6473654284765185617}
@@ -263,9 +263,9 @@ MonoBehaviour:
   gear:
     Slots:
     - slotInstance: {fileID: 8676878880412253646}
-      identifier: -1
-    - slotInstance: {fileID: 8676878881274855192}
-      identifier: 1
+      identifier: 35
+    - slotInstance: {fileID: 0}
+      identifier: 30
 --- !u!1001 &361220320311853570
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -736,6 +736,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2486434751872803829, guid: 0bf061d59c1baa64ba620b67edbe7ba3,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 2486434751872803829, guid: 0bf061d59c1baa64ba620b67edbe7ba3,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 2486434751872803830, guid: 0bf061d59c1baa64ba620b67edbe7ba3,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 7798942011873871194, guid: c5b662dc825fe5142a9542bdbf89cc09,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0bf061d59c1baa64ba620b67edbe7ba3, type: 3}
 --- !u!224 &6473654283960239813 stripped
@@ -747,12 +763,6 @@ RectTransform:
 --- !u!1 &8676878880412253646 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2486434751872803828, guid: 0bf061d59c1baa64ba620b67edbe7ba3,
-    type: 3}
-  m_PrefabInstance: {fileID: 6551576807548591674}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &8676878881274855192 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2486434752599875874, guid: 0bf061d59c1baa64ba620b67edbe7ba3,
     type: 3}
   m_PrefabInstance: {fileID: 6551576807548591674}
   m_PrefabAsset: {fileID: 0}
