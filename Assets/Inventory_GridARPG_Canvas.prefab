@@ -742,9 +742,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0e67430e567af743ab57b8dd83955da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Grid: {fileID: 5765451637818774823}
-  PatternHolder: {fileID: 11400000, guid: 91e81bb7166a8744f8fe41ab83e4f8bd, type: 2}
-  EquipID: 01000000
 --- !u!1 &5765451636950099263
 GameObject:
   m_ObjectHideFlags: 0
@@ -888,9 +885,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0e67430e567af743ab57b8dd83955da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Grid: {fileID: 5765451637818774823}
-  PatternHolder: {fileID: 11400000, guid: 41a7007ff99b44d4b83505c5e1b52959, type: 2}
-  EquipID: ffffffff
 --- !u!1 &5765451637013239219
 GameObject:
   m_ObjectHideFlags: 0
@@ -1242,9 +1236,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0e67430e567af743ab57b8dd83955da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Grid: {fileID: 5765451637818774823}
-  PatternHolder: {fileID: 11400000, guid: 7b6bd6a184dad8f4689b030bd5fca214, type: 2}
-  EquipID: ffffffff
 --- !u!1 &5765451637312063049
 GameObject:
   m_ObjectHideFlags: 0
@@ -1782,13 +1773,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59b260b937225c24eb4c6d3022df5660, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InventoryUI: {fileID: 5765451637818774823}
+  DefaultPattern: {fileID: 11400000, guid: 7b6bd6a184dad8f4689b030bd5fca214, type: 2}
+  InventoryUI: {fileID: 4188103017337170984, guid: 2242d05d3f70e6947897372ea8c3cb65,
+    type: 3}
   gear:
+    DefaultPattern: {fileID: 0}
     Slots:
-    - slotInstance: {fileID: 8196413524263775929}
+    - slotInstance: {fileID: 1991255803877480374, guid: 2242d05d3f70e6947897372ea8c3cb65,
+        type: 3}
       identifier: 35
-    - slotInstance: {fileID: 8196413526219517039}
+    - slotInstance: {fileID: 1685826640281276157, guid: 2242d05d3f70e6947897372ea8c3cb65,
+        type: 3}
       identifier: 30
+    - slotInstance: {fileID: 1685826640369620202, guid: 2242d05d3f70e6947897372ea8c3cb65,
+        type: 3}
+      identifier: 5
+    - slotInstance: {fileID: 1685826640369581969, guid: 2242d05d3f70e6947897372ea8c3cb65,
+        type: 3}
+      identifier: 40
+    - slotInstance: {fileID: 1685826641052088334, guid: 2242d05d3f70e6947897372ea8c3cb65,
+        type: 3}
+      identifier: 10
+    - slotInstance: {fileID: 1685826639545112193, guid: 2242d05d3f70e6947897372ea8c3cb65,
+        type: 3}
+      identifier: 15
+    - slotInstance: {fileID: 1685826639774977136, guid: 2242d05d3f70e6947897372ea8c3cb65,
+        type: 3}
+      identifier: 20
+    - slotInstance: {fileID: 1685826639516126820, guid: 2242d05d3f70e6947897372ea8c3cb65,
+        type: 3}
+      identifier: 25
+    - slotInstance: {fileID: 1685826639973714362, guid: 2242d05d3f70e6947897372ea8c3cb65,
+        type: 3}
+      identifier: 45
+    - slotInstance: {fileID: 1685826639467004432, guid: 2242d05d3f70e6947897372ea8c3cb65,
+        type: 3}
+      identifier: 50
+    - slotInstance: {fileID: 1685826641130443284, guid: 2242d05d3f70e6947897372ea8c3cb65,
+        type: 3}
+      identifier: 27
+    - slotInstance: {fileID: 7901234155785101535, guid: 2242d05d3f70e6947897372ea8c3cb65,
+        type: 3}
+      identifier: 26
 --- !u!1 &5765451638150415338
 GameObject:
   m_ObjectHideFlags: 0
@@ -1932,9 +1958,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0e67430e567af743ab57b8dd83955da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Grid: {fileID: 5765451637818774823}
-  PatternHolder: {fileID: 11400000, guid: 91e81bb7166a8744f8fe41ab83e4f8bd, type: 2}
-  EquipID: 01000000
 --- !u!1 &5765451638254938980
 GameObject:
   m_ObjectHideFlags: 0
@@ -2326,9 +2349,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0e67430e567af743ab57b8dd83955da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Grid: {fileID: 5765451637818774823}
-  PatternHolder: {fileID: 11400000, guid: 91e81bb7166a8744f8fe41ab83e4f8bd, type: 2}
-  EquipID: 01000000ffffffff
 --- !u!1 &8196413524263775929
 GameObject:
   m_ObjectHideFlags: 0

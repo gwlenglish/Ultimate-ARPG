@@ -2,6 +2,7 @@ using GWLPXL.ARPGCore.Attributes.com;
 using GWLPXL.ARPGCore.CanvasUI.com;
 using GWLPXL.ARPGCore.com;
 using GWLPXL.ARPGCore.Items.com;
+using GWLPXL.ARPGCore.Types.com;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,6 +24,7 @@ namespace GWLPXL.InventoryGrid
         public System.Action<IInventoryPiece> OnDraggingPiece;
         public System.Action OnStopDragging;
         public System.Action<List<RaycastResult>, IInventoryPiece> OnTryPlace;
+
         public enum InteractState
         {
             Empty = 0,//no dragging
@@ -74,16 +76,18 @@ namespace GWLPXL.InventoryGrid
         protected virtual void OnEnable()
         {
             TheBoard.OnBoardSlotCreated += CreateBoardSlotInstance;
-            TheBoard.OnPieceRemoved += Removed;
+            TheBoard.OnPieceRemoved += Carried;
             TheBoard.OnNewPiecePlaced += Placed;
             TheBoard.OnNewPiecePlaced += ResetColors;
             GearUI.OnEquippedPiece += EquippedPiece;
             GearUI.OnUnEquipPiece += CarryRemovedPiece;
+
             GearUI.OnSwappedPiece += SwappedEquipmentPiece;
             TheBoard.OnPieceSwapped += SwappedInventory;
         }
 
        
+
         /// <summary>
         /// unsub events
         /// </summary>
@@ -91,7 +95,7 @@ namespace GWLPXL.InventoryGrid
         {
             TheBoard.OnBoardSlotCreated -= CreateBoardSlotInstance;
             TheBoard.OnPieceSwapped -= SwappedInventory;
-            TheBoard.OnPieceRemoved -= Removed;
+            TheBoard.OnPieceRemoved -= Carried;
             GearUI.OnEquippedPiece -= EquippedPiece;
             GearUI.OnUnEquipPiece -= CarryRemovedPiece;
             GearUI.OnSwappedPiece -= SwappedEquipmentPiece;
@@ -151,6 +155,7 @@ namespace GWLPXL.InventoryGrid
         /// </summary>
         public virtual void NoPieces()
         {
+
             draginstance = null;
             inventorydragging = null;
             state = InteractState.Empty;
@@ -161,20 +166,28 @@ namespace GWLPXL.InventoryGrid
         /// create draggable piece that isn't already on the grid
         /// </summary>
         /// <param name="pattern"></param>
-        public virtual void CreateNewInventoryPiece(PatternHolder pattern, int[] equipID)
+        public virtual void CreateNewInventoryPiece(Item pattern, int[] equipID)
         {
 
-            draginstance = CreatePiece(pattern, equipID);
+            draginstance = CreatePiece(pattern);
             state = InteractState.HasDraggable;
         }
 
-        protected virtual IInventoryPiece CreatePiece(PatternHolder pattern, int[] equipID)
+    
+        public virtual IInventoryPiece CreatePiece(Item itemstack)
         {
-            if (pattern == null)
+            if (itemstack.UIPattern == null)
             {
-                pattern = DefaultPattern;
+                itemstack.UIPattern = DefaultPattern;
             }
-            InventoryPiece piece  = new InventoryPiece(Instantiate(pattern.Pattern.PatternPrefab, MainPanel), Instantiate(pattern.Pattern.PatternPrefab, MainPanel), pattern.Pattern, equipID);
+            InventoryPiece piece  = new InventoryPiece(Instantiate(itemstack.UIPattern.Pattern.PatternPrefab, MainPanel), Instantiate(itemstack.UIPattern.Pattern.PatternPrefab, MainPanel), itemstack);
+            piece.Instance.name = itemstack.GetGeneratedItemName() + " Instance";
+            piece.PreviewInstance.name = itemstack.GetGeneratedItemName() + " Preview";
+            piece.PreviewInstance.transform.position = piece.Instance.transform.position;
+            piece.Instance.GetComponentInChildren<Image>().sprite = itemstack.GetSprite();
+            piece.PreviewInstance.GetComponentInChildren<Image>().sprite = itemstack.GetSprite();
+            piece.Instance.SetActive(true);
+            piece.PreviewInstance.SetActive(false);
             return piece;
         }
 
@@ -184,18 +197,23 @@ namespace GWLPXL.InventoryGrid
         /// <param name="piece"></param>
         public virtual void CarryRemovedPiece(IInventoryPiece piece)
         {
-            if (piece.Instance == null) NoPieces();
+
+            if (piece == null || piece.Instance == null) NoPieces();
+            
             inventorydragging = piece;
-            piece.PreviewInstance.SetActive(false);
             state = InteractState.HasInventoryPiece;
             OnDraggingPiece?.Invoke(piece);
+    
+
         }
 
+      
         #endregion
 
         #region protected virtual
-        protected virtual void Removed(IInventoryPiece piece, List<IBoardSlot> slots)
+        protected virtual void Carried(IInventoryPiece piece, List<IBoardSlot> slots)
         {
+
             CarryRemovedPiece(piece);
         }
 
@@ -214,14 +232,18 @@ namespace GWLPXL.InventoryGrid
         }
         protected virtual void SwappedEquipmentPiece(IInventoryPiece old, IInventoryPiece newpiece)
         {
+
             CarryRemovedPiece(old);
         }
         protected virtual void EquippedPiece(IInventoryPiece piece)
         {
+      
             NoPieces();
+
         }
         protected virtual void SwappedInventory(IInventoryPiece old, IInventoryPiece newpiece)
         {
+
             Debug.Log("Swapped Inventory");
             CarryRemovedPiece(old);
         }
@@ -273,12 +295,14 @@ namespace GWLPXL.InventoryGrid
             //Raycast using the Graphics Raycaster and mouse click position
             m_Raycaster.Raycast(m_PointerEventData, results);//can be null...
 
+
             //For every result returned, output the name of the GameObject on the Canvas hit by the Ray
             foreach (RaycastResult result in results)
             {
                 Debug.Log("Hit " + result.gameObject.name);
                 if (TheBoard.IDS.ContainsKey(result.gameObject) == false) continue;
 
+                
                 bool placed = TryPlaceOnBoard(result.gameObject, piece, true);
                 if (placed)
                 {
@@ -453,9 +477,10 @@ namespace GWLPXL.InventoryGrid
         IUseInvCanvas user = null;
         IDescribePlayerStats describeStats = null;
         ActorInventory inv = null;
+        Dictionary<IInventoryPiece, ItemStack> piecestackdic = new Dictionary<IInventoryPiece, ItemStack>();
         Dictionary<GameObject, IInventoryPiece> piecesdic = new Dictionary<GameObject, IInventoryPiece>();
         Dictionary<ItemStack, GameObject> stackdic = new Dictionary<ItemStack, GameObject>();
-      
+        Dictionary<EquipmentSlot, GameObject> equipdic = new Dictionary<EquipmentSlot, GameObject>();
         #endregion
 
         #region ARPG interface
@@ -466,12 +491,84 @@ namespace GWLPXL.InventoryGrid
 
         }
 
-        protected virtual void CreatePieceFromInventory(ItemStack stack)
+        protected virtual void GridSetup(IUseInvCanvas newUser)
+        {
+            user = newUser;
+            IAttributeUser stats = user.GetActorHub().MyStats;
+            inv = user.GetActorHub().MyInventory.GetInventoryRuntime();
+
+            CreateGrid();
+            GearUI.CreateGear(newUser.GetActorHub());
+
+            EnablePlayerInventoryUI(true);
+   
+            DisplayStats(stats);
+
+
+
+            List<ItemStack> stack = inv.GetAllUniqueStacks();
+            for (int i = 0; i < stack.Count; i++)
+            {
+                UpdateUI(stack[i].SlotID, stack[i]);
+
+            }
+
+            inv.OnSlotChanged += UpdateUI;
+   
+            //ugly use due to unity needing a frame to update the grid layout...
+            StartCoroutine(Waitaframe());
+        }
+
+
+        
+        protected virtual void UpdateUI(int slot, ItemStack stack)
+        {
+            if (stackdic.ContainsKey(stack))
+            {
+                //we have a stack
+                GameObject key = stackdic[stack];
+                if (piecesdic.ContainsKey(key))
+                {
+                    //we have a ui piece on the board
+                    if (stack.Item == null || stack.CurrentStackSize == 0)
+                    {
+                        //ddestroy piece
+                        stackdic.Remove(stack);
+                        IInventoryPiece piece = piecesdic[key];
+
+                        TheBoard.RemovePiece(piece);
+                        piecestackdic.Remove(piece);
+                        piece.CleanUP();
+                        piece = null;
+
+                        piecesdic.Remove(key);
+                        Destroy(key);
+                    }
+
+                }
+                else
+                {
+                    CreatePieceFromInventory(stack);
+                }
+            }
+            else
+            {
+                CreatePieceFromInventory(stack);
+            }
+      
+        }
+
+
+
+       
+
+
+        protected virtual bool CreatePieceFromInventory(ItemStack stack)
         {
 
-            if (stack.Item == null) return;
+            if (stack.Item == null) return false;
 
-            IInventoryPiece piece = CreatePiece(stack.Item.UIPattern, stack.Item.EquipmentIdentifier);
+            IInventoryPiece piece = CreatePiece(stack.Item);
 
             Image image = piece.Instance.GetComponentInChildren<Image>();
             Image prev = piece.PreviewInstance.GetComponentInChildren<Image>();
@@ -488,38 +585,25 @@ namespace GWLPXL.InventoryGrid
                     placed = TryPlaceOnBoard(instance, piece, false);
                     if (placed)
                     {
+                        piece.Instance.transform.position = piece.PreviewInstance.transform.position;
+                        piece.Instance.SetActive(true);
+                        piece.PreviewInstance.SetActive(false);
+                        instance.name = stack.Item.GetGeneratedItemName();
                         piecesdic[instance] = piece;
                         stackdic[stack] = instance;
+                        piecestackdic[piece] = stack;
                         Debug.Log("Item " + stack.Item + " placed " + placed + " at " + instance.name);
+                        placed = true;
                         break;
                     }
                 }
                 
 
             }
+
+            return placed;
         }
-        protected virtual void GridSetup(IUseInvCanvas newUser)
-        {
-            CreateGrid();
-            EnablePlayerInventoryUI(true);
-            user = newUser;
-            IAttributeUser stats = user.GetActorHub().MyStats;
-            DisplayStats(stats);
-
-
-            inv = user.GetActorHub().MyInventory.GetInventoryRuntime();
-            List<ItemStack> stack = inv.GetAllUniqueStacks();
-            for (int i = 0; i < stack.Count; i++)
-            {
-                CreatePieceFromInventory(stack[i]);
-
-            }
-
-
-            //ugly use due to unity needing a frame to update the grid layout...
-            StartCoroutine(Waitaframe());
-        }
-
+       
         IEnumerator Waitaframe()
         {
             yield return 0;
@@ -528,12 +612,9 @@ namespace GWLPXL.InventoryGrid
 
         private void OnDestroy()
         {
-
+            inv.OnSlotChanged -= UpdateUI;
         }
-        protected virtual void UpdateUI(int slot, ItemStack stack)
-        {
-
-        }
+       
 
         public void DisableHoverOver()
         {
@@ -573,22 +654,34 @@ namespace GWLPXL.InventoryGrid
         public void RefreshInventoryUI()
         {
             //
-
+         
             foreach (var kvp in piecesdic)
             {
+
                 if (TheBoard.SlotsOccupied.ContainsKey(kvp.Value))
                 {
-                    kvp.Value.Instance.transform.position = TheBoard.SlotsOccupied[kvp.Value][0].Instance.transform.position;
+                    if (TheBoard.SlotsOccupied[kvp.Value].Count > 0)
+                    {
+                        kvp.Value.Instance.transform.position = TheBoard.SlotsOccupied[kvp.Value][0].Instance.transform.position;
+                    }
+
                 }
                 else
                 {
                     kvp.Value.Instance.transform.position = kvp.Key.transform.position;
                 }
-                    
-                kvp.Value.Instance.SetActive(true);
-                kvp.Value.PreviewInstance.SetActive(false);
+
+
+                if (kvp.Value.Instance != null)
+                {
+                    kvp.Value.Instance.SetActive(true);
+                    kvp.Value.PreviewInstance.SetActive(false);
+                }
+
+         
             }
 
+           
         }
 
         public bool GetCanvasEnabled()

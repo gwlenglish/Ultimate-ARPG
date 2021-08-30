@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a110defa25362743bb791f86ed3e4c4, type: 3}
   m_Name: 2_Damage_Shotgun_Common_Shotgun
   m_EditorClassIdentifier: 
+  UIPattern: {fileID: 11400000, guid: 680445838d1f11240b9bb0689774ba65, type: 2}
   config: {fileID: 4900000, guid: 46da3b2bd1625484488657f6d0ba568d, type: 3}
   itemID:
     Name: 

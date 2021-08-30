@@ -11,13 +11,13 @@ namespace GWLPXL.InventoryGrid
     /// </summary>
     public class PretendItem : MonoBehaviour
     {
-        public GridInventory_UI Grid;
-        public PatternHolder PatternHolder;
-        public int[] EquipID = new int[0];
-        public void SetNewPiece()
-        {
-            Grid.CreateNewInventoryPiece(PatternHolder, EquipID);
-        }
+        //public GridInventory_UI Grid;
+        //public PatternHolder PatternHolder;
+        //public int[] EquipID = new int[0];
+        //public void SetNewPiece()
+        //{
+        //    Grid.CreateNewInventoryPiece(PatternHolder, EquipID);
+        //}
     }
 
 }

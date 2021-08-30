@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using GWLPXL.ARPGCore.com;
+using GWLPXL.ARPGCore.Items.com;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -12,6 +14,7 @@ namespace GWLPXL.InventoryGrid
     [System.Serializable]
     public class Board
     {
+        IActorHub user;
         /// <summary>
         /// piece and slots occupied
         /// </summary>
@@ -56,6 +59,7 @@ namespace GWLPXL.InventoryGrid
         /// <param name="origin"></param>
         public virtual void RemovePiece(IInventoryPiece origin)
         {
+
             if (slotsOccupied.ContainsKey(origin))
             {
                 List<IBoardSlot> slots = slotsOccupied[origin];
@@ -187,7 +191,8 @@ namespace GWLPXL.InventoryGrid
                 placed[i].PieceOnBoard = piece;
             }
 
-         
+
+     
             slotsOccupied[piece] = placed;
             OnNewPiecePlaced?.Invoke(piece, placed);
 
@@ -233,6 +238,7 @@ namespace GWLPXL.InventoryGrid
                 List<IBoardSlot> placed = PlaceOnBoard(piece, slot.Cell);
                 if (placed.Count > 0)
                 {
+                   
                     //got it
                     return placed;
                 }
@@ -247,7 +253,10 @@ namespace GWLPXL.InventoryGrid
         protected IInventoryPiece RemovePiece(List<IBoardSlot> removed)
         {
             if (removed.Count == 0) return null;
+
+          
             IInventoryPiece obj = removed[0].PieceOnBoard;//should be the same for all and not null...
+
             for (int i = 0; i < removed.Count; i++)
             {
                 removed[i].Cell.Occupied = false;

@@ -26,9 +26,10 @@ namespace GWLPXL.ARPGCore.Items.com
         /// </summary>
         public Action<int, ItemStack> OnSlotChanged;
         public Action<int> OnSlotChange;
+        public Action<ItemStack> OnStackChanged;
         public Action<Equipment> OnEquip;
         public Action<Equipment> OnUnEquip;
-
+        public Action<EquipmentSlot> OnEquipmentSlotChanged;
         public Action<int> OnGoldChanged;
         #endregion
         [SerializeField]
@@ -161,7 +162,10 @@ namespace GWLPXL.ARPGCore.Items.com
             stackPerSlot[slotA] = stackB;
             OnSlotChanged?.Invoke(slotA, stackB);
             OnSlotChange?.Invoke(slotA);
+            OnStackChanged?.Invoke(stackA);
+
             OnSlotChange?.Invoke(slotB);
+            OnStackChanged?.Invoke(stackB);
             return true;
         }
         /// <summary>
@@ -253,6 +257,7 @@ namespace GWLPXL.ARPGCore.Items.com
                 }
                 value.EquipmentInSlots = equipment;
 
+
                 appliedTraits.TryGetValue(equipment, out EquipmentTrait[] allTraits);
                 if (allTraits == null)
                 {
@@ -262,6 +267,7 @@ namespace GWLPXL.ARPGCore.Items.com
                     EquipmentHandler.ModifyVisuals(equipment.GetEquipmentSlot(), false, equipment, MyUser);
 
                     OnEquip?.Invoke(equipment);
+                  
                     RemoveFirstItemFromInventory(equipment);
                     //raise the event
                     if (EquipEvent != null && myActorStats != null)
@@ -296,6 +302,9 @@ namespace GWLPXL.ARPGCore.Items.com
                         equippedByType[type] = equippedType;
                     }
                 }
+
+
+                OnEquipmentSlotChanged?.Invoke(value);
             }
 
 
@@ -345,14 +354,14 @@ namespace GWLPXL.ARPGCore.Items.com
         /// Unequips a specific Equipment
         /// </summary>
         /// <param name="equipment"></param>
-        public virtual void UnEquip(Equipment equipment)
+        public virtual void UnEquip(Equipment equipment, bool autoaddtoinventory = true)
         {
             EquipmentSlotsType[] slot = equipment.GetEquipmentSlot();
             for (int i = 0; i < slot.Length; i++)
             {
                 runtimeEquipment.TryGetValue(slot[i], out EquipmentSlot value);
                 value.EquipmentInSlots = null;
-
+         
                 EquipmentType type = equipment.GetEquipmentType();
                 equippedByType.TryGetValue(type, out EquipmentList equippedList);
 
@@ -360,8 +369,10 @@ namespace GWLPXL.ARPGCore.Items.com
                 {
                     equippedList.RemovePiece(equipment);
                 }
-            }
 
+                OnEquipmentSlotChanged?.Invoke(value);
+            }
+     
 
             appliedTraits.TryGetValue(equipment, out EquipmentTrait[] allTraits);//ensures unique trait
             if (allTraits != null)
@@ -371,7 +382,11 @@ namespace GWLPXL.ARPGCore.Items.com
                 appliedTraits[equipment] = allTraits;
                 OnUnEquip?.Invoke(equipment);
                 EquipmentHandler.ModifyVisuals(equipment.GetEquipmentSlot(), true, equipment, MyUser);
-                AddItemToInventory(equipment);
+                if (autoaddtoinventory)
+                {
+                    AddItemToInventory(equipment);
+                }
+         
                 //raise the event
                 if (UnEquipEvent != null && myActorStats != null)
                 {
@@ -728,6 +743,7 @@ namespace GWLPXL.ARPGCore.Items.com
             stackPerSlot[slot] = value;
             OnSlotChanged?.Invoke(slot, value);
             OnSlotChange?.Invoke(slot);
+            OnStackChanged?.Invoke(value);
             return true;
 
 
@@ -815,6 +831,7 @@ namespace GWLPXL.ARPGCore.Items.com
             OnAddItem?.Invoke(newItem);
             OnSlotChange?.Invoke(availableSlot);
             OnSlotChanged?.Invoke(availableSlot, newStack);
+            OnStackChanged?.Invoke(newStack);
         }
 
 
@@ -851,6 +868,7 @@ namespace GWLPXL.ARPGCore.Items.com
                                 OnAddItem?.Invoke(newItem);
                                 OnSlotChange?.Invoke(stack.SlotID);
                                 OnSlotChanged?.Invoke(stack.SlotID, stack);
+                                OnStackChanged?.Invoke(stack);
                                 break;
                             }
                         }
