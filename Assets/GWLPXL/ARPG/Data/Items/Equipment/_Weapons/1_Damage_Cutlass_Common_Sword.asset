@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a110defa25362743bb791f86ed3e4c4, type: 3}
   m_Name: 1_Damage_Cutlass_Common_Sword
   m_EditorClassIdentifier: 
+  UIPattern: {fileID: 0}
   config: {fileID: 4900000, guid: a1c1044ee0a586e4e93583a6b8cc5ef2, type: 3}
   itemID:
     Name: 

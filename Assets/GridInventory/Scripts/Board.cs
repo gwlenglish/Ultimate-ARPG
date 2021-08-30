@@ -156,11 +156,18 @@ namespace GWLPXL.InventoryGrid
         /// <param name="piece"></param>
         /// <param name="origin"></param>
         /// <returns></returns>
+        /// 
+        List<IBoardSlot> empty = new List<IBoardSlot>();
         public virtual List<IBoardSlot> PlaceOnBoard(IInventoryPiece piece, Vector2Int origin, bool allowSwap = false)
         {
             IBoardSlot cell = slots.Find(x => x.Cell.Cell == origin);
             List<IBoardSlot> placed = new List<IBoardSlot>();
-            placed.Add(cell);
+            if (cell.Cell.Occupied)
+            {
+                return empty;
+            }
+
+    
             List<Vector2Int> pattern = piece.Pattern.GetCurrentPattern();
             for (int i = 0; i < pattern.Count; i++)
             {
@@ -168,7 +175,7 @@ namespace GWLPXL.InventoryGrid
                 IBoardSlot newcell = slots.Find(x => x.Cell.Cell == local);
                 if (newcell == null)
                 {
-                    return new List<IBoardSlot>();//fail
+                    return empty;
                 }
 
                 if (newcell.Cell.Occupied)
@@ -177,6 +184,10 @@ namespace GWLPXL.InventoryGrid
                     {
                         return TrySwapWithBoard(newcell.PieceOnBoard, piece, origin);
                     }
+                    else
+                    {
+                        return empty;
+                    }
                 }
                 else
                 {
@@ -184,6 +195,7 @@ namespace GWLPXL.InventoryGrid
                 }
             }
 
+            //placed.Add(cell);//the origin
 
             for (int i = 0; i < placed.Count; i++)
             {

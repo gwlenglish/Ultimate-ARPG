@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a110defa25362743bb791f86ed3e4c4, type: 3}
   m_Name: 2_Damage_Flamethrower_Common_FlameThrower
   m_EditorClassIdentifier: 
-  UIPattern: {fileID: 11400000, guid: 91e81bb7166a8744f8fe41ab83e4f8bd, type: 2}
+  UIPattern: {fileID: 0}
   config: {fileID: 4900000, guid: b3efb1cd1c09f0948b99e6ba05b1431a, type: 3}
   itemID:
     Name: 

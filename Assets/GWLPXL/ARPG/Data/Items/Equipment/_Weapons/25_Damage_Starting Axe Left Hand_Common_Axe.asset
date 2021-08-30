@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a110defa25362743bb791f86ed3e4c4, type: 3}
   m_Name: 25_Damage_Starting Axe Left Hand_Common_Axe
   m_EditorClassIdentifier: 
+  UIPattern: {fileID: 0}
   config: {fileID: 4900000, guid: 5f8f08bbb502758428e9d56de4cb3cf7, type: 3}
   itemID:
     Name: 

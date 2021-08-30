@@ -183,8 +183,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59b260b937225c24eb4c6d3022df5660, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DefaultPattern: {fileID: 0}
   InventoryUI: {fileID: 4188103017337170984}
   gear:
+    DefaultPattern: {fileID: 0}
     Slots:
     - slotInstance: {fileID: 1991255803877480374}
       identifier: 35

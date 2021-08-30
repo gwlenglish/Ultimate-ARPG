@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80a50b0614690124dba40c6353b6cc00, type: 3}
   m_Name: 2_Armor_Shield_Common_Plate
   m_EditorClassIdentifier: 
-  UIPattern: {fileID: 11400000, guid: 20e1df5243863e2409f70fa3e53a12dc, type: 2}
+  UIPattern: {fileID: 0}
   config: {fileID: 4900000, guid: 89fc4ce8dc5c03740add529b83a842a7, type: 3}
   itemID:
     Name: 
