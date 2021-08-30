@@ -424,12 +424,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 3430290671948481980, guid: c5b662dc825fe5142a9542bdbf89cc09,
+      objectReference: {fileID: 21300000, guid: fdd48cae6c1bf4b458a8b8f89eb6e5ff,
         type: 3}
     - target: {fileID: 7901234155706207663, guid: ffd03a3bc6f0e004b894c797c2e0a94b,
         type: 3}
       propertyPath: m_PreserveAspect
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ffd03a3bc6f0e004b894c797c2e0a94b, type: 3}
@@ -569,24 +569,34 @@ PrefabInstance:
     - target: {fileID: 2486434751872803829, guid: 0bf061d59c1baa64ba620b67edbe7ba3,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 200
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 2486434751872803829, guid: 0bf061d59c1baa64ba620b67edbe7ba3,
         type: 3}
       propertyPath: m_SizeDelta.x
       value: 200
       objectReference: {fileID: 0}
+    - target: {fileID: 2486434751872803829, guid: 0bf061d59c1baa64ba620b67edbe7ba3,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2486434751872803830, guid: 0bf061d59c1baa64ba620b67edbe7ba3,
         type: 3}
       propertyPath: m_PreserveAspect
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2486434751872803830, guid: 0bf061d59c1baa64ba620b67edbe7ba3,
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 7798942011873871194, guid: c5b662dc825fe5142a9542bdbf89cc09,
+      objectReference: {fileID: 21300000, guid: fdd48cae6c1bf4b458a8b8f89eb6e5ff,
         type: 3}
+    - target: {fileID: 4621076527860951974, guid: 0bf061d59c1baa64ba620b67edbe7ba3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0bf061d59c1baa64ba620b67edbe7ba3, type: 3}
 --- !u!224 &4188103018142510269 stripped
@@ -1010,7 +1020,7 @@ PrefabInstance:
     - target: {fileID: 7901234155706207660, guid: ffd03a3bc6f0e004b894c797c2e0a94b,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 200
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 7901234155706207660, guid: ffd03a3bc6f0e004b894c797c2e0a94b,
         type: 3}
@@ -1055,7 +1065,7 @@ PrefabInstance:
     - target: {fileID: 7901234155706207660, guid: ffd03a3bc6f0e004b894c797c2e0a94b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -236
+      value: -319
       objectReference: {fileID: 0}
     - target: {fileID: 7901234155706207660, guid: ffd03a3bc6f0e004b894c797c2e0a94b,
         type: 3}
@@ -1096,12 +1106,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 6491103365186641660, guid: c5b662dc825fe5142a9542bdbf89cc09,
+      objectReference: {fileID: 21300000, guid: fdd48cae6c1bf4b458a8b8f89eb6e5ff,
         type: 3}
     - target: {fileID: 7901234155706207663, guid: ffd03a3bc6f0e004b894c797c2e0a94b,
         type: 3}
       propertyPath: m_PreserveAspect
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ffd03a3bc6f0e004b894c797c2e0a94b, type: 3}
@@ -1206,7 +1216,7 @@ PrefabInstance:
     - target: {fileID: 7901234155706207660, guid: ffd03a3bc6f0e004b894c797c2e0a94b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -187
+      value: -213
       objectReference: {fileID: 0}
     - target: {fileID: 7901234155706207660, guid: ffd03a3bc6f0e004b894c797c2e0a94b,
         type: 3}
@@ -1247,12 +1257,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 7722145472203274332, guid: c5b662dc825fe5142a9542bdbf89cc09,
+      objectReference: {fileID: 21300000, guid: fdd48cae6c1bf4b458a8b8f89eb6e5ff,
         type: 3}
     - target: {fileID: 7901234155706207663, guid: ffd03a3bc6f0e004b894c797c2e0a94b,
         type: 3}
       propertyPath: m_PreserveAspect
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ffd03a3bc6f0e004b894c797c2e0a94b, type: 3}
@@ -1312,7 +1322,7 @@ PrefabInstance:
     - target: {fileID: 7901234155706207660, guid: ffd03a3bc6f0e004b894c797c2e0a94b,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 200
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 7901234155706207660, guid: ffd03a3bc6f0e004b894c797c2e0a94b,
         type: 3}
@@ -1398,12 +1408,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 6732188941929395313, guid: c5b662dc825fe5142a9542bdbf89cc09,
+      objectReference: {fileID: 21300000, guid: fdd48cae6c1bf4b458a8b8f89eb6e5ff,
         type: 3}
     - target: {fileID: 7901234155706207663, guid: ffd03a3bc6f0e004b894c797c2e0a94b,
         type: 3}
       propertyPath: m_PreserveAspect
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ffd03a3bc6f0e004b894c797c2e0a94b, type: 3}
@@ -1508,7 +1518,7 @@ PrefabInstance:
     - target: {fileID: 7901234155706207660, guid: ffd03a3bc6f0e004b894c797c2e0a94b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -187
+      value: -213
       objectReference: {fileID: 0}
     - target: {fileID: 7901234155706207660, guid: ffd03a3bc6f0e004b894c797c2e0a94b,
         type: 3}
@@ -1549,12 +1559,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -8128290449329325926, guid: c5b662dc825fe5142a9542bdbf89cc09,
+      objectReference: {fileID: 21300000, guid: fdd48cae6c1bf4b458a8b8f89eb6e5ff,
         type: 3}
     - target: {fileID: 7901234155706207663, guid: ffd03a3bc6f0e004b894c797c2e0a94b,
         type: 3}
       propertyPath: m_PreserveAspect
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ffd03a3bc6f0e004b894c797c2e0a94b, type: 3}
@@ -1614,7 +1624,7 @@ PrefabInstance:
     - target: {fileID: 7901234155706207660, guid: ffd03a3bc6f0e004b894c797c2e0a94b,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 150
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7901234155706207660, guid: ffd03a3bc6f0e004b894c797c2e0a94b,
         type: 3}
@@ -1659,7 +1669,7 @@ PrefabInstance:
     - target: {fileID: 7901234155706207660, guid: ffd03a3bc6f0e004b894c797c2e0a94b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -55
+      value: -99
       objectReference: {fileID: 0}
     - target: {fileID: 7901234155706207660, guid: ffd03a3bc6f0e004b894c797c2e0a94b,
         type: 3}
@@ -1700,12 +1710,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -5900829393492962718, guid: c5b662dc825fe5142a9542bdbf89cc09,
+      objectReference: {fileID: 21300000, guid: fdd48cae6c1bf4b458a8b8f89eb6e5ff,
         type: 3}
     - target: {fileID: 7901234155706207663, guid: ffd03a3bc6f0e004b894c797c2e0a94b,
         type: 3}
       propertyPath: m_PreserveAspect
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ffd03a3bc6f0e004b894c797c2e0a94b, type: 3}
@@ -1805,7 +1815,7 @@ PrefabInstance:
     - target: {fileID: 7901234155706207660, guid: ffd03a3bc6f0e004b894c797c2e0a94b,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -4
+      value: -295
       objectReference: {fileID: 0}
     - target: {fileID: 7901234155706207660, guid: ffd03a3bc6f0e004b894c797c2e0a94b,
         type: 3}
@@ -1851,12 +1861,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 4970547631783308688, guid: c5b662dc825fe5142a9542bdbf89cc09,
+      objectReference: {fileID: 21300000, guid: fdd48cae6c1bf4b458a8b8f89eb6e5ff,
         type: 3}
     - target: {fileID: 7901234155706207663, guid: ffd03a3bc6f0e004b894c797c2e0a94b,
         type: 3}
       propertyPath: m_PreserveAspect
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ffd03a3bc6f0e004b894c797c2e0a94b, type: 3}
@@ -1916,7 +1926,7 @@ PrefabInstance:
     - target: {fileID: 7901234155706207660, guid: ffd03a3bc6f0e004b894c797c2e0a94b,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 200
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 7901234155706207660, guid: ffd03a3bc6f0e004b894c797c2e0a94b,
         type: 3}
@@ -2002,12 +2012,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 4968295968239951371, guid: c5b662dc825fe5142a9542bdbf89cc09,
+      objectReference: {fileID: 21300000, guid: fdd48cae6c1bf4b458a8b8f89eb6e5ff,
         type: 3}
     - target: {fileID: 7901234155706207663, guid: ffd03a3bc6f0e004b894c797c2e0a94b,
         type: 3}
       propertyPath: m_PreserveAspect
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ffd03a3bc6f0e004b894c797c2e0a94b, type: 3}
@@ -2153,12 +2163,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 3430290671948481980, guid: c5b662dc825fe5142a9542bdbf89cc09,
+      objectReference: {fileID: 21300000, guid: fdd48cae6c1bf4b458a8b8f89eb6e5ff,
         type: 3}
     - target: {fileID: 7901234155706207663, guid: ffd03a3bc6f0e004b894c797c2e0a94b,
         type: 3}
       propertyPath: m_PreserveAspect
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ffd03a3bc6f0e004b894c797c2e0a94b, type: 3}
@@ -2304,12 +2314,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 8184059568181860812, guid: c5b662dc825fe5142a9542bdbf89cc09,
+      objectReference: {fileID: 21300000, guid: fdd48cae6c1bf4b458a8b8f89eb6e5ff,
         type: 3}
     - target: {fileID: 7901234155706207663, guid: ffd03a3bc6f0e004b894c797c2e0a94b,
         type: 3}
       propertyPath: m_PreserveAspect
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ffd03a3bc6f0e004b894c797c2e0a94b, type: 3}
@@ -2409,12 +2419,12 @@ PrefabInstance:
     - target: {fileID: 7901234155706207660, guid: ffd03a3bc6f0e004b894c797c2e0a94b,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 145
+      value: -174
       objectReference: {fileID: 0}
     - target: {fileID: 7901234155706207660, guid: ffd03a3bc6f0e004b894c797c2e0a94b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 267
+      value: 335
       objectReference: {fileID: 0}
     - target: {fileID: 7901234155706207660, guid: ffd03a3bc6f0e004b894c797c2e0a94b,
         type: 3}
@@ -2455,12 +2465,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -4532185171169382882, guid: c5b662dc825fe5142a9542bdbf89cc09,
+      objectReference: {fileID: 21300000, guid: fdd48cae6c1bf4b458a8b8f89eb6e5ff,
         type: 3}
     - target: {fileID: 7901234155706207663, guid: ffd03a3bc6f0e004b894c797c2e0a94b,
         type: 3}
       propertyPath: m_PreserveAspect
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ffd03a3bc6f0e004b894c797c2e0a94b, type: 3}

@@ -40,4 +40,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: da00f54431d9ec5469b244cd404d52ae, type: 2}
   - {fileID: 11400000, guid: 516654ffecb8b224bb613054a6f182da, type: 2}
   - {fileID: 11400000, guid: da00f54431d9ec5469b244cd404d52ae, type: 2}
+  - {fileID: 11400000, guid: a92dea09cb633454da775936da0bb446, type: 2}
+  - {fileID: 11400000, guid: 3f9fbb46f3dd10841b7ddfcc1798f392, type: 2}
+  - {fileID: 11400000, guid: 23511b40351d7234a95cfec765ab35bc, type: 2}
+  - {fileID: 11400000, guid: 5f29c0ea24ac2fb44adfde37e80b12ac, type: 2}
+  - {fileID: 11400000, guid: cd8eff8ecc90d3a469b1c30ee46fc730, type: 2}
+  - {fileID: 11400000, guid: cc1324b32985dfe449ade3cf67374888, type: 2}
   startingGold: 0
