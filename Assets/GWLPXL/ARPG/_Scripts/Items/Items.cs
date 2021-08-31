@@ -2,11 +2,13 @@
 using GWLPXL.ARPGCore.com;
 using GWLPXL.ARPGCore.Statics.com;
 using GWLPXL.ARPGCore.Types.com;
-using GWLPXL.InventoryGrid;
+
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 using System.Collections.Generic;
+using GWLPXL.ARPGCore.CanvasUI.com;
+
 namespace GWLPXL.ARPGCore.Items.com
 {
 
