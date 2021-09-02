@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 4188103017337170984}
   - component: {fileID: 4188103017337170985}
   m_Layer: 5
-  m_Name: Inventory_Equipment_CanvasARPG
+  m_Name: Player Inventory_Equipment_CanvasARPG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -15,14 +15,10 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
     [System.Serializable]
     public class EquippedGearARPG
     {
-        
-        public PatternHolder DefaultPattern;
-        public System.Action<IInventoryPiece> OnGearRemoved;
-        public System.Action<IInventoryPiece> OnGearPlaced;
-        public System.Action<IInventoryPiece, IInventoryPiece> OnGearSwap;
+
         public System.Action<IGearSlot> OnSlotCreated;
         public System.Action<IGearSlot> OnSlotRemoved;
-        public System.Action<IGearSlot> OnSlotModified;
+
 
         public Dictionary<GameObject, IGearSlot> GearSlotDic => gearSlotDic;
         public Dictionary<int, IGearSlot> GearSlotIDDic => gearSlotIDDic;
@@ -42,12 +38,12 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         protected Dictionary<GameObject, IGearSlot> gearSlotDic = new Dictionary<GameObject, IGearSlot>();
         protected Dictionary<int, IGearSlot> gearSlotIDDic = new Dictionary<int, IGearSlot>();
 
-        IActorHub user;
+
         #region public virtual
         /// <summary>
         /// call to initialize the equipment manager
         /// </summary>
-        public virtual void Setup(IActorHub user)
+        public virtual void Setup()
         {
 
             registeredSlots.Clear();
@@ -62,22 +58,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
         }
 
-   
-
  
-
-        
-
-  
-       
-
-      
-
-
-      
-
-
-
 
         /// <summary>
         /// remove an existing slot completely
@@ -124,54 +105,10 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
         #region protected virtual
 
-        /// <summary>
-        /// place piece in slot, no checks
-        /// </summary>
-        /// <param name="piece"></param>
-        /// <param name="slot"></param>
-        public virtual void Place(IInventoryPiece piece, IGearSlot slot)
-        {
-
-            slot.Piece = piece;
-            slot.Equipment = piece.ItemStack as Equipment;
-
-            slot.Piece.Instance.transform.position = slot.SlotInstance.transform.position;
-            OnGearPlaced?.Invoke(slot.Piece);
-            OnSlotModified?.Invoke(slot);
-        }
-
-        /// <summary>
-        /// swap with piece already in slot, no checks
-        /// </summary>
-        /// <param name="piece"></param>
-        /// <param name="slot"></param>
-        public virtual void Swap(IInventoryPiece piece, IGearSlot slot)
-        {
-
-            IInventoryPiece oldpiece = slot.Piece;
 
 
-            slot.Piece = piece;
-            slot.Equipment = piece.ItemStack as Equipment;
 
-            piece.Instance.transform.position = slot.SlotInstance.transform.position;
-            OnGearSwap?.Invoke(oldpiece, piece);
-            OnSlotModified?.Invoke(slot);
-        }
-        /// <summary>
-        /// remove piece from slot, no checks
-        /// </summary>
-        /// <param name="slot"></param>
-        public virtual void Remove(IGearSlot slot)
-        {
 
-            IInventoryPiece removedPiece = slot.Piece;
-            slot.Piece = null;
-            slot.Equipment = null;
-
-            OnGearRemoved?.Invoke(removedPiece);
-            OnSlotModified?.Invoke(slot);
-        }
 
         #endregion
     }

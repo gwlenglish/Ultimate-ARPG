@@ -16,27 +16,34 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
     /// </summary>
     public class EquippedGear_UI : MonoBehaviour
     {
-        IActorHub user;
-        public PatternHolder DefaultPattern;
+
+
         public EquippedGearARPG Gear => gear;
-        public System.Action<IInventoryPiece> OnEquippedPiece;
-        public System.Action<IInventoryPiece> OnUnEquipPiece;
-        public System.Action<IInventoryPiece, IInventoryPiece> OnSwappedPiece;
         public GridInventory_UI InventoryUI;
+        [Header("Gear Slots")]
         [SerializeField]
         protected EquippedGearARPG gear = new EquippedGearARPG();
+        #region slot colors
+        [Header("Colors")]
+        [SerializeField]
+        protected Color transparent = new Color(255, 255, 255, 0);
+        [SerializeField]
+        protected Color neutral = new Color(255, 255, 255, 1);
+        [SerializeField]
+        protected Color valid = Color.green;
+        [SerializeField]
+        protected Color invalid = Color.red;
+        #endregion
+        protected IActorHub user;
 
         #region unity virtual calls
         protected virtual void OnEnable()
         {
             InventoryUI.OnTryPlace += TryPlace;
             InventoryUI.OnTryRemove += TryRemove;
-            InventoryUI.OnDraggingPiece += CheckDragging;
+            InventoryUI.OnStartDraggingPiece += CheckDragging;
             InventoryUI.OnStopDragging += StopCheckDragging;
 
-            gear.OnGearPlaced += GearEquipped;
-            gear.OnGearRemoved += GearUnEquipped;
-            gear.OnGearSwap += GearSwapped;
 
 
         }
@@ -45,14 +52,11 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         {
             InventoryUI.OnTryPlace -= TryPlace;
             InventoryUI.OnTryRemove -= TryRemove;
-            InventoryUI.OnDraggingPiece -= CheckDragging;
+            InventoryUI.OnStartDraggingPiece -= CheckDragging;
             InventoryUI.OnStopDragging -= StopCheckDragging;
 
-            gear.OnGearPlaced -= GearEquipped;
-            gear.OnGearRemoved -= GearUnEquipped;
-            gear.OnGearSwap -= GearSwapped;
 
-            
+
         }
 
 
@@ -60,10 +64,19 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         #endregion
 
         #region public virtual
+        /// <summary>
+        /// sub to inventory and assign gear slots
+        /// </summary>
+        /// <param name="user"></param>
         public virtual void CreateGear(IActorHub user)
         {
+            if (this.user != null)
+            {
+                CloseDown();
+            }
+
             this.user = user;
-            gear.Setup(user);
+            gear.Setup();
 
             ActorInventory inv = user.MyInventory.GetInventoryRuntime();
             Dictionary<EquipmentSlotsType, EquipmentSlot> slots = inv.GetEquippedEquipment();
@@ -76,13 +89,32 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
 
         }
+        /// <summary>
+        /// unsub from inventory
+        /// </summary>
+        public virtual void CloseDown()
+        {
+            user.MyInventory.GetInventoryRuntime().OnEquipmentSlotChanged -= UpdateEquip;
+
+        }
+
         #endregion
 
-        Dictionary<EquipmentSlotsType, int> slotId = new Dictionary<EquipmentSlotsType, int>();
-        Dictionary<EquipmentSlot, IInventoryPiece> eqpieces = new Dictionary<EquipmentSlot, IInventoryPiece>();
+
+
+
+
+
+
+
+        #region protected virtual
+        /// <summary>
+        /// update visual to match equipment slot
+        /// </summary>
+        /// <param name="ment"></param>
         protected virtual void UpdateEquip(EquipmentSlot ment)
         {
-            int key =(int)ment.slot;
+            int key = (int)ment.slot;
             if (gear.GearSlotIDDic.ContainsKey(key))
             {
                 IGearSlot slot = gear.GearSlotIDDic[key];
@@ -90,68 +122,48 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
                 if (ment.EquipmentInSlots == null)
                 {
-                    if (slot.Piece != null)
-                    {
-                        slot.Piece.CleanUP();
-                        slot.Piece = null;
-                    }
+                    slot.ItemInSlotImage.sprite = null;
+                    slot.ItemInSlotImage.color = transparent;
+
                 }
                 else
                 {
-                    if (slot.Piece == null)
-                    {
-                        slot.Piece = InventoryUI.CreatePiece(slot.Equipment);
-                        slot.Piece.Instance.transform.position = slot.SlotInstance.transform.position;
+                    slot.ItemInSlotImage.sprite = ment.EquipmentInSlots.GetSprite();
+                    slot.ItemInSlotImage.color = neutral;
 
-                    }
-                    else
-                    {
-                        slot.Piece.ItemStack = slot.Equipment;
-                        slot.Piece.Instance.GetComponentInChildren<Image>().sprite = slot.Equipment.GetSprite();
-                        slot.Piece.PreviewInstance.GetComponentInChildren<Image>().sprite = slot.Equipment.GetSprite();
-
-                    }
                 }
 
             }
-     
 
-            
-    
-           
+
+
+
+
         }
 
-
-
-
-        #region protected virtual
-
-
-
-        protected virtual void GearSwapped(IInventoryPiece old, IInventoryPiece newpiece)
-        {
-
-            Debug.Log("Swapped Gear " + old + " and " + newpiece);
-
-            OnSwappedPiece?.Invoke(old, newpiece);
-            StopCheckDragging();
-        }
+        /// <summary>
+        /// gear equipped, clean up carried inventory piece and tell inventory
+        /// </summary>
+        /// <param name="piece"></param>
         protected virtual void GearEquipped(IInventoryPiece piece)
         {
-            Debug.Log("Placed Gear " + piece.Instance.name);
-
+            piece.CleanUP();
             InventoryUI.NoPieces();
         }
-
-        protected virtual void GearUnEquipped(IInventoryPiece piece)
+        /// <summary>
+        /// gear unequipped, set state to no pieces
+        /// </summary>
+        protected virtual void GearUnEquipped()
         {
 
-
             InventoryUI.NoPieces();
 
         }
 
-       
+        /// <summary>
+        /// update visuals to reflect valid and invalid slots
+        /// </summary>
+        /// <param name="dragging"></param>
         protected virtual void CheckDragging(IInventoryPiece dragging)
         {
             if (dragging == null)
@@ -161,7 +173,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             }
             foreach (var kvp in gear.GearSlotIDDic)
             {
-                kvp.Value.SlotInstance.GetComponent<Image>().color = Color.red;
+                kvp.Value.SlotImage.color = invalid;
 
             }
 
@@ -171,22 +183,29 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                 if (gear.GearSlotIDDic.ContainsKey(dragging.EquipmentIdentifier[i]))
                 {
                     IGearSlot slot = gear.GearSlotIDDic[dragging.EquipmentIdentifier[i]];
-                    slot.SlotInstance.GetComponent<Image>().color = Color.green;
+                    slot.SlotImage.color = valid;
                 }
             }
         }
+
+        /// <summary>
+        /// return all the slot images back to neutral
+        /// </summary>
         protected virtual void StopCheckDragging()
         {
             foreach (var kvp in gear.GearSlotIDDic)
             {
                 IGearSlot gearslot = kvp.Value;
-                gearslot.SlotInstance.GetComponent<Image>().color = Color.white;
+                gearslot.SlotImage.color = neutral;
 
             }
 
         }
 
-
+        /// <summary>
+        /// check to see if results hit a gear slot, if so unequip
+        /// </summary>
+        /// <param name="results"></param>
         protected virtual void TryRemove(List<RaycastResult> results)
         {
             foreach (RaycastResult result in results)
@@ -194,14 +213,14 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                 if (gear.GearSlotDic.ContainsKey(result.gameObject) == false) continue;
                 Debug.Log("Hit Gear " + result.gameObject.name, result.gameObject);
                 IGearSlot slot = gear.GearSlotDic[result.gameObject];
-                IInventoryPiece piece = slot.Piece;
-                if (piece == null) continue;
+                Equipment eq = user.MyInventory.GetInventoryRuntime().GetEquipmentInSlot((EquipmentSlotsType)slot.Identifier);
+                if (eq == null) continue;
 
                 if (slot.Equipment != null)
                 {
-                    slot.Piece.CleanUP();
-                    user.MyInventory.GetInventoryRuntime().UnEquip(slot.Equipment);
-                    GearUnEquipped(null);
+                    //slot.Piece.CleanUP();
+                    user.MyInventory.GetInventoryRuntime().UnEquip(eq);
+                    GearUnEquipped();
                     break;
                 
                 }
@@ -210,6 +229,12 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
             }
         }
+
+        /// <summary>
+        /// try to place piece into gear slot, if so equip and if already filled, unequip first
+        /// </summary>
+        /// <param name="results"></param>
+        /// <param name="piece"></param>
         protected virtual void TryPlace(List<RaycastResult> results, IInventoryPiece piece)
         {
             foreach (RaycastResult result in results)
@@ -219,7 +244,6 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
                 IGearSlot slot = gear.GearSlotDic[result.gameObject];
 
-             
 
                 bool allowed = false;
                 for (int i = 0; i < piece.EquipmentIdentifier.Length; i++)
@@ -235,18 +259,14 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                 {
                     if (slot.Equipment != null)
                     {
-                        //already has something\
-                        slot.Piece.CleanUP();
                         user.MyInventory.GetInventoryRuntime().UnEquip(slot.Equipment);
-                        GearUnEquipped(null);
+                        GearUnEquipped();
                     }
 
-                    slot.Piece = piece;
-                    slot.Equipment = piece.ItemStack as Equipment;
-                    slot.Piece.Instance.transform.position = slot.SlotInstance.transform.position;
-                    slot.Piece.PreviewInstance.transform.position = slot.SlotInstance.transform.position;
                     user.MyInventory.GetInventoryRuntime().Equip(piece.ItemStack as Equipment);
+
                     GearEquipped(piece);
+
                 }
 
 

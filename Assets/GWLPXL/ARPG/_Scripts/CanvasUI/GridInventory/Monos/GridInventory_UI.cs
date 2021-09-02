@@ -2,6 +2,7 @@ using GWLPXL.ARPGCore.Attributes.com;
 using GWLPXL.ARPGCore.CanvasUI.com;
 using GWLPXL.ARPGCore.com;
 using GWLPXL.ARPGCore.Items.com;
+using GWLPXL.ARPGCore.Statics.com;
 using GWLPXL.ARPGCore.Types.com;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
     {
         public PatternHolder DefaultPattern;
         public System.Action<List<RaycastResult>> OnTryRemove;
-        public System.Action<IInventoryPiece> OnDraggingPiece;
+        public System.Action<IInventoryPiece> OnStartDraggingPiece;
         public System.Action OnStopDragging;
         public System.Action<List<RaycastResult>, IInventoryPiece> OnTryPlace;
 
@@ -79,10 +80,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             TheBoard.OnPieceRemoved += Carried;
             TheBoard.OnNewPiecePlaced += Placed;
             TheBoard.OnNewPiecePlaced += ResetColors;
-            GearUI.OnEquippedPiece += EquippedPiece;
-            GearUI.OnUnEquipPiece += CarryRemovedPiece;
 
-            GearUI.OnSwappedPiece += SwappedEquipmentPiece;
             TheBoard.OnPieceSwapped += SwappedInventory;
         }
 
@@ -96,9 +94,8 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             TheBoard.OnBoardSlotCreated -= CreateBoardSlotInstance;
             TheBoard.OnPieceSwapped -= SwappedInventory;
             TheBoard.OnPieceRemoved -= Carried;
-            GearUI.OnEquippedPiece -= EquippedPiece;
-            GearUI.OnUnEquipPiece -= CarryRemovedPiece;
-            GearUI.OnSwappedPiece -= SwappedEquipmentPiece;
+
+  
             TheBoard.OnNewPiecePlaced -= Placed;
             TheBoard.OnNewPiecePlaced -= ResetColors;
         }
@@ -202,7 +199,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             
             inventorydragging = piece;
             state = InteractState.HasInventoryPiece;
-            OnDraggingPiece?.Invoke(piece);
+            OnStartDraggingPiece?.Invoke(piece);
     
 
         }
@@ -474,7 +471,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             }
         }
 
-        IUseInvCanvas user = null;
+        IActorHub user = null;
         IDescribePlayerStats describeStats = null;
         ActorInventory inv = null;
         Dictionary<IInventoryPiece, ItemStack> piecestackdic = new Dictionary<IInventoryPiece, ItemStack>();
@@ -493,9 +490,9 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
         protected virtual void GridSetup(IUseInvCanvas newUser)
         {
-            user = newUser;
-            IAttributeUser stats = user.GetActorHub().MyStats;
-            inv = user.GetActorHub().MyInventory.GetInventoryRuntime();
+            user = newUser.GetActorHub();
+            IAttributeUser stats = user.MyStats;
+            inv = user.MyInventory.GetInventoryRuntime();
 
             CreateGrid();
             GearUI.CreateGear(newUser.GetActorHub());
@@ -569,11 +566,6 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             if (stack.Item == null) return false;
 
             IInventoryPiece piece = CreatePiece(stack.Item);
-
-            Image image = piece.Instance.GetComponentInChildren<Image>();
-            Image prev = piece.PreviewInstance.GetComponentInChildren<Image>();
-            image.sprite = stack.Item.GetSprite();
-            prev.sprite = stack.Item.GetSprite();
             bool placed = false;
 
             for (int j = 0; j < TheBoard.Slots.Count; j++)
@@ -597,10 +589,21 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                         break;
                     }
                 }
-                
-
             }
 
+            if (placed == false)
+            {
+                //couldnt fit it
+                piece.CleanUP();
+                ItemHandler.DropItem(stack.Item, user.MyInventory, stack.SlotID);
+            }
+            else
+            {
+                Image image = piece.Instance.GetComponentInChildren<Image>();
+                Image prev = piece.PreviewInstance.GetComponentInChildren<Image>();
+                image.sprite = stack.Item.GetSprite();
+                prev.sprite = stack.Item.GetSprite();
+            }
             return placed;
         }
        
