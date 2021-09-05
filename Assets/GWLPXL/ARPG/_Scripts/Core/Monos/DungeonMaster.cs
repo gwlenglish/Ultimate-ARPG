@@ -96,7 +96,7 @@ namespace GWLPXL.ARPGCore.com
             "This contains the formulas for the combat interactions. " +
             "You can inherit and override the formulas to create your own.")]
         public CombatFormulaDefaults CombatFormulas;
-
+        public AffixReaderSO AffixReaderDefault;
 
         [SerializeField]
         protected GameObject loadingCanvasPrefab = null;

@@ -57,6 +57,7 @@ MonoBehaviour:
       type: 2}
     defaultCombatFormulas: {fileID: 11400000, guid: 394c5050f14d7ae44991ad1eae7cec6f,
       type: 2}
+  AffixReaderDefault: {fileID: 11400000, guid: 3e4efdf6488b65849a561f01bd339f43, type: 2}
   loadingCanvasPrefab: {fileID: 3816709810313950904, guid: 45d19cc76fdd5154d8fc6f7df048efe1,
     type: 3}
   dungeonCanvasPrefab: {fileID: 5054700464775650293, guid: fd7f24d43ef69cf479ec24cdd9d780e5,

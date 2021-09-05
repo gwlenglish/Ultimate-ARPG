@@ -84,7 +84,7 @@ namespace GWLPXL.ARPGCore.Items.com
             }
             ofLevel = combinedequipmentilevel;
             GetStats().SetiLevel(ofLevel);//sets the level
-            string generatedName = PlayerDescription.GetGeneratedName(this);
+            string generatedName = EquipmentDescription.GenerateNewNameForItem(this);
             ARPGDebugger.DebugMessage(generatedName + " generated", null);
             GetStats().SetGeneratedName(generatedName);
         }

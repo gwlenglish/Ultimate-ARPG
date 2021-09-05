@@ -6,6 +6,7 @@ using System.Text;
 using System.Linq;
 using GWLPXL.ARPGCore.DebugHelpers.com;
 using GWLPXL.ARPGCore.Traits.com;
+using GWLPXL.ARPGCore.com;
 
 namespace GWLPXL.ARPGCore.Statics.com
 {
@@ -16,6 +17,31 @@ namespace GWLPXL.ARPGCore.Statics.com
     public static class EquipmentDescription
     {
         static StringBuilder sb = new StringBuilder();
+
+        public static string GenerateNewNameForItem(Equipment equipment)
+        {
+            sb.Clear();
+            string origin = equipment.GetBaseItemName();
+
+            List<string> prefixes = equipment.GetStats().GetAllTraitPrefixes();
+            AffixReaderSO reader = DungeonMaster.Instance.AffixReaderDefault;
+            string front = reader.GetNameWithAffixesPreLoaded(prefixes, origin);
+            sb.Append(front);
+           
+
+            List<string> postnouns = equipment.GetStats().GetAllTraitNouns();
+            if (postnouns.Count > 0)
+            {
+                int rando = Random.Range(0, postnouns.Count - 1);
+                string postnoun = equipment.GetStats().GetAllTraitNouns()[rando];
+                List<string> suffixes = equipment.GetStats().GetAllTraitSuffixes();
+                string back = reader.GetNameWithAffixesPreLoaded(suffixes, postnoun);
+                sb.Append(" of ");
+                sb.Append(back);
+            }
+
+            return sb.ToString();
+        }
         public static void RenameItemWithSocketRemoved(Equipment equipment, EquipmentSocketable removed, RenameType type, AffixOverrides overrides)
         {
             sb.Clear();

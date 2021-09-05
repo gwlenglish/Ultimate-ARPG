@@ -84,41 +84,7 @@ namespace GWLPXL.ARPGCore.Statics.com
             return possibleNames[rando];
         }
         //need to plugin to the affix reader? or could be separate. 
-        public static string GetGeneratedName(Equipment equipment)
-        {
-            if (string.IsNullOrEmpty(equipment.GetStats().GetDroppedName()) == false)
-            {
-                return equipment.GetStats().GetDroppedName();
-            }
-    
-            sb.Clear();
-
-            EquipmentTrait[] NativeTraits = equipment.GetStats().GetNativeTraits();
-            if (NativeTraits.Length > 0)
-            {
-                sb.Append(NativeTraits[0].GetTraitPrefix());
-                //we use the first native one for the prefix
-                sb.Append(space);
-            }
-
-
-            sb.Append(equipment.GetStats().GetBaseName());
-
-
-            EquipmentTrait[] randomTraits = equipment.GetStats().GetRandomTraits();
-            if (randomTraits.Length > 0)
-            {
-                sb.Append(space);
-                sb.Append(randomTraits[0].GetTraitSuffix());
-                //we use the first random one for the suffix
-            }
-
-            //ARPGDebugger.DebugMessage(sb.ToString());
-            equipment.SetGeneratedItemName(sb.ToString());
-            equipment.GetStats().SetDroppedName(sb.ToString());
-            return sb.ToString();
-
-        }
+       
 
         //convert to SB
         public static string GetCharacterInfoDescription(IActorHub user)
