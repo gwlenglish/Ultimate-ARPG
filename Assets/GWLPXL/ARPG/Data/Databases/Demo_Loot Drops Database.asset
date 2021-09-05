@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9336944f5b5fbd74c90f54b8387d5fe5, type: 3}
-  m_Name: Loot Drops Database
+  m_Name: Demo_Loot Drops Database
   m_EditorClassIdentifier: 
   searchFolders:
   - Assets/GWLPXL/ARPG/Data

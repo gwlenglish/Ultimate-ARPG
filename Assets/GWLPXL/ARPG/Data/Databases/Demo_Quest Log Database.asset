@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c8b3f26b1f3c2d4469759471e3bed2ed, type: 3}
-  m_Name: Quest Log Database
+  m_Name: Demo_Quest Log Database
   m_EditorClassIdentifier: 
   searchFolders:
   - Assets/GWLPXL/ARPG/Data

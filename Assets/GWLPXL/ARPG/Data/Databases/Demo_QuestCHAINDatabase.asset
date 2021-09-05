@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74848d6eec1690c4bb82ec7af7e6e2c5, type: 3}
-  m_Name: QuestCHAINDatabase
+  m_Name: Demo_QuestCHAINDatabase
   m_EditorClassIdentifier: 
   searchFolders:
   - Assets/GWLPXL/ARPG/Data
