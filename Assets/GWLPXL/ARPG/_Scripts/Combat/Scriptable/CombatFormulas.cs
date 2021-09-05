@@ -534,6 +534,8 @@ namespace GWLPXL.ARPGCore.Combat.com
 
     public abstract class PlayerCombatFormulas : ScriptableObject
     {
+        public abstract int GetArmorValue(IActorHub user);
+        public abstract int GetAttackValue(IActorHub user);
         public abstract int GetTotalAttackDamage(IAttributeUser playerStats, IInventoryUser playerInv, IAbilityUser playerAbilities);
         public abstract int GetReducedPhysical(IAttributeUser playerStats, IInventoryUser playerInv, int enemyLevel, float fullDamageAmount);
         public abstract int GetArmor(IAttributeUser player, IInventoryUser playerInv);

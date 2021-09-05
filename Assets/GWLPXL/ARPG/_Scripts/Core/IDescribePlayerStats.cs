@@ -8,7 +8,7 @@ namespace GWLPXL.ARPGCore.com
 
     public interface IDescribePlayerStats
     {
-        void DisplayStats(IAttributeUser _stats);
+        void DisplayStats(IActorHub user);
 
     }
 }

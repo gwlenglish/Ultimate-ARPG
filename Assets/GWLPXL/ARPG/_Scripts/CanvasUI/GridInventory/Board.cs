@@ -14,7 +14,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
     [System.Serializable]
     public class Board
     {
-        IActorHub user;
+    
         /// <summary>
         /// piece and slots occupied
         /// </summary>
@@ -41,6 +41,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         public List<BoardSlot> Slots => slots;
 
         public Dictionary<IInventoryPiece, List<IBoardSlot>> SlotsOccupied => slotsOccupied;
+        public Dictionary<GameObject, IInventoryPiece> PieceInSlot => pieceinslot;
         protected Dictionary<GameObject, Vector2Int> ui = new Dictionary<GameObject, Vector2Int>();
         protected Dictionary<IInventoryPiece, List<IBoardSlot>> slotsOccupied = new Dictionary<IInventoryPiece, List<IBoardSlot>>();
         [SerializeField]
@@ -53,6 +54,8 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         [SerializeField]
         protected int Columns = 9;
 
+        protected readonly List<IBoardSlot> empty = new List<IBoardSlot>();
+        protected Dictionary<GameObject, IInventoryPiece> pieceinslot = new Dictionary<GameObject, IInventoryPiece>();
         /// <summary>
         /// remove piece from board
         /// </summary>
@@ -157,7 +160,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         /// <param name="origin"></param>
         /// <returns></returns>
         /// 
-        List<IBoardSlot> empty = new List<IBoardSlot>();
+
         public virtual List<IBoardSlot> PlaceOnBoard(IInventoryPiece piece, Vector2Int origin, bool allowSwap = false)
         {
             IBoardSlot cell = slots.Find(x => x.Cell.Cell == origin);
@@ -199,6 +202,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
             for (int i = 0; i < placed.Count; i++)
             {
+                pieceinslot[placed[i].Instance] = piece;
                 placed[i].Cell.Occupied = true;
                 placed[i].PieceOnBoard = piece;
             }
@@ -273,6 +277,11 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             {
                 removed[i].Cell.Occupied = false;
                 removed[i].PieceOnBoard = null;
+                if (pieceinslot.ContainsKey(removed[i].Instance))
+                {
+                    pieceinslot.Remove(removed[i].Instance);
+                }
+     
             }
             slotsOccupied[obj] = new List<IBoardSlot>();
             OnPieceRemoved?.Invoke(obj, removed);

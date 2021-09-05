@@ -1226,7 +1226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   freezeMover: 1
-  InvCanvasPrefab: {fileID: 5388698434707790677, guid: d7e573a08785f894da6377fe844953ec,
+  InvCanvasPrefab: {fileID: 4188103017337170995, guid: 2242d05d3f70e6947897372ea8c3cb65,
     type: 3}
 --- !u!114 &2109560524564766993
 MonoBehaviour:
@@ -1270,6 +1270,103 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99b82e2bd43fbbd4b83f1a9ae960ace9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  overrideDmgText:
+    UseOverride: 0
+    Override:
+      TextObjectPrefab: {fileID: 0}
+      Type: 0
+      Font: {fileID: 0}
+      Color: {r: 0, g: 0, b: 0, a: 0}
+      TargetDir: {x: 0, y: 0, z: 0}
+      YCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      SizeCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      FadeCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      SpeedMultiplier: 1
+      DamageTextAliveTime: 1
+      DamageQueueSpacing: 1
+      ZeroReplacement: 
+      MaxQueued: 3
+      ScaleMulti: 1
+  overrideRegenText:
+    UseOverride: 0
+    Override:
+      TextObjectPrefab: {fileID: 0}
+      Type: 0
+      Font: {fileID: 0}
+      Color: {r: 0, g: 0, b: 0, a: 0}
+      TargetDir: {x: 0, y: 0, z: 0}
+      YCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      SizeCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      FadeCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      SpeedMultiplier: 1
+      DamageTextAliveTime: 1
+      DamageQueueSpacing: 1
+      ZeroReplacement: 
+      MaxQueued: 3
+      ScaleMulti: 1
+  overrideDotText:
+    UseOverride: 0
+    Override:
+      TextObjectPrefab: {fileID: 0}
+      Type: 0
+      Font: {fileID: 0}
+      Color: {r: 0, g: 0, b: 0, a: 0}
+      TargetDir: {x: 0, y: 0, z: 0}
+      YCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      SizeCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      FadeCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      SpeedMultiplier: 1
+      DamageTextAliveTime: 1
+      DamageQueueSpacing: 1
+      ZeroReplacement: 
+      MaxQueued: 3
+      ScaleMulti: 1
+  hPBarOffset: {x: 0, y: 2, z: 0}
 --- !u!114 &6847170806850548572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1520,3 +1617,100 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99b82e2bd43fbbd4b83f1a9ae960ace9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  overrideDmgText:
+    UseOverride: 0
+    Override:
+      TextObjectPrefab: {fileID: 0}
+      Type: 0
+      Font: {fileID: 0}
+      Color: {r: 0, g: 0, b: 0, a: 0}
+      TargetDir: {x: 0, y: 0, z: 0}
+      YCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      SizeCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      FadeCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      SpeedMultiplier: 1
+      DamageTextAliveTime: 1
+      DamageQueueSpacing: 1
+      ZeroReplacement: 
+      MaxQueued: 3
+      ScaleMulti: 1
+  overrideRegenText:
+    UseOverride: 0
+    Override:
+      TextObjectPrefab: {fileID: 0}
+      Type: 0
+      Font: {fileID: 0}
+      Color: {r: 0, g: 0, b: 0, a: 0}
+      TargetDir: {x: 0, y: 0, z: 0}
+      YCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      SizeCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      FadeCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      SpeedMultiplier: 1
+      DamageTextAliveTime: 1
+      DamageQueueSpacing: 1
+      ZeroReplacement: 
+      MaxQueued: 3
+      ScaleMulti: 1
+  overrideDotText:
+    UseOverride: 0
+    Override:
+      TextObjectPrefab: {fileID: 0}
+      Type: 0
+      Font: {fileID: 0}
+      Color: {r: 0, g: 0, b: 0, a: 0}
+      TargetDir: {x: 0, y: 0, z: 0}
+      YCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      SizeCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      FadeCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      SpeedMultiplier: 1
+      DamageTextAliveTime: 1
+      DamageQueueSpacing: 1
+      ZeroReplacement: 
+      MaxQueued: 3
+      ScaleMulti: 1
+  hPBarOffset: {x: 0, y: 2, z: 0}

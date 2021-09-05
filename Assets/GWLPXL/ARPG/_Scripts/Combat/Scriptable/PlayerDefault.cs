@@ -185,6 +185,37 @@ namespace GWLPXL.ARPGCore.Combat.com
             ARPGDebugger.CombatDebugMessage(enemy.GetRuntimeAttributes().ActorName + " Resist Amount=" + resist + "Damaged Amount=" + newDmg, enemy.GetInstance());
             return rounded;
         }
+        /// <summary>
+        /// used for attack value description, calculates damage from equipment and stats
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public override int GetAttackValue(IActorHub user)
+        {
+
+            //ability mods
+        
+            int baseStatFactor = user.MyStats.GetRuntimeAttributes().GetStatForCombat(CombatStatType.Damage);//current base stat value divide by 100
+            float baseWpnFactor = user.MyInventory.GetInventoryRuntime().GetDamageFromEquipment();
+
+
+            float result = ((baseWpnFactor) + baseStatFactor);
+            int rounded = Mathf.FloorToInt(result);
+            return rounded;
+        }
+
+        /// <summary>
+        /// used for armor value description, calculates armor from stats and equipment
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public override int GetArmorValue(IActorHub user)
+        {
+            int armorAmount = 0;
+            armorAmount += user.MyStats.GetRuntimeAttributes().GetStatForCombat(CombatStatType.Armor);
+            armorAmount += user.MyInventory.GetInventoryRuntime().GetArmorFromEquipment();
+            return armorAmount;
+        }
     }
 
 

@@ -9,7 +9,7 @@ namespace GWLPXL.ARPGCore.Attributes.com
     public class ElementAttack : Attribute
     {
         public ElementType Type;
-        readonly string attack = "Attack: ";
+        readonly string attack = " Attack: ";
         public ElementAttack(ElementType type)
         {
             Type = type;

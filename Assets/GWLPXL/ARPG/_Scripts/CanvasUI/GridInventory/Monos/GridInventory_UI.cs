@@ -1,6 +1,7 @@
 using GWLPXL.ARPGCore.Attributes.com;
 using GWLPXL.ARPGCore.CanvasUI.com;
 using GWLPXL.ARPGCore.com;
+using GWLPXL.ARPGCore.DebugHelpers.com;
 using GWLPXL.ARPGCore.Items.com;
 using GWLPXL.ARPGCore.Statics.com;
 using GWLPXL.ARPGCore.Types.com;
@@ -18,10 +19,12 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
     /// <summary>
     /// ui example using Board class to generate the inventory grid/board
     /// </summary>
-    public class GridInventory_UI : MonoBehaviour, IInventoryCanvas, IVisualizeStats
+    public class GridInventory_UI : MonoBehaviour, IInventoryCanvas
     {
+        public GridInventoryEvents Events;
         public PatternHolder DefaultPattern;
         public System.Action<List<RaycastResult>> OnTryRemove;
+        public System.Action<List<RaycastResult>> ONTryHighlight;
         public System.Action<IInventoryPiece> OnStartDraggingPiece;
         public System.Action OnStopDragging;
         public System.Action<List<RaycastResult>, IInventoryPiece> OnTryPlace;
@@ -44,7 +47,14 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         public RectTransform GridTransform;//on ui
         public GameObject CellPrefab;//on ui
         public Transform PanelGrid;//on ui
-
+        [SerializeField]
+        protected Color neutral = Color.white;
+        [SerializeField]
+        protected Color transparent = new Color(255, 255, 255, 0);
+        [SerializeField]
+        protected Color valid = Color.green;
+        [SerializeField]
+        protected Color invalid = Color.red;
 
         protected EventSystem eventSystem;
         protected InteractState state = InteractState.Empty;
@@ -55,7 +65,20 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         protected List<RaycastResult> results = new List<RaycastResult>();
         protected Camera main;
         protected Canvas canvas;
+        protected bool showCellCoordinate = false;
 
+
+        #region ARPG interface fields
+        protected IActorHub user = null;
+        protected IDescribePlayerStats describeStats = null;
+        protected IDescribeEquipment describeEquipment = null;
+        protected bool hasStateDisplay = false;
+        protected bool hasHoverOverPanel = false;
+        protected ActorInventory inv = null;
+        protected Dictionary<IInventoryPiece, ItemStack> piecestackdic = new Dictionary<IInventoryPiece, ItemStack>();
+        protected Dictionary<GameObject, IInventoryPiece> piecesdic = new Dictionary<GameObject, IInventoryPiece>();
+        protected Dictionary<ItemStack, GameObject> stackdic = new Dictionary<ItemStack, GameObject>();
+        #endregion
 
         #region virtual unity calls
         /// <summary>
@@ -82,6 +105,8 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             TheBoard.OnNewPiecePlaced += ResetColors;
 
             TheBoard.OnPieceSwapped += SwappedInventory;
+
+            GearUI.Events.OnEquipmentHighlighted += DescribeItem;
         }
 
        
@@ -98,6 +123,8 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
   
             TheBoard.OnNewPiecePlaced -= Placed;
             TheBoard.OnNewPiecePlaced -= ResetColors;
+
+            GearUI.Events.OnEquipmentHighlighted -= DescribeItem;
         }
         /// <summary>
         /// creation
@@ -109,14 +136,23 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         /// </summary>
         protected virtual void LateUpdate()
         {
-
+            if (MainPanel.gameObject.activeInHierarchy == false) return;
             //need to set the pointer data.
             m_PointerEventData.position = Input.mousePosition;
 
             switch (state)
             {
                 case InteractState.Empty:
-                    TryRemoveDraggableFromGrid();
+                    if (RemoveTrigger())
+                    {
+                        TryRemoveDraggableFromGrid();//click mousedown
+                    }
+                    //detect hover over displays.
+                    if (hasHoverOverPanel)
+                    {
+                        TryHighlight();
+                    }
+       
                     break;
                 case InteractState.HasDraggable:
                     MoveDraggable(draginstance);
@@ -144,7 +180,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             //just resets the color
             foreach (var kvp in TheBoard.IDS)
             {
-                kvp.Key.GetComponent<Image>().color = new Color(255, 255, 255, 0);
+                kvp.Key.GetComponent<Image>().color = transparent;
             }
         }
         /// <summary>
@@ -216,11 +252,11 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
         protected virtual void ResetColors(IInventoryPiece piece, List<IBoardSlot> slots)
         {
-            piece.Instance.GetComponentInChildren<Image>().color = Color.white;
-            piece.PreviewInstance.GetComponentInChildren<Image>().color = Color.white;
+            piece.Instance.GetComponentInChildren<Image>().color = neutral;
+            piece.PreviewInstance.GetComponentInChildren<Image>().color =  neutral;
             for (int i = 0; i < slots.Count; i++)
             {
-                slots[i].Instance.GetComponentInChildren<Image>().color = new Color(255, 255, 255, 0);
+                slots[i].Instance.GetComponentInChildren<Image>().color = transparent;
             }
         }
         protected virtual void Placed(IInventoryPiece piece, List<IBoardSlot> slots)
@@ -240,8 +276,6 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         }
         protected virtual void SwappedInventory(IInventoryPiece old, IInventoryPiece newpiece)
         {
-
-            Debug.Log("Swapped Inventory");
             CarryRemovedPiece(old);
         }
         /// <summary>
@@ -257,12 +291,32 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             GameObject instance = UnityEngine.GameObject.Instantiate(CellPrefab, PanelGrid);
             instance.name = "Cell " + "X:" + slot.Cell.Cell.x + " Y:" + slot.Cell.Cell.y;
             TMPro.TextMeshProUGUI text = instance.GetComponentInChildren<TMPro.TextMeshProUGUI>();
-            if (text != null) text.SetText((slot.Cell.Cell.x + " , " + slot.Cell.Cell.y));
+
+            if (text != null)
+            {
+                if (showCellCoordinate)
+                {
+                    text.SetText((slot.Cell.Cell.x + " , " + slot.Cell.Cell.y));
+                }
+                else
+                {
+                    text.SetText("");
+                }
+            }
+           
             TheBoard.IDS.Add(instance, slot.Cell.Cell);
             TheBoard.Preview.CellDictionary[slot] = instance;
             slot.Instance = instance;
         }
 
+        /// <summary>
+        /// override to detect custom screen position
+        /// </summary>
+        /// <returns></returns>
+        protected virtual Vector3 GetScreenPosition()
+        {
+            return Input.mousePosition;
+        }
 
         /// <summary>
         /// draggable movement
@@ -271,7 +325,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         protected virtual void MoveDraggable(IInventoryPiece dragginginstance)
         {
 
-            Vector3 screenPoint = (Input.mousePosition);
+            Vector3 screenPoint = GetScreenPosition();
             screenPoint.z = canvas.planeDistance;
             dragginginstance.Instance.transform.position = main.ScreenToWorldPoint(screenPoint);// + new Vector3(xoffset, 0)) ;
         }
@@ -296,13 +350,14 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             //For every result returned, output the name of the GameObject on the Canvas hit by the Ray
             foreach (RaycastResult result in results)
             {
-                Debug.Log("Hit " + result.gameObject.name);
+                ARPGDebugger.DebugMessage("Hit " + result.gameObject.name, result.gameObject);
                 if (TheBoard.IDS.ContainsKey(result.gameObject) == false) continue;
 
                 
                 bool placed = TryPlaceOnBoard(result.gameObject, piece, true);
                 if (placed)
                 {
+                    Events.SceneEvents.OnPiecePlaced?.Invoke(piece);
                     return;
                 }
             }
@@ -312,38 +367,98 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
         }
 
+        /// <summary>
+        /// trigger to detect if we should try remove an item
+        /// </summary>
+        /// <returns></returns>
+        protected virtual bool RemoveTrigger()
+        {
+            return Input.GetMouseButtonDown(0);
+        }
 
         /// <summary>
         /// try remove from grid
         /// </summary>
         protected virtual void TryRemoveDraggableFromGrid()
         {
-            if (Input.GetMouseButtonDown(0) == false) return;
 
             if (m_PointerEventData == null) return;//nothing clicked, nothing ventured
-            Debug.Log("Try Remove");
+
             //Create a list of Raycast Results
             results.Clear();
 
             //Raycast using the Graphics Raycaster and mouse click position
             m_Raycaster.Raycast(m_PointerEventData, results);//can be null...
-            Debug.Log(results.Count);
+
 
             //For every result returned, output the name of the GameObject on the Canvas hit by the Ray
             foreach (RaycastResult result in results)
             {
-                Debug.Log("Hit " + result.gameObject.name, result.gameObject);
                 if (TheBoard.IDS.ContainsKey(result.gameObject) == false) continue;
-                Debug.Log("Hit " + result.gameObject.name, result.gameObject);
                 IInventoryPiece removed = TryRemoveDraggableFromGrid(result.gameObject);
                 if (removed != null)
                 {
+                    Events.SceneEvents.OnPieceRemoved?.Invoke(removed);
                     return;
                 }
 
             }
 
             OnTryRemove?.Invoke(results);
+
+        }
+
+        protected virtual void DescribeItem(Item item)
+        {
+            if (hasHoverOverPanel == false) return;
+            describeEquipment.SetMyEquipment(item);
+            describeEquipment.SetHighlightedItem(null);
+        }
+        protected virtual void TryHighlight()
+        {
+
+            describeEquipment.SetHighlightedItem(null);
+            describeEquipment.SetMyEquipment(null);
+            if (m_PointerEventData == null) return;//nothing clicked, nothing ventured
+
+            //Create a list of Raycast Results
+            results.Clear();
+
+            //Raycast using the Graphics Raycaster and mouse click position
+            m_Raycaster.Raycast(m_PointerEventData, results);//can be null...
+
+
+            //For every result returned, output the name of the GameObject on the Canvas hit by the Ray
+            foreach (RaycastResult result in results)
+            {
+                GameObject keyinstance = result.gameObject;
+                if (TheBoard.PieceInSlot.ContainsKey(keyinstance))
+                {
+                    IInventoryPiece piece = TheBoard.PieceInSlot[keyinstance];
+                    Debug.Log("Highlight " + piece.ItemStack.GetGeneratedItemName());
+                    if (piece.ItemStack is Equipment)
+                    {
+                        Equipment equipment = null;
+                        describeEquipment.SetHighlightedItem(piece.ItemStack);
+                        equipment = user.MyInventory.GetInventoryRuntime().GetEquipmentAtSlot((EquipmentSlotsType)piece.EquipmentIdentifier[0]).EquipmentInSlots;
+
+                        describeEquipment.SetMyEquipment(equipment);
+                        describeEquipment.EnableComparisonPanel();
+                    }
+                    else
+                    {
+                        DescribeItem(piece.ItemStack);
+                    }
+
+
+                    return;
+                }
+                
+
+
+            }
+
+           ONTryHighlight?.Invoke(results);
 
         }
 
@@ -383,7 +498,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             for (int i = 0; i < TheBoard.Preview.PreviewList.Count; i++)
             {
                 TheBoard.Preview.PreviewList[i].Cell.Preview = false;
-                TheBoard.Preview.CellDictionary[TheBoard.Preview.PreviewList[i]].GetComponent<Image>().color = new Color(255, 255, 255, 0);
+                TheBoard.Preview.CellDictionary[TheBoard.Preview.PreviewList[i]].GetComponent<Image>().color = transparent;
             }
 
 
@@ -413,20 +528,20 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                     if (TheBoard.Preview.PreviewList[i].Cell.Preview == false)
                     {
 
-                        TheBoard.Preview.CellDictionary[TheBoard.Preview.PreviewList[i]].GetComponent<Image>().color = new Color(255, 255, 255, 0);
+                        TheBoard.Preview.CellDictionary[TheBoard.Preview.PreviewList[i]].GetComponent<Image>().color = transparent;
                         TheBoard.Preview.PreviewList.RemoveAt(i);
                     }
                     else
                     {
-                        TheBoard.Preview.CellDictionary[TheBoard.Preview.PreviewList[i]].GetComponent<Image>().color = Color.green;
+                        TheBoard.Preview.CellDictionary[TheBoard.Preview.PreviewList[i]].GetComponent<Image>().color = valid;
                     }
                 }
             }
             else
             {
                 //not on the board, so just drag it around
-                Debug.Log("Off grid");
-                piece.Instance.transform.position = Input.mousePosition;
+                ARPGDebugger.DebugMessage("Off Grid", piece.Instance.gameObject);
+                piece.Instance.transform.position = GetScreenPosition();
             }
         }
 
@@ -443,13 +558,13 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                 }
                 else if (slot.Cell.Occupied)
                 {
-                    piece.PreviewInstance.GetComponentInChildren<Image>().color = Color.red;
+                    piece.PreviewInstance.GetComponentInChildren<Image>().color = invalid;
 
 
                 }
                 else
                 {
-                    piece.PreviewInstance.GetComponentInChildren<Image>().color = Color.green;
+                    piece.PreviewInstance.GetComponentInChildren<Image>().color = valid;
 
                 }
             }
@@ -471,37 +586,34 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             }
         }
 
-        IActorHub user = null;
-        IDescribePlayerStats describeStats = null;
-        ActorInventory inv = null;
-        Dictionary<IInventoryPiece, ItemStack> piecestackdic = new Dictionary<IInventoryPiece, ItemStack>();
-        Dictionary<GameObject, IInventoryPiece> piecesdic = new Dictionary<GameObject, IInventoryPiece>();
-        Dictionary<ItemStack, GameObject> stackdic = new Dictionary<ItemStack, GameObject>();
-        Dictionary<EquipmentSlot, GameObject> equipdic = new Dictionary<EquipmentSlot, GameObject>();
         #endregion
 
         #region ARPG interface
 
-        public void SetUser(IUseInvCanvas newUser)
+        public virtual void SetUser(IUseInvCanvas newUser)
         {
+            describeStats = GetComponent<IDescribePlayerStats>();
+            describeEquipment = GetComponent<IDescribeEquipment>();
+            hasHoverOverPanel = describeEquipment != null;
+            hasStateDisplay = describeStats != null;
+            if (hasHoverOverPanel)
+            {
+                describeEquipment.SetMyEquipment(null);
+                describeEquipment.SetHighlightedItem(null);
+                describeEquipment.DisableComparisonPanel();
+            }
+            user = newUser.GetActorHub();
+            inv = user.MyInventory.GetInventoryRuntime();
             GridSetup(newUser);
-
+            DisplayStats();
         }
 
         protected virtual void GridSetup(IUseInvCanvas newUser)
         {
-            user = newUser.GetActorHub();
-            IAttributeUser stats = user.MyStats;
-            inv = user.MyInventory.GetInventoryRuntime();
 
             CreateGrid();
             GearUI.CreateGear(newUser.GetActorHub());
-
             EnablePlayerInventoryUI(true);
-   
-            DisplayStats(stats);
-
-
 
             List<ItemStack> stack = inv.GetAllUniqueStacks();
             for (int i = 0; i < stack.Count; i++)
@@ -511,12 +623,16 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             }
 
             inv.OnSlotChanged += UpdateUI;
-   
+            inv.OnEquipmentSlotChanged += RefreshDisplay;
+
             //ugly use due to unity needing a frame to update the grid layout...
             StartCoroutine(Waitaframe());
         }
 
-
+        protected virtual void RefreshDisplay(EquipmentSlot equipment)
+        {
+            DisplayStats();
+        }
         
         protected virtual void UpdateUI(int slot, ItemStack stack)
         {
@@ -552,13 +668,10 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             {
                 CreatePieceFromInventory(stack);
             }
+
+
       
         }
-
-
-
-       
-
 
         protected virtual bool CreatePieceFromInventory(ItemStack stack)
         {
@@ -584,7 +697,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                         piecesdic[instance] = piece;
                         stackdic[stack] = instance;
                         piecestackdic[piece] = stack;
-                        Debug.Log("Item " + stack.Item + " placed " + placed + " at " + instance.name);
+                        ARPGDebugger.DebugMessage("Item " + stack.Item + " placed " + placed + " at " + instance.name, instance);
                         placed = true;
                         break;
                     }
@@ -607,39 +720,45 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             return placed;
         }
        
-        IEnumerator Waitaframe()
+        /// <summary>
+        /// ugly but required in order for unity to refresh its grid component on initialization
+        /// </summary>
+        /// <returns></returns>
+       protected IEnumerator Waitaframe()
         {
             yield return 0;
             TogglePlayerInventoryUI();
         }
 
-        private void OnDestroy()
+        protected virtual void OnDestroy()
         {
             inv.OnSlotChanged -= UpdateUI;
+            inv.OnEquipmentSlotChanged -= RefreshDisplay;
+
         }
        
 
-        public void DisableHoverOver()
+        public virtual void DisableHoverOver()
         {
-            //no implemented yet
+           //not implemented in this version
         }
 
-        public void EnableHoverOverInstance(Transform atPos, Item item, bool enableComparison)
+        public virtual void EnableHoverOverInstance(Transform atPos, Item item, bool enableComparison)
         {
-           //not implemented yet
+            //not implemented in this version
         }
 
-        public void EnablePlayerInventoryUI(bool isEnabled)
+        public virtual void EnablePlayerInventoryUI(bool isEnabled)
         {
             MainPanel.gameObject.SetActive(isEnabled);
             if (isEnabled)
             {
                 RefreshInventoryUI();
-
+                DisplayStats();
             }
         }
 
-        public void TogglePlayerInventoryUI()
+        public virtual void TogglePlayerInventoryUI()
         {
             bool toggle = !MainPanel.gameObject.activeInHierarchy;
             EnablePlayerInventoryUI(toggle);
@@ -654,10 +773,9 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             }
         }
 
-        public void RefreshInventoryUI()
+        public virtual void RefreshInventoryUI()
         {
-            //
-         
+
             foreach (var kvp in piecesdic)
             {
 
@@ -687,15 +805,16 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
            
         }
 
-        public bool GetCanvasEnabled()
+        public virtual bool GetCanvasEnabled()
         {
             return MainPanel.gameObject.activeInHierarchy;
         }
 
-        public void DisplayStats(IAttributeUser _stats)
+
+        public virtual void DisplayStats()
         {
-            if (_stats == null) return;
-            //describeStats.DisplayStats(stats);
+            if (hasStateDisplay == false) return;
+            describeStats.DisplayStats(user);
         }
 
 

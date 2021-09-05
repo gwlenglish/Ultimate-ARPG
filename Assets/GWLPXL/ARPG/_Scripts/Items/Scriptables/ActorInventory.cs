@@ -419,11 +419,13 @@ namespace GWLPXL.ARPGCore.Items.com
             int armorMods = 0;
             for (int i = 0; i < typesForArmor.Length; i++)
             {
-                equippedByType.TryGetValue(typesForArmor[i], out EquipmentList equipmentList);
-                if (equipmentList == null) continue;
-                if (equipmentList.Equipment.Count == 0) continue;
+                EquipmentType key = typesForArmor[i];
+                if (equippedByType.ContainsKey(typesForArmor[i]))
+                {
+                    EquipmentList equipmentList = equippedByType[key];
+                    armorMods += equipmentList.GetBaseStatsAdded();
+                }
 
-                armorMods += equipmentList.GetBaseStatsAdded();
             }
 
             return armorMods;
@@ -434,14 +436,19 @@ namespace GWLPXL.ARPGCore.Items.com
         /// <returns></returns>
         public virtual int GetDamageFromEquipment()
         {
+
             int damageMods = 0;
             for (int i = 0; i < typesForDamage.Length; i++)
             {
-                equippedByType.TryGetValue(typesForDamage[i], out EquipmentList equipmentList);
-                if (equipmentList == null) continue;
-                if (equipmentList.Equipment.Count == 0) continue;
+                EquipmentType key = typesForDamage[i];
+                if (equippedByType.ContainsKey(key))
+                {
+                    EquipmentList equipmentList = equippedByType[key];
+                    damageMods += equipmentList.GetBaseStatsAdded();
+                }
 
-                damageMods += equipmentList.GetBaseStatsAdded();
+
+   
             }
 
             return damageMods;

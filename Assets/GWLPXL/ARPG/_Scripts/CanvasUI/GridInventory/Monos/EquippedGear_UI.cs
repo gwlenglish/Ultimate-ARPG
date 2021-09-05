@@ -17,7 +17,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
     public class EquippedGear_UI : MonoBehaviour
     {
 
-
+        public GridEquipmentEvents Events;
         public EquippedGearARPG Gear => gear;
         public GridInventory_UI InventoryUI;
         [Header("Gear Slots")]
@@ -43,7 +43,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             InventoryUI.OnTryRemove += TryRemove;
             InventoryUI.OnStartDraggingPiece += CheckDragging;
             InventoryUI.OnStopDragging += StopCheckDragging;
-
+            InventoryUI.ONTryHighlight += TryHighlight;
 
 
         }
@@ -54,7 +54,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             InventoryUI.OnTryRemove -= TryRemove;
             InventoryUI.OnStartDraggingPiece -= CheckDragging;
             InventoryUI.OnStopDragging -= StopCheckDragging;
-
+            InventoryUI.ONTryHighlight -= TryHighlight;
 
 
         }
@@ -147,6 +147,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         /// <param name="piece"></param>
         protected virtual void GearEquipped(IInventoryPiece piece)
         {
+            Events.SceneEvents.OnEquipped?.Invoke(piece);
             piece.CleanUP();
             InventoryUI.NoPieces();
         }
@@ -155,7 +156,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         /// </summary>
         protected virtual void GearUnEquipped()
         {
-
+            Events.SceneEvents.OnUnequip?.Invoke();
             InventoryUI.NoPieces();
 
         }
@@ -202,6 +203,22 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
         }
 
+        protected virtual void TryHighlight(List<RaycastResult> results)
+        {
+            foreach (RaycastResult result in results)
+            {
+                GameObject keyinstance = result.gameObject;
+                if (gear.GearSlotDic.ContainsKey(keyinstance) == false) continue;
+
+                IGearSlot slot = gear.GearSlotDic[keyinstance];
+                Equipment piece = slot.Equipment;
+                Events.OnEquipmentHighlighted?.Invoke(piece);
+                return;
+
+            }
+
+
+        }
         /// <summary>
         /// check to see if results hit a gear slot, if so unequip
         /// </summary>
@@ -221,6 +238,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                     //slot.Piece.CleanUP();
                     user.MyInventory.GetInventoryRuntime().UnEquip(eq);
                     GearUnEquipped();
+                 
                     break;
                 
                 }

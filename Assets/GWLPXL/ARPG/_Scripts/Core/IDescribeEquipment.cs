@@ -7,11 +7,11 @@ namespace GWLPXL.ARPGCore.com
     public interface IDescribeEquipment
     {
         void SetHighlightedItem(Item highlightedItem);
-        void SetMyEquipment(Equipment myequipment);
+        void SetMyEquipment(Item myequipment);
         void EnableComparisonPanel();
         void DisableComparisonPanel();
-        void DescribeEquipment(string description);
-        void DescribeComparisonEquipment(string description);
+        void DescribeEquippedEquipment(string description);
+        void DescribeHighlightedEquipment(string description);
 
     }
 }

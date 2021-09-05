@@ -10,83 +10,93 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
     
     public class HoverOverInfo : MonoBehaviour, IDescribeEquipment
     {
+        [Header("Equipped")]
         [SerializeField]
-        TextMeshProUGUI highlightedText = null;
+        protected Transform equippedPanel = null;
         [SerializeField]
-        TextMeshProUGUI comparison = null;
+        protected Image equippedImage = null;
         [SerializeField]
-        Image equipmentImage = null;
+        protected TextMeshProUGUI equippedText = null;
         [SerializeField]
-        Image comparisonImage = null;
+        protected Image comparisonImage = null;
+        [Header("Highlighted")]
         [SerializeField]
-        Image mine = null;
+        protected Transform highlightedPanel = null;
         [SerializeField]
-        Image highlighted = null;
-      
-        private void Awake()
+        protected Image highlightedEquipmentImage = null;
+        [SerializeField]
+        protected TextMeshProUGUI highlightedText = null;
+        [SerializeField]
+        protected Image highlighted = null;
+
+        [Header("Colors")]
+        [SerializeField]
+        protected Color neutral = Color.white;
+        [SerializeField]
+        protected Color transparent = new Color(255, 255, 255, 0);
+        protected virtual void Awake()
         {
-            mine.sprite = null;
+            equippedImage.color = transparent;
+            highlighted.color = transparent;
+            equippedImage.sprite = null;
             highlighted.sprite = null;
         }
         /// <summary>
         /// my equipment
         /// </summary>
         /// <param name="description"></param>
-        public void DescribeComparisonEquipment(string description)
-        {
-            comparison.text = description;
-            if (string.IsNullOrEmpty(description))
-            {
-                comparison.text = "None";
-                float alpha = 1;
-                Color temp = comparisonImage.color;
-                temp.a = alpha;
-                comparisonImage.color = temp;
-            }
-            else
-            {
-                float alpha = 1;
-                Color temp = comparisonImage.color;
-                temp.a = alpha;
-                comparisonImage.color = temp;
-            }
-        }
-
-        public void DescribeEquipment(string description)
+        public virtual void DescribeHighlightedEquipment(string description)
         {
             highlightedText.SetText(description);
+           
         }
 
-        public void DisableComparisonPanel()
+        public virtual void DescribeEquippedEquipment(string description)
         {
-            comparisonImage.gameObject.SetActive(false);
+            equippedText.SetText(description);
         }
 
-        public void EnableComparisonPanel()
+        public virtual void DisableComparisonPanel()
         {
-            comparisonImage.gameObject.SetActive(true);
+            highlightedPanel.gameObject.SetActive(false);
         }
 
-        public void SetHighlightedItem(Item highlighteditem)
+        public virtual void EnableComparisonPanel()
+        {
+            highlightedPanel.gameObject.SetActive(true);
+        }
+
+        public virtual void SetHighlightedItem(Item highlighteditem)
         {
             if (highlighteditem == null)
             {
                 highlighted.sprite = null;
-                DescribeEquipment(string.Empty);
+                highlighted.color = transparent;
+                DescribeHighlightedEquipment(string.Empty);
+                highlightedPanel.gameObject.SetActive(false);
                 return;
             }
+            highlightedPanel.gameObject.SetActive(true);
+            highlighted.color = neutral;
             highlighted.sprite = highlighteditem.GetSprite();
+            DescribeHighlightedEquipment(highlighteditem.GetUserDescription());
+
         }
 
-        public void SetMyEquipment(Equipment myequipment)
+        public virtual void SetMyEquipment(Item myequipment)
         {
             if (myequipment == null)
             {
-                mine.sprite = null;
-                DescribeComparisonEquipment(string.Empty);
+                equippedImage.sprite = null;
+                equippedImage.color = transparent;
+                DescribeEquippedEquipment(string.Empty);
+                equippedPanel.gameObject.SetActive(false);
                 return;
             }
-            mine.sprite = myequipment.GetSprite();
+            equippedPanel.gameObject.SetActive(true);
+            equippedImage.color = neutral;
+            equippedImage.sprite = myequipment.GetSprite();
+            DescribeEquippedEquipment(myequipment.GetUserDescription());
         }
     }
 }

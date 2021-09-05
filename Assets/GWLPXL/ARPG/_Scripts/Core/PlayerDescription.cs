@@ -1,6 +1,7 @@
 ﻿
 using GWLPXL.ARPGCore.Abilities.com;
 using GWLPXL.ARPGCore.Attributes.com;
+using GWLPXL.ARPGCore.com;
 using GWLPXL.ARPGCore.Items.com;
 using GWLPXL.ARPGCore.Traits.com;
 using GWLPXL.ARPGCore.Types.com;
@@ -120,32 +121,33 @@ namespace GWLPXL.ARPGCore.Statics.com
         }
 
         //convert to SB
-        public static string GetCharacterInfoDescription(IAttributeUser stats, IInventoryUser inv, IAbilityUser abilities)
+        public static string GetCharacterInfoDescription(IActorHub user)
         {
 
 
             sb.Clear();
 
             //overall attack and armor
-            sb.Append("Attack Value: " + CombatStats.GetTotalPlayerAttackDamage(stats, inv, abilities).ToString() + enter);
-            sb.Append("Armor Value: " + CombatStats.GetPlayerArmorAmount(stats, inv).ToString() + enter);
-
+            sb.Append("Attack Value: " + DungeonMaster.Instance.CombatFormulas.GetCombatFormulas().PlayerCombat.GetAttackValue(user));
+            sb.Append(enter);
+            sb.Append("Armor Value: " + DungeonMaster.Instance.CombatFormulas.GetCombatFormulas().PlayerCombat.GetArmorValue(user));
+            sb.Append(enter);
             //stat values
-            Attribute[] attackElements = stats.GetRuntimeAttributes().GetAttributes(AttributeType.Stat);
+            Attribute[] attackElements = user.MyStats.GetRuntimeAttributes().GetAttributes(AttributeType.Stat);
             for (int i = 0; i < attackElements.Length; i++)
             {
                 Stat stat = (Stat)attackElements[i];
                 sb.Append(stat.GetFullDescription() + enter);
             }
 
-            Attribute[] resources = stats.GetRuntimeAttributes().GetAttributes(AttributeType.Resource);
+            Attribute[] resources = user.MyStats.GetRuntimeAttributes().GetAttributes(AttributeType.Resource);
             for (int i = 0; i < resources.Length; i++)
             {
                 Resource resource = (Resource)resources[i];
                 sb.Append(resource.GetFullDescription() + enter);
             }
 
-            Attribute[] eleAttacks = stats.GetRuntimeAttributes().GetAttributes(AttributeType.ElementAttack);
+            Attribute[] eleAttacks = user.MyStats.GetRuntimeAttributes().GetAttributes(AttributeType.ElementAttack);
             for (int i = 0; i < eleAttacks.Length; i++)
             {
                 ElementAttack eleAttack = (ElementAttack)eleAttacks[i];
@@ -154,7 +156,7 @@ namespace GWLPXL.ARPGCore.Statics.com
 
             }
 
-            Attribute[] eleResist = stats.GetRuntimeAttributes().GetAttributes(AttributeType.ElementResist);
+            Attribute[] eleResist = user.MyStats.GetRuntimeAttributes().GetAttributes(AttributeType.ElementResist);
             for (int i = 0; i < eleResist.Length; i++)
             {
                 ElementResist resist = (ElementResist)eleResist[i];
@@ -165,7 +167,7 @@ namespace GWLPXL.ARPGCore.Statics.com
             }
 
             //format the other stuff
-            Attribute[] other = stats.GetRuntimeAttributes().GetAttributes(AttributeType.Other);
+            Attribute[] other = user.MyStats.GetRuntimeAttributes().GetAttributes(AttributeType.Other);
             for (int i = 0; i < other.Length; i++)
             {
                 Other otheratt = (Other)other[i];

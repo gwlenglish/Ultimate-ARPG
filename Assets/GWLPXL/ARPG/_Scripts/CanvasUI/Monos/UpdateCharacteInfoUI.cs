@@ -16,12 +16,10 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         [SerializeField]
         TextMeshProUGUI text;
 
-        public void DisplayStats(IAttributeUser _stats)
+        public virtual void DisplayStats(IActorHub user)
         {
-            if (_stats == null) return;
-            IInventoryUser inv = _stats.GetInstance().GetComponent<IInventoryUser>();
-            IAbilityUser abilities = _stats.GetInstance().GetComponent<IAbilityUser>();
-            text.text = PlayerDescription.GetCharacterInfoDescription(_stats, inv, abilities);
+
+            text.text = PlayerDescription.GetCharacterInfoDescription(user);
 
         }
 

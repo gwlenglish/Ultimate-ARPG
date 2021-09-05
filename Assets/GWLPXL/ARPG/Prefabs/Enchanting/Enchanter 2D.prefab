@@ -54,8 +54,8 @@ MonoBehaviour:
       Sprite: {fileID: 3977366460457049894, guid: d274d7b6131b1094fb3cf06d40b14134,
         type: 3}
       EnchantTraits:
-      - {fileID: 0}
-      - {fileID: 0}
+      - {fileID: 11400000, guid: da55f038dc9fc4a44869e68769ee8c12, type: 2}
+      - {fileID: 11400000, guid: 3d887db43c9426d4fa41f556c33826fb, type: 2}
       AffixOverrides:
         Prefixes: []
         Suffixes: []
@@ -66,7 +66,7 @@ MonoBehaviour:
       Sprite: {fileID: 2450015216007869224, guid: d274d7b6131b1094fb3cf06d40b14134,
         type: 3}
       EnchantTraits:
-      - {fileID: 0}
+      - {fileID: 11400000, guid: 4406eb2816f912748a324c4d5960fe5d, type: 2}
       AffixOverrides:
         Prefixes: []
         Suffixes: []
@@ -77,8 +77,8 @@ MonoBehaviour:
       Sprite: {fileID: 3909212269490177266, guid: d274d7b6131b1094fb3cf06d40b14134,
         type: 3}
       EnchantTraits:
-      - {fileID: 0}
-      - {fileID: 0}
+      - {fileID: 11400000, guid: 3659cc3de806d78439dc409bd4a932fd, type: 2}
+      - {fileID: 11400000, guid: 7fb9d87b04f45d74f93c83497e5f7271, type: 2}
       AffixOverrides:
         Prefixes: []
         Suffixes: []

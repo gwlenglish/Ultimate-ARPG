@@ -13,7 +13,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
     //user interface for the inventory and equipment
     //saving should be a separate canvas. requires the dungeonmaster.
     //TO DO: subscribe to actions
-    public class PlayerInventory_UI : MonoBehaviour, IInventoryCanvas, IVisualizeStats
+    public class PlayerInventory_UI : MonoBehaviour, IInventoryCanvas
     {
         public IUseInvCanvas MyUserInv { get; set; }
         public bool FreezeDungeon = true;
@@ -78,7 +78,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             describe.SetMyEquipment(null);
             describe.SetHighlightedItem(null);
             describe.SetHighlightedItem(item);
-            describe.DescribeEquipment(description);
+            describe.DescribeEquippedEquipment(description);
         
             string comparisondesc = "";
 
@@ -111,7 +111,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             }
           
 
-            describe.DescribeComparisonEquipment(comparisondesc);
+            describe.DescribeHighlightedEquipment(comparisondesc);
             hoverOverInstance.SetActive(true);
         }
         //pop up text box that describes the equipped, same as the hover
@@ -184,8 +184,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
 
             //only relevant to player character
-            IAttributeUser stats = MyUserInv.GetUser().GetMyInstance().GetComponent<IAttributeUser>();
-            DisplayStats(stats);
+            DisplayStats();
 
 
 
@@ -201,16 +200,16 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             }
             MyUserInv = _user;
             IAttributeUser stats = _user.GetActorHub().MyStats;
-            DisplayStats(stats);
+            DisplayStats();
             EnablePlayerInventoryUI(false);
         }
 
 
 
-        public void DisplayStats(IAttributeUser stats)
+        public void DisplayStats()
         {
-            if (stats == null) return;
-            describeStats.DisplayStats(stats);
+
+            describeStats.DisplayStats(MyUserInv.GetActorHub());
         }
 
         public void TogglePlayerInventoryUI()

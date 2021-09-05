@@ -8,7 +8,7 @@ namespace GWLPXL.ARPGCore.Attributes.com
     public class ElementResist : Attribute
     {
         public ElementType Type;
-        readonly string resist = "Resist: ";
+        readonly string resist = " Resist: ";
         public override AttributeType GetAttributeType()
         {
             return AttributeType.ElementResist;

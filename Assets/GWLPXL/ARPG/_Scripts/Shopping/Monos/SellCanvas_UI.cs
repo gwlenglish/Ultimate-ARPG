@@ -234,7 +234,7 @@ namespace GWLPXL.ARPGCore.Shopping.com
 
             string description = item.GetUserDescription();
             describe.SetHighlightedItem(item);
-            describe.DescribeEquipment(description);
+            describe.DescribeEquippedEquipment(description);
             string comparisondesc = "";
 
             if (useComparison == true)
@@ -259,7 +259,7 @@ namespace GWLPXL.ARPGCore.Shopping.com
 
             }
 
-            describe.DescribeComparisonEquipment(comparisondesc);
+            describe.DescribeHighlightedEquipment(comparisondesc);
             hoverOverInstance.SetActive(true);
         }
 
