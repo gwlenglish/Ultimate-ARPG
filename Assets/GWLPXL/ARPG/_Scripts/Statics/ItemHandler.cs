@@ -95,7 +95,9 @@ namespace GWLPXL.ARPGCore.Statics.com
         {
             if (myItem is Equipment)
             {
+               
                 Equipment equipment = myItem as Equipment;
+                invUser.GetInventoryRuntime().RemoveItemFromInventory(inventorySlotID);
                 invUser.GetInventoryRuntime().Equip(equipment);
 
             }

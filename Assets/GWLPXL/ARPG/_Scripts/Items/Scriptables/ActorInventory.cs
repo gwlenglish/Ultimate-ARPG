@@ -266,9 +266,7 @@ namespace GWLPXL.ARPGCore.Items.com
                     appliedTraits[equipment] = allTraits;
                     EquipmentHandler.ModifyVisuals(equipment.GetEquipmentSlot(), false, equipment, MyUser);
 
-                    OnEquip?.Invoke(equipment);
-                  
-                    RemoveFirstItemFromInventory(equipment);
+
                     //raise the event
                     if (EquipEvent != null && myActorStats != null)
                     {
@@ -304,6 +302,8 @@ namespace GWLPXL.ARPGCore.Items.com
                 }
 
 
+                OnEquip?.Invoke(equipment);
+                RemoveFirstItemFromInventory(equipment);//hmmmm. works because they dont stack and are all unique
                 OnEquipmentSlotChanged?.Invoke(value);
             }
 

@@ -42,6 +42,7 @@ namespace GWLPXL.ARPGCore.Attributes.com
 
         public override string GetFullDescription()
         {
+            UpdateValue();
             return GetDescriptiveName() + colon + ResourceNowValue.ToString() + divisor + NowValue.ToString();
         }
 

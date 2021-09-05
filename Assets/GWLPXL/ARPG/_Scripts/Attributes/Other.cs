@@ -27,6 +27,7 @@ namespace GWLPXL.ARPGCore.Attributes.com
 
         public override string GetFullDescription()
         {
+            UpdateValue();
             return GetDescriptiveName() + colon + NowValue + percent;
         }
 

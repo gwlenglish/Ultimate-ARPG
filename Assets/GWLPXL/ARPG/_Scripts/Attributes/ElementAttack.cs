@@ -9,7 +9,7 @@ namespace GWLPXL.ARPGCore.Attributes.com
     public class ElementAttack : Attribute
     {
         public ElementType Type;
-        readonly string attack = " Attack: ";
+        protected string attack = " Attack: ";
         public ElementAttack(ElementType type)
         {
             Type = type;
@@ -26,7 +26,8 @@ namespace GWLPXL.ARPGCore.Attributes.com
 
         public override string GetFullDescription()
         {
-            return GetDescriptiveName() + attack + NowValue.ToString();
+            UpdateValue();
+            return GetDescriptiveName() + " Attack " + NowValue.ToString();
         }
 
 

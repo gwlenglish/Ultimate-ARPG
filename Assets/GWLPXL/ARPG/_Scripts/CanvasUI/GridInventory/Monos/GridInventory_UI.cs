@@ -23,11 +23,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
     {
         public GridInventoryEvents Events;
         public PatternHolder DefaultPattern;
-        public System.Action<List<RaycastResult>> OnTryRemove;
-        public System.Action<List<RaycastResult>> ONTryHighlight;
-        public System.Action<IInventoryPiece> OnStartDraggingPiece;
-        public System.Action OnStopDragging;
-        public System.Action<List<RaycastResult>, IInventoryPiece> OnTryPlace;
+
 
         public enum InteractState
         {
@@ -47,6 +43,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         public RectTransform GridTransform;//on ui
         public GameObject CellPrefab;//on ui
         public Transform PanelGrid;//on ui
+        [Header("Colors")]
         [SerializeField]
         protected Color neutral = Color.white;
         [SerializeField]
@@ -77,7 +74,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         protected ActorInventory inv = null;
         protected Dictionary<IInventoryPiece, ItemStack> piecestackdic = new Dictionary<IInventoryPiece, ItemStack>();
         protected Dictionary<GameObject, IInventoryPiece> piecesdic = new Dictionary<GameObject, IInventoryPiece>();
-        protected Dictionary<ItemStack, GameObject> stackdic = new Dictionary<ItemStack, GameObject>();
+        protected Dictionary<int, GameObject> stackdic = new Dictionary<int, GameObject>();
         #endregion
 
         #region virtual unity calls
@@ -107,6 +104,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             TheBoard.OnPieceSwapped += SwappedInventory;
 
             GearUI.Events.OnEquipmentHighlighted += DescribeItem;
+            GearUI.Events.EquippedPiece += CleanupPiece;
         }
 
        
@@ -120,11 +118,12 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             TheBoard.OnPieceSwapped -= SwappedInventory;
             TheBoard.OnPieceRemoved -= Carried;
 
-  
+
             TheBoard.OnNewPiecePlaced -= Placed;
             TheBoard.OnNewPiecePlaced -= ResetColors;
 
             GearUI.Events.OnEquipmentHighlighted -= DescribeItem;
+            GearUI.Events.EquippedPiece -= CleanupPiece;
         }
         /// <summary>
         /// creation
@@ -152,7 +151,13 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                     {
                         TryHighlight();
                     }
-       
+
+                    if (UseTrigger() == true)
+                    {
+                        TryUse();
+                    }
+               
+
                     break;
                 case InteractState.HasDraggable:
                     MoveDraggable(draginstance);
@@ -192,28 +197,20 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             draginstance = null;
             inventorydragging = null;
             state = InteractState.Empty;
-           
-            OnStopDragging?.Invoke();
+            DisplayStats();
+            Events.OnStopDragging?.Invoke();
+            Events.SceneEvents.OnStopDragging?.Invoke();
         }
-        /// <summary>
-        /// create draggable piece that isn't already on the grid
-        /// </summary>
-        /// <param name="pattern"></param>
-        public virtual void CreateNewInventoryPiece(Item pattern, int[] equipID)
-        {
 
-            draginstance = CreatePiece(pattern);
-            state = InteractState.HasDraggable;
-        }
 
     
-        public virtual IInventoryPiece CreatePiece(Item itemstack)
+        public virtual IInventoryPiece CreatePiece(Item itemstack, int stackID)
         {
             if (itemstack.UIPattern == null)
             {
                 itemstack.UIPattern = DefaultPattern;
             }
-            InventoryPiece piece  = new InventoryPiece(Instantiate(itemstack.UIPattern.Pattern.PatternPrefab, MainPanel), Instantiate(itemstack.UIPattern.Pattern.PatternPrefab, MainPanel), itemstack);
+            InventoryPiece piece  = new InventoryPiece(Instantiate(itemstack.UIPattern.Pattern.PatternPrefab, MainPanel), Instantiate(itemstack.UIPattern.Pattern.PatternPrefab, MainPanel), itemstack, stackID);
             piece.Instance.name = itemstack.GetGeneratedItemName() + " Instance";
             piece.PreviewInstance.name = itemstack.GetGeneratedItemName() + " Preview";
             piece.PreviewInstance.transform.position = piece.Instance.transform.position;
@@ -235,8 +232,8 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             
             inventorydragging = piece;
             state = InteractState.HasInventoryPiece;
-            OnStartDraggingPiece?.Invoke(piece);
-    
+            Events.OnStartDraggingPiece?.Invoke(piece);
+            Events.SceneEvents.OnStartDragging?.Invoke(piece);
 
         }
 
@@ -363,7 +360,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             }
 
             //if didn't place on bard, try passing to other systems
-            OnTryPlace?.Invoke(results, piece);
+            Events.OnTryPlace?.Invoke(results, piece);
 
         }
 
@@ -404,7 +401,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
             }
 
-            OnTryRemove?.Invoke(results);
+            Events.OnTryRemove?.Invoke(results);
 
         }
 
@@ -413,6 +410,43 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             if (hasHoverOverPanel == false) return;
             describeEquipment.SetMyEquipment(item);
             describeEquipment.SetHighlightedItem(null);
+        }
+
+        protected virtual bool UseTrigger()
+        {
+            return Input.GetMouseButtonDown(1);
+        }
+        protected virtual void TryUse()
+        {
+            if (m_PointerEventData == null) return;//nothing clicked, nothing ventured
+
+            //Create a list of Raycast Results
+            results.Clear();
+
+            //Raycast using the Graphics Raycaster and mouse click position
+            m_Raycaster.Raycast(m_PointerEventData, results);//can be null...
+
+
+            //For every result returned, output the name of the GameObject on the Canvas hit by the Ray
+            foreach (RaycastResult result in results)
+            {
+                GameObject keyinstance = result.gameObject;
+                if (TheBoard.PieceInSlot.ContainsKey(keyinstance))
+                {
+                    IInventoryPiece piece = TheBoard.PieceInSlot[keyinstance];
+                    ItemStack stack = user.MyInventory.GetInventoryRuntime().GetItemStackBySlot(piece.ItemStackID);
+
+                    if (piece.Item is Potion)
+                    {
+                        ItemHandler.DetermineAndUseItem(piece.Item, user.MyInventory, stack.SlotID);
+                        UpdateUI(stack.SlotID, stack);
+                        Events.OnItemUsed.Invoke(piece.Item);
+                        Events.SceneEvents.OnItemUsed.Invoke(piece.Item);
+                        return;
+                    }
+                }
+
+            }
         }
         protected virtual void TryHighlight()
         {
@@ -435,11 +469,10 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                 if (TheBoard.PieceInSlot.ContainsKey(keyinstance))
                 {
                     IInventoryPiece piece = TheBoard.PieceInSlot[keyinstance];
-                    Debug.Log("Highlight " + piece.ItemStack.GetGeneratedItemName());
-                    if (piece.ItemStack is Equipment)
+                    if (piece.Item is Equipment)
                     {
                         Equipment equipment = null;
-                        describeEquipment.SetHighlightedItem(piece.ItemStack);
+                        describeEquipment.SetHighlightedItem(piece.Item);
                         equipment = user.MyInventory.GetInventoryRuntime().GetEquipmentAtSlot((EquipmentSlotsType)piece.EquipmentIdentifier[0]).EquipmentInSlots;
 
                         describeEquipment.SetMyEquipment(equipment);
@@ -447,7 +480,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                     }
                     else
                     {
-                        DescribeItem(piece.ItemStack);
+                        DescribeItem(piece.Item);
                     }
 
 
@@ -458,7 +491,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
             }
 
-           ONTryHighlight?.Invoke(results);
+           Events.ONTryHighlight?.Invoke(results);
 
         }
 
@@ -636,49 +669,45 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         
         protected virtual void UpdateUI(int slot, ItemStack stack)
         {
-            if (stackdic.ContainsKey(stack))
-            {
-                //we have a stack
-                GameObject key = stackdic[stack];
-                if (piecesdic.ContainsKey(key))
-                {
-                    //we have a ui piece on the board
-                    if (stack.Item == null || stack.CurrentStackSize == 0)
-                    {
-                        //ddestroy piece
-                        stackdic.Remove(stack);
-                        IInventoryPiece piece = piecesdic[key];
 
-                        TheBoard.RemovePiece(piece);
-                        piecestackdic.Remove(piece);
-                        piece.CleanUP();
-                        piece = null;
+            CreatePieceFromInventory(stack);
 
-                        piecesdic.Remove(key);
-                        Destroy(key);
-                    }
-
-                }
-                else
-                {
-                    CreatePieceFromInventory(stack);
-                }
-            }
-            else
-            {
-                CreatePieceFromInventory(stack);
-            }
-
+          
 
       
         }
 
+        protected virtual void CleanupPiece(IInventoryPiece piece)
+        {
+            stackdic.Remove(piece.ItemStackID);
+            piecestackdic.Remove(piece);
+            TheBoard.RemovePiece(piece);
+            piece.CleanUP();
+        }
+
         protected virtual bool CreatePieceFromInventory(ItemStack stack)
         {
+            if (stackdic.ContainsKey(stack.SlotID))
+            {
+                if (stack.CurrentStackSize <= 0 || stack.Item == null)
+                {
+                    GameObject instnace = stackdic[stack.SlotID];
+                    if (piecesdic.ContainsKey(instnace))
+                    {
+                        IInventoryPiece currentpiece = piecesdic[instnace];
+                        currentpiece.CleanUP();
+                        stackdic.Remove(stack.SlotID);
+                        piecesdic.Remove(instnace);
+                    }
+                }
+                Debug.Log("Stack already contains key");
+                return false;
+            }
 
             if (stack.Item == null) return false;
+            if (stack.CurrentStackSize == 0) return false;
 
-            IInventoryPiece piece = CreatePiece(stack.Item);
+            IInventoryPiece piece = CreatePiece(stack.Item, stack.SlotID);
             bool placed = false;
 
             for (int j = 0; j < TheBoard.Slots.Count; j++)
@@ -695,7 +724,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                         piece.PreviewInstance.SetActive(false);
                         instance.name = stack.Item.GetGeneratedItemName();
                         piecesdic[instance] = piece;
-                        stackdic[stack] = instance;
+                        stackdic[stack.SlotID] = instance;
                         piecestackdic[piece] = stack;
                         ARPGDebugger.DebugMessage("Item " + stack.Item + " placed " + placed + " at " + instance.name, instance);
                         placed = true;

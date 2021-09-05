@@ -4,8 +4,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
+
 namespace GWLPXL.ARPGCore.CanvasUI.com
 {
+
+    [System.Serializable]
+    public class UnityGridItemUsed : UnityEvent<Item> { }
     [System.Serializable]
     public class UnityGridEquipmentEquipped : UnityEvent<IInventoryPiece> { }
     [System.Serializable]
@@ -16,6 +21,9 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
     {
         public UnityInventoryPiecePlaced OnPiecePlaced;
         public UnityInventoryPiecePlaced OnPieceRemoved;
+        public UnityInventoryPiecePlaced OnStartDragging;
+        public UnityEvent OnStopDragging;
+        public UnityGridItemUsed OnItemUsed;
     }
     [System.Serializable]
     public class UnityGridEquipmentEvents
@@ -27,8 +35,15 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
     [System.Serializable]
     public class GridInventoryEvents
     {
-        public UnityGridInventoryEvents SceneEvents;
-
+        public UnityGridInventoryEvents SceneEvents = new UnityGridInventoryEvents();
+        public System.Action<IInventoryPiece> OnPiecePlaced;
+        public System.Action<IInventoryPiece> OnPieceRemoved;
+        public System.Action<Item> OnItemUsed;
+        public System.Action<List<RaycastResult>> OnTryRemove;
+        public System.Action<List<RaycastResult>> ONTryHighlight;
+        public System.Action<IInventoryPiece> OnStartDraggingPiece;
+        public System.Action OnStopDragging;
+        public System.Action<List<RaycastResult>, IInventoryPiece> OnTryPlace;
     }
 
     [System.Serializable]
@@ -36,6 +51,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
     {
         public UnityGridEquipmentEvents SceneEvents;
         public System.Action<Item> OnEquipmentHighlighted;
+        public System.Action<IInventoryPiece> EquippedPiece;
 
     }
 

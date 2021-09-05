@@ -7,9 +7,10 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
     {
         GameObject Instance { get; set; }
         GameObject PreviewInstance { get; set; }
-        Item ItemStack { get; set; }
+        Item Item { get; set; }
         IPattern Pattern { get; set; }
         int[] EquipmentIdentifier { get; set; }
+        int ItemStackID { get; set; }
         void CleanUP();
     }
 
@@ -23,7 +24,8 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         public GameObject PreviewInstance { get => previewInstance; set => previewInstance = value; }
         public IPattern Pattern { get => pattern; set => pattern = value; }
         public int[] EquipmentIdentifier { get => equipmentIdentifier; set =>equipmentIdentifier = value; }
-        public Item ItemStack { get => itemstack; set => itemstack = value; }
+        public Item Item { get => item; set => item = value; }
+        public int ItemStackID { get => itemStackID; set => itemStackID = value; }
 
         [SerializeField]
         protected GameObject instance;
@@ -34,10 +36,13 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         [SerializeField]
         protected int[] equipmentIdentifier = new int[0];
         [SerializeField]
-        protected Item itemstack;
-        public InventoryPiece(GameObject instance, GameObject previewInstance, Item item)
+        protected Item item;
+        [SerializeField]
+        protected int itemStackID;
+        public InventoryPiece(GameObject instance, GameObject previewInstance, Item item, int itemstackid)
         {
-            this.itemstack = item;
+            this.itemStackID = itemstackid;
+            this.item = item;
             equipmentIdentifier = item.EquipmentIdentifier;
             this.pattern = item.UIPattern.Pattern;
             this.instance = instance;
@@ -51,7 +56,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             GameObject.Destroy(instance);
             GameObject.Destroy(previewInstance);
             pattern = null;
-            itemstack = null;
+            item = null;
             equipmentIdentifier = new int[0];
         }
 

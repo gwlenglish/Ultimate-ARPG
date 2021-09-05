@@ -39,22 +39,22 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         #region unity virtual calls
         protected virtual void OnEnable()
         {
-            InventoryUI.OnTryPlace += TryPlace;
-            InventoryUI.OnTryRemove += TryRemove;
-            InventoryUI.OnStartDraggingPiece += CheckDragging;
-            InventoryUI.OnStopDragging += StopCheckDragging;
-            InventoryUI.ONTryHighlight += TryHighlight;
+            InventoryUI.Events.OnTryPlace += TryPlace;
+            InventoryUI.Events.OnTryRemove += TryRemove;
+            InventoryUI.Events.OnStartDraggingPiece += CheckDragging;
+            InventoryUI.Events.OnStopDragging += StopCheckDragging;
+            InventoryUI.Events.ONTryHighlight += TryHighlight;
 
 
         }
 
         protected virtual void OnDisable()
         {
-            InventoryUI.OnTryPlace -= TryPlace;
-            InventoryUI.OnTryRemove -= TryRemove;
-            InventoryUI.OnStartDraggingPiece -= CheckDragging;
-            InventoryUI.OnStopDragging -= StopCheckDragging;
-            InventoryUI.ONTryHighlight -= TryHighlight;
+            InventoryUI.Events.OnTryPlace -= TryPlace;
+            InventoryUI.Events.OnTryRemove -= TryRemove;
+            InventoryUI.Events.OnStartDraggingPiece -= CheckDragging;
+            InventoryUI.Events.OnStopDragging -= StopCheckDragging;
+            InventoryUI.Events.ONTryHighlight -= TryHighlight;
 
 
         }
@@ -148,7 +148,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         protected virtual void GearEquipped(IInventoryPiece piece)
         {
             Events.SceneEvents.OnEquipped?.Invoke(piece);
-            piece.CleanUP();
+            Events.EquippedPiece?.Invoke(piece);
             InventoryUI.NoPieces();
         }
         /// <summary>
@@ -235,7 +235,6 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
                 if (slot.Equipment != null)
                 {
-                    //slot.Piece.CleanUP();
                     user.MyInventory.GetInventoryRuntime().UnEquip(eq);
                     GearUnEquipped();
                  
@@ -281,8 +280,8 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                         GearUnEquipped();
                     }
 
-                    user.MyInventory.GetInventoryRuntime().Equip(piece.ItemStack as Equipment);
 
+                    user.MyInventory.GetInventoryRuntime().Equip(piece.Item as Equipment);
                     GearEquipped(piece);
 
                 }

@@ -132,13 +132,16 @@ namespace GWLPXL.ARPGCore.Statics.com
             sb.Append(enter);
             sb.Append("Armor Value: " + DungeonMaster.Instance.CombatFormulas.GetCombatFormulas().PlayerCombat.GetArmorValue(user));
             sb.Append(enter);
+            sb.Append(enter);
             //stat values
             Attribute[] attackElements = user.MyStats.GetRuntimeAttributes().GetAttributes(AttributeType.Stat);
             for (int i = 0; i < attackElements.Length; i++)
             {
                 Stat stat = (Stat)attackElements[i];
+                
                 sb.Append(stat.GetFullDescription() + enter);
             }
+            sb.Append(enter);
 
             Attribute[] resources = user.MyStats.GetRuntimeAttributes().GetAttributes(AttributeType.Resource);
             for (int i = 0; i < resources.Length; i++)
@@ -146,15 +149,18 @@ namespace GWLPXL.ARPGCore.Statics.com
                 Resource resource = (Resource)resources[i];
                 sb.Append(resource.GetFullDescription() + enter);
             }
+            sb.Append(enter);
 
             Attribute[] eleAttacks = user.MyStats.GetRuntimeAttributes().GetAttributes(AttributeType.ElementAttack);
             for (int i = 0; i < eleAttacks.Length; i++)
             {
                 ElementAttack eleAttack = (ElementAttack)eleAttacks[i];
                 if (eleAttack.Type == ElementType.None) continue;//skip it so it doesn't add itself to the description
+               // sb.Append("TEST" + enter);
                 sb.Append(eleAttack.GetFullDescription() + enter);//for some reason not formatting the same as resist
 
             }
+            sb.Append(enter);
 
             Attribute[] eleResist = user.MyStats.GetRuntimeAttributes().GetAttributes(AttributeType.ElementResist);
             for (int i = 0; i < eleResist.Length; i++)
@@ -166,6 +172,7 @@ namespace GWLPXL.ARPGCore.Statics.com
 
             }
 
+            sb.Append(enter);
             //format the other stuff
             Attribute[] other = user.MyStats.GetRuntimeAttributes().GetAttributes(AttributeType.Other);
             for (int i = 0; i < other.Length; i++)
