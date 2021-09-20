@@ -13,12 +13,12 @@ namespace GWLPXL.ARPGCore.Quests.com
     public class ExploreQuestObjective : MonoBehaviour
     {
         [SerializeField]
-        Quest[] myQuests = null;
+        protected Quest[] myQuests = null;
         [SerializeField]
-        ExploreArea myArea = null;
+        protected ExploreArea myArea = null;
         [SerializeField]
-        bool onlyRecordIfActive = true;
-        private void Awake()
+        protected bool onlyRecordIfActive = true;
+        protected virtual void Awake()
         {
             //requirements of the trigger
             GetComponent<Collider>().isTrigger = true;
@@ -26,7 +26,7 @@ namespace GWLPXL.ARPGCore.Quests.com
             GetComponent<Rigidbody>().useGravity = false;
         }
 
-        private void OnTriggerEnter(Collider other)
+        protected virtual void OnTriggerEnter(Collider other)
         {
             IQuestUser questUser = other.GetComponentInParent<IQuestUser>();
             if (questUser == null) return;

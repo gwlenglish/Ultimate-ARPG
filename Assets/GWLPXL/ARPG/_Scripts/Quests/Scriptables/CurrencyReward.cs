@@ -25,7 +25,7 @@ namespace GWLPXL.ARPGCore.Quests.com
 
 
 #if UNITY_EDITOR
-        private void OnValidate()
+        protected virtual void OnValidate()
         {
             if (AutoName)
             {

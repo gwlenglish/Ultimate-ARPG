@@ -31,45 +31,45 @@ namespace GWLPXL.ARPGCore.Auras.com
         public System.Action<Aura, int> OnUNEquippedAura;
 
         [SerializeField]
-        TextAsset config;
+        protected TextAsset config;
 
         public AuraControllerData AuraControllerData;
 
         [SerializeField]
-        Aura[] startingAuras = new Aura[0];
+        protected Aura[] startingAuras = new Aura[0];
         [SerializeField]
         [Range(1, 100)]
-        int equippedcap = 2;
+        protected int equippedcap = 2;
         [SerializeField]
         [Range(1, 100)]
-        int learnedCap = 100;
+        protected int learnedCap = 100;
 
-        Aura[] equipped = new Aura[0];
-        Aura[] learned = new Aura[0];
+        protected Aura[] equipped = new Aura[0];
+        protected Aura[] learned = new Aura[0];
 
         [System.NonSerialized]
-        Dictionary<int, Aura> appliedPassiveBuffsByCategory = new Dictionary<int, Aura>();
+        protected Dictionary<int, Aura> appliedPassiveBuffsByCategory = new Dictionary<int, Aura>();
         [System.NonSerialized]
-        Dictionary<Aura, bool> appliedAuras = new Dictionary<Aura, bool>();
+        protected Dictionary<Aura, bool> appliedAuras = new Dictionary<Aura, bool>();
 
-        Aura[] persistentscene = new Aura[0];
-        public AuraControllerData GetID() => AuraControllerData;
-        public void SetSceneAuras(Aura[] auras)
+        protected Aura[] persistentscene = new Aura[0];
+        public virtual AuraControllerData GetID() => AuraControllerData;
+        public virtual void SetSceneAuras(Aura[] auras)
         {
             persistentscene = auras;
         }
-        public Aura[] GetSceneAuras()
+        public virtual Aura[] GetSceneAuras()
         {
             return persistentscene;
         }
-        public Aura GetEquippedAuraAtSlot(int slot)
+        public virtual Aura GetEquippedAuraAtSlot(int slot)
         {
             if (slot < 0 || slot > equipped.Length - 1) return null;
             return equipped[slot];
         }
-        public Aura[] GetEquippedAuras() => equipped;//read only
+        public virtual Aura[] GetEquippedAuras() => equipped;//read only
        
-        public Aura[] GetEquippedAndAppliedAuras()
+        public virtual Aura[] GetEquippedAndAppliedAuras()
         {
             List<Aura> temp = new List<Aura>();
             for (int i = 0; i < equipped.Length; i++)
@@ -83,7 +83,7 @@ namespace GWLPXL.ARPGCore.Auras.com
             }
             return temp.ToArray();
         }
-        public Aura[] GetCopyAllKnownAuras()
+        public virtual Aura[] GetCopyAllKnownAuras()
         {
             List<Aura> temp = new List<Aura>();
             for (int i = 0; i < learned.Length; i++)
@@ -98,7 +98,7 @@ namespace GWLPXL.ARPGCore.Auras.com
         /// <summary>
         /// 
         /// </summary>
-        public void TryInitialize()
+        public virtual void TryInitialize()
         {
             if (learned.Length > 0 && equipped.Length > 0) return;
             appliedPassiveBuffsByCategory.Clear();
@@ -115,10 +115,19 @@ namespace GWLPXL.ARPGCore.Auras.com
             }
         }
 
-        public void EquipAura(Aura anyAura, int atSlot)
+        public virtual void EquipAura(Aura anyAura, int atSlot, bool autoLearn = false)
         {
             if (learned.Contains(anyAura) == false)
             {
+                if (autoLearn)
+                {
+                    bool learned = LearnAura(anyAura);
+                    if (learned == false)
+                    {
+                        ARPGDebugger.DebugMessage("Can't equip ability, need to learn it first and can't learn amymore.", this);
+                        return;
+                    }
+                }
                 ARPGDebugger.DebugMessage("Can't equip ability, need to learn it first.", this);
                 return;
             }
@@ -139,7 +148,7 @@ namespace GWLPXL.ARPGCore.Auras.com
             OnEquippedAura?.Invoke(anyAura, atSlot);
         }
 
-        public bool LearnAura(Aura anyAura)
+        public virtual bool LearnAura(Aura anyAura)
         {
             if (anyAura == null) return false;
 
@@ -185,7 +194,7 @@ namespace GWLPXL.ARPGCore.Auras.com
       
      
 
-        public void ToggleEquippedAura(int atSlot, ITakeAura onUser)
+        public virtual void ToggleEquippedAura(int atSlot, ITakeAura onUser)
         {
             if (atSlot > equipped.Length)
             {
@@ -202,7 +211,7 @@ namespace GWLPXL.ARPGCore.Auras.com
         /// </summary>
         /// <param name="anyAura"></param>
         /// <param name="onUser"></param>
-        public void ToggleEquippedAura(Aura anyAura, ITakeAura onUser)
+        public virtual void ToggleEquippedAura(Aura anyAura, ITakeAura onUser)
         {
             if (anyAura == null)
             {
@@ -228,7 +237,7 @@ namespace GWLPXL.ARPGCore.Auras.com
             
         }
 
-        public Dictionary<Aura, bool> GetAppliedAuras()
+        public virtual Dictionary<Aura, bool> GetAppliedAuras()
         {
             return appliedAuras;
         }
@@ -236,7 +245,7 @@ namespace GWLPXL.ARPGCore.Auras.com
         /// Toggles off and then on the current auras in use.
         /// </summary>
         /// <param name="onUser"></param>
-        public void RefreshAuras(ITakeAura onUser)
+        public virtual void RefreshAuras(ITakeAura onUser)
         {
             Debug.Log("Refresh called");
             List<Aura> reapply = new List<Aura>();
@@ -258,7 +267,7 @@ namespace GWLPXL.ARPGCore.Auras.com
         }
 
        
-        void ApplyAura(Aura toApply, ITakeAura onUser)
+        protected virtual void ApplyAura(Aura toApply, ITakeAura onUser)
         {
             appliedPassiveBuffsByCategory.TryGetValue(toApply.GetCategory(), out Aura oldValue);
 
@@ -273,7 +282,7 @@ namespace GWLPXL.ARPGCore.Auras.com
 
         }
 
-        void RemoveAura(Aura buff, ITakeAura fromUser)
+        protected virtual void RemoveAura(Aura buff, ITakeAura fromUser)
         {
             appliedPassiveBuffsByCategory.TryGetValue(buff.GetCategory(), out Aura value);
             if (value != null)
@@ -303,7 +312,7 @@ namespace GWLPXL.ARPGCore.Auras.com
         #endregion
 
 #if UNITY_EDITOR
-        private void OnValidate()
+        protected virtual void OnValidate()
         {
             if (AuraControllerData.AutoName && string.IsNullOrEmpty(AuraControllerData.Name) == false && this.name != AuraControllerData.Name)
             {

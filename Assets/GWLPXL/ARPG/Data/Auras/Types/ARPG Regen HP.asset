@@ -34,7 +34,7 @@ MonoBehaviour:
     AOE: 1
     LayersToCheck:
     - serializedVersion: 2
-      m_Bits: 2048
+      m_Bits: 33554432
     ColliderType: 0
     AreaRadius: 1
     CheckAreaRate: 0.5

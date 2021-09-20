@@ -13,9 +13,9 @@ namespace GWLPXL.ARPGCore.Quests.com
     {
         [Header("Quest Item Unique")]
         [SerializeField]
-        QuestItemGoal[] goals = new QuestItemGoal[0];
+        protected QuestItemGoal[] goals = new QuestItemGoal[0];
         [System.NonSerialized]
-        StringBuilder sb = new StringBuilder();
+        protected StringBuilder sb = new StringBuilder();
         public override string GetProgressDescription()
         {
            

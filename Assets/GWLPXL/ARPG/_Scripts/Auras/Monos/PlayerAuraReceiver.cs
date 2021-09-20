@@ -12,14 +12,14 @@ namespace GWLPXL.ARPGCore.Auras.com
     public class PlayerAuraReceiver : MonoBehaviour, ITakeAura
     {
         [SerializeField]
-        PlayerAuraReceiveEvents receiveEvents = new PlayerAuraReceiveEvents();
+        protected PlayerAuraReceiveEvents receiveEvents = new PlayerAuraReceiveEvents();
         [SerializeField]
-        AuraTargetGroup[] mygroups = new AuraTargetGroup[1] { AuraTargetGroup.Friendly };
+        protected AuraTargetGroup[] mygroups = new AuraTargetGroup[1] { AuraTargetGroup.Friendly };
 
 
-        IActorHub hub = null;
+        protected IActorHub hub = null;
        
-        public void AuraModifyCurrentResource(int resourceType, int byAmount)
+        public virtual void AuraModifyCurrentResource(int resourceType, int byAmount)
         {
             if (hub.MyHealth != null)
             {
@@ -29,7 +29,7 @@ namespace GWLPXL.ARPGCore.Auras.com
             receiveEvents.SceneEvents.OnReceiveResourceCurrent.Invoke((ResourceType)resourceType, byAmount);
         }
 
-        public void AuraModifyMaxResource(int resourceType, int byAmount)
+        public virtual void AuraModifyMaxResource(int resourceType, int byAmount)
         {
             if (hub.MyHealth != null)
             {
@@ -39,7 +39,7 @@ namespace GWLPXL.ARPGCore.Auras.com
             receiveEvents.SceneEvents.OnReceiveResourceAuraMax.Invoke((ResourceType)resourceType, byAmount);
         }
 
-        public void AuraBuffSat(int statType, int byAmount)
+        public virtual void AuraBuffSat(int statType, int byAmount)
         {
             if (hub.MyHealth != null)
             {
@@ -51,7 +51,7 @@ namespace GWLPXL.ARPGCore.Auras.com
         }
 
         // Todo thinking about events with modifiers. Maybe not by amount, just push NowValue or save old value and subtract
-        public void AuraApplyModifierResource(int resourceType, AttributeModifier modifier)
+        public virtual void AuraApplyModifierResource(int resourceType, AttributeModifier modifier)
         {
             if (hub.MyHealth != null)
             {
@@ -60,7 +60,7 @@ namespace GWLPXL.ARPGCore.Auras.com
             hub.MyStats.GetRuntimeAttributes().AddModifierResource((ResourceType)resourceType, modifier);
         }
 
-        public void AuraRemoveModifierResource(int resourceType, AttributeModifier modifier)
+        public virtual void AuraRemoveModifierResource(int resourceType, AttributeModifier modifier)
         {
             if (hub.MyHealth != null)
             {
@@ -69,7 +69,7 @@ namespace GWLPXL.ARPGCore.Auras.com
             hub.MyStats.GetRuntimeAttributes().RemoveModifierResource((ResourceType)resourceType, modifier);
         }
 
-        public void AuraRemoveSourceModifierResource(int resourceType, object source)
+        public virtual void AuraRemoveSourceModifierResource(int resourceType, object source)
         {
             if (hub.MyHealth != null)
             {
@@ -77,7 +77,7 @@ namespace GWLPXL.ARPGCore.Auras.com
             }
             hub.MyStats.GetRuntimeAttributes().RemoveSourceModifierResource((ResourceType)resourceType, source);
         }
-        public void AuraApplyModifierStat(int statType, AttributeModifier modifier)
+        public virtual void AuraApplyModifierStat(int statType, AttributeModifier modifier)
         {
             if (hub.MyHealth != null)
             {
@@ -86,7 +86,7 @@ namespace GWLPXL.ARPGCore.Auras.com
             hub.MyStats.GetRuntimeAttributes().AddModifierStat((StatType)statType, modifier);
         }
 
-        public void AuraRemoveModifierStat(int statType, AttributeModifier modifier)
+        public virtual void AuraRemoveModifierStat(int statType, AttributeModifier modifier)
         {
             if (hub.MyHealth != null)
             {
@@ -95,7 +95,7 @@ namespace GWLPXL.ARPGCore.Auras.com
             hub.MyStats.GetRuntimeAttributes().RemoveModifierStat((StatType)statType, modifier);
         }
 
-        public void AuraRemoveSourceModifierStat(int statType, object source)
+        public virtual void AuraRemoveSourceModifierStat(int statType, object source)
         {
             if (hub.MyHealth != null)
             {
@@ -104,17 +104,17 @@ namespace GWLPXL.ARPGCore.Auras.com
             hub.MyStats.GetRuntimeAttributes().RemoveSourceModifierStat((StatType)statType, source);
         }
 
-        public AuraTargetGroup[] GetAuraGroups()
+        public virtual AuraTargetGroup[] GetAuraGroups()
         {
             return mygroups;
         }
 
-        public GameObject GetGameObjectInstance()
+        public virtual GameObject GetGameObjectInstance()
         {
             return this.gameObject;
         }
 
-        public void SetActorHub(IActorHub newHub) => hub = newHub;
+        public virtual void SetActorHub(IActorHub newHub) => hub = newHub;
 
     }
 }

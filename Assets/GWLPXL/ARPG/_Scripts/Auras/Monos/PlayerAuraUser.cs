@@ -18,23 +18,23 @@ namespace GWLPXL.ARPGCore.Auras.com
     {
 
         [SerializeField]
-        PlayerAuraEvents auraEvents = new PlayerAuraEvents();
+        protected PlayerAuraEvents auraEvents = new PlayerAuraEvents();
         [SerializeField]
-        AuraController AuraControllerTemplate = null;
+        protected AuraController AuraControllerTemplate = null;
 
-        AuraController runtime = null;
-        IActorHub hub = null;
+        protected AuraController runtime = null;
+        protected IActorHub hub = null;
 
-        void Awake()
+        protected virtual void Awake()
         {
             SetRuntimeAuraController(Instantiate(AuraControllerTemplate));
          
         }
-        public void SetTemplate(AuraController newTemplate)
+        public virtual void SetTemplate(AuraController newTemplate)
         {
             AuraControllerTemplate = newTemplate;
         }
-        public void SubscribeEvents()
+        public virtual void SubscribeEvents()
         {
             GetAuraControllerRuntime().OnEquippedAura += OnEquipped;
             GetAuraControllerRuntime().OnEquippedAura += OnLearned;
@@ -42,19 +42,19 @@ namespace GWLPXL.ARPGCore.Auras.com
 
         }
 
-        void OnEquipped(Aura aura, int slot)
+        protected virtual void OnEquipped(Aura aura, int slot)
         {
             auraEvents.SceneEvents.OnAuraEquipped.Invoke(aura);
         }
-        void OnLearned(Aura aura, int slot)
+        protected virtual void OnLearned(Aura aura, int slot)
         {
             auraEvents.SceneEvents.OnAuraLearned.Invoke(aura);
         }
-        void OnForgot(Aura aura, int slot)
+        protected virtual void OnForgot(Aura aura, int slot)
         {
             auraEvents.SceneEvents.OnAuraForgot.Invoke(aura);
         }
-        public void UnSubscribeEvents()
+        public virtual void UnSubscribeEvents()
         {
             if (GetAuraControllerRuntime() == null) return;
             GetAuraControllerRuntime().OnEquippedAura -= OnEquipped;
@@ -63,7 +63,7 @@ namespace GWLPXL.ARPGCore.Auras.com
         }
 
 
-        void ResetSceneAuras()
+        protected virtual void ResetSceneAuras()
         {
             Aura[] auras = GetAuraControllerRuntime().GetSceneAuras();
             for (int i = 0; i < auras.Length; i++)
@@ -72,7 +72,7 @@ namespace GWLPXL.ARPGCore.Auras.com
             }
         }
 
-        void DisableAurasAndSaveThem()
+        protected virtual void DisableAurasAndSaveThem()
         {
             Aura[] auras = GetAuraControllerRuntime().GetEquippedAndAppliedAuras();
             for (int i = 0; i < auras.Length; i++)
@@ -82,26 +82,26 @@ namespace GWLPXL.ARPGCore.Auras.com
             GetAuraControllerRuntime().SetSceneAuras(auras);
         }
 
-        public AuraController GetAuraControllerRuntime()
+        public virtual AuraController GetAuraControllerRuntime()
         {
             return runtime;
         }
 
-        public void ToggleAura(Aura aura)
+        public virtual void ToggleAura(Aura aura)
         {
             GetAuraControllerRuntime().ToggleEquippedAura(aura, hub.MyAuraTaker);
         }
-        public void ToggleAura(int atEquippedSlot)
+        public virtual void ToggleAura(int atEquippedSlot)
         {
             GetAuraControllerRuntime().ToggleEquippedAura(atEquippedSlot, hub.MyAuraTaker);
         }
 
-        public AuraController GetAuraControllerTemplate()
+        public virtual AuraController GetAuraControllerTemplate()
         {
             return AuraControllerTemplate;
         }
 
-        public void SetRuntimeAuraController(AuraController controller)
+        public virtual void SetRuntimeAuraController(AuraController controller)
         {
             if (runtime != null)
             {
@@ -118,17 +118,17 @@ namespace GWLPXL.ARPGCore.Auras.com
 
         }
 
-        public void Load()
+        public virtual void Load()
         {
             ResetSceneAuras();
         }
 
-        public void Save()
+        public virtual void Save()
         {
             DisableAurasAndSaveThem();
         }
 
-        public void SetActorHub(IActorHub newHub)
+        public virtual void SetActorHub(IActorHub newHub)
         {
             hub = newHub;
         }

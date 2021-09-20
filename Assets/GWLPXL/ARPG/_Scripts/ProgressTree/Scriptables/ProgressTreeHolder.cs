@@ -14,26 +14,26 @@ namespace GWLPXL.ARPGCore.ProgressTree.com
         public TextAsset JsonConfig;
 
         [SerializeField]
-        ID ID;
+        protected ID ID;
         [SerializeField]
-        bool autoName = false;
+        protected bool autoName = false;
         [SerializeField]
-        bool autoAssignID = false;
+        protected bool autoAssignID = false;
         public int PointsAvailable => pointsAvailable;
         [Tooltip("Points that can be spent into the tree")]
         [SerializeField]
-        int pointsAvailable = 1;
+        protected int pointsAvailable = 1;
         [Tooltip("The tree template. Runtime values must be changed through code, this is only a template that is copied.")]
         [SerializeField]
-        TreeData[] theTree = new TreeData[0];
+        protected TreeData[] theTree = new TreeData[0];
 
         #region runtime dics
         [System.NonSerialized]
-        Dictionary<int, bool> tierAvailable = new Dictionary<int, bool>();//quick check to see if tier is available.
+        protected Dictionary<int, bool> tierAvailable = new Dictionary<int, bool>();//quick check to see if tier is available.
         [System.NonSerialized]
-        Dictionary<int, TreeNodeHolder[]> perTier = new Dictionary<int, TreeNodeHolder[]>();//check if tier is unlocked or what tier a node is on
+        protected Dictionary<int, TreeNodeHolder[]> perTier = new Dictionary<int, TreeNodeHolder[]>();//check if tier is unlocked or what tier a node is on
         [System.NonSerialized]
-        Dictionary<TreeNodeHolder, RuntimeDataNode> runtimeDic = new Dictionary<TreeNodeHolder, RuntimeDataNode>();//dic that holds the runtime copies, main one
+        protected Dictionary<TreeNodeHolder, RuntimeDataNode> runtimeDic = new Dictionary<TreeNodeHolder, RuntimeDataNode>();//dic that holds the runtime copies, main one
         #endregion
 
         #region public
@@ -42,12 +42,12 @@ namespace GWLPXL.ARPGCore.ProgressTree.com
         /// sets the points available.
         /// </summary>
         /// <param name="newAvailable"></param>
-        public void SetPointsAvailable(int newAvailable)
+        public virtual void SetPointsAvailable(int newAvailable)
         {
             pointsAvailable = newAvailable;
         }
       
-        public TreeNodeHolder GetRuntimeNode(TreeNodeHolder template)
+        public virtual TreeNodeHolder GetRuntimeNode(TreeNodeHolder template)
         {
             return GetMyNode(template);
         }
@@ -57,7 +57,7 @@ namespace GWLPXL.ARPGCore.ProgressTree.com
         /// <param name="tier"></param>
         /// <param name="isAvailable"></param>
         /// 
-        public void SetTierAvailable(int tier, bool isAvailable)
+        public virtual void SetTierAvailable(int tier, bool isAvailable)
         {
            
             //main function
@@ -114,7 +114,7 @@ namespace GWLPXL.ARPGCore.ProgressTree.com
         /// <param name="amount"></param>
         /// <returns></returns>
         /// 
-        public int Divest(TreeNodeHolder template, int amount)
+        public virtual int Divest(TreeNodeHolder template, int amount)
         {
             //check node
             TreeNodeHolder runtime = CheckPreconditions(template);
@@ -191,7 +191,7 @@ namespace GWLPXL.ARPGCore.ProgressTree.com
         /// <param name="template"></param>
         /// <param name="amount"></param>
         /// <returns></returns>
-        public int Invest(TreeNodeHolder template, int amount)
+        public virtual int Invest(TreeNodeHolder template, int amount)
         {
             int capSpending = 0;
             for (int i = 0; i < amount; i++)
@@ -288,7 +288,7 @@ namespace GWLPXL.ARPGCore.ProgressTree.com
         /// </summary>
         /// <param name="template"></param>
         /// <returns></returns>
-        public int GetNodeInvestment(TreeNodeHolder template)
+        public virtual int GetNodeInvestment(TreeNodeHolder template)
         {
             TreeNodeHolder runtime = GetMyNode(template);
             return runtime.Invested;
@@ -299,7 +299,7 @@ namespace GWLPXL.ARPGCore.ProgressTree.com
         /// </summary>
         /// <param name="template"></param>
         /// <returns></returns>
-        public int GetNodeTier(TreeNodeHolder template)
+        public virtual int GetNodeTier(TreeNodeHolder template)
         {
             if (runtimeDic.Count == 0)
             {
@@ -314,7 +314,7 @@ namespace GWLPXL.ARPGCore.ProgressTree.com
         /// </summary>
         /// <param name="tier"></param>
         /// <returns></returns>
-        public bool GetTierAvailable(int tier)
+        public virtual bool GetTierAvailable(int tier)
         {
             if (tierAvailable.Count == 0 || perTier.Count == 0)
             {
@@ -331,7 +331,7 @@ namespace GWLPXL.ARPGCore.ProgressTree.com
         /// </summary>
         /// <param name="template"></param>
         /// <returns></returns>
-        public bool GetAvailableStatus(TreeNodeHolder template)
+        public virtual bool GetAvailableStatus(TreeNodeHolder template)
         {
 
             if (runtimeDic.Count == 0)
@@ -345,7 +345,7 @@ namespace GWLPXL.ARPGCore.ProgressTree.com
 
         }
 
-        public bool GetUnlockStatus(TreeNodeHolder template)
+        public virtual bool GetUnlockStatus(TreeNodeHolder template)
         {
             if (runtimeDic.Count == 0)
             {
@@ -359,7 +359,7 @@ namespace GWLPXL.ARPGCore.ProgressTree.com
         /// </summary>
         /// <param name="template"></param>
         /// <returns></returns>
-        public bool GetAvailability(TreeNodeHolder template)
+        public virtual bool GetAvailability(TreeNodeHolder template)
         {
 
             //we traverse the tiers to find the node
@@ -393,13 +393,13 @@ namespace GWLPXL.ARPGCore.ProgressTree.com
 
         #endregion
 
-        #region private
+        #region protected
         /// <summary>
         /// 
         /// </summary>
         /// <param name="template"></param>
         /// <returns></returns>
-        bool CheckTierConditions(TreeNodeHolder template)
+        protected virtual bool CheckTierConditions(TreeNodeHolder template)
         {
             int tier = GetNodeTier(template);
             return GetTierAvailable(tier);
@@ -410,7 +410,7 @@ namespace GWLPXL.ARPGCore.ProgressTree.com
         /// <param name="template"></param>
         /// <returns></returns>
         /// 
-        TreeNodeHolder GetMyNode(TreeNodeHolder template)
+        protected TreeNodeHolder GetMyNode(TreeNodeHolder template)
         {
             if (runtimeDic.Count == 0)
             {
@@ -424,7 +424,7 @@ namespace GWLPXL.ARPGCore.ProgressTree.com
         /// </summary>
         /// <param name="template"></param>
         /// <returns></returns>
-        TreeNodeHolder CheckPreconditions(TreeNodeHolder template)
+        protected TreeNodeHolder CheckPreconditions(TreeNodeHolder template)
         {
             //check dictionaries
             if (runtimeDic.Count == 0)
@@ -441,7 +441,7 @@ namespace GWLPXL.ARPGCore.ProgressTree.com
         /// </summary>
         /// <param name="template"></param>
         /// <returns></returns>
-        TreeNodeHolder[] AmIARequirement(TreeNodeHolder template)
+        protected TreeNodeHolder[] AmIARequirement(TreeNodeHolder template)
         {
             if (runtimeDic.Count == 0)
             {
@@ -465,7 +465,7 @@ namespace GWLPXL.ARPGCore.ProgressTree.com
         /// </summary>
         /// <param name="template"></param>
         /// <returns></returns>
-        bool CheckRequirements(TreeNodeHolder template)
+        protected bool CheckRequirements(TreeNodeHolder template)
         {
             if (runtimeDic.Count == 0)
             {
@@ -490,7 +490,7 @@ namespace GWLPXL.ARPGCore.ProgressTree.com
 
         #region region that initializes dictionaries
 
-        void LoadRuntimeDic()
+        protected void LoadRuntimeDic()
         {
             for (int i = 0; i < theTree.Length; i++)
             {
@@ -526,7 +526,7 @@ namespace GWLPXL.ARPGCore.ProgressTree.com
         /// <summary>
         /// force tiers to index
         /// </summary>
-        private void OnValidate()
+        protected virtual void OnValidate()
         {
             ///forces tier to be linked to index
             for (int i = 0; i < theTree.Length; i++)

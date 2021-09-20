@@ -12,11 +12,11 @@ namespace GWLPXL.ARPGCore.ProgressTree.com
         public TextAsset JsonConfig;
         public ID ID => id;
         [SerializeField]
-        ID id;
+        protected ID id;
         [SerializeField]
-        bool autoName = false;
+        protected bool autoName = false;
         [SerializeField]
-        bool autoAssignUniqueID = false;
+        protected bool autoAssignUniqueID = false;
         public int Invested { get; private set; }
         public bool IsAvailable { get; private set; }
         [Range(0, 255)]
@@ -29,7 +29,7 @@ namespace GWLPXL.ARPGCore.ProgressTree.com
         /// So people can see what has 'unlocked' or is 'available', even if they haven't reached that tier yet. 
         /// </summary>
         /// <param name="isAvailable"></param>
-        public void SetAvailable(bool isAvailable)
+        public virtual void SetAvailable(bool isAvailable)
         {
             IsAvailable = isAvailable;
             Available?.Invoke(this, IsAvailable);
@@ -40,7 +40,7 @@ namespace GWLPXL.ARPGCore.ProgressTree.com
         /// </summary>
         /// <param name="amount"></param>
         /// <returns></returns>
-        public int Divest(int amount)
+        public virtual int Divest(int amount)
         {
             int divested = 0;
             for (int i = 0; i < amount; i++)
@@ -68,7 +68,7 @@ namespace GWLPXL.ARPGCore.ProgressTree.com
         /// </summary>
         /// <param name="amount"></param>
         /// <returns></returns>
-        public int Invest(int amount)
+        public virtual int Invest(int amount)
         {
             int invested = 0;
             for (int i = 0; i < amount; i++)
@@ -93,7 +93,7 @@ namespace GWLPXL.ARPGCore.ProgressTree.com
 
 
 #if UNITY_EDITOR
-        private void OnValidate()
+        protected virtual void OnValidate()
         {
             for (int i = 0; i < Requirements.Length; i++)
             {
