@@ -5,9 +5,9 @@ namespace GWLPXL.ARPGCore.PlayerInput.com
     public class PlayerMouseInputClass : MonoBehaviour, IPlayerMouseInput, IGameplayInput
     {
         [SerializeField]
-        MouseInput[] mouseInputs = new MouseInput[2] { new MouseInput("Fire1"), new MouseInput("Fire2") };
+        protected MouseInput[] mouseInputs = new MouseInput[2] { new MouseInput("Fire1"), new MouseInput("Fire2") };
 
-        bool allowed = true; 
+        protected bool allowed = true; 
         public bool GetMouseButtonTwo()
         {
             if (allowed == false) return allowed;

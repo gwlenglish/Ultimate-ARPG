@@ -11,7 +11,7 @@ namespace GWLPXL.ARPGCore.PlayerInput.com
     {
         [SerializeField]
         [Tooltip("Buttons will have preference. To not check buttons, leave the button field empty.")]
-        PlayerCanvasInput[] canvasToggleInputs = new PlayerCanvasInput[5]
+        protected PlayerCanvasInput[] canvasToggleInputs = new PlayerCanvasInput[5]
         {
              new PlayerCanvasInput(string.Empty, KeyCode.I, CanvasType.Inventory),
            new PlayerCanvasInput(string.Empty, KeyCode.O, CanvasType.Save),
@@ -22,9 +22,9 @@ namespace GWLPXL.ARPGCore.PlayerInput.com
 
 
 
-        IActorHub hub = null;
+        protected IActorHub hub = null;
 
-        bool allowed = true;
+        protected bool allowed = true;
       
 
         public void AllowInput() => allowed = true;
@@ -34,14 +34,14 @@ namespace GWLPXL.ARPGCore.PlayerInput.com
         
 
         //we use update instead of ticks because we want to be able to open and class canvases even when the dungeon is frozen
-        private void Update()
+        protected virtual void Update()
         {
             if (allowed == false) return;
            // if (TickManager.Instance.Paused) return;//if we are paused, i.e. loading, dont allow this
             CheckForCanvasInputs();
         }
 
-        public void CheckForCanvasInputs()
+        public virtual void CheckForCanvasInputs()
         {
             for (int i = 0; i < canvasToggleInputs.Length; i++)
             {
@@ -67,7 +67,7 @@ namespace GWLPXL.ARPGCore.PlayerInput.com
             }
         }
 
-        public void ToggleCanvas(CanvasType type)
+        public virtual void ToggleCanvas(CanvasType type)
         {
             switch (type)
             {
@@ -105,7 +105,7 @@ namespace GWLPXL.ARPGCore.PlayerInput.com
         }
 
         //i hate this method but so it goes...
-        public bool HasFreezeMoverCanvasEnabled()
+        public virtual bool HasFreezeMoverCanvasEnabled()
         {
             if (hub.PlayerControlled.CanvasHub.InvCanvas != null)
             {
@@ -149,7 +149,7 @@ namespace GWLPXL.ARPGCore.PlayerInput.com
             return false;
         }
 
-        public void SetInputHub(IActorHub actorhub)
+        public virtual void SetInputHub(IActorHub actorhub)
         {
             hub = actorhub;
         }

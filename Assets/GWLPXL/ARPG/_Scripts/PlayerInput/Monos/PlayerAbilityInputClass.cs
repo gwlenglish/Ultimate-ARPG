@@ -13,11 +13,11 @@ namespace GWLPXL.ARPGCore.PlayerInput.com
     {
         [SerializeField]
         [Tooltip("Buttons will have preference. To not check buttons, leave the button field empty.")]
-        PlayerAbilityInput abilityInputs = new PlayerAbilityInput();
+        protected PlayerAbilityInput abilityInputs = new PlayerAbilityInput();
 
 
-        bool allowed = true;
-        IActorHub hub;
+        protected bool allowed = true;
+        protected IActorHub hub;
        
         //inputs
         protected virtual void Start()
