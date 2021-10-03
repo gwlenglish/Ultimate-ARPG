@@ -826,9 +826,8 @@ GameObject:
   - component: {fileID: 5388698434707790680}
   - component: {fileID: 5388698434707790683}
   - component: {fileID: 5388698434707790682}
-  - component: {fileID: 2670229668887121310}
   m_Layer: 5
-  m_Name: PlayerInventoryCanvas_Solo
+  m_Name: PlayerInventoryCanvas_Solo_OLD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -914,25 +913,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &2670229668887121310
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5388698434707790677}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b126a63b977d36945897bf25e6a7ca50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FreezeDungeon: 1
-  savingUI: {fileID: 0}
-  MainPanel: {fileID: 5388698435120588662}
-  HoverObjPrefab: {fileID: 868308346249792551, guid: ac667c00031c42342bdc0504fbb58b92,
-    type: 3}
-  charInfo: {fileID: 4894700334597554397}
-  HoverOverParent: {fileID: 5388698435120588663}
 --- !u!1 &5388698434756712577
 GameObject:
   m_ObjectHideFlags: 0
