@@ -12,22 +12,22 @@ namespace GWLPXL.ARPGCore.Movement.com
         public float Speed = 5;
         public bool RotateTowardsVelocity = false;
         public float RotateSpeed = 5;
-        float speedMulti = 1;
-        float defaultSpeed;
-        IPlayerMovementInput input;
-        Rigidbody2D rb2d;
-        bool stopped;
-        Vector2 newPos = Vector2.zero;
-        IActorHub hub;
-        bool moverenabled;
-        private void Awake()
+        protected float speedMulti = 1;
+        protected float defaultSpeed;
+        protected IPlayerMovementInput input;
+        protected Rigidbody2D rb2d;
+        protected bool stopped;
+        protected Vector2 newPos = Vector2.zero;
+        protected IActorHub hub;
+        protected bool moverenabled;
+        protected virtual void Awake()
         {
             defaultSpeed = Speed;
         }
         public void AddTicker() => TickManager.Instance.AddTicker(this);
         
 
-        public void DoTick()
+        public virtual void DoTick()
         {
             if (stopped || hub.MyHealth.IsDead()) return;
             float x = hub.InputHub.MoveInputs.GetHorizontalRaw();
@@ -53,11 +53,11 @@ namespace GWLPXL.ARPGCore.Movement.com
         }
 
 
-        public float GetTickDuration() => Time.deltaTime;
+        public virtual float GetTickDuration() => Time.deltaTime;
 
-        public void RemoveTicker() => TickManager.Instance.RemoveTicker(this);
+        public virtual void RemoveTicker() => TickManager.Instance.RemoveTicker(this);
 
-        public void SetUpMover()
+        public virtual void SetUpMover()
         {
             rb2d = GetComponent<Rigidbody2D>();
             if (rb2d == null)
@@ -75,41 +75,41 @@ namespace GWLPXL.ARPGCore.Movement.com
             AddTicker();
         }
 
-        public GameObject GetGameObject() => this.gameObject;
+        public virtual GameObject GetGameObject() => this.gameObject;
        
 
-        public void SetVelocity(Vector3 newVel)
+        public virtual void SetVelocity(Vector3 newVel)
         {
            
         }
 
-        public void ResetState()
+        public virtual void ResetState()
         {
             
         }
 
-        public void SetDesiredDestination(Vector3 newDestination, float stoppingDistance)
+        public virtual void SetDesiredDestination(Vector3 newDestination, float stoppingDistance)
         {
             rb2d.MovePosition(newDestination);
         }
 
-        public void SetDesiredRotation(Vector3 towards, float stoppingDistance)
+        public virtual void SetDesiredRotation(Vector3 towards, float stoppingDistance)
         {
           
         }
 
       
-        public void SetNewSpeed(float newTopSpeed, float newAcceleration)
+        public virtual void SetNewSpeed(float newTopSpeed, float newAcceleration)
         {
             Speed = newTopSpeed;
         }
 
-        public void ResetSpeed()
+        public virtual void ResetSpeed()
         {
             Speed = defaultSpeed;
         }
 
-        private void OnDestroy()
+        protected virtual void OnDestroy()
         {
             RemoveTicker();
         }
@@ -119,38 +119,38 @@ namespace GWLPXL.ARPGCore.Movement.com
             return hub;
         }
 
-        public void SetActorHub(IActorHub newHub)
+        public virtual void SetActorHub(IActorHub newHub)
         {
             hub = newHub;
         }
 
-        public void DisableMovement(bool isStopped)
+        public virtual void DisableMovement(bool isStopped)
         {
             moverenabled = isStopped;
 
         }
 
-        public float GetVelocitySquaredMag()
+        public virtual float GetVelocitySquaredMag()
         {
             return newPos.sqrMagnitude;
             Debug.Log(rb2d.velocity.sqrMagnitude);
             return rb2d.velocity.sqrMagnitude;
         }
 
-        public void ModifySpeedMultiplier(float byAmount)
+        public virtual void ModifySpeedMultiplier(float byAmount)
         {
             speedMulti += byAmount;
             Speed = defaultSpeed * speedMulti;
         }
 
-        public bool GetMoverEnabled()
+        public virtual bool GetMoverEnabled()
         {
             return moverenabled;
         }
 
-        public float GetSpeedMultiplier() => speedMulti;
+        public virtual float GetSpeedMultiplier() => speedMulti;
 
-        public Vector3 GetVelocityDirection() => rb2d.velocity.normalized;
+        public virtual Vector3 GetVelocityDirection() => rb2d.velocity.normalized;
        
     }
 }
