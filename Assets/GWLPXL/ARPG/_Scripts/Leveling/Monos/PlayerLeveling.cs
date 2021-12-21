@@ -55,7 +55,7 @@ namespace GWLPXL.ARPGCore.Leveling.com
                 baseNextLevel = (float)newBase + (newBase * XPCurve.Evaluate(multi));
             }
 
-
+         
             float newXP = baseNextLevel;
             int nextLevelXP = Mathf.RoundToInt(baseNextLevel);
             ARPGDebugger.DebugMessage("Next Level XP " + nextLevelXP, this);

@@ -12,13 +12,13 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
     public class SaveCanvasUser : MonoBehaviour, IUseSaveCanvas, IUseCanvas
     {
         [SerializeField]
-        bool freezeMover = true;
+        protected bool freezeMover = true;
         [SerializeField]
-        GameObject SaveCanvasPrefab = null;
+        protected GameObject SaveCanvasPrefab = null;
 
-        ISaveCanvas saveC = null;
-        IActorHub actorhub = null;
-        public void SetUserToCanvas()
+        protected ISaveCanvas saveC = null;
+        protected IActorHub actorhub = null;
+        public virtual void SetUserToCanvas()
         {
             if (SaveCanvasPrefab == null) return;
 
@@ -32,25 +32,25 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
         }
 
-        public void ToggleCanvas()
+        public virtual void ToggleCanvas()
         {
             saveC.TogglePlayerSaveCanvas();
         }
 
-        public bool GetCanvasEnabled()
+        public virtual bool GetCanvasEnabled()
         {
             if (saveC == null) return false;
             return saveC.GetCanvasEnabled();
         }
 
 
-        public void SetCanvasPrefab(GameObject newprefab) => SaveCanvasPrefab = newprefab;
+        public virtual void SetCanvasPrefab(GameObject newprefab) => SaveCanvasPrefab = newprefab;
 
-        public ISaveCanvas GetUI() => saveC;
+        public virtual ISaveCanvas GetUI() => saveC;
 
-        public bool GetFreezeMover() => freezeMover;
+        public virtual bool GetFreezeMover() => freezeMover;
 
-        public void SetActorHub(IActorHub hub) => actorhub = hub;
+        public virtual void SetActorHub(IActorHub hub) => actorhub = hub;
         
     }
 }

@@ -7078,6 +7078,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 4fecaaa2e1857194da1d5ae412c87751,
         type: 2}
+    - target: {fileID: 5710349178950200367, guid: 3265ee1c6ac2d4a46801109d947df153,
+        type: 3}
+      propertyPath: freezeMover
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5710349179592715451, guid: 3265ee1c6ac2d4a46801109d947df153,
         type: 3}
       propertyPath: m_Enabled

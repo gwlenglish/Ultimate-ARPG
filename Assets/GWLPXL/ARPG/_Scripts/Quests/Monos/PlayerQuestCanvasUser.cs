@@ -12,32 +12,32 @@ namespace GWLPXL.ARPGCore.Quests.com
     public class PlayerQuestCanvasUser : MonoBehaviour, IUseCanvas, IUseQuesterCanvas
     {
         [SerializeField]
-        bool freezeMover = false;
+        protected bool freezeMover = false;
 
         [SerializeField]
-        GameObject questCanvasPrefab = null;
-        GameObject questCanvasInstance = null;
+        protected GameObject questCanvasPrefab = null;
+        protected GameObject questCanvasInstance = null;
 
-        IQuesterCanvas questCanvas = null;
-        IActorHub actorhub = null;
+        protected IQuesterCanvas questCanvas = null;
+        protected IActorHub actorhub = null;
        
-        public bool GetCanvasEnabled()
+        public virtual bool GetCanvasEnabled()
         {
             if (questCanvas == null) return false;
             return questCanvas.GetCanvasEnabled();
         }
 
-        public IQuestUser GetQuester()
+        public virtual IQuestUser GetQuester()
         {
             return actorhub.MyQuests;
         }
 
-        public IQuesterCanvas GetQuesterUI()
+        public virtual IQuesterCanvas GetQuesterUI()
         {
             return questCanvas;
         }
 
-        public void SetUserToCanvas()
+        public virtual void SetUserToCanvas()
         {
             if (questCanvasInstance != null)
             {
@@ -51,19 +51,19 @@ namespace GWLPXL.ARPGCore.Quests.com
 
         }
 
-        public void ToggleCanvas()
+        public virtual void ToggleCanvas()
         {
             GetQuesterUI().ToggleQuesterUI();
         }
 
-        public bool GetFreezeMover()
+        public virtual bool GetFreezeMover()
         {
             return freezeMover;
         }
 
-        public void SetPrefabCanvas(GameObject newprefab) => questCanvasPrefab = newprefab;
+        public virtual void SetPrefabCanvas(GameObject newprefab) => questCanvasPrefab = newprefab;
 
-        public void SetActorHub(IActorHub hub) => actorhub = hub;
+        public virtual void SetActorHub(IActorHub hub) => actorhub = hub;
       
     }
 }

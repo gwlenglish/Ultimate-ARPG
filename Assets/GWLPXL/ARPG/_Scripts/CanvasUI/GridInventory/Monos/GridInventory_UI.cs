@@ -85,12 +85,21 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         {
             eventSystem = FindObjectOfType<EventSystem>();
             m_Raycaster = GetComponent<GraphicRaycaster>();
-            m_PointerEventData = new PointerEventData(eventSystem);
             main = Camera.main;
             canvas = GetComponent<Canvas>();
             canvas.worldCamera = main;
-
+            SetPointerData(new PointerEventData(eventSystem));
         }
+
+        public virtual PointerEventData GetPointerData()
+        {
+            return m_PointerEventData;
+        }
+        public virtual void SetPointerData(PointerEventData pointerData)
+        {
+            m_PointerEventData = pointerData;
+        }
+
         /// <summary>
         /// sub events
         /// </summary>
@@ -108,7 +117,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         }
 
        
-
+      
         /// <summary>
         /// unsub events
         /// </summary>
@@ -137,12 +146,12 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         {
             if (MainPanel.gameObject.activeInHierarchy == false) return;
             //need to set the pointer data.
-            m_PointerEventData.position = Input.mousePosition;
+            GetPointerData().position = GetScreenPosition();
 
             switch (state)
             {
                 case InteractState.Empty:
-                    if (RemoveTrigger())
+                    if (RemoveTrigger() == true)
                     {
                         TryRemoveDraggableFromGrid();//click mousedown
                     }
@@ -334,14 +343,14 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         /// <param name="piece"></param>
         protected virtual void TryPlaceDraggable(IInventoryPiece piece)
         {
-            if (Input.GetMouseButtonDown(0) == false) return;
-            if (m_PointerEventData == null) return;//nothing clicked, nothing ventured
+            if (RemoveTrigger() == false) return;
+            if (GetPointerData() == null) return;//nothing clicked, nothing ventured
 
             //Create a list of Raycast Results
             results.Clear();
 
             //Raycast using the Graphics Raycaster and mouse click position
-            m_Raycaster.Raycast(m_PointerEventData, results);//can be null...
+            m_Raycaster.Raycast(GetPointerData(), results);//can be null...
 
 
             //For every result returned, output the name of the GameObject on the Canvas hit by the Ray
@@ -379,13 +388,13 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         protected virtual void TryRemoveDraggableFromGrid()
         {
 
-            if (m_PointerEventData == null) return;//nothing clicked, nothing ventured
+            if (GetPointerData() == null) return;//nothing clicked, nothing ventured
 
             //Create a list of Raycast Results
             results.Clear();
 
             //Raycast using the Graphics Raycaster and mouse click position
-            m_Raycaster.Raycast(m_PointerEventData, results);//can be null...
+            m_Raycaster.Raycast(GetPointerData(), results);//can be null...
 
 
             //For every result returned, output the name of the GameObject on the Canvas hit by the Ray
@@ -418,7 +427,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         }
         protected virtual void TryUse()
         {
-            if (m_PointerEventData == null) return;//nothing clicked, nothing ventured
+            if (GetPointerData() == null) return;//nothing clicked, nothing ventured
 
             //Create a list of Raycast Results
             results.Clear();
@@ -538,7 +547,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             List<RaycastResult> preview = new List<RaycastResult>();
 
             //Raycast using the Graphics Raycaster and mouse click position
-            m_Raycaster.Raycast(m_PointerEventData, preview);
+            m_Raycaster.Raycast(GetPointerData(), preview);
             piece.PreviewInstance.SetActive(false);
             foreach (RaycastResult result in preview)
             {
@@ -605,6 +614,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
             Vector3 newpos = uiobject.transform.position;
             piece.PreviewInstance.transform.position = newpos;
+
             piece.PreviewInstance.SetActive(true);
 
             for (int i = 0; i < TheBoard.Preview.PreviewList.Count; i++)
@@ -720,6 +730,8 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                     if (placed)
                     {
                         piece.Instance.transform.position = piece.PreviewInstance.transform.position;
+
+
                         piece.Instance.SetActive(true);
                         piece.PreviewInstance.SetActive(false);
                         instance.name = stack.Item.GetGeneratedItemName();

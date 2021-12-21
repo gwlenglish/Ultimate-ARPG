@@ -20,18 +20,18 @@ namespace GWLPXL.ARPGCore.ProgressTree.com
     {
 
         [SerializeField]
-        bool freezeMover = true;
+        protected bool freezeMover = true;
         [SerializeField]
-        GameObject InvCanvasPrefab;
+        protected GameObject InvCanvasPrefab;
 
-        IProgressTree ui = null;
-        IActorHub actorhub = null;
-        GameObject newCanvas = null;
+        protected IProgressTree ui = null;
+        protected IActorHub actorhub = null;
+        protected GameObject newCanvas = null;
        
 
        
 
-        public void SetUserToCanvas()
+        public virtual void SetUserToCanvas()
         {
             if (InvCanvasPrefab == null) return;
             newCanvas = Instantiate(InvCanvasPrefab.gameObject, transform);
@@ -42,22 +42,22 @@ namespace GWLPXL.ARPGCore.ProgressTree.com
         }
 
       
-        public void ToggleCanvas()
+        public virtual void ToggleCanvas()
         {
             GetInvUI().ToggleUI();
         }
 
-        public IAbilityUser GetUser()
+        public virtual IAbilityUser GetUser()
         {
             return actorhub.MyAbilities;
         }
 
-        public IProgressTree GetInvUI()
+        public virtual IProgressTree GetInvUI()
         {
             return ui;
         }
 
-        public bool GetCanvasEnabled()
+        public virtual bool GetCanvasEnabled()
         {
             if (ui == null) return false;
             return ui.GetEnabled();
@@ -65,11 +65,11 @@ namespace GWLPXL.ARPGCore.ProgressTree.com
 
       
 
-        public void SetCanvasPrefab(GameObject newPrefab) => InvCanvasPrefab = newPrefab;
+        public virtual void SetCanvasPrefab(GameObject newPrefab) => InvCanvasPrefab = newPrefab;
 
-        public bool GetFreezeMover() => freezeMover;
+        public virtual bool GetFreezeMover() => freezeMover;
 
-        public void SetActorHub(IActorHub hub) => actorhub = hub;
+        public virtual void SetActorHub(IActorHub hub) => actorhub = hub;
        
     }
 }

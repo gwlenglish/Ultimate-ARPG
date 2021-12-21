@@ -763,6 +763,15 @@ MonoBehaviour:
       OnPieceRemoved:
         m_PersistentCalls:
           m_Calls: []
+      OnStartDragging:
+        m_PersistentCalls:
+          m_Calls: []
+      OnStopDragging:
+        m_PersistentCalls:
+          m_Calls: []
+      OnItemUsed:
+        m_PersistentCalls:
+          m_Calls: []
   DefaultPattern: {fileID: 11400000, guid: 7b6bd6a184dad8f4689b030bd5fca214, type: 2}
   FreezeDungeon: 1
   TheBoard:
@@ -2143,6 +2152,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4188103018540769166}
     m_Modifications:
+    - target: {fileID: 6689047979032834858, guid: b21244a2749420e44a287244a1851681,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6689047979032834860, guid: b21244a2749420e44a287244a1851681,
         type: 3}
       propertyPath: m_Name
@@ -2252,6 +2266,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6689047979200543258, guid: b21244a2749420e44a287244a1851681,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6689047979200543258, guid: b21244a2749420e44a287244a1851681,
+        type: 3}
+      propertyPath: m_Alpha
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b21244a2749420e44a287244a1851681, type: 3}

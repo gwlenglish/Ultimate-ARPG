@@ -10,21 +10,21 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
     {
 
         [SerializeField]
-        bool freezeMover = true;
+        protected bool freezeMover = true;
         [SerializeField]
-        GameObject InvCanvasPrefab = null;
+        protected GameObject InvCanvasPrefab = null;
 
-        IInventoryCanvas canvas = null;
-        IActorHub actorHub = null;
-        private void Awake()
+        protected IInventoryCanvas canvas = null;
+        protected IActorHub actorHub = null;
+        protected virtual void Awake()
         {
             
 
         }
-        public IActorHub GetActorHub() => actorHub;
+        public virtual IActorHub GetActorHub() => actorHub;
      
 
-        public void SetUserToCanvas()
+        public virtual void SetUserToCanvas()
         {
             if (InvCanvasPrefab == null) return;
             GameObject newCanvas = Instantiate(InvCanvasPrefab.gameObject, transform);
@@ -34,22 +34,22 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         }
 
         //
-        public void ToggleCanvas()
+        public virtual void ToggleCanvas()
         {
             canvas.TogglePlayerInventoryUI();
         }
 
-        public IInventoryUser GetUser()
+        public virtual IInventoryUser GetUser()
         {
             return actorHub.MyInventory;
         }
 
-        public IInventoryCanvas GetInvUI()
+        public virtual IInventoryCanvas GetInvUI()
         {
             return canvas;
         }
 
-        public bool GetCanvasEnabled()
+        public virtual bool GetCanvasEnabled()
         {
             if (canvas == null) return false;
             return canvas.GetCanvasEnabled();
@@ -57,13 +57,13 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
 
 
-        public void EnableCanvas()
+        public virtual void EnableCanvas()
         {
             if (GetInvUI() == null) return;
             GetInvUI().EnablePlayerInventoryUI(true);
         }
 
-        public void DisableCanvas()
+        public virtual void DisableCanvas()
         {
             if (GetInvUI() == null) return;
 
@@ -71,11 +71,11 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
         }
 
-        public void SetCanvasPrefab(GameObject newprefab) => InvCanvasPrefab = newprefab;
+        public virtual void SetCanvasPrefab(GameObject newprefab) => InvCanvasPrefab = newprefab;
 
-        public bool GetFreezeMover() => freezeMover;
+        public virtual bool GetFreezeMover() => freezeMover;
 
-        public void SetActorHub(IActorHub hub)
+        public virtual void SetActorHub(IActorHub hub)
         {
             actorHub = hub;
         }

@@ -1,0 +1,308 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dfc5aa1fea49fc4eb02a2aa530ca687, type: 3}
+  m_Name: Settings_Test DB
+  m_EditorClassIdentifier: 
+  config: {fileID: 0}
+  LayerAssign:
+    GroundLayer:
+      serializedVersion: 2
+      m_Bits: 0
+    AttackableLayer:
+      serializedVersion: 2
+      m_Bits: 0
+    InteractableLayer:
+      serializedVersion: 2
+      m_Bits: 0
+  Templates:
+    UnityDefaults:
+      PhysicsType: 0
+    CanvasPaths:
+      CanvasPrefabspath: Assets/GWLPXL/ARPG/Prefabs/UI
+    AnimatorPaths:
+      PlayerAnimatorPath: Assets/GWLPXL/ARPG/Data/Animations/Animators/Base/ARPG_Player_Base.controller
+      EnemyAnimatorPath: Assets/GWLPXL/ARPG/Data/Animations/Animators/Base/ARPG_Enemy_Base.controller
+    PrefabPaths:
+      EnemyHPInfoPrefabPath: Assets/GWLPXL/ARPG/Prefabs/Enemy/EnemyInfo.prefab
+      LootPrefabPath: Assets/GWLPXL/ARPG/Prefabs/Looting/LootPrefab.prefab
+    BasePlayerAnimatorC: {fileID: 0}
+    BaseEnemyAnimatorC: {fileID: 0}
+    Player3DDefaults:
+      Move3DDefault: {fileID: 0}
+      AnimController: {fileID: 0}
+    ActorDefaults:
+      EnemyDefaults3D: []
+      EnemyDefaults2D: []
+      AnimController2D: {fileID: 0}
+      AnimController: {fileID: 0}
+    Player2DDefaults:
+      AnimController: {fileID: 0}
+      IdleStates: {fileID: 0}
+      WalkStates: {fileID: 0}
+      DeathStates: {fileID: 0}
+      AbilityStates: []
+  GizmoIconPaths:
+    BreakableBase: Assets/GWLPXL/ARPG/Gizmos/TestAttackable.png
+    BreakableDropLocation: Assets/GWLPXL/ARPG/Gizmos/TestDropLocation.png
+    SearchableBase: Assets/GWLPXL/ARPG/Gizmos/SearchableIcon.png
+  PingObjects:
+    TypesPing: {fileID: 0}
+  InspectObjects:
+    Equipment:
+      Equipment: {fileID: 0}
+      ScollableEq: {x: 0, y: 0}
+    Player:
+      PlayerViewOptions:
+      - Attributes
+      - Inventory
+      - Class
+      - Abilities
+      - Auras
+      ToolBarSelector: 0
+      Attributes: {fileID: 0}
+      Inventory: {fileID: 0}
+      ActorClass: {fileID: 0}
+      Abilities: {fileID: 0}
+      Auras: {fileID: 0}
+    Enemy:
+      EnemyViewOptions:
+      - Attributes
+      - Inventory
+      - Class
+      - Abilities
+      - Auras
+      - Loot Drops
+      ToolBarSelector: 0
+      Attributes: {fileID: 0}
+      Inventory: {fileID: 0}
+      ActorClass: {fileID: 0}
+      Abilities: {fileID: 0}
+      Auras: {fileID: 0}
+  GeneratedTemp:
+    Equipment:
+      MinILevelCurve: 1
+      MaxILevelCurve: 100
+      ILevel: 1
+      Equipment: {fileID: 0}
+      ScollableEq: {x: 0, y: 0}
+      PowerCurves: []
+      DamageValues: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+      CurvedEq:
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+    Attributes:
+      Generated: 0
+      Attributes: {fileID: 0}
+      MinILevelCurve: 1
+      MaxILevelCurve: 100
+      Level: 1
+      ScollableEq: {x: 0, y: 0}
+      PowerCurves: []
+      CurvedAttributes:
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
