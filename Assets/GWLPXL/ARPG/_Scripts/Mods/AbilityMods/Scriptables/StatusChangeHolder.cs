@@ -7,7 +7,7 @@ using GWLPXL.ARPGCore.Abilities.com;
 namespace GWLPXL.ARPGCore.Abilities.Mods.com
 {
 
-    [CreateAssetMenu(menuName = "GWLPXL/ARPG/Abilities/Logic/NEW_StatusChangeHolder")]
+    [CreateAssetMenu(menuName = "GWLPXL/ARPG/Abilities/Mods/NEW_StatusChangeHolder")]
 
     public class StatusChangeHolder : AbilityLogic
     {

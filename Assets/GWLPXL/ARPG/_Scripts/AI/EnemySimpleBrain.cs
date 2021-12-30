@@ -28,20 +28,20 @@ namespace GWLPXL.ARPGCore.AI.com
         [Range(0, 1f)]
         [Tooltip("How often to play the hurt state. At 1 (100%), you can stunlock so you probably don't want that.")]
         public float RandomizedHurtChance = .10f;
-        bool hurt = true;
-        IAIEntity bb = null;
-        float aggrotimer = 0;
-        bool aggroed = false;
+        protected bool hurt = true;
+        protected IAIEntity bb = null;
+        protected float aggrotimer = 0;
+        protected bool aggroed = false;
 
-        bool dead;
+        protected bool dead;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             bb = GetComponent<IAIEntity>();
         }
 
-        
-        private void Start()
+
+        protected virtual void Start()
         {
             if (ActorHub != null)
             {
@@ -70,7 +70,7 @@ namespace GWLPXL.ARPGCore.AI.com
             AddTicker();
         }
 
-        private void OnDestroy()
+        protected  void OnDestroy()
         {
             EnemyHealth health = ActorHub.GetComponent<IActorHub>().MyHealth as EnemyHealth;
             if (health != null)
@@ -82,20 +82,20 @@ namespace GWLPXL.ARPGCore.AI.com
             RemoveTicker();
         }
 
-        void Dead()
+        protected virtual void Dead()
         {
             dead = true;
             bb.SetStateKey(DeathKey);
         }
 
-        void Idle()
+        protected virtual void Idle()
         {
             if (dead) return;
             bb.SetStateKey(IdleKey);
         }
 
-   
-        void TookDamage(IActorHub aggrotarget)
+
+        protected virtual void TookDamage(IActorHub aggrotarget)
         {
             if (dead) return;
             int rando = Random.Range(0, 101);
@@ -114,7 +114,7 @@ namespace GWLPXL.ARPGCore.AI.com
         }
 
 
-        void AggroPlayer(IActorHub aggrotarget)
+        protected virtual void AggroPlayer(IActorHub aggrotarget)
         {
             if (dead) return;
             if (aggrotarget != null)
@@ -126,7 +126,7 @@ namespace GWLPXL.ARPGCore.AI.com
         }
 
       
-        private void Aggro()
+        protected virtual void Aggro()
         {
             bb.SetStateKey(AggroKey);
             aggroed = true;
@@ -138,11 +138,11 @@ namespace GWLPXL.ARPGCore.AI.com
             TickManager.Instance.AddTicker(this);
         }
 
-        bool CheckAggro()
+        protected virtual bool CheckAggro()
         {
             return bb.GetAttackTarget() != null && AggroSightAngle > 0 && AggroDetectRange > 0;
         }
-        public void DoTick()
+        public virtual void DoTick()
         {
             if (dead) return;
 
@@ -188,7 +188,7 @@ namespace GWLPXL.ARPGCore.AI.com
         }
 
        
-        private void OnDrawGizmosSelected()
+        protected virtual void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, AggroDetectRange);
@@ -198,7 +198,7 @@ namespace GWLPXL.ARPGCore.AI.com
             TickManager.Instance.RemoveTicker(this);
         }
 
-        public float GetTickDuration() => Time.deltaTime;
+        public virtual float GetTickDuration() => Time.deltaTime;
 
     }
 }

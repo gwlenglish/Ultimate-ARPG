@@ -15,22 +15,22 @@ namespace GWLPXL.ARPGCore.Abilities.com
         public LayerMask[] CollisionLayers = new LayerMask[0];
         bool interrupted = false;
 
-        private void Start()
+        protected virtual void Start()
         {
             OnInterrupt += Interrupted;
         }
-      
-        bool ContainsLayer(LayerMask mask, int layer)
+
+        protected virtual bool ContainsLayer(LayerMask mask, int layer)
         {
             return ((mask & (1 << layer)) != 0);
         }
 
-        void Interrupted(Ability ability)
+        protected virtual void Interrupted(Ability ability)
         {
             interrupted = true;
         }
 
-        private void OnCollisionEnter(Collision collision)
+        protected virtual void OnCollisionEnter(Collision collision)
         {
             if (interrupted) return;
             if (CollisionLayers.Length == 0) return;
@@ -46,7 +46,7 @@ namespace GWLPXL.ARPGCore.Abilities.com
         }
        
 
-        public void Remove()
+        public virtual void Remove()
         {
             OnInterrupt -= Interrupted;
             Destroy(this);

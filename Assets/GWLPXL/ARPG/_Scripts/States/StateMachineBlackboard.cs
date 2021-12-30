@@ -24,7 +24,7 @@ namespace GWLPXL.ARPGCore.AI.com
         public float DefaultStoppingDistance = 3;
 
         IActorHub hub = null;
-        private void Awake()
+        protected virtual void Awake()
         {
             if (ActorHub == null) GetComponent<IActorHub>();
             if (ActorHub != null) hub = ActorHub.GetComponent<IActorHub>();

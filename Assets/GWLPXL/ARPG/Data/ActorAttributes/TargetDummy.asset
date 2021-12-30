@@ -21,7 +21,7 @@ MonoBehaviour:
   myLevel: 1
   restoreOnLevel: 1
   ActorName: Target Dummy
-  maxLevel: 99
+  maxLevel: 50
   baseStat: 0
   Resources:
   - BaseValue: 0
@@ -83,7 +83,7 @@ MonoBehaviour:
     NowValue: 491
     Type: 1
   Stats:
-  - BaseValue: 0
+  - BaseValue: 30
     Level1Value: 0
     LevelCurve:
       serializedVersion: 2
@@ -91,8 +91,8 @@ MonoBehaviour:
       - serializedVersion: 3
         time: 0
         value: 0
-        inSlope: 2
-        outSlope: 2
+        inSlope: 0
+        outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
@@ -100,8 +100,8 @@ MonoBehaviour:
       - serializedVersion: 3
         time: 1
         value: 1
-        inSlope: 0
-        outSlope: 0
+        inSlope: 2
+        outSlope: 2
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
@@ -109,7 +109,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    Level99Max: 100
+    Level99Max: 60
     NowValue: 2
     Type: 0
   - BaseValue: 0

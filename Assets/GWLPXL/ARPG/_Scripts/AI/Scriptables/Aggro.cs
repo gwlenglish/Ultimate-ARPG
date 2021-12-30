@@ -40,7 +40,7 @@ namespace GWLPXL.ARPGCore.States.com
     public class GenericAggroState : IState
     {
         public IAIEntity Entity;
-        AggroVars vars;
+        protected AggroVars vars;
 
         public GenericAggroState(IAIEntity entity, AggroVars vars)
         {
@@ -65,7 +65,7 @@ namespace GWLPXL.ARPGCore.States.com
         }
 
 
-        void EndAbility(Ability ability)
+        protected virtual void EndAbility(Ability ability)
         {
             if (ability == vars.Ability)
             {
