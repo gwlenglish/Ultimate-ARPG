@@ -26,12 +26,13 @@ MonoBehaviour:
     Range: 3
     ResourceCost: 5
     ResourceType: 1
-    AnimationTrigger: Spin
-    AnimationIndex: 3
     Logics: []
     UniqueID: 4
     Sprite: {fileID: -5041531480436496497, guid: d274d7b6131b1094fb3cf06d40b14134,
       type: 3}
+    AnimationTrigger: Spin
+    AnimBlending: 0.02
+    AnimationIndex: 0
   category: 1
   AddCooldown: 1
   CoolDownRate: 1

@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 25504
+        "instanceID": 26176
     },
     "id": {
         "Name": "",
         "ID": 5,
         "Ability": {
-            "instanceID": 24892
+            "instanceID": 25628
         }
     },
     "autoName": true,
@@ -17,20 +17,21 @@
         "Range": 3.0,
         "ResourceCost": 5.0,
         "ResourceType": 1,
-        "AnimationTrigger": "Ability",
-        "AnimationIndex": 2,
         "Logics": [
             {
-                "instanceID": 25506
+                "instanceID": 26178
             },
             {
-                "instanceID": 25508
+                "instanceID": 26180
             }
         ],
         "UniqueID": 4,
         "Sprite": {
             "instanceID": 0
-        }
+        },
+        "AnimationTrigger": "Ability",
+        "AnimBlending": 0.019999999552965165,
+        "AnimationIndex": 0
     },
     "category": 1,
     "AddCooldown": true,

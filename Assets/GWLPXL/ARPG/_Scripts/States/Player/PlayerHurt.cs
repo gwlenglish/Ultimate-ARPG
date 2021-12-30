@@ -19,10 +19,6 @@ namespace GWLPXL.ARPGCore.States.com
         public void Enter()
         {
             timer = 0;
-            if (hub.MyAnimator != null)
-            {
-      
-            }
 
             hub.MyMover.DisableMovement(true);
         }

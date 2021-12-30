@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 25514
+        "instanceID": 26186
     },
     "id": {
         "Name": "Blast_Charged_Fireball",
         "ID": 22,
         "Ability": {
-            "instanceID": 24896
+            "instanceID": 25632
         }
     },
     "autoName": false,
@@ -17,17 +17,18 @@
         "Range": 10.0,
         "ResourceCost": 5.0,
         "ResourceType": 1,
-        "AnimationTrigger": "Fireball",
-        "AnimationIndex": 1,
         "Logics": [
             {
-                "instanceID": 23964
+                "instanceID": 24742
             }
         ],
         "UniqueID": 7,
         "Sprite": {
-            "instanceID": 23960
-        }
+            "instanceID": 24738
+        },
+        "AnimationTrigger": "Fireball",
+        "AnimBlending": 0.019999999552965165,
+        "AnimationIndex": 0
     },
     "category": 1,
     "AddCooldown": true,

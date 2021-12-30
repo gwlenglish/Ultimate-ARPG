@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 23950
+        "instanceID": 24730
     },
     "id": {
         "Name": "Basic Melee HChu",
         "ID": 10,
         "Ability": {
-            "instanceID": 23660
+            "instanceID": 24458
         }
     },
     "autoName": false,
@@ -17,17 +17,18 @@
         "Range": 1.5,
         "ResourceCost": 0.0,
         "ResourceType": 20,
-        "AnimationTrigger": "BasicMelee",
-        "AnimationIndex": 0,
         "Logics": [
             {
-                "instanceID": 23952
+                "instanceID": 24732
             }
         ],
         "UniqueID": 8,
         "Sprite": {
             "instanceID": 0
-        }
+        },
+        "AnimationTrigger": "BasicMelee",
+        "AnimBlending": 0.019999999552965165,
+        "AnimationIndex": 0
     },
     "category": 0,
     "AddCooldown": true,

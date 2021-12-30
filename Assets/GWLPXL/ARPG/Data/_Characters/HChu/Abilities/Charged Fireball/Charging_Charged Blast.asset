@@ -25,13 +25,14 @@ MonoBehaviour:
     Range: 10
     ResourceCost: 5
     ResourceType: 1
-    AnimationTrigger: Charging
-    AnimationIndex: 1
     Logics:
     - {fileID: 11400000, guid: 0a30b4b68f987374da0830dfb2fec159, type: 2}
     - {fileID: 11400000, guid: 293805834b7f34641ad5af8b0e870c2b, type: 2}
     UniqueID: 7
     Sprite: {fileID: 949155980521528692, guid: d274d7b6131b1094fb3cf06d40b14134, type: 3}
+    AnimationTrigger: Charging
+    AnimBlending: 0.02
+    AnimationIndex: 0
   category: 1
   AddCooldown: 1
   CoolDownRate: 0

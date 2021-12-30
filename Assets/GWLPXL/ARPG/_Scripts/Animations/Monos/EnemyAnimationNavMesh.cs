@@ -6,31 +6,32 @@ using UnityEngine;
 namespace GWLPXL.ARPGCore.Animations.com
 {
     /// <summary>
-    /// not used anymore in the new system, deprecated. Will delete in future versions
+    /// deprecated unused methods
+    /// adding new wrapper method for calling into animator states
     /// </summary>
     public class EnemyAnimationNavMesh : MonoBehaviour, IAnimate
     {
         [SerializeField]
         protected Animator animator;
-        protected bool delay = false;
-        [SerializeField]
-        float additionalCooldown = 1f;
-        [SerializeField]
-        string isHurt = "IsHurt";
-        [SerializeField]
-        string IsDead = "IsDead";
-        [SerializeField]
-        string abilityIndex = "AbilityIndex";
-        [SerializeField]
-        string basicattackIndex = "BasicAttackIndex";
+        //protected bool delay = false;
         //[SerializeField]
-        //string isLooping = "IsLooping";
-        [SerializeField]
-        string Movement = "Movement";
+        //protected float additionalCooldown = 1f;
+        //[SerializeField]
+        //protected string isHurt = "IsHurt";
+        //[SerializeField]
+        //protected string IsDead = "IsDead";
+        //[SerializeField]
+        //protected string abilityIndex = "AbilityIndex";
+        //[SerializeField]
+        //protected string basicattackIndex = "BasicAttackIndex";
+        ////[SerializeField]
+        ////string isLooping = "IsLooping";
+        //[SerializeField]
+        //protected string Movement = "Movement";
 
-        float animatorSpeed = 1f;
+        //protected float animatorSpeed = 1f;
 
-        void Awake()
+        protected virtual void Awake()
         {
             if (animator == null)
             {
@@ -44,25 +45,25 @@ namespace GWLPXL.ARPGCore.Animations.com
            
         }
 
-
-        public void SetDead(bool isDead)
+        [System.Obsolete("Use State Machine instead")]
+        public virtual void SetDead(bool isDead)
         {
             if (animator == null) return;
-            animator.SetBool(IsDead, isDead);
+            //animator.SetBool(IsDead, isDead);
         }
-
-        public void TriggerAbilityAnimation(string trigger, int index, bool canLoop)
+        [System.Obsolete("Use SetAnimatorState()")]
+        public virtual void TriggerAbilityAnimation(string trigger, int index, bool canLoop, float blend = .02f)
         {
             if (animator == null) return;
-
+            SetAnimatorState(trigger, blend, index);
             //ARPGDebugger.DebugMessage("Enemy animations called with trigger and index " + trigger + " " + index, this);
-            animator.SetTrigger(trigger);
-            animator.SetInteger(abilityIndex, index);
+           // animator.SetTrigger(trigger);
+          // animator.SetInteger(abilityIndex, index);
         }
 
 
 
-        public float GetCurrentAnimationLength()
+        public virtual float GetCurrentAnimationLength()
         {
             if (animator == null) return 0f;
 
@@ -77,78 +78,92 @@ namespace GWLPXL.ARPGCore.Animations.com
             length = length + translength;
             return length;
         }
-
-        public void SetMovement(float movement)
+        [System.Obsolete("Use State Machine instead")]
+        public virtual void SetMovement(float movement)
         {
             if (animator == null) return;
 
-            animator.SetFloat(Movement, movement);
+            //animator.SetFloat(Movement, movement);
         }
 
         /// <summary>
         /// deprecated
         /// </summary>
         /// <returns></returns>
-        public bool GetDelay()
+        /// 
+        [System.Obsolete]
+        public virtual bool GetDelay()
         {
             if (animator == null) return false;
 
-            return delay;
+            return false;
         }
 
         /// <summary>
         /// no longer used, deprecated
         /// </summary>
-        public void DelayAnimation()
+        public virtual void DelayAnimation()
         {
             StartCoroutine(AnimationDelay());
         }
-        IEnumerator AnimationDelay()
+        protected virtual IEnumerator AnimationDelay()
         {
-            delay = true;
             yield return null;
-            while (animator.GetCurrentAnimatorStateInfo(0).IsName(Movement) == false)
-            {
-                yield return null;
-            }
-            yield return new WaitForSeconds(additionalCooldown);
-            delay = false;
+            //delay = true;
+       
+            //while (animator.GetCurrentAnimatorStateInfo(0).IsName(Movement) == false)
+            //{
+            //    yield return null;
+            //}
+            //yield return new WaitForSeconds(additionalCooldown);
+            //delay = false;
 
 
 
         }
 
-        public Animator GetAnimator()
+        public virtual Animator GetAnimator()
         {
             return animator;
         }
 
-        public void SetHurt(bool _isHurt)
+        [System.Obsolete("Use State Machine instead")]
+        public virtual void SetHurt(bool _isHurt)
         {
             if (animator == null) return;
 
-            animator.SetBool(isHurt, _isHurt);
+            //animator.SetBool(isHurt, _isHurt);
         }
 
-        public void TriggerBasicAttackAnimation(string trigger, int index, bool canLoop)
+        [System.Obsolete("Use SetAnimatorState()")]
+        public virtual void TriggerBasicAttackAnimation(string trigger, int index, bool canLoop, float blend = .02f)
         {
-            animator.SetTrigger(trigger);
-            animator.SetInteger(basicattackIndex, index);
-            SetLooping(canLoop);
+            SetAnimatorState(trigger, blend, index);
+           // animator.SetTrigger(trigger);
+           // animator.SetInteger(basicattackIndex, index);
+           // SetLooping(canLoop);
         }
-
-        public void SetLooping(bool isLooping)
+        [System.Obsolete]
+        public virtual void SetLooping(bool isLooping)
         {
          //
         }
-        public void SetAnimatorSpeed(float newvalue)
+        public virtual void SetAnimatorSpeed(float newvalue)
         {
             animator.speed = newvalue;
         }
 
-        public void SetBasicAttackIndex(int newIndex)
+        [System.Obsolete("Use SetAnimatorState()")]
+        public virtual void SetBasicAttackIndex(int newIndex)
         {
-            animator.SetInteger(basicattackIndex, newIndex);
+            //animator.SetInteger(basicattackIndex, newIndex);
+        }
+
+        public virtual void SetAnimatorState(string name, float blendduration = 0.02F, int layer = 0)
+        {
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName(name)) return;
+
+            animator.CrossFadeInFixedTime(name, blendduration, layer);
         }
     }
 }

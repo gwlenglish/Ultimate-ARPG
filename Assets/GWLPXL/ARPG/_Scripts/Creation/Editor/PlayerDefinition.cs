@@ -563,8 +563,9 @@ namespace GWLPXL.ARPGCore.Creation.com
                     {
                         animator = instance.AddComponent<Animator>();
                     }
+                    PlayerAnimations playeranim = animator.gameObject.AddComponent<PlayerAnimations>();
                     player.Animator = instance.gameObject;
-
+                    player.MyAnim = playeranim;
                     RuntimeAnimatorController basecontroller = null;
 
                     switch (type)
@@ -864,6 +865,8 @@ namespace GWLPXL.ARPGCore.Creation.com
                         animator = instance.AddComponent<Animator>();
                     }
                     enemy.Animator = animator;
+                    EnemyAnimationNavMesh playeranim = animator.gameObject.AddComponent<EnemyAnimationNavMesh>();
+                    enemy.MyAnim = playeranim;
                     RuntimeAnimatorController basecontroller = null;
 
                     switch (type)

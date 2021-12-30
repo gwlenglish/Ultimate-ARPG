@@ -25,12 +25,13 @@ MonoBehaviour:
     Range: 10
     ResourceCost: 5
     ResourceType: 1
-    AnimationTrigger: Fireball
-    AnimationIndex: 1
     Logics:
     - {fileID: 11400000, guid: 7a6c190c80ea8c34bae95f8956f26fbb, type: 2}
     UniqueID: 7
     Sprite: {fileID: 949155980521528692, guid: d274d7b6131b1094fb3cf06d40b14134, type: 3}
+    AnimationTrigger: Fireball
+    AnimBlending: 0.02
+    AnimationIndex: 0
   category: 1
   AddCooldown: 1
   CoolDownRate: 1

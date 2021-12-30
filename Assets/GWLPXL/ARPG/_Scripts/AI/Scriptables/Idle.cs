@@ -12,7 +12,8 @@ namespace GWLPXL.ARPGCore.AI.com
     public class IdleVars
     {
         public string AnimatorStateName = "Idle";
-
+        public float AnimBlendDuration = .02f;
+        public int AnimLayer = 0;
     }
 
 
@@ -39,7 +40,7 @@ namespace GWLPXL.ARPGCore.AI.com
     public class IdleState : IState
     {
         public IAIEntity Entity;
-        IdleVars vars;
+        protected IdleVars vars;
 
 
         public IdleState(IAIEntity entity, IdleVars vars)
@@ -51,7 +52,7 @@ namespace GWLPXL.ARPGCore.AI.com
 
         public void Enter()
         {
-            Entity.GetActorHub().MyAnimator.Play(vars.AnimatorStateName);
+            Entity.GetActorHub().MyAnim.SetAnimatorState(vars.AnimatorStateName, vars.AnimBlendDuration, vars.AnimLayer);
             Entity.GetActorHub().MyMover.SetDesiredDestination(Entity.GetActorHub().MyTransform.position, 1f);
    
         }

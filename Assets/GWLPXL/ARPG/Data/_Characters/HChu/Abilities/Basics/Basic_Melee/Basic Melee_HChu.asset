@@ -25,12 +25,13 @@ MonoBehaviour:
     Range: 1.5
     ResourceCost: 0
     ResourceType: 20
-    AnimationTrigger: BasicMelee
-    AnimationIndex: 0
     Logics:
     - {fileID: 11400000, guid: a62fa378428d01941b5f9edb80ce768d, type: 2}
     UniqueID: 8
     Sprite: {fileID: 0}
+    AnimationTrigger: BasicMelee
+    AnimBlending: 0.02
+    AnimationIndex: 0
   category: 0
   AddCooldown: 1
   CoolDownRate: 0

@@ -30,10 +30,14 @@ namespace GWLPXL.ARPGCore.States.com
     [System.Serializable]
     public class AggroVars
     {
-        public string AbilityStateName = string.Empty;
+        public string AbilityStateName = string.Empty;//animator
+        public float AbilityBlendDuration = .02f;
+        public int AbilityAnimLayer = 0;
         public Ability Ability = null;
         public string ChaseStateName = "Walk";
-  
+        public float ChaseBlendDuration = .02f;
+        public int ChaseLayer = 0;
+
     }
 
    
@@ -89,7 +93,7 @@ namespace GWLPXL.ARPGCore.States.com
             if (sqrdmag > vars.Ability.GetRangeSquaredWithBuffer() || //no range
                 vars.Ability.HasSight(Entity.GetActorHub(), Entity.GetAttackTarget().transform, EditorPhysicsType.Unity3D) == false)//no sight
             {
-                Entity.GetActorHub().MyAnimator.Play(vars.ChaseStateName);
+                Entity.GetActorHub().MyAnim.SetAnimatorState(vars.ChaseStateName, vars.ChaseBlendDuration, vars.ChaseLayer);
                 Entity.GetActorHub().MyMover.SetDesiredDestination(Entity.GetAttackTarget().transform.position, vars.Ability.GetRangeWithBuffer());
             }
             else
@@ -98,7 +102,7 @@ namespace GWLPXL.ARPGCore.States.com
                 if (success)
                 {
                     
-                    Entity.GetActorHub().MyAnimator.Play(vars.AbilityStateName, 0, 0f);//used for nonlooping animation to restart the animation from the beginning
+                    Entity.GetActorHub().MyAnim.SetAnimatorState(vars.AbilityStateName, vars.AbilityBlendDuration, vars.AbilityAnimLayer);//used for nonlooping animation to restart the animation from the beginning
                     Entity.GetActorHub().MyAbilities.GetRuntimeController().OnAbilityEnd += EndAbility;
                 }
             }

@@ -160,7 +160,7 @@ namespace GWLPXL.ARPGCore.Abilities.com
         {
             if (actorhub.MyAnimator != null && triggerAnimations == true)
             {
-                actorhub.MyAnimator.Play(toCast.Data.AnimationTrigger, 0, 0);
+                actorhub.MyAnim.SetAnimatorState(toCast.Data.AnimationTrigger, toCast.Data.AnimBlending, toCast.Data.AnimationIndex);
             }
 
            

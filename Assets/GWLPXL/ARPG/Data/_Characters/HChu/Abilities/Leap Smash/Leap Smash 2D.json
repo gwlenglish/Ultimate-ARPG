@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 23996
+        "instanceID": 24774
     },
     "id": {
         "Name": "Leap Smash 2D",
         "ID": 24,
         "Ability": {
-            "instanceID": 24898
+            "instanceID": 25634
         }
     },
     "autoName": false,
@@ -17,23 +17,24 @@
         "Range": 10.0,
         "ResourceCost": 0.0,
         "ResourceType": 20,
-        "AnimationTrigger": "BasicMelee",
-        "AnimationIndex": 1,
         "Logics": [
             {
-                "instanceID": 23998
+                "instanceID": 24776
             },
             {
-                "instanceID": 23954
+                "instanceID": 24732
             },
             {
-                "instanceID": 24000
+                "instanceID": 24778
             }
         ],
         "UniqueID": 7,
         "Sprite": {
-            "instanceID": 25502
-        }
+            "instanceID": 26174
+        },
+        "AnimationTrigger": "BasicMelee",
+        "AnimBlending": 0.019999999552965165,
+        "AnimationIndex": 0
     },
     "category": 1,
     "AddCooldown": true,

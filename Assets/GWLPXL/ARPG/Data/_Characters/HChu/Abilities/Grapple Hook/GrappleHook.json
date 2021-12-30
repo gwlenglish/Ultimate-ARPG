@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 23988
+        "instanceID": 24766
     },
     "id": {
         "Name": "",
         "ID": 18,
         "Ability": {
-            "instanceID": 23674
+            "instanceID": 24470
         }
     },
     "autoName": false,
@@ -17,23 +17,24 @@
         "Range": 10.0,
         "ResourceCost": 0.0,
         "ResourceType": 20,
-        "AnimationTrigger": "BasicMelee",
-        "AnimationIndex": 1,
         "Logics": [
             {
-                "instanceID": 23990
+                "instanceID": 24768
             },
             {
-                "instanceID": 23992
+                "instanceID": 24770
             },
             {
-                "instanceID": 23954
+                "instanceID": 24732
             }
         ],
         "UniqueID": 7,
         "Sprite": {
-            "instanceID": 23994
-        }
+            "instanceID": 24772
+        },
+        "AnimationTrigger": "BasicMelee",
+        "AnimBlending": 0.019999999552965165,
+        "AnimationIndex": 0
     },
     "category": 1,
     "AddCooldown": true,

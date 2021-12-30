@@ -4,23 +4,32 @@ namespace GWLPXL.ARPGCore.Animations.com
 
 
     /// <summary>
-    /// not used anymore in the new system, deprecated. Will delete in future versions
+    /// some methods will be deprecated
     /// </summary>
     public interface IAnimate
     {
         Animator GetAnimator();
         void SetAnimatorSpeed(float newavalue);
+        [System.Obsolete("Use State Machine instead")]
         void SetDead(bool isDead);
+        [System.Obsolete("Use State Machine instead")]
         void SetHurt(bool isHurt);
+        [System.Obsolete("Use State Machine instead")]
         void SetLooping(bool isLooping);
+        [System.Obsolete("Use State Machine instead")]
         void SetBasicAttackIndex(int newIndex);
-        void TriggerAbilityAnimation(string trigger, int index, bool canLoop);
-        void TriggerBasicAttackAnimation(string trigger, int index, bool canLoop);
+        [System.Obsolete("Use Set Animator State")]
+        void TriggerAbilityAnimation(string trigger, int index, bool canLoop, float blend = .02f);
+        [System.Obsolete("Use Set Animator State")]
+        void TriggerBasicAttackAnimation(string trigger, int index, bool canLoop, float blend = .02f);
+        [System.Obsolete("Use State Machine instead")]
+        void SetMovement(float movement);
 
         float GetCurrentAnimationLength();
-        void SetMovement(float movement);
         bool GetDelay();
         void DelayAnimation();
+        void SetAnimatorState(string name, float blendduration = .02f, int layer = 0);
+       
 
     }
 }

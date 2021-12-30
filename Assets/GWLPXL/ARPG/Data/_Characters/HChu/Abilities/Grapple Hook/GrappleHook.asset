@@ -26,8 +26,6 @@ MonoBehaviour:
     Range: 10
     ResourceCost: 0
     ResourceType: 20
-    AnimationTrigger: BasicMelee
-    AnimationIndex: 1
     Logics:
     - {fileID: 11400000, guid: badb98eeae12c474a9de28c5e904b389, type: 2}
     - {fileID: 11400000, guid: 1913eb564d30a944ead0e72b46730e9a, type: 2}
@@ -35,6 +33,9 @@ MonoBehaviour:
     UniqueID: 7
     Sprite: {fileID: 4634406729999819279, guid: d274d7b6131b1094fb3cf06d40b14134,
       type: 3}
+    AnimationTrigger: BasicMelee
+    AnimBlending: 0.02
+    AnimationIndex: 0
   category: 1
   AddCooldown: 1
   CoolDownRate: 1

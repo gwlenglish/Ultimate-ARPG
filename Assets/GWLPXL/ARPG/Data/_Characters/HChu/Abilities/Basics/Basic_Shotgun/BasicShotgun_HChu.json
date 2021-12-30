@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 23944
+        "instanceID": 24722
     },
     "id": {
         "Name": "",
         "ID": 11,
         "Ability": {
-            "instanceID": 23658
+            "instanceID": 24454
         }
     },
     "autoName": false,
@@ -17,17 +17,18 @@
         "Range": 10.0,
         "ResourceCost": 0.0,
         "ResourceType": 20,
-        "AnimationTrigger": "BasicShotgun",
-        "AnimationIndex": 6,
         "Logics": [
             {
-                "instanceID": 23946
+                "instanceID": 24724
             }
         ],
         "UniqueID": 8,
         "Sprite": {
             "instanceID": 0
-        }
+        },
+        "AnimationTrigger": "BasicShotgun",
+        "AnimBlending": 0.019999999552965165,
+        "AnimationIndex": 0
     },
     "category": 0,
     "AddCooldown": true,

@@ -25,12 +25,13 @@ MonoBehaviour:
     Range: 10
     ResourceCost: 5
     ResourceType: 1
-    AnimationTrigger: ChainLightning
-    AnimationIndex: 1
     Logics:
     - {fileID: 11400000, guid: f4a79277c18ce164ba556f019960787e, type: 2}
     UniqueID: 7
     Sprite: {fileID: 949155980521528692, guid: d274d7b6131b1094fb3cf06d40b14134, type: 3}
+    AnimationTrigger: ChainLightning
+    AnimBlending: 0.02
+    AnimationIndex: 0
   category: 1
   AddCooldown: 1
   CoolDownRate: 1.5

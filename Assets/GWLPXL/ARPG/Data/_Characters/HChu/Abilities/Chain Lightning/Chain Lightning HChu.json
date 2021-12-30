@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 23956
+        "instanceID": 24734
     },
     "id": {
         "Name": "",
         "ID": 12,
         "Ability": {
-            "instanceID": 23664
+            "instanceID": 24460
         }
     },
     "autoName": false,
@@ -17,17 +17,18 @@
         "Range": 10.0,
         "ResourceCost": 5.0,
         "ResourceType": 1,
-        "AnimationTrigger": "ChainLightning",
-        "AnimationIndex": 1,
         "Logics": [
             {
-                "instanceID": 23958
+                "instanceID": 24736
             }
         ],
         "UniqueID": 7,
         "Sprite": {
-            "instanceID": 23960
-        }
+            "instanceID": 24738
+        },
+        "AnimationTrigger": "ChainLightning",
+        "AnimBlending": 0.019999999552965165,
+        "AnimationIndex": 0
     },
     "category": 1,
     "AddCooldown": true,

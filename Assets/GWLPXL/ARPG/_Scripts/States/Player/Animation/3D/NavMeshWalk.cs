@@ -39,10 +39,9 @@ namespace GWLPXL.ARPGCore.States.com
         }
         public void Enter()
         {
-           if (hub.GetActorHub().MyAnimator != null)
-            {
-                hub.GetActorHub().MyAnimator.Play(vars.AnimatorStateName);
-            }
+            hub.GetActorHub().MyAnim.SetAnimatorState(vars.AnimatorStateName, vars.BlendDuration, vars.Layer);
+
+           
         }
 
         public void Exit()

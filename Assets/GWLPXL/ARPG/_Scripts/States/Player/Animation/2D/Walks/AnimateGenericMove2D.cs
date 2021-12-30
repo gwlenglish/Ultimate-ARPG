@@ -16,13 +16,7 @@ namespace GWLPXL.ARPGCore.States.com
         }
         public void Enter()
         {
-
-            if (entity.GetActorHub().MyAnimator != null)
-            {
-                entity.GetActorHub().MyAnimator.Play(vars.AnimatorStateName);
-            }
-
-      
+            entity.GetActorHub().MyAnimator.Play(vars.AnimatorStateName);
 
 
         }

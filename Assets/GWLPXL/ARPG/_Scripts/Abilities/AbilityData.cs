@@ -14,11 +14,16 @@ namespace GWLPXL.ARPGCore.Abilities.com
         public float Range = 1;
         public float ResourceCost = 0;
         public ResourceType ResourceType = ResourceType.Mana;
-        public string AnimationTrigger = "Ability";
-        public int AnimationIndex = 0;
         public AbilityLogic[] Logics = new AbilityLogic[0];
         public int UniqueID = 0;
         public Sprite Sprite = null;
+
+        [Header("Animation")]
+        [Tooltip("The Animator State NAME")]
+        public string AnimationTrigger = "Ability";
+        public float AnimBlending = .02f;
+        [Tooltip("The Animator State LAYER")]
+        public int AnimationIndex = 0;
 
     }
 }

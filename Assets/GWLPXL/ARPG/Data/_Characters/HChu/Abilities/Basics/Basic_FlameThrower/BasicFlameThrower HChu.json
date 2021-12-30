@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 23948
+        "instanceID": 24726
     },
     "id": {
         "Name": "BasicFlameThrower HChu",
         "ID": 21,
         "Ability": {
-            "instanceID": 23660
+            "instanceID": 24456
         }
     },
     "autoName": false,
@@ -17,17 +17,18 @@
         "Range": 5.0,
         "ResourceCost": 0.0,
         "ResourceType": 20,
-        "AnimationTrigger": "BasicFlame",
-        "AnimationIndex": 7,
         "Logics": [
             {
-                "instanceID": 23950
+                "instanceID": 24728
             }
         ],
         "UniqueID": 0,
         "Sprite": {
             "instanceID": 0
-        }
+        },
+        "AnimationTrigger": "BasicFlame",
+        "AnimBlending": 0.019999999552965165,
+        "AnimationIndex": 0
     },
     "category": 0,
     "AddCooldown": true,

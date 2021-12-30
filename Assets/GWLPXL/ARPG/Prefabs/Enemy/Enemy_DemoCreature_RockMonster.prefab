@@ -249,6 +249,8 @@ MonoBehaviour:
   AggroDuration: 7
   IdleKey: Idle
   DeathKey: Death
+  HurtKey: Hurt
+  RandomizedHurtChance: 0.1
 --- !u!1 &1329585666169073269
 GameObject:
   m_ObjectHideFlags: 0
@@ -1286,6 +1288,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2812022943147984096}
   - component: {fileID: 1188190635779979597}
+  - component: {fileID: 1449079827705235512}
   m_Layer: 0
   m_Name: earth elemental2
   m_TagString: Untagged
@@ -1328,6 +1331,25 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1449079827705235512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2812022943147759808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b0629c8979850249ac9f0114e73829e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  additionalCooldown: 1
+  isHurt: IsHurt
+  IsDead: IsDead
+  abilityIndex: AbilityIndex
+  basicattackIndex: BasicAttackIndex
+  Movement: Movement
 --- !u!1 &2812022943147759810
 GameObject:
   m_ObjectHideFlags: 0
@@ -2859,6 +2881,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
   healthResource: 0
+  iFrameTime: 0.25
   immortal: 0
 --- !u!114 &4186270880124485643
 MonoBehaviour:
@@ -2872,6 +2895,102 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cc8915749161f446b238474a145df4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  overrideDmgText:
+    UseOverride: 0
+    Override:
+      TextObjectPrefab: {fileID: 0}
+      Type: 0
+      Font: {fileID: 0}
+      Color: {r: 0, g: 0, b: 0, a: 0}
+      TargetDir: {x: 0, y: 0, z: 0}
+      YCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      SizeCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      FadeCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      SpeedMultiplier: 1
+      DamageTextAliveTime: 1
+      DamageQueueSpacing: 1
+      ZeroReplacement: 
+      MaxQueued: 3
+      ScaleMulti: 1
+  overrideRegenText:
+    UseOverride: 0
+    Override:
+      TextObjectPrefab: {fileID: 0}
+      Type: 0
+      Font: {fileID: 0}
+      Color: {r: 0, g: 0, b: 0, a: 0}
+      TargetDir: {x: 0, y: 0, z: 0}
+      YCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      SizeCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      FadeCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      SpeedMultiplier: 1
+      DamageTextAliveTime: 1
+      DamageQueueSpacing: 1
+      ZeroReplacement: 
+      MaxQueued: 3
+      ScaleMulti: 1
+  overrideDotText:
+    UseOverride: 0
+    Override:
+      TextObjectPrefab: {fileID: 0}
+      Type: 0
+      Font: {fileID: 0}
+      Color: {r: 0, g: 0, b: 0, a: 0}
+      TargetDir: {x: 0, y: 0, z: 0}
+      YCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      SizeCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      FadeCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      SpeedMultiplier: 1
+      DamageTextAliveTime: 1
+      DamageQueueSpacing: 1
+      ZeroReplacement: 
+      MaxQueued: 3
+      ScaleMulti: 1
   floatingTextOffset: {x: 0, y: 2, z: 0}
 --- !u!114 &4186270880124485640
 MonoBehaviour:

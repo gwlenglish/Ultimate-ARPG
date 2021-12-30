@@ -25,12 +25,13 @@ MonoBehaviour:
     Range: 5
     ResourceCost: 0
     ResourceType: 20
-    AnimationTrigger: BasicFlame
-    AnimationIndex: 7
     Logics:
     - {fileID: 11400000, guid: 8c3b6db90e027614d8296434a63391c6, type: 2}
     UniqueID: 0
     Sprite: {fileID: 0}
+    AnimationTrigger: BasicFlame
+    AnimBlending: 0.02
+    AnimationIndex: 0
   category: 0
   AddCooldown: 1
   CoolDownRate: 0

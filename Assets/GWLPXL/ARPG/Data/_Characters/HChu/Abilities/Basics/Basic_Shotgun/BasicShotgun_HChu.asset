@@ -25,12 +25,13 @@ MonoBehaviour:
     Range: 10
     ResourceCost: 0
     ResourceType: 20
-    AnimationTrigger: BasicShotgun
-    AnimationIndex: 6
     Logics:
     - {fileID: 11400000, guid: febdb9249c456f74199a2c11728cf8e0, type: 2}
     UniqueID: 8
     Sprite: {fileID: 0}
+    AnimationTrigger: BasicShotgun
+    AnimBlending: 0.02
+    AnimationIndex: 0
   category: 0
   AddCooldown: 1
   CoolDownRate: 0

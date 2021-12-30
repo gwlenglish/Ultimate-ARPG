@@ -41,7 +41,6 @@ namespace GWLPXL.ARPGCore.States.com
 
         [HideInInspector]
         public Vector3 TargetPos = Vector3.zero;
-        public string AbilityStateName = string.Empty;
         public Ability Ability = null;
         public Locomotion Locomotion = null;
         public EditorPhysicsType Type = EditorPhysicsType.Unity3D;
@@ -60,13 +59,10 @@ namespace GWLPXL.ARPGCore.States.com
         }
         public void Enter()
         {
-                        entity.GetActorHub().MyMover.DisableMovement(true);
+            entity.GetActorHub().MyMover.DisableMovement(true);
+            entity.GetActorHub().MyAnim.SetAnimatorState(vars.Ability.Data.AnimationTrigger, vars.Ability.Data.AnimBlending, vars.Ability.Data.AnimationIndex);
 
-            if (entity.GetActorHub().MyAnimator != null)
-            {
-               // entity.GetActorHub().MyAnimator.CrossFade(vars.AbilityStateName, .25f);
-                entity.GetActorHub().MyAnimator.Play(vars.AbilityStateName);
-            }
+           
             entity.GetActorHub().MyAbilities.GetRuntimeController().OnAbilityEnd += ExitAbility;
 
            

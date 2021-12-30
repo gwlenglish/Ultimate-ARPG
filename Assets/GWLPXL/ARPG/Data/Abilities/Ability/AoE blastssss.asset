@@ -25,13 +25,14 @@ MonoBehaviour:
     Range: 3
     ResourceCost: 5
     ResourceType: 1
-    AnimationTrigger: Ability
-    AnimationIndex: 2
     Logics:
     - {fileID: 11400000, guid: 49f453c06a6eb634c960c9f3f3b61449, type: 2}
     - {fileID: 11400000, guid: 58e2c39828848d644aeb7fda317be0e7, type: 2}
     UniqueID: 4
     Sprite: {fileID: 0}
+    AnimationTrigger: Ability
+    AnimBlending: 0.02
+    AnimationIndex: 0
   category: 1
   AddCooldown: 1
   CoolDownRate: 1

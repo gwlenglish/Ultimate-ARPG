@@ -7,38 +7,39 @@ using UnityEngine;
 namespace GWLPXL.ARPGCore.Animations.com
 {
     /// <summary>
-    /// not used anymore in the new system, deprecated. Will delete in future versions
+    /// deprecated unused methods
+    /// use the main SetAnimatorState method now
     /// </summary>
     [RequireComponent(typeof(Animator))]
     public class PlayerAnimations : MonoBehaviour, IAnimate, ITick
     {
 
         #region fields
-        Animator animator = null;
-        bool delay = false;
-        [SerializeField]
-        string isHurt = "IsHurt";
-        [SerializeField]
-        string IsDead = "IsDead";
-        [SerializeField]
-        string abilityIndex = "AbilityIndex";
-        [SerializeField]
-        string basicattackIndex = "BasicAttackIndex";
-        [SerializeField]
-        string isLooping = "IsLooping";
-        [SerializeField]
-        string Movement = "Movement";
+        protected  Animator animator = null;
+        protected bool delay = false;
+        //[SerializeField]
+        //protected string isHurt = "IsHurt";
+        //[SerializeField]
+        //protected string IsDead = "IsDead";
+        //[SerializeField]
+        //protected string abilityIndex = "AbilityIndex";
+        //[SerializeField]
+        //protected string basicattackIndex = "BasicAttackIndex";
+        //[SerializeField]
+        //protected string isLooping = "IsLooping";
+        //[SerializeField]
+        //protected string Movement = "Movement";
 
-        int normalizedSpeed = 1;
-        float animatorSpeed = 1;
+        //protected int normalizedSpeed = 1;
+        //protected float animatorSpeed = 1;
         #endregion
 
-        IActorHub mover = null;
+        protected IActorHub mover = null;
 
-      
+
 
         #region private calls
-        void Awake()
+        protected virtual void Awake()
         {
             animator = GetComponent<Animator>();
 
@@ -49,39 +50,83 @@ namespace GWLPXL.ARPGCore.Animations.com
 
 
         #region public
-        public void TriggerBasicAttackAnimation(string trigger, int index, bool canLoop)
+        public virtual void SetAnimatorSpeed(float newvalue)
         {
-            animator.SetTrigger(trigger);
-            animator.SetInteger(basicattackIndex, index);
-            SetLooping(canLoop);
-        }
-        public void TriggerAbilityAnimation(string trigger, int index, bool canLoop)
-        {
-            animator.SetTrigger(trigger);
-            animator.SetInteger(abilityIndex, index);
-            SetLooping(canLoop);
+            animator.speed = newvalue;
+            ARPGCore.DebugHelpers.com.ARPGDebugger.DebugMessage("Animator speed " + animator.speed, this);
         }
 
-        public void SetLooping(bool isLooping)
+        public virtual void AddTicker() => TickManager.Instance.AddTicker(this);
+
+
+        public virtual void DoTick()//helps sync the animator to the agent
         {
-            animator.SetBool(this.isLooping, isLooping);
+            //a source of great consternation
+            Vector3 worldDeltaPosition = mover.MyTransform.position - transform.position;
+            // Pull character towards agent
+            if (worldDeltaPosition.magnitude > .01f)
+            {
+                transform.position = mover.MyTransform.position - 0.9f * worldDeltaPosition;
+
+            }
+            // SetLooping(mouseInput.GetMouseButtonOneDown());
+            //     transform.rotation = Quaternion.Slerp(navmeshmover.GetAgent().transform.rotation, this.transform.localRotation, Time.deltaTime);
         }
-        public Animator GetAnimator()
+
+        public virtual void RemoveTicker() => TickManager.Instance.RemoveTicker(this);
+
+
+        public virtual float GetTickDuration() => Time.deltaTime;
+
+        [System.Obsolete("Use SetAnimatorState()")]
+        public virtual void SetBasicAttackIndex(int newIndex)
+        {
+            //animator.SetInteger(basicattackIndex, newIndex);
+        }
+        public virtual void SetAnimatorState(string name, float blendduration = 0.02F, int layer = 0)
+        {
+            animator.CrossFadeInFixedTime(name, blendduration, layer);
+        }
+
+        [System.Obsolete("Use SetAnimatorState()")]
+        public virtual void TriggerBasicAttackAnimation(string trigger, int index, bool canLoop, float blend = .02f)
+        {
+            SetAnimatorState(trigger, blend, index);
+            //animator.SetTrigger(trigger);
+            //animator.SetInteger(basicattackIndex, index);
+            //SetLooping(canLoop);
+        }
+        [System.Obsolete("Use SetAnimatorState()")]
+        public virtual void TriggerAbilityAnimation(string trigger, int index, bool canLoop, float blend = .02f)
+        {
+            SetAnimatorState(trigger, blend, index);
+            //animator.SetTrigger(trigger);
+            //animator.SetInteger(abilityIndex, index);
+            //SetLooping(canLoop);
+        }
+        [System.Obsolete()]
+        public virtual void SetLooping(bool isLooping)
+        {
+            //animator.SetBool(this.isLooping, isLooping);
+        }
+        public virtual Animator GetAnimator()
         {
             return animator;
         }
-        public void SetHurt(bool _isHurt)
+        [System.Obsolete("Use State Machine instead")]
+        public virtual void SetHurt(bool _isHurt)
         {
-            animator.SetBool(isHurt, _isHurt);
+            //animator.SetBool(isHurt, _isHurt);
         }
-        public void SetDead(bool isDead)
+        [System.Obsolete("Use State Machine instead")]
+        public virtual void SetDead(bool isDead)
         {
 
-            animator.SetBool(IsDead, isDead);
+            //animator.SetBool(IsDead, isDead);
         }
 
 
-        public float GetCurrentAnimationLength()
+        public virtual float GetCurrentAnimationLength()
         {
 
 
@@ -97,69 +142,43 @@ namespace GWLPXL.ARPGCore.Animations.com
             //ARPGDebugger.DebugMessage("Animator delay length: " + length);
             return length;
         }
-
-        public void SetMovement(float movement)
+        [System.Obsolete("Use State Machine instead")]
+        public virtual void SetMovement(float movement)
         {
 
-            animator.SetFloat(Movement, movement);
+            //animator.SetFloat(Movement, movement);
         }
-
-        public bool GetDelay()
+        [System.Obsolete]
+        public virtual bool GetDelay()
         {
 
             return delay;
         }
 
-        public void DelayAnimation()
+        [System.Obsolete]
+        public virtual void DelayAnimation()
         {
             StartCoroutine(AnimationDelay());
         }
         #endregion
 
         #region coroutines
-        IEnumerator AnimationDelay()
+        [System.Obsolete]
+        protected virtual IEnumerator AnimationDelay()
         {
-            delay = true;
             yield return null;
-            while (animator.GetCurrentAnimatorStateInfo(0).IsName(Movement) == false)
-            {
-                yield return null;
-            }
-            delay = false;
+            //delay = true;
+     
+            //while (animator.GetCurrentAnimatorStateInfo(0).IsName(Movement) == false)
+            //{
+            //    yield return null;
+            //}
+            //delay = false;
         }
 
-        public void SetAnimatorSpeed(float newvalue)
-        {
-            animator.speed = newvalue;
-            ARPGCore.DebugHelpers.com.ARPGDebugger.DebugMessage("Animator speed " + animator.speed, this);
-        }
+      
 
-        public void AddTicker() => TickManager.Instance.AddTicker(this);
-
-       
-        public void DoTick()//helps sync the animator to the agent
-        {
-            //a source of great consternation
-            Vector3 worldDeltaPosition = mover.MyTransform.position - transform.position;
-            // Pull character towards agent
-            if (worldDeltaPosition.magnitude > .01f)
-            {
-                transform.position = mover.MyTransform.position - 0.9f * worldDeltaPosition;
-
-            }
-           // SetLooping(mouseInput.GetMouseButtonOneDown());
-            //     transform.rotation = Quaternion.Slerp(navmeshmover.GetAgent().transform.rotation, this.transform.localRotation, Time.deltaTime);
-        }
-
-        public void RemoveTicker() => TickManager.Instance.RemoveTicker(this);
-
-
-        public float GetTickDuration() => Time.deltaTime;
-
-        public void SetBasicAttackIndex(int newIndex)
-        {
-            animator.SetInteger(basicattackIndex, newIndex);
-        }
+      
 
 
         #endregion

@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 25008
+        "instanceID": 25742
     },
     "id": {
         "Name": "",
         "ID": 13,
         "Ability": {
-            "instanceID": 24466
+            "instanceID": 25234
         }
     },
     "autoName": false,
@@ -17,17 +17,18 @@
         "Range": 10.0,
         "ResourceCost": 5.0,
         "ResourceType": 1,
-        "AnimationTrigger": "Fireball",
-        "AnimationIndex": 1,
         "Logics": [
             {
-                "instanceID": 23964
+                "instanceID": 24742
             }
         ],
         "UniqueID": 7,
         "Sprite": {
             "instanceID": 0
-        }
+        },
+        "AnimationTrigger": "Fireball",
+        "AnimBlending": 0.019999999552965165,
+        "AnimationIndex": 0
     },
     "category": 1,
     "AddCooldown": true,

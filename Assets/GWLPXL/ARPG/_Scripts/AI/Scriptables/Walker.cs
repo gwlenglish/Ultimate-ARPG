@@ -12,6 +12,8 @@ namespace GWLPXL.ARPGCore.AI.com
     public class WalkerVars
     {
         public string AnimatorStateName = "Walk";
+        public float BlendingTime = .02f;
+        public int AnimatorLayer = 0;
         public float Speed = 1;
         public float Acceleration = 55;
         public float StoppingDistance = 1;
@@ -58,7 +60,8 @@ namespace GWLPXL.ARPGCore.AI.com
 
         public void Enter()
         {
-            Entity.GetActorHub().MyAnimator.Play(vars.AnimatorStateName);
+            Entity.GetActorHub().MyAnim.SetAnimatorState(vars.AnimatorStateName, vars.BlendingTime, vars.AnimatorLayer);
+
 
         }
 

@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 25500
+        "instanceID": 26172
     },
     "id": {
         "Name": "",
         "ID": 4,
         "Ability": {
-            "instanceID": 24890
+            "instanceID": 25626
         }
     },
     "autoName": true,
@@ -17,13 +17,14 @@
         "Range": 3.0,
         "ResourceCost": 5.0,
         "ResourceType": 1,
-        "AnimationTrigger": "Spin",
-        "AnimationIndex": 3,
         "Logics": [],
         "UniqueID": 4,
         "Sprite": {
-            "instanceID": 25502
-        }
+            "instanceID": 26174
+        },
+        "AnimationTrigger": "Spin",
+        "AnimBlending": 0.019999999552965165,
+        "AnimationIndex": 0
     },
     "category": 1,
     "AddCooldown": true,

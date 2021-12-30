@@ -167,11 +167,11 @@ namespace GWLPXL.ARPGCore.Abilities.com
                 {
                     if (toCast == GetRuntimeController().BasicAttacks[i])
                     {
-                        actorhub.MyAnim.TriggerBasicAttackAnimation(toCast.Data.AnimationTrigger, toCast.Data.AnimationIndex, toCast.CanLoop);
+                        actorhub.MyAnim.SetAnimatorState(toCast.Data.AnimationTrigger, toCast.Data.AnimBlending, toCast.Data.AnimationIndex);
                         return;
                     }
                 }
-                actorhub.MyAnim.TriggerAbilityAnimation(toCast.Data.AnimationTrigger, toCast.Data.AnimationIndex, toCast.CanLoop);
+                actorhub.MyAnim.SetAnimatorState(toCast.Data.AnimationTrigger, toCast.Data.AnimBlending, toCast.Data.AnimationIndex);
 
 
             }
@@ -196,8 +196,8 @@ namespace GWLPXL.ARPGCore.Abilities.com
                 {
                     if (previous.CanLoop && actorhub.MyAnim != null)
                     {
-                        actorhub.MyAnim.SetLooping(false);
-                        actorhub.MyAnim.GetAnimator().ResetTrigger(previous.Data.AnimationTrigger);
+                        //actorhub.MyAnim.SetLooping(false);
+                        //actorhub.MyAnim.GetAnimator().ResetTrigger(previous.Data.AnimationTrigger);
                         
                     }
                 }

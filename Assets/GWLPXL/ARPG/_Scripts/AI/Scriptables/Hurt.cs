@@ -12,6 +12,8 @@ namespace GWLPXL.ARPGCore.AI.com
     public class HurtVars
     {
         public string AnimatorStateName = "Hurt";
+        public float AnimBlending = .02f;
+        public int AnimLayer = 0;
 
     }
 
@@ -51,15 +53,16 @@ namespace GWLPXL.ARPGCore.AI.com
 
         public void Enter()
         {
-            Entity.GetActorHub().MyAnimator.Play(vars.AnimatorStateName);
+            Entity.GetActorHub().MyAnim.SetAnimatorState(vars.AnimatorStateName, vars.AnimBlending, vars.AnimLayer);
             Entity.GetActorHub().MyMover.SetDesiredDestination(Entity.GetActorHub().MyTransform.position, 1f);
+            Entity.GetActorHub().MyMover.DisableMovement(true);
    
         }
 
         public void Exit()
         {
-          
 
+            Entity.GetActorHub().MyMover.DisableMovement(false);
         }
 
         public void Tick()

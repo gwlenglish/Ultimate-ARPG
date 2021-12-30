@@ -45,6 +45,8 @@ namespace GWLPXL.ARPGCore.States.com
     public class MoveVars
     {
         public string AnimatorStateName = string.Empty;
+        public float BlendDuration = .02f;
+        public int Layer = 0;
     }
     [System.Serializable]
     public class MoveVars2D
