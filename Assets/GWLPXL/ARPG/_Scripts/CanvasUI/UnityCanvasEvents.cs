@@ -1,4 +1,5 @@
 ﻿using GWLPXL.ARPGCore.Abilities.com;
+using GWLPXL.ARPGCore.com;
 using GWLPXL.ARPGCore.Items.com;
 using System.Collections;
 using System.Collections.Generic;
@@ -24,6 +25,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         public UnityInventoryPiecePlaced OnStartDragging;
         public UnityEvent OnStopDragging;
         public UnityGridItemUsed OnItemUsed;
+        public UnityGridItemUsed OnItemDropped;
     }
     [System.Serializable]
     public class UnityGridEquipmentEvents
@@ -42,6 +44,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         public System.Action<List<RaycastResult>> OnTryRemove;
         public System.Action<List<RaycastResult>> ONTryHighlight;
         public System.Action<IInventoryPiece> OnStartDraggingPiece;
+        public System.Action<Item> OnItemDropped;
         public System.Action OnStopDragging;
         public System.Action<List<RaycastResult>, IInventoryPiece> OnTryPlace;
     }
@@ -52,6 +55,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         public UnityGridEquipmentEvents SceneEvents;
         public System.Action<Item> OnEquipmentHighlighted;
         public System.Action<IInventoryPiece> EquippedPiece;
+
 
     }
 

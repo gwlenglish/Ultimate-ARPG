@@ -1,5 +1,6 @@
 using GWLPXL.ARPGCore.com;
 using GWLPXL.ARPGCore.Items.com;
+using GWLPXL.ARPGCore.Statics.com;
 using GWLPXL.ARPGCore.Types.com;
 using System.Collections;
 using System.Collections.Generic;
@@ -254,6 +255,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         /// <param name="piece"></param>
         protected virtual void TryPlace(List<RaycastResult> results, IInventoryPiece piece)
         {
+
             foreach (RaycastResult result in results)
             {
 
@@ -288,6 +290,8 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
 
             }
+
+            
         }
 
 

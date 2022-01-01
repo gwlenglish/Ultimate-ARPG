@@ -151,7 +151,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             switch (state)
             {
                 case InteractState.Empty:
-                    if (RemoveTrigger() == true)
+                    if (PickupTrigger() == true)
                     {
                         TryRemoveDraggableFromGrid();//click mousedown
                     }
@@ -211,8 +211,25 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             Events.SceneEvents.OnStopDragging?.Invoke();
         }
 
+        /// <summary>
+        /// drop the item on the ground
+        /// </summary>
+        /// <param name="piece"></param>
+        public virtual void DropItem(IInventoryPiece piece)
+        {
+            ItemHandler.DropItem(piece.Item, user.MyInventory, piece.ItemStackID);
+            Events.OnItemDropped?.Invoke(piece.Item);
+            Events.SceneEvents.OnItemDropped?.Invoke(piece.Item);
+            piece.CleanUP();
+            NoPieces();
+        }
 
-    
+    /// <summary>
+    /// create inventory piece from an item. The inventory piece is a visual representation of the item on the grid
+    /// </summary>
+    /// <param name="itemstack"></param>
+    /// <param name="stackID"></param>
+    /// <returns></returns>
         public virtual IInventoryPiece CreatePiece(Item itemstack, int stackID)
         {
             if (itemstack.UIPattern == null)
@@ -343,7 +360,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         /// <param name="piece"></param>
         protected virtual void TryPlaceDraggable(IInventoryPiece piece)
         {
-            if (RemoveTrigger() == false) return;
+            if (PickupTrigger() == false) return;
             if (GetPointerData() == null) return;//nothing clicked, nothing ventured
 
             //Create a list of Raycast Results
@@ -368,16 +385,27 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                 }
             }
 
+            foreach (RaycastResult result in results)
+            {
+                DropItem_UI drop = result.gameObject.GetComponent<DropItem_UI>();
+                if (drop != null)
+                {
+                    DropItem(piece);
+                    return;
+                }
+            }
+
             //if didn't place on bard, try passing to other systems
             Events.OnTryPlace?.Invoke(results, piece);
 
+          
         }
 
         /// <summary>
-        /// trigger to detect if we should try remove an item
+        /// trigger to detect if we should try pick up an item from the grid, i.e. move it from the grid to the equipment
         /// </summary>
         /// <returns></returns>
-        protected virtual bool RemoveTrigger()
+        protected virtual bool PickupTrigger()
         {
             return Input.GetMouseButtonDown(0);
         }
