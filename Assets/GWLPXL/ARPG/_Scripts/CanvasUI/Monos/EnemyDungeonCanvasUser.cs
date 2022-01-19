@@ -28,30 +28,30 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
         #region public interface
 
-        public Vector3 GetHPBarOffset()
+        public virtual Vector3 GetHPBarOffset()
         {
             return floatingTextOffset;
         }
 
 
-        public void CreateUIDamageText(string message, ElementType type, bool isCritical)
+        public virtual void CreateUIDamageText(string message, ElementType type, bool isCritical)
         {
             DefaultDamageText(message, type, isCritical);
         }
 
-        public void CreateUIRegenText(string message, ResourceType type)
+        public virtual void CreateUIRegenText(string message, ResourceType type)
         {
             DefaultRegenText(message, type);
         }
 
 
-        public void CreateUIDoTText(string message, ElementType type)
+        public virtual void CreateUIDoTText(string message, ElementType type)
         {
             DefaultDoTText(message, type);
         }
 
       
-        public void SetActorHub(IActorHub newhub)
+        public virtual void SetActorHub(IActorHub newhub)
         {
             hub = newhub;
         }

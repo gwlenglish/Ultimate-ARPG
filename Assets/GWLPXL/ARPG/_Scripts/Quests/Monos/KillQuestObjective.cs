@@ -13,15 +13,15 @@ namespace GWLPXL.ARPGCore.Quests.com
     {
 
         [SerializeField]
-        Quest[] myQuests = null;
+        protected Quest[] myQuests = null;
         [SerializeField]
         [Tooltip("Only count the kills if the player has the quest in progress = true. Count always = false.")]
-        bool onlyRecordIfQuestInProgress = false;
-        IActorHub hub;
+        protected bool onlyRecordIfQuestInProgress = false;
+        protected IActorHub hub;
         
 
 
-        public void UpdateQuest(IQuestUser forUser)
+        public virtual void UpdateQuest(IQuestUser forUser)
         {
             Debug.Log("Update quest called");
             if (forUser == null) return;
@@ -47,7 +47,7 @@ namespace GWLPXL.ARPGCore.Quests.com
 
         }
 
-        public void SetActorHub(IActorHub hub) => this.hub = hub;
+        public virtual void SetActorHub(IActorHub hub) => this.hub = hub;
        
     }
 }

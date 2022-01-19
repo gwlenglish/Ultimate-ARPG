@@ -11,7 +11,7 @@ namespace GWLPXL.ARPGCore.Portals.com
     [RequireComponent(typeof(NavMeshAgent))]
     public class SceneTraveler : MonoBehaviour, IPortalUser
     {
-        public void Travel()
+        public virtual void Travel()
         {
             string fromScene = DungeonMaster.Instance.Last.SceneName;
             int intendedPos = DungeonMaster.Instance.Last.Position;

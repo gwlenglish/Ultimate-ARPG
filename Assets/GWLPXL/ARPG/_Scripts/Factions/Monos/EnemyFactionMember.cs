@@ -21,16 +21,16 @@ namespace GWLPXL.ARPGCore.Factions.com
     {
         public ActorFactionEvents FactionEvents;
         [SerializeField]
-        RelationChange[] factionChangesOnDeath = new RelationChange[0];
+        protected RelationChange[] factionChangesOnDeath = new RelationChange[0];
         [SerializeField]
-        FactionTypes myFaction = FactionTypes.None;
-        EnemyHealth hp = null;
+        protected FactionTypes myFaction = FactionTypes.None;
+        protected EnemyHealth hp = null;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             hp = GetComponent<EnemyHealth>();
         }
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             if (hp != null)
             {
@@ -38,7 +38,7 @@ namespace GWLPXL.ARPGCore.Factions.com
             }
         }
 
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
             if (hp != null)
             {
@@ -46,26 +46,26 @@ namespace GWLPXL.ARPGCore.Factions.com
             }
         }
 
-        void ModifyPlayerRep()
+        protected virtual void ModifyPlayerRep()
         {
             FactionManager.Instance.ModifyPlayerRep(factionChangesOnDeath);
            
         }
-        public void DecreaseRep(FactionTypes withFaction, int amount)
+        public virtual void DecreaseRep(FactionTypes withFaction, int amount)
         {
             FactionManager.Instance.DecreaseFactionRep(GetFaction(), withFaction, amount);
             FactionEvents.SceneEvents.OnRepDecreased.Invoke(withFaction, amount);
             FactionEvents.SceneEvents.OnAnyRepModified.Invoke();
         }
 
-        public FactionTypes GetFaction() => myFaction;
+        public virtual FactionTypes GetFaction() => myFaction;
 
-        public int GetFactionRep(FactionTypes withFaction)
+        public virtual int GetFactionRep(FactionTypes withFaction)
         {
             return FactionManager.Instance.GetRepValue(GetFaction(), withFaction);
         }
 
-        public void IncreaseRep(FactionTypes withFaction, int amount)
+        public virtual void IncreaseRep(FactionTypes withFaction, int amount)
         {
             FactionManager.Instance.IncreaseFactionRep(GetFaction(), withFaction, amount);
             FactionEvents.SceneEvents.OnRepIncreased.Invoke(withFaction, amount);

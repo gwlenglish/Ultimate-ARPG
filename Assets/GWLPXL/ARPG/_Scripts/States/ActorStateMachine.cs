@@ -12,12 +12,12 @@ namespace GWLPXL.ARPGCore.States.com
     public class ActorStateMachine : MonoBehaviour, IStateMachineEntity, ITick
     {
         public GameObject ActorHub;
-        IStateMachine machine;
+        protected IStateMachine machine;
         [Tooltip("These have priority over movement states.")]
         public MovementStates MovementStates = null;
 
-        IActorHub actorhub = null;
-        IAIEntity ai = null;
+        protected IActorHub actorhub = null;
+        protected IAIEntity ai = null;
 
         public I2DStateMachine Machine2D { get; set; }
 
@@ -68,43 +68,43 @@ namespace GWLPXL.ARPGCore.States.com
             RemoveTicker();
         }
 
-        public I2DStateMachine Get2D() => null;
+        public virtual I2DStateMachine Get2D() => null;
 
-        public IActorHub GetActorHub() => actorhub;
+        public virtual IActorHub GetActorHub() => actorhub;
       
   
       
 
      
 
-        public void SetActorHub(IActorHub newHub)
+        public virtual void SetActorHub(IActorHub newHub)
         {
             actorhub = newHub;
         }
 
-        public void AddTicker()
+        public virtual void AddTicker()
         {
             TickManager.Instance.AddTicker(this);
         }
 
-        public void DoTick()
+        public virtual void DoTick()
         {
 
             machine.Tick();
             //Debug.Log(this.gameObject.name+ " " + machine.GetCurrentlyRunnnig());
         }
 
-        public void RemoveTicker()
+        public virtual void RemoveTicker()
         {
             TickManager.Instance.RemoveTicker(this);
         }
 
-        public float GetTickDuration()
+        public virtual float GetTickDuration()
         {
             return Time.deltaTime;
         }
 
-        public IAIEntity GetAI() => ai;
+        public virtual IAIEntity GetAI() => ai;
        
     }
 }

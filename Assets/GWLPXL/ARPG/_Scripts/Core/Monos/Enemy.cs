@@ -82,7 +82,7 @@ namespace GWLPXL.ARPGCore.com
         public int InitialLevel = 1;
 
 
-        void Awake()
+        protected virtual void Awake()
         {
             PlayerControlled = null;
             NavMeshAgent = MovementSystem.GetComponent<INavMeshMover>();
@@ -130,7 +130,7 @@ namespace GWLPXL.ARPGCore.com
         }
 
 
-        public void Start()
+        protected virtual void Start()
         {
 
             if (EnemyInfo != null)
@@ -177,7 +177,7 @@ namespace GWLPXL.ARPGCore.com
         }
 
 
-        private void OnDestroy()
+        protected virtual void OnDestroy()
         {
        
             if (EventController != null)

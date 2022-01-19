@@ -14,12 +14,12 @@ namespace GWLPXL.ARPGCore.Quests.com
     public class DropQuestItemObjective : MonoBehaviour, IDropLoot
     {
         [SerializeField]
-        UnityLootDropEvents lootEvents = new UnityLootDropEvents();
+        protected UnityLootDropEvents lootEvents = new UnityLootDropEvents();
         [SerializeField]
-        QuestItem questItem = null;
+        protected QuestItem questItem = null;
         [SerializeField]
-        GameObject LootPrefabOverride = null;
-        public void DropLoot()
+        protected GameObject LootPrefabOverride = null;
+        public virtual void DropLoot()
         {
 
             ILoot newLoot = LootHandler.DropLoot(questItem, transform.position, LootPrefabOverride);
@@ -29,7 +29,7 @@ namespace GWLPXL.ARPGCore.Quests.com
             }
         }
 
-        public void SetLootDrop(LootDrops newDrops)
+        public virtual void SetLootDrop(LootDrops newDrops)
         {
             return;//nothin ghere, this is just exactly a quest item
         }

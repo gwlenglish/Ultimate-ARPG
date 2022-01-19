@@ -14,19 +14,19 @@ namespace GWLPXL.ARPGCore.AI.com
         public GameObject BlackBoard = null;
         public AIStateSO[] States = new AIStateSO[0];
 
-        IStateMachine machine;
-        IActorHub hub;
-        IAIEntity ai;
-        I2DStateMachine state2d = null;
+        protected IStateMachine machine;
+        protected IActorHub hub;
+        protected IAIEntity ai;
+        protected I2DStateMachine state2d = null;
         public I2DStateMachine Machine2D { get; set; }
 
-        private void Awake()
+        protected virtual void Awake()
         {
             state2d = GetComponent<I2DStateMachine>();
             if (BlackBoard == null) ai = GetComponent<IAIEntity>();
             if (BlackBoard != null) ai = BlackBoard.GetComponent<IAIEntity>();
         }
-        private void Start()
+        protected virtual void Start()
         {
             machine = new IStateMachine();
             for (int i = 0; i < States.Length; i++)
@@ -38,48 +38,48 @@ namespace GWLPXL.ARPGCore.AI.com
             AddTicker();
         }
 
-   
-        private void OnDestroy()
+
+        protected virtual void OnDestroy()
         {
             RemoveTicker();
         }
-        public void AddTicker()
+        public virtual void AddTicker()
         {
             TickManager.Instance.AddTicker(this);
         }
 
-        public void DoTick()
+        public virtual void DoTick()
         {
            
            // Debug.Log("Enemy" + machine.GetCurrentlyRunnnig());
             machine.Tick();
         }
 
-        public float GetTickDuration()
+        public virtual float GetTickDuration()
         {
             return Time.deltaTime;
         }
 
-        public void RemoveTicker()
+        public virtual void RemoveTicker()
         {
             TickManager.Instance.RemoveTicker(this);
         }
 
-        public Transform GetInstance() => this.transform;
+        public virtual Transform GetInstance() => this.transform;
 
      
 
-        public IActorHub GetActorHub() => hub;
+        public virtual IActorHub GetActorHub() => hub;
 
-        public I2DStateMachine Get2D() => state2d;
+        public virtual I2DStateMachine Get2D() => state2d;
      
 
-        public void SetActorHub(IActorHub newHub)
+        public virtual void SetActorHub(IActorHub newHub)
         {
             hub = newHub;
         }
 
-        public IAIEntity GetAI()
+        public virtual IAIEntity GetAI()
         {
             return ai;
         }

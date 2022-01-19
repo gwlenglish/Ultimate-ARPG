@@ -13,18 +13,18 @@ namespace GWLPXL.ARPGCore.Abilities.com
  
         [SerializeField]
         [Tooltip("Scene specific events")]
-        ActorAbilityEvents abilityEvents = new ActorAbilityEvents();
+        protected ActorAbilityEvents abilityEvents = new ActorAbilityEvents();
         [SerializeField]
-        AbilityController abilityControllerTemplate = null;
+        protected AbilityController abilityControllerTemplate = null;
         [SerializeField]
-        bool syncAnimationSpeedWithAbility = true;
+        protected bool syncAnimationSpeedWithAbility = true;
 
-        AbilityController runtime = null;
-        Ability lastIntended = null;
-        Transform me;
-        IActorHub actorhub;
-        bool basicattack = false;
-        Ability charged = null;
+        protected AbilityController runtime = null;
+        protected Ability lastIntended = null;
+        protected Transform me;
+        protected IActorHub actorhub;
+        protected bool basicattack = false;
+        protected Ability charged = null;
         protected    virtual void Awake()
         {
             me = GetComponent<Transform>();
@@ -61,19 +61,19 @@ namespace GWLPXL.ARPGCore.Abilities.com
 
         }
 
-        void AbiltiyEndEvent(Ability ability)
+       protected virtual void AbiltiyEndEvent(Ability ability)
         {
             abilityEvents.SceneEvents.OnAbilityEnd.Invoke(ability);
         }
-        void AbilityForgetEvent(Ability ability, int slot)
+        protected virtual void AbilityForgetEvent(Ability ability, int slot)
         {
             abilityEvents.SceneEvents.OnAbilityForgot.Invoke(ability);
         }
-        void AbilityLearnEvent(Ability ability, int slot)
+        protected virtual void AbilityLearnEvent(Ability ability, int slot)
         {
             abilityEvents.SceneEvents.OnAbilityLearned.Invoke(ability);
         }
-        void AbilityStartEvent(Ability ability)
+        protected virtual void AbilityStartEvent(Ability ability)
         {
             abilityEvents.SceneEvents.OnAbilityTriggered.Invoke(ability);
         }

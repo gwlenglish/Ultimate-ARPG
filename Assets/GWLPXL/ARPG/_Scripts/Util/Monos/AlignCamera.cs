@@ -23,12 +23,13 @@ namespace GWLPXL.ARPGCore.Util.com
         public float ZOffset = 0;
         public float XOffset = 0;
         public float YOffset = 1;
-        Camera mainCamera = null;
-        IResourceBar[] resourceBars = new IResourceBar[0];
-        ILabel[] labels = new ILabel[0];
-        bool hasdmg = false;
-        IReceiveDamage damagereceiver;
-        private void Awake()
+
+        protected  Camera mainCamera = null;
+        protected IResourceBar[] resourceBars = new IResourceBar[0];
+        protected ILabel[] labels = new ILabel[0];
+        protected bool hasdmg = false;
+        protected IReceiveDamage damagereceiver;
+        protected virtual void Awake()
         {
             mainCamera = Camera.main;
             resourceBars = GetComponentsInChildren<IResourceBar>();
@@ -41,23 +42,23 @@ namespace GWLPXL.ARPGCore.Util.com
             }
         }
 
-        private void Start()
+        protected virtual void Start()
         {
             AddTicker();
             DoTick();//force a tick for the first update
         }
-        private void OnDestroy()
+        protected virtual void OnDestroy()
         {
             RemoveTicker();
         }
-        public void AddTicker()
+        public virtual void AddTicker()
         {
             TickManager.Instance.AddTicker(this);
 
         }
 
      
-        public void DoTick()
+        public virtual void DoTick()
         {
             if (hasdmg == true && damagereceiver.IsDead())
             {
@@ -88,7 +89,7 @@ namespace GWLPXL.ARPGCore.Util.com
             }
         }
         //doesn't work with cameras straight down
-        void AlignToCamera()
+        protected virtual void AlignToCamera()
         {
             if (mainCamera == null) return;//can't align without camera
             transform.localPosition = new Vector3(XOffset, YOffset, ZOffset);
@@ -111,13 +112,13 @@ namespace GWLPXL.ARPGCore.Util.com
             
         }
 
-        public float GetTickDuration()
+        public virtual float GetTickDuration()
         {
             if (UseDeltaTime) return Time.deltaTime;
             return UpdateRate;
         }
 
-        public void RemoveTicker()
+        public virtual void RemoveTicker()
         {
             TickManager.Instance.RemoveTicker(this);
 

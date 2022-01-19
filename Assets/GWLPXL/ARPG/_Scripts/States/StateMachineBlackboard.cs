@@ -33,19 +33,19 @@ namespace GWLPXL.ARPGCore.AI.com
         }
 
      
-        public GameObject GetMoveTarget() => MoveTarget;
+        public virtual GameObject GetMoveTarget() => MoveTarget;
 
-        public bool HasMoveTarget() => MoveTarget != null;
+        public virtual bool HasMoveTarget() => MoveTarget != null;
 
-        public IActorHub GetActorHub() => hub;
+        public virtual IActorHub GetActorHub() => hub;
 
-        public GameObject GetAttackTarget() => AttackTarget;
+        public virtual GameObject GetAttackTarget() => AttackTarget;
 
-        public void SetMoveTarget(GameObject newTarget) => MoveTarget = newTarget;
+        public virtual void SetMoveTarget(GameObject newTarget) => MoveTarget = newTarget;
 
-        public void SetAttackTarget(GameObject newTarget) => AttackTarget = newTarget;
+        public virtual void SetAttackTarget(GameObject newTarget) => AttackTarget = newTarget;
 
-        public float GetIdleDistance()
+        public virtual float GetIdleDistance()
         {
             if (ActiveAbility != null)
             {
@@ -57,23 +57,23 @@ namespace GWLPXL.ARPGCore.AI.com
             }
         }
 
-        public bool GetActiveAbilityInUse() 
+        public virtual bool GetActiveAbilityInUse() 
         {
             if (ActiveAbility == null) return false;
             return hub.MyAbilities.GetRuntimeController().GetAbilityActive(ActiveAbility);
         }
 
-        public string GetStateKey() => ActiveState;
+        public virtual string GetStateKey() => ActiveState;
 
-        public void SetStateKey(string newState) => ActiveState = newState;
+        public virtual void SetStateKey(string newState) => ActiveState = newState;
 
-        public void SetActiveAbility(Ability newActive) => ActiveAbility = newActive;
+        public virtual void SetActiveAbility(Ability newActive) => ActiveAbility = newActive;
 
-        public Vector3 GetDirection() => FacingDirection;
+        public virtual Vector3 GetDirection() => FacingDirection;
 
-        public void SetDirection(Vector3 newDirection) => FacingDirection = newDirection;
+        public virtual void SetDirection(Vector3 newDirection) => FacingDirection = newDirection;
 
-        public Ability GetActiveAbility() => ActiveAbility;
+        public virtual Ability GetActiveAbility() => ActiveAbility;
        
     }
 }

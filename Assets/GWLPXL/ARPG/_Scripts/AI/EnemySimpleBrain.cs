@@ -12,27 +12,35 @@ namespace GWLPXL.ARPGCore.AI.com
     public class EnemySimpleBrain : MonoBehaviour, ITick
     {
         public GameObject ActorHub = null;
+        [Header("Detection")]
         [Tooltip("If greater than 0, will aggro based on sight.")]
         public float AggroDetectRange = 1;
         [Tooltip("Field of vision")]
         public float AggroSightAngle = 45;
         [Tooltip("Layers that will block sight completely.")]
         public LayerMask SightBlockingLayers;
+        [Header("State Keys")]
+        [Tooltip("The state to start the game in")]
         public string DefaultKey = "Aggro";
+        [Tooltip("The key to indicate aggro")]
         public string AggroKey = "Aggro";
+        [Tooltip("How long to remain aggro")]
         public float AggroDuration = 7f;
-
+        [Tooltip("Idle")]
         public string IdleKey = "Idle";
+        [Tooltip("Death")]
         public string DeathKey = "Death";
+        [Tooltip("Hurt")]
         public string HurtKey = "Hurt";
         [Range(0, 1f)]
-        [Tooltip("How often to play the hurt state. At 1 (100%), you can stunlock so you probably don't want that.")]
+        [Tooltip("How often to play the hurt state. At 1 (100%), you can stunlock so you maybe you don't want that.")]
         public float RandomizedHurtChance = .10f;
+
+
         protected bool hurt = true;
         protected IAIEntity bb = null;
         protected float aggrotimer = 0;
         protected bool aggroed = false;
-
         protected bool dead;
 
         protected virtual void Awake()

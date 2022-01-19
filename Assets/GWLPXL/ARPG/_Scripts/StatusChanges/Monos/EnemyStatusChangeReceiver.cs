@@ -1,8 +1,7 @@
 ﻿
-using GWLPXL.ARPGCore.Attributes.com;
-using GWLPXL.ARPGCore.CanvasUI.com;
+
 using GWLPXL.ARPGCore.com;
-using GWLPXL.ARPGCore.Combat.com;
+
 using GWLPXL.ARPGCore.DebugHelpers.com;
 using GWLPXL.ARPGCore.Statics.com;
 using GWLPXL.ARPGCore.Types.com;
@@ -135,22 +134,22 @@ namespace GWLPXL.ARPGCore.StatusEffects.com
 
 
         }
-        public Transform AtLocation()
+        public virtual Transform AtLocation()
         {
             return this.transform;
         }
-        public IActorHub GetActorHub()
+        public virtual IActorHub GetActorHub()
         {
             return actorhub;
         }
 
-        public void SetActorHub(IActorHub newHub)
+        public virtual void SetActorHub(IActorHub newHub)
         {
             actorhub = newHub;
         }
 
 
-        public List<StatusEffectVars> GetCurrentApplied() => StatusEffectHelper.GetAllActiveEffects(GetActorHub());
+        public virtual List<StatusEffectVars> GetCurrentApplied() => StatusEffectHelper.GetAllActiveEffects(GetActorHub());
 
         
     }

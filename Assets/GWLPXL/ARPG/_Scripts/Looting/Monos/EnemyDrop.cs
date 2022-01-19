@@ -10,18 +10,18 @@ namespace GWLPXL.ARPGCore.Looting.com
     public class EnemyDrop : MonoBehaviour, IDropLoot
     {
         [SerializeField]
-        EnemyDropLootEvents dropLootEvents = new EnemyDropLootEvents();
+        protected EnemyDropLootEvents dropLootEvents = new EnemyDropLootEvents();
         [SerializeField]
-        LootDrops possibleDrops;
+        protected LootDrops possibleDrops;
         [SerializeField]
-        float delay = .25f;
-        IScale scale = null;
+        protected float delay = .25f;
+        protected IScale scale = null;
 
-        private void Awake()
+        protected virtual void Awake()
         {
            scale  = GetComponent<IScale>();
         }
-        public void DropLoot()
+        public virtual void DropLoot()
         {
             if (possibleDrops == null || possibleDrops.AllPossibleItems.Count == 0) return;
 
@@ -39,7 +39,7 @@ namespace GWLPXL.ARPGCore.Looting.com
             }
         }
 
-        public void SetLootDrop(LootDrops newDrops)
+        public virtual void SetLootDrop(LootDrops newDrops)
         {
             possibleDrops = newDrops;
         }

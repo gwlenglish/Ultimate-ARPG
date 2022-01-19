@@ -10,10 +10,10 @@ namespace GWLPXL.ARPGCore.Attributes.com
     {
 
         [SerializeField]
-        ActorAttributes statsTemplate;
-        ActorAttributes runtimeCopy_stats;
+        protected ActorAttributes statsTemplate;
+        protected ActorAttributes runtimeCopy_stats;
 
-        void Awake()
+        protected virtual void Awake()
         {
             ActorAttributes temp = Instantiate(statsTemplate);
             SetRuntimeAttributes(temp);
@@ -25,11 +25,11 @@ namespace GWLPXL.ARPGCore.Attributes.com
         }
 
 
-        public ActorAttributes GetAttributeTemplate()
+        public virtual ActorAttributes GetAttributeTemplate()
         {
             return statsTemplate;
         }
-        public void SetRuntimeAttributes(ActorAttributes newStats)
+        public virtual void SetRuntimeAttributes(ActorAttributes newStats)
         {
             runtimeCopy_stats = newStats;
         }
@@ -38,12 +38,12 @@ namespace GWLPXL.ARPGCore.Attributes.com
             return runtimeCopy_stats;
         }
 
-        public Transform GetInstance()
+        public virtual Transform GetInstance()
         {
             return transform;
         }
 
-        public void SetAttributeTemplate(ActorAttributes newTemplate)
+        public virtual void SetAttributeTemplate(ActorAttributes newTemplate)
         {
             statsTemplate = newTemplate;
         }

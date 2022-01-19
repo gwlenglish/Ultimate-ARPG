@@ -8,8 +8,8 @@ namespace GWLPXL.ARPGCore.com
     /// </summary>
     public class ActorEventController : MonoBehaviour, IEventController
     {
-        ISubscribeEvents[] eventSubbers = new ISubscribeEvents[0];
-        public void SubEvents()
+        protected ISubscribeEvents[] eventSubbers = new ISubscribeEvents[0];
+        public virtual void SubEvents()
         {
             eventSubbers = GetComponentsInChildren<ISubscribeEvents>();
             for (int i = 0; i < eventSubbers.Length; i++)
@@ -18,7 +18,7 @@ namespace GWLPXL.ARPGCore.com
             }
         }
 
-        public void UnSubEvents()
+        public virtual void UnSubEvents()
         {
             for (int i = 0; i < eventSubbers.Length; i++)
             {
@@ -27,9 +27,6 @@ namespace GWLPXL.ARPGCore.com
             }
         }
 
-        public void TestEvent()
-        {
-            Debug.Log("Worked");
-        }
+      
     }
 }

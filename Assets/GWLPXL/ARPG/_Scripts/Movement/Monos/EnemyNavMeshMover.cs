@@ -18,28 +18,28 @@ namespace GWLPXL.ARPGCore.Movement.com
     public class EnemyNavMeshMover : MonoBehaviour, IMover, IChangeStates, ITick, INavMeshMover
     {
         public NavMeshAgent Agent;
-        float speedMulit = 1;
-        float distanceToPlayerSquared;
-        Vector3 startingPosition;
-        float originalSpeed;
-        float originalAccel;
-        float baseheight = 0;
-        IActorHub hub;
+        protected float speedMulit = 1;
+        protected float distanceToPlayerSquared;
+        protected Vector3 startingPosition;
+        protected float originalSpeed;
+        protected float originalAccel;
+        protected float baseheight = 0;
+        protected IActorHub hub;
 
 
-        private void Awake()
+        protected virtual void Awake()
         {
             baseheight = Agent.baseOffset;
             originalAccel = Agent.acceleration;
             originalSpeed = Agent.speed;
 
         }
-        private void OnDestroy()
+        protected virtual void OnDestroy()
         {
-            RemoveTicker();
+            //RemoveTicker();
         }
 
-        protected void Start()
+        protected virtual void Start()
         {
             SetUpMover();
             hub.MyAbilities.SetIntendedAbility(0);
@@ -49,7 +49,7 @@ namespace GWLPXL.ARPGCore.Movement.com
 
      
 
-        public void SetDesiredDestination(Vector3 newDestination, float stoppingDistance)
+        public virtual void SetDesiredDestination(Vector3 newDestination, float stoppingDistance)
         {
             if (Agent.isActiveAndEnabled)
             {
@@ -76,7 +76,7 @@ namespace GWLPXL.ARPGCore.Movement.com
             }
 
         }
-        public void SetDesiredRotation(Vector3 towards, float stoppingDistance)
+        public virtual void SetDesiredRotation(Vector3 towards, float stoppingDistance)
         {
             Vector3 lookPositon = towards - transform.position;
             float sqrdMag = lookPositon.sqrMagnitude;
@@ -87,7 +87,7 @@ namespace GWLPXL.ARPGCore.Movement.com
                 transform.rotation = Quaternion.LookRotation(lookPositon);
             }
         }
-        public void StopAgentMovement(bool isStopped)
+        public virtual void StopAgentMovement(bool isStopped)
         {
             if (Agent.isActiveAndEnabled)
             {
@@ -100,75 +100,76 @@ namespace GWLPXL.ARPGCore.Movement.com
         }
 
 
-        public void DisableNavMeshAgent()
+        public virtual void DisableNavMeshAgent()
         {
             Agent.enabled = false;
         }
 
 
-        public void SetNewSpeed(float newTopSpeed, float newAcceleration)
+        public virtual void SetNewSpeed(float newTopSpeed, float newAcceleration)
         {
             Agent.speed = newTopSpeed;
             Agent.acceleration = newAcceleration;
         }
 
-        public void ResetSpeed()
+        public virtual void ResetSpeed()
         {
             SetNewSpeed(originalSpeed, originalAccel);
         }
 
-
-        public void ResetState()
+        [System.Obsolete("Deprecated, use the state machine.")]
+        public virtual void ResetState()
         {
            
         }
 
-        public void SetVelocity(Vector3 newVel)
+        public virtual void SetVelocity(Vector3 newVel)
         {
             Agent.velocity = newVel;
         }
 
-        public void ChangeState(IState newstate)
+        [System.Obsolete("Deprecated, use the state machine.")]
+        public virtual void ChangeState(IState newstate)
         {
            
 
 
         }
-
-        public void DefaultMoveState()
+        [System.Obsolete("Deprecated, use the state machine.")]
+        public virtual void DefaultMoveState()
         {
 
         }
 
-        public GameObject GetGameObject()
+        public virtual GameObject GetGameObject()
         {
             return this.gameObject;
         }
 
-        public void AddTicker()
+        public virtual void AddTicker()
         {
             TickManager.Instance.AddTicker(this);
 
         }
-
-        public void DoTick()
+        [System.Obsolete("Deprecated, use the state machine.")]
+        public virtual void DoTick()
         {
           
 
         }
-
-        public void RemoveTicker()
+        [System.Obsolete("Deprecated, use the state machine.")]
+        public virtual void RemoveTicker()
         {
             TickManager.Instance.RemoveTicker(this);
 
         }
 
-        public float GetTickDuration()
+        public virtual float GetTickDuration()
         {
             return Time.deltaTime;
         }
 
-        public void SetUpMover()
+        public virtual void SetUpMover()
         {
             AddTicker();
             startingPosition = transform.position;
@@ -177,63 +178,63 @@ namespace GWLPXL.ARPGCore.Movement.com
         }
 
       
-        public IActorHub GetHub() => hub;
+        public virtual IActorHub GetHub() => hub;
       
 
-        public void SetActorHub(IActorHub newHub) => hub = newHub;
+        public virtual void SetActorHub(IActorHub newHub) => hub = newHub;
        
-        public void DisableMovement(bool isStopped)
+        public virtual void DisableMovement(bool isStopped)
         {
             StopAgentMovement(isStopped);
         }
 
-        public float GetVelocitySquaredMag()
+        public virtual float GetVelocitySquaredMag()
         {
             return Agent.velocity.sqrMagnitude;
         }
 
-        public void ModifySpeedMultiplier(float byAmount)
+        public virtual void ModifySpeedMultiplier(float byAmount)
         {
             speedMulit += byAmount;
             Agent.speed = (originalSpeed * speedMulit);
             Agent.acceleration = (originalAccel* speedMulit);
         }
 
-        public bool GetMoverEnabled()
+        public virtual bool GetMoverEnabled()
         {
             return Agent.isActiveAndEnabled;
         }
 
-        public NavMeshAgent GetAgent()
+        public virtual NavMeshAgent GetAgent()
         {
             return Agent;
         }
 
-        public void SetAgentBaseHeight(float newheight)
+        public virtual void SetAgentBaseHeight(float newheight)
         {
             Agent.baseOffset = newheight;
             Debug.Log("Base height " + Agent.baseOffset);
         }
 
-        public void ResetBaseHeight()
+        public virtual void ResetBaseHeight()
         {
             Agent.baseOffset = baseheight;
         }
 
-        public void EnableUpdate(bool updatePosition, bool updateRotation)
+        public virtual void EnableUpdate(bool updatePosition, bool updateRotation)
         {
             Agent.updatePosition = updatePosition;
             Agent.updateRotation = updateRotation;
         }
 
-        public void SetAgentPositionRotaion(Vector3 newpos, Quaternion newRot)
+        public virtual void SetAgentPositionRotaion(Vector3 newpos, Quaternion newRot)
         {
             Agent.nextPosition = newpos;
         }
 
-        public float GetSpeedMultiplier() => speedMulit;
+        public virtual float GetSpeedMultiplier() => speedMulit;
 
-        public Vector3 GetVelocityDirection() => GetAgent().velocity.normalized;
+        public virtual Vector3 GetVelocityDirection() => GetAgent().velocity.normalized;
        
     }
 }

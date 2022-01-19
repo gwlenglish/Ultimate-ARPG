@@ -34,6 +34,8 @@ namespace GWLPXL.ARPGCore.com
         protected ResourceType healthResource = ResourceType.Health;
         [SerializeField]
         protected float iFrameTime = .25f;
+        [SerializeField]
+        protected bool immortal = false;
 
         protected CombatGroupType[] combatGroups = new CombatGroupType[1] { CombatGroupType.Enemy };
         protected bool isDead = false;
@@ -44,8 +46,6 @@ namespace GWLPXL.ARPGCore.com
         protected IActorHub lastcharacterHitMe = null;
         protected int lastNonMitagatedHitAmount = 0;
         protected IActorHub owner = null;
-        [SerializeField]
-        protected bool immortal = false;
 
         #region unity calls
         protected virtual void Awake()
@@ -56,55 +56,53 @@ namespace GWLPXL.ARPGCore.com
         #endregion
 
         #region public interfaces
-        public void SetImmortal(bool isImmortal) => immortal = isImmortal;
-
-        public void Die()
+        public virtual void Die()
         {
             DefaultDie();
 
         }
-        public CombatGroupType[] GetMyCombatGroup()
+        public virtual CombatGroupType[] GetMyCombatGroup()
         {
             return combatGroups;
         }
 
-        public void SetCharacterThatHitMe(IActorHub user)
+        public virtual void SetCharacterThatHitMe(IActorHub user)
         {
             lastcharacterHitMe = user;
 
         }
 
-        public void SetUser(IActorHub forUser)
+        public virtual void SetUser(IActorHub forUser)
         {
             owner = forUser;
 
 
         }
-        public Transform GetInstance()
+        public virtual Transform GetInstance()
         {
             return transform;
         }
 
-        public bool IsDead()
+        public virtual bool IsDead()
         {
             return isDead;
         }
-        public bool IsHurt()
+        public virtual bool IsHurt()
         {
             return !canBeAttacked;
         }
 
-        public ResourceType GetHealthResource()
+        public virtual ResourceType GetHealthResource()
         {
             return healthResource;
         }
-        public void SetInvincible(bool isImmoratal) => immortal = isImmoratal;
+        public virtual void SetInvincible(bool isImmoratal) => immortal = isImmoratal;
         /// <summary>
         /// doesn't respect the iframe timer
         /// </summary>
         /// <param name="damageAmount"></param>
         /// <param name="type"></param>
-        public void TakeDamage(int damageAmount, ElementType type)
+        public virtual void TakeDamage(int damageAmount, ElementType type)
         {
             DefaultTakeDamage(damageAmount, type);
         }
@@ -115,12 +113,12 @@ namespace GWLPXL.ARPGCore.com
         /// <param name="type"></param>
         /// <param name="owner"></param>
         //this one has an iframe timer. I wonder if we need that on enemy tho.
-        public void TakeDamage(int damageAmount, IActorHub damageDealer)
+        public virtual void TakeDamage(int damageAmount, IActorHub damageDealer)
         {
             DefaultTakeActorDamage(damageAmount, damageDealer);
 
         }
-        public void CheckDeath()
+        public virtual void CheckDeath()
         {
             DefaultCheckDeath();
 
