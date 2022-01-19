@@ -22,6 +22,12 @@ MonoBehaviour:
       XTiltAngle: 0
       YTiltAngle: 0
       ZTiltAngle: 0
+    ChargeOptions:
+      MaximumChargePercentPhys: 2
+      MaximumChargePercentElemental: 2
+    Overrides:
+      DamageOverride: {fileID: 0}
+      OptionsOverride: {fileID: 0}
   abilityEndProjectile:
     Rotation: 0
     ProjectilePrefab: {fileID: 0}
@@ -30,4 +36,10 @@ MonoBehaviour:
       XTiltAngle: 0
       YTiltAngle: 0
       ZTiltAngle: 0
+    ChargeOptions:
+      MaximumChargePercentPhys: 2
+      MaximumChargePercentElemental: 2
+    Overrides:
+      DamageOverride: {fileID: 0}
+      OptionsOverride: {fileID: 0}
   additionalProjectiles: []

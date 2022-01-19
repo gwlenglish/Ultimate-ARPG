@@ -1,12 +1,12 @@
 {
     "config": {
-        "instanceID": 24734
+        "instanceID": 24750
     },
     "id": {
         "Name": "",
         "ID": 12,
         "Ability": {
-            "instanceID": 24460
+            "instanceID": 24476
         }
     },
     "autoName": false,
@@ -19,12 +19,12 @@
         "ResourceType": 1,
         "Logics": [
             {
-                "instanceID": 24736
+                "instanceID": 24752
             }
         ],
         "UniqueID": 7,
         "Sprite": {
-            "instanceID": 24738
+            "instanceID": 24754
         },
         "AnimationTrigger": "ChainLightning",
         "AnimBlending": 0.019999999552965165,

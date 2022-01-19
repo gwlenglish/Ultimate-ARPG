@@ -12,7 +12,7 @@ namespace GWLPXL.ARPGCore.Leveling.com
     public class EnemyLevelScaler : MonoBehaviour, IScale
     {
 
-        IActorHub hub;
+        protected IActorHub hub;
         
         public int GetUNScaledLevel()
         {

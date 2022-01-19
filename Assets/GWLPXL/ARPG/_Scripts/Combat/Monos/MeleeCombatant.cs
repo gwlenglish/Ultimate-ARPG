@@ -13,17 +13,25 @@ namespace GWLPXL.ARPGCore.Combat.com
     {
         [SerializeField]
         [Tooltip("Default is good for enemies who don't change weapons. For the player, the fist should be the default so they can always attack.")]
-        GameObject[] defaultMeleeDD = new GameObject[0];
-
-        IDoDamage[] currentMeleeDD = new IDoDamage[0];
-
+        protected GameObject[] defaultMeleeDD = new GameObject[0];
         [SerializeField]
-        EquipmentSlotsType[] meleeWpnSlots = new EquipmentSlotsType[2] { EquipmentSlotsType.RightWpnHand, EquipmentSlotsType.LeftWpnHand };//slots that can carry weapons by index.
-        IActorHub hub = null;
-        List<GameObject> meleeObjs = new List<GameObject>();
+        protected EquipmentSlotsType[] meleeWpnSlots = new EquipmentSlotsType[2] { EquipmentSlotsType.RightWpnHand, EquipmentSlotsType.LeftWpnHand };//slots that can carry weapons by index.
+        
+        protected IDoDamage[] currentMeleeDD = new IDoDamage[0];
+        protected IActorHub hub = null;
+        protected List<GameObject> meleeObjs = new List<GameObject>();
+
+        #region unity lifecycle
         protected virtual void Start()
         {
+            Setup();
 
+        }
+        #endregion
+
+        #region protected
+        protected virtual void Setup()
+        {
             if (defaultMeleeDD.Length == 0)
             {
                 IDoDamage findfirst = hub.MyTransform.GetComponentInChildren<IDoDamage>();
@@ -45,25 +53,26 @@ namespace GWLPXL.ARPGCore.Combat.com
                 {
                     defaultMeleeDD[i] = damagers[i].GetTransform().gameObject;
                 }
-              //  defaultMeleeDD = GetComponentsInChildren<IDoDamage>();
+                //  defaultMeleeDD = GetComponentsInChildren<IDoDamage>();
 
             }
-            
+
             for (int i = 0; i < defaultMeleeDD.Length; i++)
             {
                 SetMeleeDamageDealer(defaultMeleeDD[i].GetComponentInChildren<IDoDamage>(), i);
             }
-
-      
         }
-        public IDoDamage[] GetMeleeDamageBoxes()
+        #endregion
+
+        #region public
+        public virtual IDoDamage[] GetMeleeDamageBoxes()
         {
            // if (currentMeleeDD == null || currentMeleeDD.Length == 0) return defaultMeleeDD;
             //ARPGDebugger.DebugMessage(currentMeleeDD.GetTransform().name + " current melee DD", this.gameObject);
             return currentMeleeDD;
         }
 
-        public Transform[] GetMeleeTransforms()
+        public virtual Transform[] GetMeleeTransforms()
         {
             List<Transform> _temp = new List<Transform>();
 
@@ -85,15 +94,22 @@ namespace GWLPXL.ARPGCore.Combat.com
 
         
 
-        public void SetMeleeDamageDealer(IDoDamage damager, int atIndex)
+        public virtual void SetMeleeDamageDealer(IDoDamage damager, int atIndex)
         {
-            if (atIndex > meleeWpnSlots.Length - 1)
+            if (atIndex > meleeWpnSlots.Length - 1 || atIndex < 0)
             {
                 ARPGDebugger.DebugMessage("Trying to set a damage dealer over the amount of weapons the actor can carry. Increase the max if you want to carry more.", this);
                 return;
             }
-            meleeObjs.Clear();
+
            
+            if (atIndex > currentMeleeDD.Length - 1 || atIndex < 0)
+            {
+                ARPGDebugger.DebugMessage(ARPGDebugger.SB.Append("Trying to set a damage dealer that the actor doesn't have. Is your damage dealer reference null? does it inherit IDoDamage?"), this);
+                return;
+            }
+
+            meleeObjs.Clear();
             currentMeleeDD[atIndex] = damager;
             for (int i = 0; i < currentMeleeDD.Length; i++)
             {
@@ -105,7 +121,7 @@ namespace GWLPXL.ARPGCore.Combat.com
 
         }
 
-        public void ResetDefaultDamageDealer(int atIndex)
+        public virtual void ResetDefaultDamageDealer(int atIndex)
         {
             if (atIndex > meleeWpnSlots.Length - 1)
             {
@@ -137,12 +153,13 @@ namespace GWLPXL.ARPGCore.Combat.com
 
         }
 
-        public EquipmentSlotsType[] GetWpnMeleeSlots()
+        public virtual EquipmentSlotsType[] GetWpnMeleeSlots()
         {
             return meleeWpnSlots;
         }
 
-        public void SetActorHub(IActorHub newhub) => hub = newhub;
+        public virtual void SetActorHub(IActorHub newhub) => hub = newhub;
 
+        #endregion
     }
 }

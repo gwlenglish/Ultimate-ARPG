@@ -6525,13 +6525,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 357313929038211929, guid: 2fd81006893900245b5efedd7cf77489,
         type: 3}
-      propertyPath: AggroDetectRange
-      value: 9.12
+      propertyPath: SightBlockingLayers.m_Bits
+      value: 8388609
       objectReference: {fileID: 0}
     - target: {fileID: 357313929038211929, guid: 2fd81006893900245b5efedd7cf77489,
         type: 3}
-      propertyPath: SightBlockingLayers.m_Bits
-      value: 8388609
+      propertyPath: DefaultKey
+      value: Idle
+      objectReference: {fileID: 0}
+    - target: {fileID: 357313929038211929, guid: 2fd81006893900245b5efedd7cf77489,
+        type: 3}
+      propertyPath: AggroDetectRange
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 1329585664975498627, guid: 2fd81006893900245b5efedd7cf77489,
         type: 3}

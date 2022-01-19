@@ -2,7 +2,7 @@
 using GWLPXL.ARPGCore.com;
 using GWLPXL.ARPGCore.Types.com;
 using UnityEngine;
-
+using System.Text;
 namespace GWLPXL.ARPGCore.DebugHelpers.com
 {
 
@@ -10,7 +10,15 @@ namespace GWLPXL.ARPGCore.DebugHelpers.com
 
     public static class ARPGDebugger
     {
-       
+        public static StringBuilder SB = new StringBuilder();
+        public static void DebugMessage(StringBuilder message, Object context)
+        {
+
+            if (DungeonMaster.Instance == null) return;
+            DebugMessage(message.ToString(), context);
+            message.Clear();
+
+        }
         public static void DebugMessage(string message, Object context)
         {
 
