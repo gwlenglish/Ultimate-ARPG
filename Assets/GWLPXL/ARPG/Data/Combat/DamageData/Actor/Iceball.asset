@@ -26,8 +26,8 @@ MonoBehaviour:
       sotmod: 1
     damageMultipliers:
       physicalMultipler:
-        minD: 1
-        maxD: 1
+        minD: 0
+        maxD: 0
         percentOfCasterAttack: 0
       elementMultipliers:
       - editorDescription: Cold

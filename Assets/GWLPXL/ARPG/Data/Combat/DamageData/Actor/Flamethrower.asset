@@ -26,14 +26,14 @@ MonoBehaviour:
       sotmod: 1
     damageMultipliers:
       physicalMultipler:
-        minD: 1
-        maxD: 1
+        minD: 0
+        maxD: 0
         percentOfCasterAttack: 0
       elementMultipliers:
       - editorDescription: Fire
         damageType: 1
-        minD: 2
-        maxD: 3
+        minD: 3
+        maxD: 6
         percentOfCasterElement: 0
     statusOverTimeOptions:
       applySOTAtEnter: 1

@@ -1,17 +1,17 @@
 {
     "config": {
-        "instanceID": 17560
+        "instanceID": 17748
     },
     "id": {
         "Name": "Pistol",
         "ID": 7,
         "Instance": {
-            "instanceID": 17332
+            "instanceID": 17498
         }
     },
     "DamageVar": {
         "combatHandler": {
-            "instanceID": 17178
+            "instanceID": 17314
         },
         "descriptiveName": "Pistol",
         "damageOptions": {
@@ -21,7 +21,8 @@
         },
         "damageMultipliers": {
             "physicalMultipler": {
-                "baseDamageAmount": 2,
+                "minD": 8,
+                "maxD": 12,
                 "percentOfCasterAttack": 0.0
             },
             "elementMultipliers": []

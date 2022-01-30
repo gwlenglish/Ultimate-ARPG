@@ -79,7 +79,11 @@ namespace GWLPXL.ARPGCore.Statics.com
             if (value == false)
             {
                 vars.Savedspeed = 1 - vars.SlowPercent;
-                target.MyMover.ModifySpeedMultiplier(-(1 - vars.SlowPercent));
+                if (target.MyMover != null)
+                {
+                    target.MyMover.ModifySpeedMultiplier(-(1 - vars.SlowPercent));
+                }
+               
                 value = true;
                 vars.Dicvalue[target] = value;
             }

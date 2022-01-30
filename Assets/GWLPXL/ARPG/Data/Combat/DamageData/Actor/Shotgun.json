@@ -1,17 +1,17 @@
 {
     "config": {
-        "instanceID": 17516
+        "instanceID": 17704
     },
     "id": {
         "Name": "Shotgun",
         "ID": 8,
         "Instance": {
-            "instanceID": 17346
+            "instanceID": 17512
         }
     },
     "DamageVar": {
         "combatHandler": {
-            "instanceID": 17178
+            "instanceID": 17314
         },
         "descriptiveName": "Shotgun",
         "damageOptions": {
@@ -21,7 +21,8 @@
         },
         "damageMultipliers": {
             "physicalMultipler": {
-                "baseDamageAmount": 5,
+                "minD": 22,
+                "maxD": 34,
                 "percentOfCasterAttack": 0.0
             },
             "elementMultipliers": []

@@ -1,17 +1,17 @@
 {
     "config": {
-        "instanceID": 25346
+        "instanceID": 26066
     },
     "id": {
         "Name": "Fireball",
         "ID": 11,
         "Instance": {
-            "instanceID": 24926
+            "instanceID": 25702
         }
     },
     "DamageVar": {
         "combatHandler": {
-            "instanceID": 17178
+            "instanceID": 17314
         },
         "descriptiveName": "MagicOrb",
         "damageOptions": {
@@ -21,14 +21,16 @@
         },
         "damageMultipliers": {
             "physicalMultipler": {
-                "baseDamageAmount": 5,
+                "minD": 0,
+                "maxD": 0,
                 "percentOfCasterAttack": 0.0
             },
             "elementMultipliers": [
                 {
                     "editorDescription": "Fire",
                     "damageType": 1,
-                    "baseElementDamageAmount": 15,
+                    "minD": 12,
+                    "maxD": 15,
                     "percentOfCasterElement": 0.10000000149011612
                 }
             ]

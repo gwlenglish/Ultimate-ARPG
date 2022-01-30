@@ -1,17 +1,17 @@
 {
     "config": {
-        "instanceID": 25330
+        "instanceID": 26050
     },
     "id": {
         "Name": "Fireball",
         "ID": 10,
         "Instance": {
-            "instanceID": 24924
+            "instanceID": 25700
         }
     },
     "DamageVar": {
         "combatHandler": {
-            "instanceID": 17178
+            "instanceID": 17314
         },
         "descriptiveName": "Fireball",
         "damageOptions": {
@@ -21,14 +21,16 @@
         },
         "damageMultipliers": {
             "physicalMultipler": {
-                "baseDamageAmount": 5,
+                "minD": 0,
+                "maxD": 0,
                 "percentOfCasterAttack": 0.0
             },
             "elementMultipliers": [
                 {
                     "editorDescription": "Fire",
                     "damageType": 1,
-                    "baseElementDamageAmount": 15,
+                    "minD": 23,
+                    "maxD": 35,
                     "percentOfCasterElement": 0.10000000149011612
                 }
             ]

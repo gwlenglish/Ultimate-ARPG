@@ -1,17 +1,17 @@
 {
     "config": {
-        "instanceID": 25526
+        "instanceID": 26240
     },
     "id": {
         "Name": "Fist",
         "ID": 4,
         "Instance": {
-            "instanceID": 24916
+            "instanceID": 25692
         }
     },
     "DamageVar": {
         "combatHandler": {
-            "instanceID": 17178
+            "instanceID": 17314
         },
         "descriptiveName": "Fist",
         "damageOptions": {
@@ -21,7 +21,8 @@
         },
         "damageMultipliers": {
             "physicalMultipler": {
-                "baseDamageAmount": 1,
+                "minD": 3,
+                "maxD": 5,
                 "percentOfCasterAttack": 0.20000000298023225
             },
             "elementMultipliers": []

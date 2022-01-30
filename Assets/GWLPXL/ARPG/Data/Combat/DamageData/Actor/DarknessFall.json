@@ -1,17 +1,17 @@
 {
     "config": {
-        "instanceID": 25354
+        "instanceID": 26074
     },
     "id": {
         "Name": "Flamethrower",
         "ID": 5,
         "Instance": {
-            "instanceID": 24918
+            "instanceID": 25694
         }
     },
     "DamageVar": {
         "combatHandler": {
-            "instanceID": 17178
+            "instanceID": 17314
         },
         "descriptiveName": "Darkness Fall",
         "damageOptions": {
@@ -21,14 +21,16 @@
         },
         "damageMultipliers": {
             "physicalMultipler": {
-                "baseDamageAmount": 0,
+                "minD": 0,
+                "maxD": 0,
                 "percentOfCasterAttack": 0.0
             },
             "elementMultipliers": [
                 {
                     "editorDescription": "Fire",
                     "damageType": 2,
-                    "baseElementDamageAmount": 1,
+                    "minD": 15,
+                    "maxD": 22,
                     "percentOfCasterElement": 0.10000000149011612
                 }
             ]

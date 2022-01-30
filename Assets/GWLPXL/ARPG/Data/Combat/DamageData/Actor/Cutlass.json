@@ -1,17 +1,17 @@
 {
     "config": {
-        "instanceID": 25524
+        "instanceID": 26238
     },
     "id": {
         "Name": "Cutlass",
         "ID": 2,
         "Instance": {
-            "instanceID": 24914
+            "instanceID": 25690
         }
     },
     "DamageVar": {
         "combatHandler": {
-            "instanceID": 17178
+            "instanceID": 17314
         },
         "descriptiveName": "Cutlass",
         "damageOptions": {
@@ -21,7 +21,8 @@
         },
         "damageMultipliers": {
             "physicalMultipler": {
-                "baseDamageAmount": 5,
+                "minD": 12,
+                "maxD": 24,
                 "percentOfCasterAttack": 0.10000000149011612
             },
             "elementMultipliers": []
