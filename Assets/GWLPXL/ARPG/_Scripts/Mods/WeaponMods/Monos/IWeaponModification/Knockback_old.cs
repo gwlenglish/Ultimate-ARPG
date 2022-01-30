@@ -11,6 +11,8 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
     /// <summary>
     ///deprecated, will delete in future versions
     /// </summary>
+    /// 
+    [System.Obsolete]
     public class Knockback_old : MonoBehaviour, IWeaponModification
     {
         [HideInInspector]
@@ -20,7 +22,7 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
 
      
 
-        public void DoModification(IActorHub other)
+        public void DoModification(AttackValues other)
         {
             //if (IsActive() == false) return;
 

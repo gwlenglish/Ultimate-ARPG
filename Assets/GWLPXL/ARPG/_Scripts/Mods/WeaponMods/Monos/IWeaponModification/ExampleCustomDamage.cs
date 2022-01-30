@@ -15,7 +15,7 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
 
         bool active = false;
         IActorHub self = null;
-        public void DoModification(IActorHub other)
+        public void DoModification(AttackValues other)
         {
             Debug.Log("Custom Mod");
             if (IsActive() == false) return;
@@ -24,8 +24,9 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
             float damageamount = 4 * self.MyStats.GetRuntimeAttributes().GetStatNowValue(Types.com.StatType.Strength) + 5;
             int rounded = Mathf.FloorToInt(damageamount);
             Debug.Log("Expected custom damage: " + rounded);
+            other.PhysicalAttack.Add(new PhysicalAttackResults(rounded, false, "Custom Example"));
             //pass the damage to the other
-            other.MyHealth.TakeDamage(Mathf.FloorToInt(rounded), self);
+
         }
 
         public bool DoChange(Transform other)

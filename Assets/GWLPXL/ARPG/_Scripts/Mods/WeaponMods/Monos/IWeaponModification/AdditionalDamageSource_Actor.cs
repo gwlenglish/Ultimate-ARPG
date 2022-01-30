@@ -16,11 +16,11 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
         bool active = false;
         IActorHub self = null;
 
-        public void DoModification(IActorHub other)
+        public void DoModification(AttackValues other)
         {
             if (IsActive() == false) return;
 
-            CombatHelper.DoAdditionalDamageSourceActor(self, other, Vars);
+            CombatHelper.GetAdditionalDamageSourceActor(other, Vars);
 
         }
 

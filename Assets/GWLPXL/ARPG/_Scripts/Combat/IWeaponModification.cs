@@ -31,9 +31,9 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
         /// peform the mod logic
         /// </summary>
         /// <param name="other"></param>
-        void DoModification(IActorHub other);
+        void DoModification(AttackValues values);
         /// <summary>
-        /// if returns true, will prevent damage calculations.
+        /// if returns true, will prevent damage calculations, false proceed as usual.
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>

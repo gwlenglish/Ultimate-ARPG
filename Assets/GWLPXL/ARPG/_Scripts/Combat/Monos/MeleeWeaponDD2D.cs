@@ -151,8 +151,12 @@ namespace GWLPXL.ARPGCore.Combat.com
 
         public void DamageLogic(IActorHub attacked)
         {
-            damage.DamageVar.CombatHandler.DoMeleeActorDamageLogic(owner, this, attacked, this, this);
-
+            if (DungeonMaster.Instance.CombatFormulas.GetCombatFormulas().CanMeleeAttack(owner, this, this, attacked, this))
+            {
+                AttackValues values = new AttackValues(owner, attacked);
+                damage.DamageVar.CombatHandler.GetMeleeActorDamageLogic(values, owner, this, attacked, this, this);
+                values.Resolve();
+            }
 
         }
 

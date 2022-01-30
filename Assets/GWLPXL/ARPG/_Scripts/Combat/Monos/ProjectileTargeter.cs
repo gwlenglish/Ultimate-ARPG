@@ -213,7 +213,7 @@ namespace GWLPXL.ARPGCore.Combat.com
         public bool IsActive() => isactive;
        
 
-        public void DoModification(IActorHub other)
+        public void DoModification(AttackValues other)
         {
             //
         }

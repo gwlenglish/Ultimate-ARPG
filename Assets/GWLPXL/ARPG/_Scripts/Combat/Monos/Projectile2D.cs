@@ -159,9 +159,14 @@ namespace GWLPXL.ARPGCore.Combat.com
 
         public void DamageLogic(IActorHub damageTarget)
         {
-            damage.DamageVar.CombatHandler.DoProjectileDamage(owner, this, damageTarget, this, this);
+            if (DungeonMaster.Instance.CombatFormulas.GetCombatFormulas().CanProjectileAttack(owner, this, damageTarget, this, this))
+            {
+                AttackValues values = new AttackValues(owner, damageTarget);
+                damage.DamageVar.CombatHandler.GetProjectileDamage(values, owner, this, damageTarget, this, this);
+                values.Resolve();
+            }
 
-           
+
         }
 
 

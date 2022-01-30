@@ -17,7 +17,7 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
         bool active;
         IActorHub myself;
        
-        public void DoModification(IActorHub other)
+        public void DoModification(AttackValues other)
         {
             if (IsActive() == false) return;
             CombatHelper.DoKnockbackAOE(myself, transform.position, Vars);

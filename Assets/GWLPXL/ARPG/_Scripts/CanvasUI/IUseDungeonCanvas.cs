@@ -7,7 +7,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 {
     public interface IUseFloatingText
     {
-
+        void DamageResults(DamageResults args);
         Vector3 GetHPBarOffset();
         void CreateUIDamageText(string message, ElementType type, bool isCritical = false);
         void CreateUIDoTText(string message, ElementType type);

@@ -32,17 +32,22 @@ namespace GWLPXL.ARPGCore.AI.com
         public string DeathKey = "Death";
         [Tooltip("Hurt")]
         public string HurtKey = "Hurt";
+        [Tooltip("Move")]
+        public string MoveKey = "Move";
         [Range(0, 1f)]
         [Tooltip("How often to play the hurt state. At 1 (100%), you can stunlock so you maybe you don't want that.")]
         public float RandomizedHurtChance = .10f;
+        [Tooltip("How long to stay in the hurt state?")]
+        [SerializeField]
+        protected float hurtduration = 1f;
 
-
-        protected bool hurt = true;
+        protected bool hurt = false;
         protected IAIEntity bb = null;
         protected float aggrotimer = 0;
         protected bool aggroed = false;
         protected bool dead;
 
+        protected float hurtimer;
         protected virtual void Awake()
         {
             bb = GetComponent<IAIEntity>();
@@ -102,6 +107,10 @@ namespace GWLPXL.ARPGCore.AI.com
             bb.SetStateKey(IdleKey);
         }
 
+        protected virtual void Move()
+        {
+            bb.SetStateKey(MoveKey);
+        }
 
         protected virtual void TookDamage(IActorHub aggrotarget)
         {
@@ -154,17 +163,28 @@ namespace GWLPXL.ARPGCore.AI.com
         {
             if (dead) return;
 
-            if (bb.GetActorHub().MyHealth.IsHurt() && hurt)
+            if (hurt)
             {
-                bb.SetStateKey(HurtKey);
-                return;
-            }
-            else
-            {
-                hurt = false;
+                hurtimer += GetTickDuration();
+
+                if (hurtimer > hurtduration)
+                {
+                    hurt = false;
+                    hurtimer = 0;
+                    if (bb.GetMoveTarget() != null)
+                    {
+                        Move();
+                    }
+                  
+                }
+                else
+                {
+                    return;
+                }
             }
 
-            
+
+
             if (CheckAggro())
             {
                 //check sight and range
@@ -185,12 +205,14 @@ namespace GWLPXL.ARPGCore.AI.com
 
             if (aggroed)
             {
+                
                 aggrotimer += GetTickDuration();
                 if (aggrotimer >= AggroDuration)
                 {
                     aggrotimer = 0;
-                    Idle();
                     aggroed = false;
+                    Idle();
+                    
                 }
             }
         }

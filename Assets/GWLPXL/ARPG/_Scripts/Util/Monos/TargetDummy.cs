@@ -59,7 +59,7 @@ namespace GWLPXL.ARPGCore.Demo.com
             int wpndmg = EnemyCombatResolution.DoEnemyPhysicalReducedChecks(MyStats, damageAmount, healthResource);
             NotifyUI(ElementType.None, wpndmg);
 
-            Dictionary<ElementType, ElementAttackResults> results = EnemyCombatResolution.DoEnemyElementalDamageResistChecks(MyStats, damageDealer.MyStats, healthResource);
+            Dictionary<ElementType, ElementAttackResults> results = EnemyCombatResolution.GetEnemyElementalDamageResistChecks(MyStats, damageDealer.MyStats, healthResource);
             foreach (var kvp in results)
             {
                 TakeDamage(kvp.Value.Damage, kvp.Key);
@@ -137,7 +137,17 @@ namespace GWLPXL.ARPGCore.Demo.com
         public void SetActorHub(IActorHub newHub) => owner = newHub;
 
         public void SetInvincible(bool isImmoratal) => immortal = isImmoratal;
-       
+
+        public void TakeDamage(AttackValues values)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IActorHub GetUser()
+        {
+            return null;
+        }
+
 
 
 

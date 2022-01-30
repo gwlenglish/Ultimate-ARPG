@@ -26,12 +26,14 @@ MonoBehaviour:
       sotmod: 1
     damageMultipliers:
       physicalMultipler:
-        baseDamageAmount: 5
+        minD: 1
+        maxD: 1
         percentOfCasterAttack: 0
       elementMultipliers:
       - editorDescription: Cold
         damageType: 2
-        baseElementDamageAmount: 10
+        minD: 18
+        maxD: 22
         percentOfCasterElement: 0.1
     statusOverTimeOptions:
       applySOTAtEnter: 1

@@ -5,7 +5,7 @@ using GWLPXL.ARPGCore.DebugHelpers.com;
 using UnityEngine;
 using GWLPXL.ARPGCore.Abilities.com;
 using GWLPXL.ARPGCore.Statics.com;
-
+using System.Collections.Generic;
 namespace GWLPXL.ARPGCore.Abilities.Mods.com
 {
 
@@ -27,7 +27,8 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
         private void Apply(IActorHub obj)
         {
             Vector3 origin = obj.MyTransform.position + obj.MyTransform.TransformDirection(LocalOffset);
-            CombatHelper.DoAoEWeaponDmg(obj, origin, Vars);
+            AttackValues values = new AttackValues(obj, null);
+            CombatHelper.GetAoEWeaponDmg(values, obj, origin, Vars);
 
             if (VFX != null)
             {

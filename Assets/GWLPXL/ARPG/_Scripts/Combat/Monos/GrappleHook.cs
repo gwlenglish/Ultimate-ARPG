@@ -17,10 +17,10 @@ namespace GWLPXL.ARPGCore.Combat.com
             return false;
         }
 
-        public void DoModification(IActorHub other)
+        public void DoModification(AttackValues other)
         {
             PullTowardsTarget pull = hub.MyTransform.gameObject.AddComponent<PullTowardsTarget>();
-            PulLVars vars = new PulLVars(Vars.Duration, other.MyTransform.position, hub.MyTransform.position, hub);
+            PulLVars vars = new PulLVars(Vars.Duration, other.Defenders[0].MyTransform.position, hub.MyTransform.position, hub);
             vars.Duration = Vars.Duration;
             vars.Curve = Vars.Curve;
             pull.Vars = vars;

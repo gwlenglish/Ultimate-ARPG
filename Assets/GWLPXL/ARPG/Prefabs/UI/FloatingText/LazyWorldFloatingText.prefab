@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26701f0deae87c04b8a309f507c4e0cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Combine: 1
   DamageTextPrefab: {fileID: 5506154406983463939, guid: 786bcb0ceaa831e4a9a4e63acca61c2b,
     type: 3}
   DoTTextPrefab: {fileID: 5506154406983463939, guid: 786bcb0ceaa831e4a9a4e63acca61c2b,

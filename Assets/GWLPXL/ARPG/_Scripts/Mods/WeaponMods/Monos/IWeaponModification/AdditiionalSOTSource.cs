@@ -19,10 +19,14 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
         public AdditionalSoTSourceVars Vars = new AdditionalSoTSourceVars();
         bool active = false;
         IActorHub self = null;
-        public void DoModification(IActorHub other)
+        public void DoModification(AttackValues other)
         {
             if (IsActive() == false) return;
-            CombatHelper.DoAddAdditionalSoT(other, Vars);
+            for (int i = 0; i < other.Defenders.Count; i++)
+            {
+                CombatHelper.DoAddAdditionalSoT(other.Defenders[i], Vars);
+            }
+           
 
         }
 

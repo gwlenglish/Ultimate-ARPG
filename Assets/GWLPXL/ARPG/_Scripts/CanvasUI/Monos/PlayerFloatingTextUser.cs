@@ -35,7 +35,10 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         protected IActorHub hub;
 
         #region public interface
-
+        public void DamageResults(DamageResults args)
+        {
+            throw new System.NotImplementedException();
+        }
         public void CreateUIDamageText(string message, ElementType type, bool isCritical)
         {
             DefaultDamageText(message, type, isCritical);
@@ -105,6 +108,8 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
             }
         }
+
+      
         #endregion
     }
 }

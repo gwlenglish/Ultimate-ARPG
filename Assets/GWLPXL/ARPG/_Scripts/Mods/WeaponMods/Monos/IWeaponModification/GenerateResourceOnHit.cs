@@ -19,7 +19,7 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
 
         
 
-        public void DoModification(IActorHub other)
+        public void DoModification(AttackValues other)
         {
             if (IsActive() == false) return;
             CombatHelper.DoGenerateResource(owner, Vars);

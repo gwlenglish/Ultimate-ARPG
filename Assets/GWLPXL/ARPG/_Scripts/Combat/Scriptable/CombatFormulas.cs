@@ -56,34 +56,36 @@ namespace GWLPXL.ARPGCore.Combat.com
         /// <param name="damageTarget"></param>
         /// <param name="damage"></param>
         /// <param name="projectileOptions"></param>
-        public override void DoProjectileDamage(IActorHub owner, IDoDamage damageDealer, IActorHub damageTarget, IDoActorDamage damage, IProjectile projectileOptions)
+        public override AttackValues GetProjectileDamage(AttackValues values, IActorHub owner, IDoDamage damageDealer, IActorHub damageTarget, IDoActorDamage damage, IProjectile projectileOptions)
         {
-            if (damage.GetActorDamageData().DamageVar.DamageOptions.InflictPhysicalDmg == false && damage.GetActorDamageData().DamageVar.DamageOptions.InfictElementalDmg == false) return;//no dmg to do
-            if (damageTarget == null) return;
-            if (damageTarget == owner) return;
-
-            if (damage.GetActorDamageData().DamageVar.CombatHandler.DetermineAttackable(damageTarget.MyHealth, owner.MyHealth, projectileOptions.GetProjectileData().ProjectileVars.FriendlyFire) == false) return; //can't attack
-            if (damageDealer.GetDamagedList().Contains(damageTarget) == true) return;
+         
 
 
             if (damage.GetActorDamageData().DamageVar.DamageOptions.InflictPhysicalDmg)
             {
-                int phys = damage.GetActorDamageData().DamageVar.CombatHandler.DoProjectilePhysicalDamage(owner, damageTarget, damage.GetActorDamageData().DamageVar.DamageMultipliers.PhysMultipler);
+                int phys = damage.GetActorDamageData().DamageVar.DamageMultipliers.PhysMultipler.GetPhysicalDamageAmount(owner);
+                values.PhysicalAttack.Add(new PhysicalAttackResults(phys, false, "Projectile"));
                 damage.GetActorDamageEvents().SceneEvents.OnPhysicalDamagedOther.Invoke(phys, damageTarget.MyHealth);
 
             }
 
             if (damage.GetActorDamageData().DamageVar.DamageOptions.InfictElementalDmg)
             {
-                int ele = damage.GetActorDamageData().DamageVar.CombatHandler.DoProjectileElementalDamage(owner, damageTarget, damage.GetActorDamageData().DamageVar.DamageMultipliers.ElementMultiplers);
-                damage.GetActorDamageEvents().SceneEvents.OnElementalDamageOther.Invoke(ele, damageTarget.MyHealth);
+                for (int i = 0; i < damage.GetActorDamageData().DamageVar.DamageMultipliers.ElementMultiplers.Length; i++)
+                {
+                    ElementDamageMultiplierActor elev = damage.GetActorDamageData().DamageVar.DamageMultipliers.ElementMultiplers[i];
+                    values.ElementAttacks.Add(new ElementAttackResults(elev.DamageType, elev.GetElementDamageAmount(owner), "Projectile"));
+                    damage.GetActorDamageEvents().SceneEvents.OnElementalDamageOther.Invoke(elev.GetElementDamageAmount(owner), damageTarget.MyHealth);
+                }
+    
+             
 
             }
 
             int modlength = damageDealer.GetWeaponMods().Length;
             for (int i = 0; i < modlength; i++)
             {
-                damageDealer.GetWeaponMods()[i].DoModification(damageTarget);
+                damageDealer.GetWeaponMods()[i].DoModification(values);
             }
 
             damageDealer.GetDamagedList().Add(damageTarget);
@@ -94,6 +96,7 @@ namespace GWLPXL.ARPGCore.Combat.com
             }
 
             damageTarget.MyHealth.SetCharacterThatHitMe(owner);
+            return values;
         }
         /// <summary>
         /// performs the SoTs damage 
@@ -199,6 +202,20 @@ namespace GWLPXL.ARPGCore.Combat.com
             sots.GetSoTAppliedList().Add(target);
 
         }
+
+        public override int GetPhysicalAttackValue(IActorHub self)
+        {
+            if (self.PlayerControlled != null)
+            {
+                return PlayerCombat.GetAttackValue(self);
+            }
+            else
+            {
+                return EnemyCombat.GetAttackValue(self);
+            }
+        }
+
+
         /// <summary>
         /// performs melee damage (defined by the melee damage box)
         /// </summary>
@@ -207,27 +224,28 @@ namespace GWLPXL.ARPGCore.Combat.com
         /// <param name="attacked"></param>
         /// <param name="actorDmg"></param>
         /// <param name="meleeOptions"></param>
-        public override void DoMeleeActorDamageLogic(IActorHub owner, IDoDamage damager, IActorHub attacked, IDoActorDamage actorDmg, IMeleeWeapon meleeOptions)
+        public override AttackValues GetMeleeActorDamageLogic(AttackValues results, IActorHub owner, IDoDamage damager, IActorHub attacked, IDoActorDamage actorDmg, IMeleeWeapon meleeOptions)
         {
-            if (owner == null) return;
-            if (attacked == null) return;
-            if (attacked == owner) return;
-            if (actorDmg.GetActorDamageData().DamageVar.DamageOptions.InfictElementalDmg == false && actorDmg.GetActorDamageData().DamageVar.DamageOptions.InflictPhysicalDmg == false) return;
-            if (actorDmg.GetActorDamageData().DamageVar.CombatHandler.DetermineAttackable(attacked.MyHealth, owner.MyHealth, meleeOptions.GetMeleeOptions().MeleeVars.FriendlyFire) == false) return;//cant attack
-            if (damager.GetDamagedList().Contains(attacked) == true) return;
-
-
+           
             if (actorDmg.GetActorDamageData().DamageVar.DamageOptions.InflictPhysicalDmg)
             {
-                int physdmg = actorDmg.GetActorDamageData().DamageVar.CombatHandler.DoMeleePhysicalDamage(owner, attacked, actorDmg.GetActorDamageData().DamageVar.DamageMultipliers.PhysMultipler);
+
+                int physdmg = actorDmg.GetActorDamageData().DamageVar.DamageMultipliers.PhysMultipler.GetPhysicalDamageAmount(owner);
+                results.PhysicalAttack.Add(new PhysicalAttackResults(physdmg, false, "Melee"));
                 actorDmg.GetActorDamageEvents().SceneEvents.OnPhysicalDamagedOther.Invoke(physdmg, attacked.MyHealth);
 
             }
 
             if (actorDmg.GetActorDamageData().DamageVar.DamageOptions.InfictElementalDmg)
             {
-                int eleDmg = actorDmg.GetActorDamageData().DamageVar.CombatHandler.DoMeleeElementalDamage(owner, attacked, actorDmg.GetActorDamageData().DamageVar.DamageMultipliers.ElementMultiplers);
-                actorDmg.GetActorDamageEvents().SceneEvents.OnElementalDamageOther.Invoke(eleDmg, attacked.MyHealth);
+                for (int i = 0; i < actorDmg.GetActorDamageData().DamageVar.DamageMultipliers.ElementMultiplers.Length; i++)
+                {
+                    results.ElementAttacks.Add(new ElementAttackResults(actorDmg.GetActorDamageData().DamageVar.DamageMultipliers.ElementMultiplers[i].DamageType, 
+                        actorDmg.GetActorDamageData().DamageVar.DamageMultipliers.ElementMultiplers[i].GetElementDamageAmount(owner), 
+                        "Melee"));
+                    actorDmg.GetActorDamageEvents().SceneEvents.OnElementalDamageOther.Invoke(actorDmg.GetActorDamageData().DamageVar.DamageMultipliers.ElementMultiplers[i].GetElementDamageAmount(owner), attacked.MyHealth);
+                }
+              
 
             }
 
@@ -235,10 +253,11 @@ namespace GWLPXL.ARPGCore.Combat.com
             int modlength = damager.GetWeaponMods().Length;
             for (int i = 0; i < modlength; i++)//try moving this to the damage logic. hmmm
             {
-                damager.GetWeaponMods()[i].DoModification(attacked);
+                damager.GetWeaponMods()[i].DoModification(results);
             }
 
             damager.GetDamagedList().Add(attacked);
+            return results;
             actorDmg.GetActorDamageEvents().SceneEvents.OnDamagedOther.Invoke();
             attacked.MyHealth.SetCharacterThatHitMe(owner);
            // Debug.Log("Ran attack for " + owner.MyTransform.gameObject.name);
@@ -433,9 +452,10 @@ namespace GWLPXL.ARPGCore.Combat.com
             return forUser.GetRuntimeAttributes().GetElementAttack(damageType);
         }
 
+        [System.Obsolete]
         protected virtual int DefaultPhysicalDamageBehavior(IActorHub attacker, IActorHub damageTarget, int dmg)
         {
-            damageTarget.MyHealth.TakeDamage(dmg, attacker);
+           // damageTarget.MyHealth.TakeDamage(dmg, attacker);
             return dmg;
         }
 
@@ -479,7 +499,7 @@ namespace GWLPXL.ARPGCore.Combat.com
             return damageArray;
         }
        
-
+        [System.Obsolete]
         protected virtual int DefaultElementalDamageBehavior(IReceiveDamage damageTarget, ElementAttackValues[] damageArray)
         {
             
@@ -491,7 +511,7 @@ namespace GWLPXL.ARPGCore.Combat.com
                 if (baseElement > 0)
                 {
                     ARPGDebugger.CombatDebugMessage(ColorForDamage("Damage Sent to ") + damageTarget + " for " + baseElement.ToString() + " " + type.ToString(), null);
-                    damageTarget.TakeDamage(baseElement, type);
+                  //  damageTarget.TakeDamage(baseElement, type);
                     total += baseElement;
                 }
             }
@@ -507,6 +527,8 @@ namespace GWLPXL.ARPGCore.Combat.com
         {
             return "<color=red>" + toColor + "</color>";
         }
+
+        [System.Obsolete]
         protected virtual int DefaultElementalDamageBehavior(IReceiveDamage damageTarget, ElementDamageMultiplierNoActor[] damageArray)
         {
 
@@ -519,13 +541,63 @@ namespace GWLPXL.ARPGCore.Combat.com
 
                 if (baseprojectile > 0)
                 {
-                    damageTarget.TakeDamage(baseprojectile, type);
+                   // damageTarget.TakeDamage(baseprojectile, type);
                     total += baseprojectile;
                 }
             }
 
             return total;
         }
+
+        public override List<ElementAttackResults> GetReducedResultsElemental(List<ElementAttackResults> attackvalues, IActorHub self)
+        {
+            if (self.PlayerControlled != null)
+            {
+                //player one
+                return PlayerCombat.GetReducedResults(attackvalues, self);
+            }
+            else
+            {
+                return EnemyCombat.GetReducedResults(attackvalues, self);
+            }
+     
+        }
+
+        public override List<PhysicalAttackResults> GetReducedResultsPhysical(List<PhysicalAttackResults> results, IActorHub self)
+        {
+            if (self.PlayerControlled != null)
+            {
+                return PlayerCombat.GetReducedPhysical(results, self);
+            }
+            else
+            {
+                return EnemyCombat.GetReducedPhysical(results, self);
+            }
+        }
+
+        public override bool CanMeleeAttack(IActorHub owner, IDoDamage damager, IDoActorDamage actorDmg, IActorHub attacked, IMeleeWeapon meleeOptions)
+        {
+            if (owner == null) return false;
+            if (attacked == null) return false;
+            if (attacked == owner) return false;
+            if (actorDmg.GetActorDamageData().DamageVar.DamageOptions.InfictElementalDmg == false && actorDmg.GetActorDamageData().DamageVar.DamageOptions.InflictPhysicalDmg == false) return false;
+            if (actorDmg.GetActorDamageData().DamageVar.CombatHandler.DetermineAttackable(attacked.MyHealth, owner.MyHealth, meleeOptions.GetMeleeOptions().MeleeVars.FriendlyFire) == false) return false;//cant attack
+            if (damager.GetDamagedList().Contains(attacked) == true) return false;
+            return true;
+        }
+
+        public override bool CanProjectileAttack(IActorHub owner, IDoDamage damageDealer, IActorHub damageTarget, IDoActorDamage damage, IProjectile projectileOptions)
+        {
+            if (damage.GetActorDamageData().DamageVar.DamageOptions.InflictPhysicalDmg == false && damage.GetActorDamageData().DamageVar.DamageOptions.InfictElementalDmg == false) return false;//no dmg to do
+            if (damageTarget == null) return false;
+            if (damageTarget == owner) return false;
+
+            if (damage.GetActorDamageData().DamageVar.CombatHandler.DetermineAttackable(damageTarget.MyHealth, owner.MyHealth, projectileOptions.GetProjectileData().ProjectileVars.FriendlyFire) == false) return false; //can't attack
+            if (damageDealer.GetDamagedList().Contains(damageTarget) == true) return false;
+            return true;
+        }
+
+       
 
         #endregion
     }
@@ -537,17 +609,34 @@ namespace GWLPXL.ARPGCore.Combat.com
         public abstract int GetArmorValue(IActorHub user);
         public abstract int GetAttackValue(IActorHub user);
         public abstract int GetTotalAttackDamage(IAttributeUser playerStats, IInventoryUser playerInv, IAbilityUser playerAbilities);
+        [System.Obsolete]
         public abstract int GetReducedPhysical(IAttributeUser playerStats, IInventoryUser playerInv, int enemyLevel, float fullDamageAmount);
         public abstract int GetArmor(IAttributeUser player, IInventoryUser playerInv);
         public abstract Dictionary<ElementType, ElementAttackResults> GetElementalDamageResistChecks(IAttributeUser defender, IAttributeUser attacker);
         public abstract int GetElementalDamageResistChecks(IAttributeUser enemy, ElementType _type, int elementDamage);
 
+        public abstract List<ElementAttackResults> GetReducedResults(List<ElementAttackResults> attackvalues, IActorHub self);
 
+        public abstract List<PhysicalAttackResults> GetReducedPhysical(List<PhysicalAttackResults> results, IActorHub self);
     }
 
 
     public abstract class CommonCombatFormulas :ScriptableObject
     {
+        public abstract int GetPhysicalAttackValue(IActorHub self);
+        public abstract bool CanMeleeAttack(IActorHub owner, IDoDamage damager, IDoActorDamage actorDmg, IActorHub attacked, IMeleeWeapon meleeOptions);
+
+        public abstract bool CanProjectileAttack(IActorHub owner, IDoDamage damageDealer, IActorHub damageTarget, IDoActorDamage damage, IProjectile projectileOptions);
+
+        public abstract AttackValues GetMeleeActorDamageLogic(AttackValues results, IActorHub owner, IDoDamage damager, IActorHub attacked, IDoActorDamage actorDmg, IMeleeWeapon meleeOptions);
+
+        public abstract AttackValues GetProjectileDamage(AttackValues results, IActorHub owner, IDoDamage damageDealer, IActorHub damageTarget, IDoActorDamage damage, IProjectile projectileOptions);
+
+        public abstract List<ElementAttackResults> GetReducedResultsElemental(List<ElementAttackResults> attackvalues, IActorHub self);
+
+        public abstract List<PhysicalAttackResults> GetReducedResultsPhysical(List<PhysicalAttackResults> results, IActorHub self);
+
+
 
         public abstract bool AddDOTS(IActorHub target, ModifyResourceVars[] damageOverTimeOptions);
         public abstract void SoTsDamageLogic(IActorHub target, IDoActorDamage damage);
@@ -555,8 +644,7 @@ namespace GWLPXL.ARPGCore.Combat.com
         public abstract void OnEnterSotLogic(IActorHub owner, IActorHub target, IDoActorDamage damage, IApplySOT sots);
         public abstract void OnExitSoTLogic(IActorHub target, IDoActorDamage damage, IApplySOT sots);
 
-        public abstract void DoMeleeActorDamageLogic(IActorHub owner, IDoDamage damager, IActorHub attacked, IDoActorDamage actorDmg, IMeleeWeapon meleeOptions);
-        public abstract void DoProjectileDamage(IActorHub owner, IDoDamage damageDealer, IActorHub damageTarget, IDoActorDamage damage, IProjectile projectileOptions);
+
         public abstract int DoMeleePhysicalDamage(IActorHub attacker, IActorHub damageTarget, PhysicalDamageMultiplier mod);
         public abstract int DoMeleeElementalDamage(IActorHub attacker, IActorHub damageTarget, ElementDamageMultiplierActor[] mods);
         public abstract int DoProjectilePhysicalDamage(IActorHub attacker, IActorHub damageTarget, PhysicalDamageMultiplier mod);
@@ -574,22 +662,27 @@ namespace GWLPXL.ARPGCore.Combat.com
 
 
 
-
-
     }
 
     public abstract class EnemyCombatFormulas : ScriptableObject
     {
+        public abstract int GetAttackValue(IActorHub user);
+      
         public abstract int GetTotalAttackDamage(IAttributeUser enemy);
+        [System.Obsolete]
         public abstract Dictionary<ElementType, ElementAttackResults> GetElementalDamageResistChecks(IAttributeUser enemy, IAttributeUser player);
+
+        public abstract List<ElementAttackResults> GetReducedResults(List<ElementAttackResults> attackvalues, IActorHub self);
+
         public abstract int GetElementalDamageResistChecks(IAttributeUser enemy, ElementType _type, int elementDamage);
 
+        [System.Obsolete]
         public abstract int GetReducedPhysical(IAttributeUser enemyStats, int damageAmount);
 
         public abstract int GetArmor(IAttributeUser enemy);
-        
-    
-        
+
+
+        public abstract List<PhysicalAttackResults> GetReducedPhysical(List<PhysicalAttackResults> results, IActorHub self);
     }
 
     /// <summary>

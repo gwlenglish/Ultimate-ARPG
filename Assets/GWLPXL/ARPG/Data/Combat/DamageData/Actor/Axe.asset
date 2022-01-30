@@ -26,13 +26,22 @@ MonoBehaviour:
       sotmod: 0
     damageMultipliers:
       physicalMultipler:
-        baseDamageAmount: 10
+        minD: 1
+        maxD: 8
         percentOfCasterAttack: 0
       elementMultipliers: []
     statusOverTimeOptions:
       applySOTAtEnter: 1
       applySOTAtExit: 0
-      additionalSOTs: []
+      additionalSOTs:
+      - Type: 0
+        ElementDamage: 0
+        StatusEffects: []
+        AmountPerTick: 0
+        Duration: 0
+        ClampStatusEffectToDuration: 0
+        TickRate: 0
+        StackAmount: 0
       damageRate: 1
       friendlyFire: 0
     statusOverTimeMultiplers:

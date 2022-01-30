@@ -5,6 +5,7 @@ using GWLPXL.ARPGCore.Items.com;
 using GWLPXL.ARPGCore.Leveling.com;
 using GWLPXL.ARPGCore.Statics.com;
 using GWLPXL.ARPGCore.Types.com;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,7 @@ namespace GWLPXL.ARPGCore.com
 
     public class PlayerHealth : MonoBehaviour, IReceiveDamage
     {
+        public Action<DamageResults> OnTakeDamage;
         [SerializeField]
         protected PlayerCombatFormulas combatHandler = null;
         [SerializeField]
@@ -205,6 +207,54 @@ namespace GWLPXL.ARPGCore.com
             canBeAttacked = false;
             yield return new WaitForSeconds(duration);
             canBeAttacked = true;
+        }
+
+        public void TakeDamage(AttackValues values)
+        {
+            IActorHub attacker = values.Attacker;
+            List<ElementAttackResults> elements = values.ElementAttacks;
+            List<PhysicalAttackResults> phys = values.PhysicalAttack;
+
+            elements = combatHandler.GetReducedResults(elements, owner);//calculates resist and new reduced values
+            phys = combatHandler.GetReducedPhysical(phys, owner);
+
+            if (immortal == false)
+            {
+                for (int i = 0; i < elements.Count; i++)
+                {
+                    if (elements[i].Reduced > 0)//prevent dmg if immortal, but show everything else
+                    {
+                        owner.MyStats.GetRuntimeAttributes().ModifyNowResource(healthResource, -elements[i].Reduced);
+                    }
+
+                }
+
+                for (int i = 0; i < phys.Count; i++)
+                {
+                    if (phys[i].PhysicalReduced > 0)
+                    {
+                        owner.MyStats.GetRuntimeAttributes().ModifyNowResource(healthResource, -phys[i].PhysicalReduced);
+                    }
+                }
+
+            }
+
+            DamageResults d = new DamageResults(elements, phys, this);
+            OnTakeDamage?.Invoke(d);
+            NotifyUI(d);
+            CheckDeath();
+            StartCoroutine(CanBeAttackedCooldown(iFrameTime));//we are invulnerable for a short time
+        }
+        protected virtual void NotifyUI(DamageResults results)
+        {
+
+          //  if (can == null) return;
+          //  dungeoncanvas.DamageResults(results);
+
+        }
+        public IActorHub GetUser()
+        {
+            return owner;
         }
 
 

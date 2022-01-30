@@ -8,15 +8,77 @@ using TMPro;
 namespace GWLPXL.ARPGCore.CanvasUI.com
 {
 
-
+   /// <summary>
+   /// combine not working
+   /// </summary>
     public class LazyWorldFloatingText : MonoBehaviour, IFloatTextCanvas
     {
+        class DMGUI
+        {
+            public IReceiveDamage Target;
+            public Vector3 Pos;
+            public int DMG;
+
+            public DMGUI(IReceiveDamage t, Vector3 v, int d)
+            {
+                Target = t;
+                Pos = v;
+                DMG = d;
+            }
+        }
+
+        public bool Combine = false;
         public GameObject DamageTextPrefab = default;
         public GameObject DoTTextPrefab = default;
         public GameObject RegenTextPrefab = default;
+        List<DMGUI> list = new List<DMGUI>();
+        int frame;
+        private void FixedUpdate()
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                DefaultMakeText(DamageTextPrefab, list[i].Pos, list[i].DMG.ToString());
+
+            }
+            list.Clear();
+            frame = 0;
+            if (frame > 0)
+            {
+                
+            }
+          
+            frame++;
+        }
         public void CreateDamagedText(IReceiveDamage damageTaker, Vector3 position, string text, ElementType type, bool isCritical = false)
         {
-            DefaultMakeText(DamageTextPrefab, position, text);
+
+            if (Combine)
+            {
+                int dmg = 0;
+                int.TryParse(text, out dmg);
+                bool found = false;
+                for (int i = 0; i < list.Count; i++)
+                {
+                    if (list[i].Target == damageTaker)
+                    {
+                        list[i].DMG += dmg;
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (found == false)
+                {
+                    list.Add(new DMGUI(damageTaker, position, dmg));
+                }
+            }
+            else
+            {
+                DefaultMakeText(DamageTextPrefab, position, text);
+
+            }
+
+
         }
 
       
@@ -49,6 +111,11 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
         protected virtual void DefaultMakeText(GameObject textPrefab, Vector3 position, string text)
         {
+            if (textPrefab == null)
+            {
+                //no prefab
+                return;
+            }
             GameObject newtext = Instantiate(textPrefab);
             newtext.transform.position = position;
             newtext.GetComponent<TextMeshPro>().SetText(text);

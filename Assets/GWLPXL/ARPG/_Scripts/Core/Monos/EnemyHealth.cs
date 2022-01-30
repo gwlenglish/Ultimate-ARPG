@@ -14,13 +14,49 @@ using GWLPXL.ARPGCore.Types.com;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-
+using System;
+using System.Linq;
 namespace GWLPXL.ARPGCore.com
 {
-    
+    [System.Serializable]
+    public class PhysicalAttackResults
+    {
+        public string Source;
+        public int PhysicalDamage;
+        public int PhysicalResisted;
+        public int PhysicalReduced;
+        public bool PhysicalCrit;
+        public PhysicalAttackResults(int damage, bool crit, string source)
+        {
+            Source = source;
+            PhysicalDamage = damage;
+            PhysicalCrit = crit;
+        }
+
+        public void AddDamage(int amount)
+        {
+            PhysicalDamage += amount;
+        }
+    }
+
+    [System.Serializable]
+    public class DamageResults : EventArgs
+    {
+        public List<ElementAttackResults> ElementResults;
+        public List<PhysicalAttackResults> PhysicalResult;
+        public IReceiveDamage Target;
+
+
+        public DamageResults(List<ElementAttackResults> e, List<PhysicalAttackResults> phys, IReceiveDamage target)
+        {
+            Target = target;
+            PhysicalResult = phys;
+            ElementResults = e;
+        }
+    }
     public class EnemyHealth : MonoBehaviour, IReceiveDamage
     {
+        public Action<DamageResults> OnTakeDamage;
         public System.Action OnDeath;
         public System.Action<GameObject> OnDeathAttacker;
         public System.Action<IActorHub> OnDamagedMe;
@@ -102,6 +138,8 @@ namespace GWLPXL.ARPGCore.com
         /// </summary>
         /// <param name="damageAmount"></param>
         /// <param name="type"></param>
+        /// 
+        [System.Obsolete]
         public virtual void TakeDamage(int damageAmount, ElementType type)
         {
             DefaultTakeDamage(damageAmount, type);
@@ -113,11 +151,53 @@ namespace GWLPXL.ARPGCore.com
         /// <param name="type"></param>
         /// <param name="owner"></param>
         //this one has an iframe timer. I wonder if we need that on enemy tho.
+        [System.Obsolete]
         public virtual void TakeDamage(int damageAmount, IActorHub damageDealer)
         {
             DefaultTakeActorDamage(damageAmount, damageDealer);
 
         }
+        List<DamageResults> results = new List<DamageResults>();
+        public void TakeDamage(AttackValues values)
+        {
+            IActorHub attacker = values.Attacker;
+            List<ElementAttackResults> elements = values.ElementAttacks;
+            List<PhysicalAttackResults> phys = values.PhysicalAttack;
+
+            elements = combatHandler.GetReducedResults(elements, owner);//calculates resist and new reduced values
+            phys = combatHandler.GetReducedPhysical(phys, owner);
+
+            if (immortal == false)
+            {
+                for (int i = 0; i < elements.Count; i++)
+                {
+                    if (elements[i].Reduced > 0)//prevent dmg if immortal, but show everything else
+                    {
+                        owner.MyStats.GetRuntimeAttributes().ModifyNowResource(healthResource, -elements[i].Reduced);
+                    }
+
+                }
+
+                for (int i = 0; i < phys.Count; i++)
+                {
+                    if (phys[i].PhysicalReduced > 0)
+                    {
+                        owner.MyStats.GetRuntimeAttributes().ModifyNowResource(healthResource, -phys[i].PhysicalReduced);
+                    }
+                }
+               
+            }
+
+            DamageResults d = new DamageResults(elements, phys, this);
+            results.Add(d);
+            OnTakeDamage?.Invoke(d);
+            NotifyUI(d);
+            CheckDeath();
+            StartCoroutine(CanBeAttackedCooldown(iFrameTime));//we are invulnerable for a short time
+            SetCharacterThatHitMe(values.Attacker);
+        }
+
+
         public virtual void CheckDeath()
         {
             DefaultCheckDeath();
@@ -208,7 +288,7 @@ namespace GWLPXL.ARPGCore.com
                 owner.MyStats.GetRuntimeAttributes().ModifyNowResource(healthResource, -damage);
             }
 
-            NotifyUI(type, damage);
+           // NotifyUI(type, damage);
             RaiseUnityDamageEvent(damage);
             if (isDead) return;
 
@@ -216,6 +296,7 @@ namespace GWLPXL.ARPGCore.com
             CheckDeath();
         }
 
+        [System.Obsolete]
         protected virtual void DefaultTakeActorDamage(int damageAmount, IActorHub damageDealer)
         {
             if (isDead) return;
@@ -226,19 +307,34 @@ namespace GWLPXL.ARPGCore.com
             int wpndmg = combatHandler.GetReducedPhysical(owner.MyStats, damageAmount);
             if (wpndmg > 0)
             {
-                TakeDamage(wpndmg, ElementType.None);
+                TakeDamage(wpndmg, ElementType.None);//since this is calling ui multiple
             }
 
             Dictionary<ElementType, ElementAttackResults> results = combatHandler.GetElementalDamageResistChecks(owner.MyStats, damageDealer.MyStats);
             foreach (var kvp in results)
             {
-                TakeDamage(kvp.Value.Damage, kvp.Key);
+                int damage = combatHandler.GetElementalDamageResistChecks(owner.MyStats, kvp.Value.Type, damageAmount);
+
+                if (damage > 0 && immortal == false)//prevent dmg if immortal, but show everything else
+                {
+                    owner.MyStats.GetRuntimeAttributes().ModifyNowResource(healthResource, -damage);
+                }
+                kvp.Value.Reduced = damage;
+                //TakeDamage(kvp.Value.Damage, kvp.Key);//since this is calling ui multiplie
             }
 
- 
-
-
+  
+            bool crit = false;
+            if (lastcharacterHitMe != null)
+            {
+                crit = CritHelper.WasCrit(lastcharacterHitMe.MyStats, lastNonMitagatedHitAmount);
+            }
+            if (crit)
+            {
+                lastNonMitagatedHitAmount = 0;
+            }
             OnDamagedMe?.Invoke(damageDealer);
+
             CheckDeath();
             StartCoroutine(CanBeAttackedCooldown(iFrameTime));//we are invulnerable for a short time
         }
@@ -266,6 +362,19 @@ namespace GWLPXL.ARPGCore.com
             }
         }
 
+        protected virtual void NotifyUI(DamageResults results)
+        {
+
+            if (dungeoncanvas == null) return;
+            dungeoncanvas.DamageResults(results);
+            
+        }
+
+        /// <summary>
+        /// deprecate
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="damage"></param>
         protected virtual void NotifyUI(ElementType type, int damage)
         {
             if (dungeoncanvas == null) return;
@@ -282,6 +391,13 @@ namespace GWLPXL.ARPGCore.com
             dungeoncanvas.CreateUIDamageText("-" + damage.ToString(), type, crit);
 
         }
+
+        public IActorHub GetUser()
+        {
+            return owner;
+        }
+
+
 
         #endregion
 

@@ -98,6 +98,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
   healthResource: 0
+  iFrameTime: 0.25
   immortal: 0
 --- !u!114 &6195200486441316410
 MonoBehaviour:
@@ -137,7 +138,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BaseXP: 40
-  UseScaledAmount: 1
+  UseDungeonScaling: 1
+  UseDiminishingReturns: 1
+  NoXPDelta: 2
+  DiminishCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &3855509219426966303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,7 +159,104 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cc8915749161f446b238474a145df4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  overrideDmgText:
+    UseOverride: 0
+    Override:
+      TextObjectPrefab: {fileID: 0}
+      Type: 0
+      Font: {fileID: 0}
+      Color: {r: 0, g: 0, b: 0, a: 0}
+      TargetDir: {x: 0, y: 0, z: 0}
+      YCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      SizeCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      FadeCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      SpeedMultiplier: 1
+      DamageTextAliveTime: 1
+      DamageQueueSpacing: 1
+      ZeroReplacement: 
+      MaxQueued: 3
+      ScaleMulti: 1
+  overrideRegenText:
+    UseOverride: 0
+    Override:
+      TextObjectPrefab: {fileID: 0}
+      Type: 0
+      Font: {fileID: 0}
+      Color: {r: 0, g: 0, b: 0, a: 0}
+      TargetDir: {x: 0, y: 0, z: 0}
+      YCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      SizeCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      FadeCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      SpeedMultiplier: 1
+      DamageTextAliveTime: 1
+      DamageQueueSpacing: 1
+      ZeroReplacement: 
+      MaxQueued: 3
+      ScaleMulti: 1
+  overrideDotText:
+    UseOverride: 0
+    Override:
+      TextObjectPrefab: {fileID: 0}
+      Type: 0
+      Font: {fileID: 0}
+      Color: {r: 0, g: 0, b: 0, a: 0}
+      TargetDir: {x: 0, y: 0, z: 0}
+      YCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      SizeCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      FadeCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      SpeedMultiplier: 1
+      DamageTextAliveTime: 1
+      DamageQueueSpacing: 1
+      ZeroReplacement: 
+      MaxQueued: 3
+      ScaleMulti: 1
   floatingTextOffset: {x: 0, y: 2, z: 0}
+  combine: 0
 --- !u!1 &1082908816304575591
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,7 +459,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba9388c0c2c026f4397831c6cc0ef126, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  combatHandler: {fileID: 0}
   receiverEvents:
     SceneEvent:
       OnRegenResource:
@@ -990,11 +1095,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActorHub: {fileID: 3495537873336263508}
+  AggroDetectRange: 1
+  AggroSightAngle: 45
+  SightBlockingLayers:
+    serializedVersion: 2
+    m_Bits: 0
   DefaultKey: Aggro
   AggroKey: Aggro
   AggroDuration: 7
   IdleKey: Idle
   DeathKey: Death
+  HurtKey: Hurt
+  RandomizedHurtChance: 0.1
 --- !u!1 &8468113007378022161
 GameObject:
   m_ObjectHideFlags: 0

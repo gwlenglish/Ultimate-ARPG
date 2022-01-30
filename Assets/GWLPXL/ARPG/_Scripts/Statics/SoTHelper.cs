@@ -15,7 +15,7 @@ namespace GWLPXL.ARPGCore.Statics.com
         public static System.Action<IActorHub, ModifyResourceVars> OnDoTRemoved;
         public static System.Action<IActorHub, int, ResourceType, ElementType> OnRegenResource;
         public static System.Action<IActorHub, int, ResourceType, ElementType> OnReduceResource;
-
+        public static Dictionary<IActorHub, Dictionary<ModifyResourceVars, ModifyResourceDoTState>> Dotdic => dotdic;
         static Dictionary<IActorHub, Dictionary<ModifyResourceVars, ModifyResourceDoTState>> dotdic = new Dictionary<IActorHub, Dictionary<ModifyResourceVars, ModifyResourceDoTState>>();
 
         public static void ReduceResource(IActorHub target, int dmgamount, ResourceType type)

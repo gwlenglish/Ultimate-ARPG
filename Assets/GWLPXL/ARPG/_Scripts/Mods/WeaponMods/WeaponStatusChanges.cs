@@ -52,7 +52,9 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
         public bool TimeObjectLifetimeWithWeaponStatus = true;
         public GameObject VFXPrefab = null;
 
-
+        public abstract void Apply(Transform[] weapon, IActorHub forUser);
+        public abstract void Remove(Transform[] weapons, IActorHub forUser);
+        protected abstract IWeaponModification CreateIWeaponMono(Transform forTransform);
 
         protected virtual void Enable(Transform[] coat, IActorHub forUser, Dictionary<Transform, WeaponBuffTracker> trackingDic)
         {
@@ -101,9 +103,7 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
             }
             
         }
-        public abstract void Apply(Transform[] weapon, IActorHub forUser);
-        public abstract void Remove(Transform[] weapons, IActorHub forUser);
-        protected abstract IWeaponModification CreateIWeaponMono(Transform forTransform);
+
         protected virtual GameObject MakePrefabInstance(Transform coatSkill)
         {
             if (VFXPrefab == null) return null;

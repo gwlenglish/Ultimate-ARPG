@@ -19,24 +19,27 @@ namespace GWLPXL.ARPGCore.Combat.com
             return false;
         }
 
-        public void DoModification(IActorHub other)
+        public void DoModification(AttackValues other)
         {
-           
-            GameObject instance = Instantiate(Vars.ExplosionPrefab, other.MyTransform.position, Quaternion.identity);
-            ActorExplosion explode = instance.GetComponent<ActorExplosion>();
-            ExplosionVars newvars = new ExplosionVars(Vars.ActorDamage, user);
-            newvars.Delay = Vars.Delay;
-            newvars.Duration = Vars.Duration;
-            newvars.EndRadius = Vars.EndRadius;
-            newvars.ExplosionCurve = Vars.ExplosionCurve;
-            newvars.StickToTarget = Vars.StickToTarget;
-            explode.Vars = newvars;
-
-            explode.gameObject.transform.position = other.MyTransform.position;
-            if (Vars.StickToTarget)
+            for (int i = 0; i < other.Defenders.Count; i++)
             {
-                explode.gameObject.transform.SetParent(other.MyTransform);
+                GameObject instance = Instantiate(Vars.ExplosionPrefab, other.Defenders[i].MyTransform.position, Quaternion.identity);
+                ActorExplosion explode = instance.GetComponent<ActorExplosion>();
+                ExplosionVars newvars = new ExplosionVars(Vars.ActorDamage, user);
+                newvars.Delay = Vars.Delay;
+                newvars.Duration = Vars.Duration;
+                newvars.EndRadius = Vars.EndRadius;
+                newvars.ExplosionCurve = Vars.ExplosionCurve;
+                newvars.StickToTarget = Vars.StickToTarget;
+                explode.Vars = newvars;
+
+                explode.gameObject.transform.position = other.Defenders[i].MyTransform.position;
+                if (Vars.StickToTarget)
+                {
+                    explode.gameObject.transform.SetParent(other.Defenders[i].MyTransform);
+                }
             }
+           
             
         }
 

@@ -22,7 +22,7 @@ namespace GWLPXL.ARPGCore.StatusEffects.com
         [Tooltip("When enabled, will clamp the status effect duration to this duration.")]
         public bool ClampStatusEffectToDuration = false;
         public float TickRate = 1f;
-        [Tooltip("How many stacks at once. AmountPerTick * Stack = total.")]
+        [Tooltip("How many max stacks at once. AmountPerTick * Stack = total.")]
         [Range(1, 5)]
         public int StackAmount = 1;
 
@@ -43,11 +43,12 @@ namespace GWLPXL.ARPGCore.StatusEffects.com
     /// </summary>
     public class ModifyResourceDoTState : IDoT, ITick
     {
-        ModifyResourceVars vars = null;
-        IActorHub target = null;
-        int currentStacks = 0;
-        bool applied = false;
-        float timer = 0;
+        public float CurrentTimer => timer;
+        protected ModifyResourceVars vars = null;
+        protected IActorHub target = null;
+        protected int currentStacks = 0;
+        protected bool applied = false;
+        protected float timer = 0;
         public ModifyResourceDoTState(IActorHub target, ModifyResourceVars vars)
         {
             this.target = target;
@@ -55,12 +56,12 @@ namespace GWLPXL.ARPGCore.StatusEffects.com
             AddTicker();
         }
 
-        public void AddTicker()
+        public virtual void AddTicker()
         {
             TickManager.Instance.AddTicker(this);
         }
 
-        public void ApplyDoT()
+        public virtual  void ApplyDoT()
         {
             timer = 0;
             currentStacks += 1;
@@ -73,7 +74,7 @@ namespace GWLPXL.ARPGCore.StatusEffects.com
             StatusEffectHelper.ApplyStatusEffects(target, vars.StatusEffects);
         }
 
-        public void DoTick()
+        public virtual void DoTick()
         {
             if (applied == false) return;
             Tick();
@@ -82,11 +83,11 @@ namespace GWLPXL.ARPGCore.StatusEffects.com
 
       
 
-        public float GetTickDuration() => vars.TickRate;
+        public virtual float GetTickDuration() => vars.TickRate;
 
       
 
-        public void RemoveDoT()
+        public virtual void RemoveDoT()
         {
             applied = false;
             RemoveTicker();
@@ -99,12 +100,12 @@ namespace GWLPXL.ARPGCore.StatusEffects.com
 
         }
 
-        public void RemoveTicker()
+        public virtual void RemoveTicker()
         {
             TickManager.Instance.RemoveTicker(this);
         }
 
-        public void Tick()
+        public virtual  void Tick()
         {
         
             if (timer >= vars.Duration && vars.Duration > 0)

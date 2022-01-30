@@ -20,17 +20,25 @@ namespace GWLPXL.ARPGCore.Combat.com
         /// </summary>
         /// <param name="damageAmount"></param>
         /// <param name="type"></param>
-        void TakeDamage(int damageAmount, ElementType type);
-        /// <summary>
-        /// damage with player / enemy formula defaults
-        /// </summary>
-        /// <param name="damageAmount"></param>
-        /// <param name="damageDealer"></param>
-        void TakeDamage(int damageAmount, IActorHub damageDealer);
+        /// 
+        //[System.Obsolete]
+        //void TakeDamage(int damageAmount, ElementType type);
+        ///// <summary>
+        ///// damage with player / enemy formula defaults
+        ///// </summary>
+        ///// <param name="damageAmount"></param>
+        ///// <param name="damageDealer"></param>
+        ///// 
+
+        //[System.Obsolete]
+        //void TakeDamage(int damageAmount, IActorHub damageDealer);
+
+        void TakeDamage(AttackValues values);
         void Die();
         bool IsHurt();
         ResourceType GetHealthResource();
         void SetUser(IActorHub forUser);
+        IActorHub GetUser();
         /// <summary>
         /// used to make an actor immortal, e.g. target dummies or invincibility
         /// </summary>

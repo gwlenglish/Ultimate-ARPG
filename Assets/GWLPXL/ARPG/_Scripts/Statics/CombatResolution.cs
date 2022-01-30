@@ -12,17 +12,23 @@ using GWLPXL.ARPGCore.Leveling.com;
 
 namespace GWLPXL.ARPGCore.Statics.com
 {
+    [System.Obsolete("Use CombatHandlers, will be removed")]
     public static class PlayerCombatResolution
     {
 
     }
+
+    [System.Obsolete("Use CombatHandlers, will be removed")]
     public static class EnemyCombatResolution
     {
+        [System.Obsolete("Use CombatHandlers, will be removed")]
         public static int GetEnemyReducedWeaponDamage(IAttributeUser enemy)
         {
             return GetEnemyArmor(enemy);
         }
-        public static Dictionary<ElementType, ElementAttackResults> DoEnemyElementalDamageResistChecks(IAttributeUser enemy, IAttributeUser player, ResourceType type)
+
+        [System.Obsolete]
+        public static Dictionary<ElementType, ElementAttackResults> GetEnemyElementalDamageResistChecks(IAttributeUser enemy, IAttributeUser player, ResourceType type)
         {
             //Dictionary<ElementType, ElementAttack> attackElements =  player.GetRuntimeStats().GetRuntimeElementValues();
             Dictionary<ElementType, ElementAttackResults> attackDic = new Dictionary<ElementType, ElementAttackResults>();
@@ -50,7 +56,7 @@ namespace GWLPXL.ARPGCore.Statics.com
                     attackDic.TryGetValue(eletype, out ElementAttackResults value);
                     if (value == null)
                     {
-                        value = new ElementAttackResults(eletype, newDmg, resistAmount);
+                        value = new ElementAttackResults(eletype, newDmg, null);
                         attackDic[eletype] = value;
                     }
                     else
@@ -68,6 +74,8 @@ namespace GWLPXL.ARPGCore.Statics.com
 
 
         }
+
+        [System.Obsolete("Use CombatHandlers, will be removed")]
         public static int DoEnemyElementalDamageWithResistChecks(IAttributeUser enemy, ElementType _type, float elementDamage, ResourceType type)
         {
             float absolute = Mathf.Abs(elementDamage);
@@ -89,6 +97,7 @@ namespace GWLPXL.ARPGCore.Statics.com
             return rounded;
         }
 
+        [System.Obsolete("Use CombatHandlers, will be removed")]
         public static int DoEnemyPhysicalReducedChecks(
            IAttributeUser enemyStats,
            int damageAmount,
@@ -115,6 +124,8 @@ namespace GWLPXL.ARPGCore.Statics.com
 
             //raise ui
         }
+
+        [System.Obsolete("Use CombatHandlers, will be removed")]
         private static int GetEnemyArmor(IAttributeUser enemy)
         {
             int scaled = 1;
@@ -127,8 +138,12 @@ namespace GWLPXL.ARPGCore.Statics.com
 
         }
     }
+
+
+    [System.Obsolete("Use the Combat Handlers. This will be removed")]
     public static class CombatResolution
     {
+        [System.Obsolete]
         static int GetReducedElementDamage(IAttributeUser player, ElementType _type, float elementDamage)
         {
             if (player == null) return Mathf.FloorToInt(elementDamage);//if not attributes, can't resist so take full amount
@@ -139,6 +154,8 @@ namespace GWLPXL.ARPGCore.Statics.com
 
 
         }
+
+        [System.Obsolete]
         public static int DoBreakableDamage(IAttributeUser victim, int amount, ResourceType type)
         {
             amount = Mathf.Abs(amount);
@@ -147,35 +164,48 @@ namespace GWLPXL.ARPGCore.Statics.com
             return amount;
 
         }
+
+        [System.Obsolete]
         public static int DoElementalMeleeDamage(IAttributeUser caster, IReceiveDamage damageTarget)
         {
             List<ElementAttackValues> values = CombatStats.GetActorElementAttackValues(caster);
             return DefaultElementalDamageBehavior(damageTarget, values.ToArray());
         }
+
+        [System.Obsolete]
         public static int DoElementalMeleeDamage(IAttributeUser caster, IReceiveDamage damageTarget, ElementDamageMultiplierActor[] damageArray)
         {
             return DefaultElementalDamageBehavior(caster, damageTarget, damageArray);
         }
 
+        [System.Obsolete]
         public static int DoElementalDamageOverTime(IReceiveDamage damageTarget, ElementDamageMultiplierNoActor[] damageArray)
         {
             return DefaultElementalDamageBehavior(damageTarget, damageArray);
         }
+
+        [System.Obsolete]
         public static int DoElementalDamageOverTime(IAttributeUser caster, IReceiveDamage damageTarget, ElementDamageMultiplierActor[] damageArray)
         {
             return DefaultElementalDamageBehavior(caster, damageTarget, damageArray);
         }
+
+        [System.Obsolete]
         public static int DoElementalProjectileDamage(IAttributeUser caster, IReceiveDamage damageTarget)
         {
             List<ElementAttackValues> values = CombatStats.GetActorElementAttackValues(caster);
             return DefaultElementalDamageBehavior(damageTarget, values.ToArray());
 
         }
+
+        [System.Obsolete]
         public static int DoElementalProjectileDamage(IAttributeUser caster, IReceiveDamage damageTarget, ElementDamageMultiplierActor[] damageArray)
         {
             return DefaultElementalDamageBehavior(caster, damageTarget, damageArray);
 
         }
+
+        [System.Obsolete]
         public static int DoPhysicalDamage(IActorHub attacker, IActorHub damageTarget)
         {
             if (attacker == null || attacker.MyTransform == null) return 0;
@@ -183,16 +213,22 @@ namespace GWLPXL.ARPGCore.Statics.com
             return DefaultPhysicalDamageBehavior(attacker, phys, damageTarget);
 
         }
+
+        [System.Obsolete]
         public static int DoPhysicalDamage(IActorHub attacker, IActorHub damageTarget, PhysicalDamageMultiplier physdmg)
         {
             return DefaultPhysicalDamageBehavior(attacker, physdmg, damageTarget);
 
         }
+
+        [System.Obsolete]
         public static bool DetermineAttackable(IReceiveDamage target, IReceiveDamage attacker, bool friendlyFire)
         {
             return DefaultDetermineLogic(target, attacker, friendlyFire);
 
         }
+
+        [System.Obsolete]
         public static int DoPlayerElementDamageWithResistChecks(IAttributeUser player, ElementType _type, float elementDamage, ResourceType type)
         {
             float resist = player.GetRuntimeAttributes().GetElementResist(_type);
@@ -209,23 +245,14 @@ namespace GWLPXL.ARPGCore.Statics.com
 
 
         }
+
+        [System.Obsolete("Use CombatHandlers, will be removed")]
         public static int DoPlayerReducedElemental(IReceiveDamage damageTaker, IAttributeUser damageDealer, ResourceType healthResource, TookDamageEvent customEvent)
         {
-            int totaltaken = 0;
-            IAttributeUser takerstats = damageTaker.GetInstance().GetComponent<IAttributeUser>();
-            Attribute[] attackElements = damageDealer.GetRuntimeAttributes().GetAttributes(AttributeType.ElementAttack);
-            for (int i = 0; i < attackElements.Length; i++)
-            {
-                ElementAttack attackEle = (ElementAttack)attackElements[i];
-                ElementType type = attackEle.Type;
-                int attack = attackEle.NowValue;
-                int eleDmgTaken = GetReducedElementDamage(takerstats, type, attack);
-                damageTaker.TakeDamage(eleDmgTaken, type);
-                totaltaken += eleDmgTaken;
-            }
-            return -totaltaken;
+            return 0;
         }
-       
+
+        [System.Obsolete]
         public static int DoPlayerReducedPhysical(IAttributeUser playerStats, IInventoryUser playerInv, int enemyLevel, float fullDamageAmount)
         {
             float mobMulti = Formulas.MobLevelMultiplier;
@@ -241,6 +268,7 @@ namespace GWLPXL.ARPGCore.Statics.com
             return -rounded;
         }
 
+        [System.Obsolete]
         private static bool DefaultDetermineLogic(IReceiveDamage target, IReceiveDamage attacker, bool friendlyFire)
         {
            // if (attacker == null) return true;//always lie the attack through if an attacker group isn't set
@@ -256,20 +284,24 @@ namespace GWLPXL.ARPGCore.Statics.com
             return true;
         }
 
+        [System.Obsolete]
         private static int DefaultPhysicalDamageBehavior(IActorHub attacker, int dmg, IActorHub damageTarget)
         {
            // int dmg = physdmg.GetPhysicalDamageAmount(attacker);
   
-            damageTarget.MyHealth.TakeDamage(dmg, attacker);
-            return dmg;
-        }
-        private static int DefaultPhysicalDamageBehavior(IActorHub attacker, PhysicalDamageMultiplier physdmg, IActorHub damageTarget)
-        {
-            int dmg = physdmg.GetPhysicalDamageAmount(attacker);
-            damageTarget.MyHealth.TakeDamage(dmg, attacker);
+            //damageTarget.MyHealth.TakeDamage(dmg, attacker);
             return dmg;
         }
 
+        [System.Obsolete]
+        private static int DefaultPhysicalDamageBehavior(IActorHub attacker, PhysicalDamageMultiplier physdmg, IActorHub damageTarget)
+        {
+            int dmg = physdmg.GetPhysicalDamageAmount(attacker);
+         //   damageTarget.MyHealth.TakeDamage(dmg, attacker);
+            return dmg;
+        }
+
+        [System.Obsolete]
         private static int DefaultElementalDamageBehavior(IReceiveDamage damageTarget, ElementAttackValues[] damageArray)
         {
             float multi = 1;
@@ -297,13 +329,15 @@ namespace GWLPXL.ARPGCore.Statics.com
 
                 if (combinedmdg > 0)
                 {
-                    damageTarget.TakeDamage(combinedmdg, type);
+                   // damageTarget.TakeDamage(combinedmdg, type);
                     total += combinedmdg;
                 }
             }
 
             return total;
         }
+
+        [System.Obsolete]
         private static int DefaultElementalDamageBehavior(IReceiveDamage damageTarget, ElementDamageMultiplierNoActor[] damageArray)
         {
             float multi = 1;
@@ -331,13 +365,15 @@ namespace GWLPXL.ARPGCore.Statics.com
 
                 if (combinedmdg > 0)
                 {
-                    damageTarget.TakeDamage(combinedmdg, type);
+                   // damageTarget.TakeDamage(combinedmdg, type);
                     total += combinedmdg;
                 }
             }
 
             return total;
         }
+
+        [System.Obsolete]
         private static int DefaultElementalDamageBehavior(IAttributeUser caster, IReceiveDamage damageTarget, ElementDamageMultiplierActor[] damageArray)
         {
             List<ElementAttackValues> actorele = CombatStats.GetActorElementAttackValues(caster);
@@ -380,7 +416,7 @@ namespace GWLPXL.ARPGCore.Statics.com
 
                 if (combinedmdg > 0)
                 {
-                    damageTarget.TakeDamage(combinedmdg, type);
+                  //  damageTarget.TakeDamage(combinedmdg, type);
                     total += combinedmdg;
                 }
             }
@@ -397,18 +433,6 @@ namespace GWLPXL.ARPGCore.Statics.com
         {
             Type = type;
             AttackDamage = attackdamage;
-        }
-    }
-    public class ElementAttackResults
-    {
-        public ElementType Type;
-        public int Damage;
-        public int Resisted;
-        public ElementAttackResults(ElementType type, int dmg, int resist)
-        {
-            Type = type;
-            Damage = dmg;
-            Resisted = resist;
         }
     }
 }

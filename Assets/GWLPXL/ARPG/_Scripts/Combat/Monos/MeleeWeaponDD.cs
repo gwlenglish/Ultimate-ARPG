@@ -8,7 +8,7 @@ using GWLPXL.ARPGCore.DebugHelpers.com;
 using GWLPXL.ARPGCore.StatusEffects.com;
 using GWLPXL.ARPGCore.com;
 using GWLPXL.ARPGCore.Abilities.Mods.com;
-
+using GWLPXL.ARPGCore.Statics.com;
 
 namespace GWLPXL.ARPGCore.Combat.com
 {
@@ -160,7 +160,13 @@ namespace GWLPXL.ARPGCore.Combat.com
 
         public void DamageLogic(IActorHub attacked)
         {
-            damage.DamageVar.CombatHandler.DoMeleeActorDamageLogic(owner, this, attacked, this, this);
+            if (damage.DamageVar.CombatHandler.CanMeleeAttack(owner, this, this, attacked, this))
+            {
+                AttackValues values = new AttackValues(owner, attacked);
+                damage.DamageVar.CombatHandler.GetMeleeActorDamageLogic(values, owner, this, attacked, this, this);
+                values.Resolve();
+            }
+           
         }
 
         public Transform GetTransform()

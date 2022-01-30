@@ -16,7 +16,6 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
         [Tooltip("Takes actors base ele plus the BaseDamage listed here.")]
         public AoEWeapoNVars Vars;
 
-
         [System.NonSerialized]
         Dictionary<Transform, WeaponBuffTracker> trackerdic = new Dictionary<Transform, WeaponBuffTracker>();//and something to track to enable/disable
         public override void Apply(Transform[] weapon, IActorHub forUser)
@@ -37,8 +36,5 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
             return source;
         }
 
-       
-
-     
     }
 }

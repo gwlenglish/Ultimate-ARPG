@@ -26,7 +26,8 @@ MonoBehaviour:
       sotmod: 0
     damageMultipliers:
       physicalMultipler:
-        baseDamageAmount: 1
+        minD: 1
+        maxD: 3
         percentOfCasterAttack: 0.2
       elementMultipliers: []
     statusOverTimeOptions:

@@ -46,7 +46,7 @@ namespace GWLPXL.ARPGCore.Combat.com
 
   
       
-        public void DoModification(IActorHub other)
+        public void DoModification(AttackValues other)
         {
             if (enabled == false) return;
 
@@ -57,10 +57,9 @@ namespace GWLPXL.ARPGCore.Combat.com
             ChainDamageVars newVars = new ChainDamageVars();
             newVars = Vars;
             tracker.SetOriginalCaster(self);
-
-            // tracker.TryDamageLink(newVars, transform.position);
-            ChainDamagLink firstlink = other.MyTransform.gameObject.AddComponent<ChainDamagLink>();
-            firstlink.SetDamageVars(newVars, 0, other, tracker);
+            ChainDamagLink firstlink = other.Defenders[0].MyTransform.gameObject.AddComponent<ChainDamagLink>();
+            firstlink.SetDamageVars(newVars, 0, other.Defenders[0], tracker);
+          
 
         }
 

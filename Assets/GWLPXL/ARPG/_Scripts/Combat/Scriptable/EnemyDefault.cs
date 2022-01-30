@@ -1,4 +1,5 @@
 ﻿using GWLPXL.ARPGCore.Attributes.com;
+using GWLPXL.ARPGCore.com;
 using GWLPXL.ARPGCore.DebugHelpers.com;
 using GWLPXL.ARPGCore.Leveling.com;
 using GWLPXL.ARPGCore.Statics.com;
@@ -14,12 +15,37 @@ namespace GWLPXL.ARPGCore.Combat.com
     [CreateAssetMenu(menuName ="GWLPXL/ARPG/Combat/EnemyDefaultFormulas")]
     public class EnemyDefault : EnemyCombatFormulas
     {
+        public override List<PhysicalAttackResults> GetReducedPhysical(List<PhysicalAttackResults> results, IActorHub self)
+        {
+            if (self.MyStats == null) return results;
+            for (int i = 0; i < results.Count; i++)
+            {
+                results[i].PhysicalResisted = self.MyStats.GetRuntimeAttributes().GetStatForCombat(CombatStatType.Armor);
+                results[i].PhysicalReduced = results[i].PhysicalDamage - results[i].PhysicalResisted;
+                if (results[i].PhysicalReduced < 0) results[i].PhysicalReduced = 0;
+            }
+
+            return results;
+        }
+        public override List<ElementAttackResults> GetReducedResults(List<ElementAttackResults> attackvalues, IActorHub self)
+        {
+            if (self.MyStats == null) return attackvalues;
+            for (int i = 0; i < attackvalues.Count; i++)
+            {
+                attackvalues[i].Resisted = self.MyStats.GetRuntimeAttributes().GetElementResist(attackvalues[i].Type);//grab oru resist
+                attackvalues[i].Reduced = attackvalues[i].Damage - attackvalues[i].Resisted;
+                if (attackvalues[i].Reduced < 0) attackvalues[i].Reduced = 0;
+            }
+            return attackvalues;
+        }
         /// <summary>
         /// simple +- calculation against damage and resist, e.g. 25 damage and 12 resist = 13 result
         /// </summary>
         /// <param name="defender"></param>
         /// <param name="attacker"></param>
         /// <returns></returns>
+        /// 
+        [System.Obsolete("Use Get Reduced Results")]
         public override Dictionary<ElementType, ElementAttackResults> GetElementalDamageResistChecks(IAttributeUser defender, IAttributeUser attacker)
         {
             Dictionary<ElementType, ElementAttackResults> attackDic = new Dictionary<ElementType, ElementAttackResults>();
@@ -47,7 +73,7 @@ namespace GWLPXL.ARPGCore.Combat.com
                     attackDic.TryGetValue(eletype, out ElementAttackResults value);
                     if (value == null)
                     {
-                        value = new ElementAttackResults(eletype, newDmg, resistAmount);
+                        value = new ElementAttackResults(eletype, newDmg, "Deprecated Source");
                         attackDic[eletype] = value;
                     }
                     else
@@ -121,6 +147,17 @@ namespace GWLPXL.ARPGCore.Combat.com
 
             ARPGDebugger.CombatDebugMessage(enemy.GetRuntimeAttributes().ActorName + ARPGDebugger.GetColorForResist(" Resist Amount= ") + resist + "Damaged Amount=" + newDmg, enemy.GetInstance());
             return newDmg;
+        }
+
+        public override int GetAttackValue(IActorHub user)
+        {
+
+            int baseStatFactor = user.MyStats.GetRuntimeAttributes().GetStatForCombat(CombatStatType.Damage);//current base stat value divide by 100
+            float baseWpnFactor = user.MyInventory.GetInventoryRuntime().GetDamageFromEquipment();
+
+            float result = ((baseWpnFactor) + baseStatFactor);
+            int rounded = Mathf.FloorToInt(result);
+            return rounded;
         }
     }
 

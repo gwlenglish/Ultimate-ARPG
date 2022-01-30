@@ -24,19 +24,55 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         [SerializeField]
         [Tooltip("Adjusts the start position of the floating text.")]
         protected Vector3 floatingTextOffset = new Vector3(0, 2, 0);//change the y value to move the hp bar up and down
+        [SerializeField]
+        protected bool combine = false;
         protected IActorHub hub;
 
         #region public interface
 
+      
+        public virtual void DamageResults(DamageResults args)
+        {
+            if (combine)
+            {
+                int dmg = 0;
+                for (int i = 0; i < args.ElementResults.Count; i++)
+                {
+                    dmg += args.ElementResults[i].Reduced;
+                }
+
+                for (int i = 0; i < args.PhysicalResult.Count; i++)
+                {
+                    dmg += args.PhysicalResult[i].PhysicalReduced;
+                }
+              
+                CreateUIDamageText(dmg.ToString(), ElementType.None, false);
+            }
+            else
+            {
+                for (int i = 0; i < args.ElementResults.Count; i++)
+                {
+                    CreateUIDamageText(args.ElementResults[i].Reduced.ToString(), args.ElementResults[i].Type, args.PhysicalResult[i].PhysicalCrit);
+                }
+
+                for (int i = 0; i < args.PhysicalResult.Count; i++)
+                {
+                    CreateUIDamageText(args.PhysicalResult[i].PhysicalReduced.ToString(), ElementType.None, args.PhysicalResult[i].PhysicalCrit);
+
+                }
+            }
+        }
         public virtual Vector3 GetHPBarOffset()
         {
             return floatingTextOffset;
         }
 
+       
 
         public virtual void CreateUIDamageText(string message, ElementType type, bool isCritical)
         {
             DefaultDamageText(message, type, isCritical);
+            
         }
 
         public virtual void CreateUIRegenText(string message, ResourceType type)
@@ -86,6 +122,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
         protected virtual void DefaultDamageText(string message, ElementType type, bool isCritical)
         {
+            
             if (overrideDmgText.UseOverride)
             {
                 DungeonMaster.Instance.GetFloatTextCanvas().CreateNewFloatingText(hub.MyHealth, overrideDmgText.Override, transform.position + GetHPBarOffset(), message, FloatingTextType.Damage);

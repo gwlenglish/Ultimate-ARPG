@@ -6538,6 +6538,11 @@ PrefabInstance:
       propertyPath: AggroDetectRange
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 357313929038211929, guid: 2fd81006893900245b5efedd7cf77489,
+        type: 3}
+      propertyPath: RandomizedHurtChance
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1329585664975498627, guid: 2fd81006893900245b5efedd7cf77489,
         type: 3}
       propertyPath: m_Name
@@ -6627,6 +6632,11 @@ PrefabInstance:
         type: 3}
       propertyPath: iFrameTime
       value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4186270880124485643, guid: 2fd81006893900245b5efedd7cf77489,
+        type: 3}
+      propertyPath: combine
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2fd81006893900245b5efedd7cf77489, type: 3}

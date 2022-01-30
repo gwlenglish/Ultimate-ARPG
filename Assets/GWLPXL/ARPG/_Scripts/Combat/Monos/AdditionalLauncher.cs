@@ -37,7 +37,7 @@ namespace GWLPXL.ARPGCore.Combat.com
             return false;
         }
 
-        public void DoModification(IActorHub other)
+        public void DoModification(AttackValues values)
         {
             
         }

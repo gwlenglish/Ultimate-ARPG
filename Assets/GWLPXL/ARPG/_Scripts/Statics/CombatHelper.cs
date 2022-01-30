@@ -17,7 +17,20 @@ namespace GWLPXL.ARPGCore.Statics.com
     public static class CombatHelper
     {
         public static System.Action<GameObject> OnProjectileBlocked;
+        static string ElementalCleave = "Elemental Cleave";
+        static string AoEWeapon = "AoE Weapon";
+        static string AdditionalActor = "Additional Actor Source";
+        static string AdditionalNoActor = "Additional NO Actor Source";
 
+
+        public static void ResolveAttack(AttackValues values)
+        {
+            for (int i = 0; i < values.Defenders.Count; i++)
+            {
+                values.Defenders[i].MyHealth.TakeDamage(values);
+            }
+           
+        }
         /// <summary>
         /// used to start a dash
         /// </summary>
@@ -90,26 +103,19 @@ namespace GWLPXL.ARPGCore.Statics.com
         /// additional damage, no actor
         /// </summary>
         /// <param name="other"></param>
-        public static void DoAdditionalDamageSource(IActorHub target, DamageSourceVars_NoActor Vars)
+        public static AttackValues GetAdditionalDamageSource(AttackValues values, DamageSourceVars_NoActor Vars)
         {
-
-            if (Vars.DamageMultipliers.PhysicalMultipliers.BasePhysicalDamage > 0)
-            {
-                target.MyHealth.TakeDamage(
-                    Vars.DamageMultipliers.PhysicalMultipliers.BasePhysicalDamage,
-                    Types.com.ElementType.None);
-
-            }
-
+            PhysicalAttackResults phys = new PhysicalAttackResults(Vars.DamageMultipliers.PhysicalMultipliers.BasePhysicalDamage, false, AdditionalNoActor);
+            values.PhysicalAttack.Add(phys);
+            List<ElementAttackResults> ele = new List<ElementAttackResults>(Vars.DamageMultipliers.ElementMultipliers.Length);
             for (int i = 0; i < Vars.DamageMultipliers.ElementMultipliers.Length; i++)
             {
-                if (Vars.DamageMultipliers.ElementMultipliers[i].BaseElementDamage > 0)
-                {
-                    target.MyHealth.TakeDamage(
-                        Vars.DamageMultipliers.ElementMultipliers[i].BaseElementDamage,
-                        Vars.DamageMultipliers.ElementMultipliers[i].DamageType);
-                }
+                ele[i] = new ElementAttackResults(Vars.DamageMultipliers.ElementMultipliers[i].DamageType, Vars.DamageMultipliers.ElementMultipliers[i].BaseElementDamage, AdditionalNoActor);
+               
             }
+
+
+            return values;
         }
         /// <summary>
         /// does addition damage source
@@ -117,30 +123,25 @@ namespace GWLPXL.ARPGCore.Statics.com
         /// <param name="attacker"></param>
         /// <param name="target"></param>
         /// <param name="Vars"></param>
-        public static void DoAdditionalDamageSourceActor(IActorHub attacker, IActorHub target, DamageSourceVars_Actor Vars)
+        public static AttackValues GetAdditionalDamageSourceActor(AttackValues values, DamageSourceVars_Actor Vars)
         {
-
+            
             if (Vars.AdditionalDamage.PhysMultipler.PercentOfCasterAttack > 0)
             {
-                int add = Vars.AdditionalDamage.PhysMultipler.GetPhysicalDamageAmount(attacker);
-                if (add > 0)
-                {
-                    target.MyHealth.TakeDamage(add, Types.com.ElementType.None);
-
-                }
+                int add = Vars.AdditionalDamage.PhysMultipler.GetPhysicalDamageAmount(values.Attacker);
+                values.PhysicalAttack.Add(new PhysicalAttackResults(add, false, AdditionalActor));
+                
             }
 
 
             for (int i = 0; i < Vars.AdditionalDamage.ElementMultiplers.Length; i++)
             {
-                int add = Vars.AdditionalDamage.ElementMultiplers[i].GetElementDamageAmount(attacker);
-                if (add > 0)
-                {
-                    target.MyHealth.TakeDamage(add, Vars.AdditionalDamage.ElementMultiplers[i].DamageType);
-                }
-
-
+                int add = Vars.AdditionalDamage.ElementMultiplers[i].GetElementDamageAmount(values.Attacker);
+                values.ElementAttacks.Add(new ElementAttackResults(Vars.AdditionalDamage.ElementMultiplers[i].DamageType, add, AdditionalActor));
+               
             }
+
+            return values;
         }
         /// <summary>
         /// adds an additional sot source
@@ -322,7 +323,7 @@ namespace GWLPXL.ARPGCore.Statics.com
         /// </summary>
         /// <param name="attacker"></param>
         /// <param name="origin"></param>
-        public static void DoAoEWeaponDmg(IActorHub attacker, Vector3 origin, AoEWeapoNVars Vars)
+        public static void GetAoEWeaponDmg(AttackValues results, IActorHub attacker, Vector3 origin, AoEWeapoNVars Vars)
         {
 
             int invDamage = 1;
@@ -347,7 +348,8 @@ namespace GWLPXL.ARPGCore.Statics.com
                             if (CombatHelper.HasSight(attacker, colliders[i].transform, Vars.PhysicsType, Vars.Angle))
                             {
                                 //do the damage.
-                                receiver.MyHealth.TakeDamage(invDamage, Vars.Element);
+                                results.PhysicalAttack.Add(new PhysicalAttackResults(invDamage, false, AoEWeapon));
+
                             }
 
 
@@ -367,7 +369,7 @@ namespace GWLPXL.ARPGCore.Statics.com
                             if (CombatHelper.HasSight(attacker, coll2d[i].transform, Vars.PhysicsType, Vars.Angle))
                             {
                                 //do the damage.
-                                receiver.MyHealth.TakeDamage(invDamage, Vars.Element);
+                                results.PhysicalAttack.Add(new PhysicalAttackResults(invDamage, false, AoEWeapon));
                             }
 
 
@@ -492,7 +494,7 @@ namespace GWLPXL.ARPGCore.Statics.com
                 float basedmg = data.DamageVar.DamageMultipliers.PhysMultipler.BasePhysicalDamage;
                 float newMax = basedmg * vars.MaximumChargePercentPhys;
                 float newlerp = Mathf.Lerp(basedmg, newMax, skillUser.MyAbilities.GetRuntimeController().GetChargedAmount());
-                data.DamageVar.DamageMultipliers.PhysMultipler.SetBaseAmount(Mathf.FloorToInt(newlerp));
+              //  data.DamageVar.DamageMultipliers.PhysMultipler.SetBaseAmount(Mathf.FloorToInt(newlerp));
             }
 
             if (vars.MaximumChargePercentElemental > 0)
@@ -508,6 +510,10 @@ namespace GWLPXL.ARPGCore.Statics.com
             }
         }
 
+        public static bool CanMeleeAttack(IActorHub owner, IDoDamage damager, IDoActorDamage actorDmg, IActorHub attacked, IMeleeWeapon meleeOptions)
+        {
+            return DungeonMaster.Instance.CombatFormulas.GetCombatFormulas().CanMeleeAttack(owner, damager, actorDmg, attacked, meleeOptions);
+        }
         /// <summary>
         /// requires rigidbodies
         /// </summary>
@@ -561,13 +567,13 @@ namespace GWLPXL.ARPGCore.Statics.com
         /// <param name="caster"></param>
         /// <param name="origin"></param>
         /// <param name="Vars"></param>
-        public static void DoElementalCleave(IActorHub caster, Vector3 origin, AoEWeapoNVars Vars)
+        public static void GetElementalCleave(AttackValues results, IActorHub caster, Vector3 origin, AoEWeapoNVars Vars)
         {
             int damage = caster.MyStats.GetRuntimeAttributes().GetElementAttack(Vars.Element);
             float multi = 1;
             if (Vars.PercentOfWpnDmg > 0)
             {
-                multi = CombatStats.GetTotalActorDamage(caster.MyTransform.gameObject);
+                multi = CombatStats.GetTotalActorDamage(caster.MyTransform.gameObject);//change to weapon dmg
             }
             int scaledDamage = Mathf.FloorToInt(damage * multi);
             Collider[] colliders = Physics.OverlapSphere(origin, Vars.Radius);//this is wrong, add the bonus and then perform the aoe check
@@ -580,7 +586,8 @@ namespace GWLPXL.ARPGCore.Statics.com
                 {
                     if (CombatHelper.HasSight(caster, colliders[i].transform, Vars.PhysicsType, Vars.Angle))
                     {
-                        receiver.TakeDamage(scaledDamage, Vars.Element);
+                        results.ElementAttacks.Add(new ElementAttackResults(Vars.Element, scaledDamage, ElementalCleave));
+
                     }
 
 

@@ -17,10 +17,14 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
         bool active;
         //this can keep track of the stacks.
         IActorHub caster = null;
-        public void DoModification(IActorHub other)
+        public void DoModification(AttackValues other)
         {
             if (IsActive() == false) return;
-            CombatHelper.DoAddDot(other, Vars);
+            for (int i = 0; i < other.Defenders.Count; i++)
+            {
+                CombatHelper.DoAddDot(other.Defenders[i], Vars);
+            }
+           
 
         }
 

@@ -14,14 +14,14 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
     public class ElementalWeapon_AOE : MonoBehaviour, IWeaponModification
     {
         public AoEWeapoNVars Vars;
-        bool active = false;
-        IActorHub myDamage = null;
+        protected bool active = false;
+        protected IActorHub myDamage = null;
         
-        public void DoModification(IActorHub other)
+        public void DoModification(AttackValues results)
         {
             if (IsActive() == false) return;
 
-            CombatHelper.DoElementalCleave(myDamage, transform.position, Vars);
+            CombatHelper.GetElementalCleave(results, results.Attacker, transform.position, Vars);
 
         }
 

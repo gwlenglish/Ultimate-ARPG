@@ -52,7 +52,7 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
             return enabledDeflector;
         }
 
-        public void DoModification(IActorHub other)
+        public void DoModification(AttackValues other)
         {
             return;
         }

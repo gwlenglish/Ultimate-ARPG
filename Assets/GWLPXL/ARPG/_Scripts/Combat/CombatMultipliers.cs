@@ -96,8 +96,13 @@ namespace GWLPXL.ARPGCore.Combat.com
         [Header("Base")]
         [SerializeField]
         ElementType damageType = ElementType.Fire;
-        [SerializeField]
+
         protected int baseElementDamageAmount = 0;
+        [Tooltip("Min and Max Damage Range")]
+        [SerializeField]
+        protected int minD = 1;
+        [SerializeField]
+        protected int maxD = 3;
         [SerializeField]
         [Range(0, 2f)]
         [Header("Multiplier")]
@@ -111,8 +116,13 @@ namespace GWLPXL.ARPGCore.Combat.com
             percentOfCasterElement = percentofcasterelementtoapply;
         }
 
+        void RollNewAmount()
+        {
+            baseElementDamageAmount = Random.Range(minD, maxD + 1);
+        }
         public virtual int GetElementDamageAmount(IActorHub forUser)
         {
+            RollNewAmount();
             if (forUser == null) return baseElementDamageAmount;
             float baseUserAttack = (float)forUser.MyStats.GetRuntimeAttributes().GetElementAttack(damageType);
             baseUserAttack *= (percentOfCasterElement);
@@ -127,22 +137,40 @@ namespace GWLPXL.ARPGCore.Combat.com
         public int BasePhysicalDamage => baseDamageAmount;
         public float PercentOfCasterAttack => percentOfCasterAttack;
         [Header("Base")]
-        [SerializeField]
+      //  [SerializeField]
         protected int baseDamageAmount = 0;
+
+        [Tooltip("Base damage range. Will random roll to get the range.")]
+        [SerializeField]
+        protected int minD = 1;
+        [SerializeField]
+        protected int maxD = 3;
         [Range(0, 2f)]
         [Header("Multiplier")]
         [Tooltip("In percent, so 1 = 100%.")]
         [SerializeField]
         protected float percentOfCasterAttack = 0;
-        public virtual int SetBaseAmount(int newamount) => baseDamageAmount = newamount;
+
+        public virtual void SetBaseAmount(int min, int max)
+        {
+            minD = min;
+            maxD = max;
+        }
+
+       
+        void RollNewBaseAmount()
+        {
+            baseDamageAmount = Random.Range(minD, maxD + 1);
+        }
         public virtual int GetPhysicalDamageAmount(IActorHub forUser)
         {
+            RollNewBaseAmount();
             if (forUser == null)
             {
                 return BasePhysicalDamage;
             }
 
-            float baseUserAttack = CombatStats.GetTotalActorDamage(forUser.MyTransform.gameObject);
+            float baseUserAttack = DungeonMaster.Instance.CombatFormulas.GetCombatFormulas().GetPhysicalAttackValue(forUser);
             baseUserAttack *= (PercentOfCasterAttack);
             return Mathf.FloorToInt(baseUserAttack + (BasePhysicalDamage));
             ///eventually move this over to formulas, enemy attack damage and elemental

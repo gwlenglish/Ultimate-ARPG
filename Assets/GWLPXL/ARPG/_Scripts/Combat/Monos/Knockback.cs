@@ -202,12 +202,12 @@ namespace GWLPXL.ARPGCore.Combat.com
             return false;
         }
 
-        public void DoModification(IActorHub other)
+        public void DoModification(AttackValues other)
         {
-            Vector3 direction = other.MyTransform.position - hub.MyTransform.position;
+            Vector3 direction = other.Defenders[0].MyTransform.position - hub.MyTransform.position;
             direction.y = 0;
             direction.Normalize();
-            KnockbackState state = new KnockbackState(other, direction, Vars);
+            KnockbackState state = new KnockbackState(other.Defenders[0], direction, Vars);
         }
 
         public Transform GetTransform() => this.transform;

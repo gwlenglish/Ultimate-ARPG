@@ -7,6 +7,7 @@ using GWLPXL.ARPGCore.DebugHelpers.com;
 
 using UnityEngine;
 using GWLPXL.ARPGCore.Statics.com;
+using System.Collections.Generic;
 
 namespace GWLPXL.ARPGCore.Combat.com
 {
@@ -51,31 +52,37 @@ namespace GWLPXL.ARPGCore.Combat.com
             
 
             ChainVars current = vars.Chains[chainindex];
+            AttackValues values = new AttackValues(chainstart.GetCaster(), dmgtarget);
+            //do the dmg here
+            //do the dmg here
 
-            //do the dmg here
-            //do the dmg here
 
             if (current.Damage.AdditionalDamage.PhysMultipler.PercentOfCasterAttack > 0 )
             {
                 int add = current.Damage.AdditionalDamage.PhysMultipler.GetPhysicalDamageAmount(chainstart.GetCaster());
+                values.PhysicalAttack.Add(new PhysicalAttackResults(add, false, "Chain Damage Link"));
                 if (add > 0)
                 {
-                    dmgtarget.MyHealth.TakeDamage(add, Types.com.ElementType.None);
                     ARPGDebugger.CombatDebugMessage(ARPGDebugger.GetColorForChain("Chain Damage: ") + ARPGDebugger.GetColorForDamage(add.ToString()) + " on " + dmgtarget.ToString(), this);
                 }
             }
 
-
-            for (int i = 0; i < current.Damage.AdditionalDamage.ElementMultiplers.Length; i++)
+            if (current.Damage.AdditionalDamage.ElementMultiplers.Length > 0)
             {
-                int add = current.Damage.AdditionalDamage.ElementMultiplers[i].GetElementDamageAmount(chainstart.GetCaster());
-                if (add > 0)
+                for (int i = 0; i < current.Damage.AdditionalDamage.ElementMultiplers.Length; i++)
                 {
-                    dmgtarget.MyHealth.TakeDamage(add, current.Damage.AdditionalDamage.ElementMultiplers[i].DamageType);
-                    ARPGDebugger.CombatDebugMessage(ARPGDebugger.GetColorForChain("Chain Damage: ") + ARPGDebugger.GetColorForDamage(add.ToString()) + " on " + dmgtarget.ToString(), this);
-
+                    int add = current.Damage.AdditionalDamage.ElementMultiplers[i].GetElementDamageAmount(chainstart.GetCaster());
+                    values.ElementAttacks.Add(new ElementAttackResults(current.Damage.AdditionalDamage.ElementMultiplers[i].DamageType, add, "Chain Damage Link"));
+                    if (add > 0)
+                    {
+                        ARPGDebugger.CombatDebugMessage(ARPGDebugger.GetColorForChain("Chain Damage: ") + ARPGDebugger.GetColorForDamage(add.ToString()) + " on " + dmgtarget.ToString(), this);
+                    }
                 }
             }
+            
+            
+  
+       
 
 
             if (current.SoT.StatusOverTimeOptions.AdditionalDOTs.Length > 0)
@@ -87,11 +94,9 @@ namespace GWLPXL.ARPGCore.Combat.com
                 }
             }
 
-
-           
-
+      
             chainstart.TryDamageLink(vars, transform.position);
-
+            values.Resolve();
             Destroy(this);
         }
 

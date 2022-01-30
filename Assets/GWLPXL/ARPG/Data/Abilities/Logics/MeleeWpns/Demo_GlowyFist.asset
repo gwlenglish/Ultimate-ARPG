@@ -13,7 +13,15 @@ MonoBehaviour:
   m_Name: Demo_GlowyFist
   m_EditorClassIdentifier: 
   config: {fileID: 0}
-  ParentToMelee: 1
+  Vars:
+    DamageOverride: {fileID: 0}
+    MeleeOptionsOverride: {fileID: 0}
+    ChargeOptions:
+      MaximumChargePercentPhys: 2
+      MaximumChargePercentElemental: 2
+    Wpnbuffs:
+    - {fileID: 11400000, guid: 69b03de4810fa4f48aae41484729f62a, type: 2}
+  Requirements: []
   VFXPrefab: {fileID: 6737455918876932369, guid: 95337f44a09a2284284daa31bc071951,
     type: 3}
-  wpnbuffs: []
+  ParentToMelee: 1

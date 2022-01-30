@@ -203,6 +203,15 @@ namespace GWLPXL.ARPGCore.Looting.com
         }
 
         public void SetInvincible(bool isImmoratal) => immortal = isImmoratal;
-       
+
+        public void TakeDamage(AttackValues values)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IActorHub GetUser()
+        {
+            return this;
+        }
     }
 }
