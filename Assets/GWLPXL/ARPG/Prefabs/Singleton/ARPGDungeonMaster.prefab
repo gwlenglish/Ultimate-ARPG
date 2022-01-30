@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7925747025153749103}
   - component: {fileID: 204576767603836902}
   - component: {fileID: 8243100846993190316}
+  - component: {fileID: 7730048977818518046}
   m_Layer: 0
   m_Name: ARPGDungeonMaster
   m_TagString: Untagged
@@ -140,6 +141,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FactionRelationsTemplate: {fileID: 11400000, guid: 7f45ce58823fcfe42addd8521aae88a7,
     type: 2}
+--- !u!114 &7730048977818518046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9106405784661955895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 825107a3e3012694886978eb5afa949b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Log: []
 --- !u!1001 &3205863415533760723
 PrefabInstance:
   m_ObjectHideFlags: 0

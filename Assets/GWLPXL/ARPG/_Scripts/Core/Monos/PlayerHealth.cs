@@ -17,7 +17,7 @@ namespace GWLPXL.ARPGCore.com
     {
         public Action<DamageResults> OnTakeDamage;
         [SerializeField]
-        protected PlayerCombatFormulas combatHandler = null;
+        protected PlayerDefault combatHandler = null;
         [SerializeField]
         protected PlayerHealthEvents healthEvents = new PlayerHealthEvents();
         [SerializeField]
@@ -91,7 +91,7 @@ namespace GWLPXL.ARPGCore.com
         /// <param name="type"></param>
         public void TakeDamage(int damageAmount, ElementType type)
         {
-            DefaultTakeDamage(damageAmount, type);
+           // DefaultTakeDamage(damageAmount, type);
 
         }
         /// <summary>
@@ -101,7 +101,7 @@ namespace GWLPXL.ARPGCore.com
         /// <param name="damageDealer"></param>
         public void TakeDamage(int damageAmount, IActorHub damageDealer)
         {
-            DefaultTakeActorDamage(damageAmount, damageDealer);
+          //  DefaultTakeActorDamage(damageAmount, damageDealer);
 
         }
         public void CheckDeath()
@@ -117,20 +117,7 @@ namespace GWLPXL.ARPGCore.com
             if (combatHandler == null) combatHandler = ScriptableObject.CreateInstance<PlayerDefault>();
         }
 
-        protected virtual void DefaultTakeDamage(int damageAmount, ElementType type)
-        {
-            int damage = combatHandler.GetElementalDamageResistChecks(owner.MyStats, type, damageAmount);
-            if (damage > 0 && immortal == false)
-            {
-                owner.MyStats.GetRuntimeAttributes().ModifyNowResource(healthResource, -damage);
-            }
-
-            //int eleDmgTaken = CombatResolution.DoPlayerElementDamageWithResistChecks(stats, type, damageAmount, healthResource);
-
-            NotifyCustomDamageEvent(type, damage);
-            CheckDeath();
-            //raise event, dmgtaken and type
-        }
+       
 
         protected virtual void DefaultDie()
         {
@@ -161,38 +148,7 @@ namespace GWLPXL.ARPGCore.com
         }
 
 
-        protected virtual void DefaultTakeActorDamage(int damageAmount, IActorHub damageDealer)
-        {
-            if (canBeAttacked == false) return;
-
-            int scaledLevel = 1;
-            if (damageDealer != null)
-            {
-                //IScale scaledD = damageDealer.GetInstance().GetComponent<IScale>();
-                //if (scaledD != null)
-                //{
-                //    scaledLevel = scaledD.GetScaledLevel();
-                //}
-            }
-
-            //check physical
-            int physicalDmgTaken = combatHandler.GetReducedPhysical(owner.MyStats, owner.MyInventory, scaledLevel, damageAmount);
-            if (physicalDmgTaken > 0)
-            {
-                TakeDamage(physicalDmgTaken, ElementType.None);
-            }
-
-
-            Dictionary<ElementType, ElementAttackResults> results = combatHandler.GetElementalDamageResistChecks(owner.MyStats, damageDealer.MyStats);
-            foreach (var kvp in results)
-            {
-                TakeDamage(kvp.Value.Damage, kvp.Key);
-            }
-
-
-            CheckDeath();
-            StartCoroutine(CanBeAttackedCooldown(iFrameTime));//we are invulnerable for a short time
-        }
+       
 
         protected virtual void DefautlCheckDeath()
         {
@@ -211,36 +167,38 @@ namespace GWLPXL.ARPGCore.com
 
         public void TakeDamage(AttackValues values)
         {
-            IActorHub attacker = values.Attacker;
-            List<ElementAttackResults> elements = values.ElementAttacks;
-            List<PhysicalAttackResults> phys = values.PhysicalAttack;
+            if (canBeAttacked == false)
+            {
+                return;
+            }
 
-            elements = combatHandler.GetReducedResults(elements, owner);//calculates resist and new reduced values
-            phys = combatHandler.GetReducedPhysical(phys, owner);
+            values = combatHandler.TakeDamageFormula(values, owner);
+
 
             if (immortal == false)
             {
-                for (int i = 0; i < elements.Count; i++)
+                for (int i = 0; i < values.ElementAttacks.Count; i++)
                 {
-                    if (elements[i].Reduced > 0)//prevent dmg if immortal, but show everything else
+                    if (values.ElementAttacks[i].Reduced > 0)//prevent dmg if immortal, but show everything else
                     {
-                        owner.MyStats.GetRuntimeAttributes().ModifyNowResource(healthResource, -elements[i].Reduced);
+                        owner.MyStats.GetRuntimeAttributes().ModifyNowResource(healthResource, -values.ElementAttacks[i].Reduced);
                     }
 
                 }
 
-                for (int i = 0; i < phys.Count; i++)
+                for (int i = 0; i < values.PhysicalAttack.Count; i++)
                 {
-                    if (phys[i].PhysicalReduced > 0)
+                    if (values.PhysicalAttack[i].PhysicalReduced > 0)
                     {
-                        owner.MyStats.GetRuntimeAttributes().ModifyNowResource(healthResource, -phys[i].PhysicalReduced);
+                        owner.MyStats.GetRuntimeAttributes().ModifyNowResource(healthResource, -values.PhysicalAttack[i].PhysicalReduced);
                     }
                 }
 
             }
 
-            DamageResults d = new DamageResults(elements, phys, this);
+            DamageResults d = new DamageResults(values.ElementAttacks, values.PhysicalAttack, this);
             OnTakeDamage?.Invoke(d);
+            CombatLogger.AddResult(d);
             NotifyUI(d);
             CheckDeath();
             StartCoroutine(CanBeAttackedCooldown(iFrameTime));//we are invulnerable for a short time

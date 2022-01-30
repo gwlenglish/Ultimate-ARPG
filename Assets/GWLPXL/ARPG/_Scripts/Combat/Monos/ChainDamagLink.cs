@@ -94,9 +94,9 @@ namespace GWLPXL.ARPGCore.Combat.com
                 }
             }
 
-      
-            chainstart.TryDamageLink(vars, transform.position);
             values.Resolve();
+            chainstart.TryDamageLink(vars, transform.position);
+       
             Destroy(this);
         }
 

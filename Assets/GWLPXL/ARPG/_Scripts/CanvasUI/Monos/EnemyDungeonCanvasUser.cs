@@ -52,7 +52,8 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
             {
                 for (int i = 0; i < args.ElementResults.Count; i++)
                 {
-                    CreateUIDamageText(args.ElementResults[i].Reduced.ToString(), args.ElementResults[i].Type, args.PhysicalResult[i].PhysicalCrit);
+                   
+                    CreateUIDamageText(args.ElementResults[i].Reduced.ToString(), args.ElementResults[i].Type, args.ElementResults[i].WasCrit);
                 }
 
                 for (int i = 0; i < args.PhysicalResult.Count; i++)
