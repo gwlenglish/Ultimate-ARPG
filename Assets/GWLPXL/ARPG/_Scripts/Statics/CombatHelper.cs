@@ -17,20 +17,16 @@ namespace GWLPXL.ARPGCore.Statics.com
     public static class CombatHelper
     {
         public static System.Action<GameObject> OnProjectileBlocked;
-        static string ElementalCleave = "Elemental Cleave";
-        static string AoEWeapon = "AoE Weapon";
-        static string AdditionalActor = "Additional Actor Source";
-        static string AdditionalNoActor = "Additional NO Actor Source";
+        public static string AttackValue = "Attack Value";
+        public static string Projectile = "Projectile";
+        public static string Melee = "Melee";
+        public static string ElementalCleave = "Elemental Cleave";
+        public static string AoEWeapon = "AoE Weapon";
+        public static string AdditionalActor = "Additional Actor Source";
+        public static string AdditionalNoActor = "Additional NO Actor Source";
 
 
-        public static void ResolveAttack(AttackValues values)
-        {
-            for (int i = 0; i < values.Defenders.Count; i++)
-            {
-                values.Defenders[i].MyHealth.TakeDamage(values);
-            }
-           
-        }
+       
         /// <summary>
         /// used to start a dash
         /// </summary>

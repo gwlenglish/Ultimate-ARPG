@@ -36,7 +36,7 @@ namespace GWLPXL.ARPGCore.Combat.com
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public abstract int GetAttackValue(IActorHub user);
+        public abstract PhysicalAttackResults GetAttackValue(IActorHub user, bool cancrit);
         /// <summary>
         /// calcualte the reduced damage amount based on the element resists
         /// </summary>

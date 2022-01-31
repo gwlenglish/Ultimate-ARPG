@@ -81,7 +81,7 @@ namespace GWLPXL.ARPGCore.Combat.com
         /// </summary>
         /// <param name="self"></param>
         /// <returns></returns>
-        public override int GetAttackValue(IActorHub self)
+        public override PhysicalAttackResults GetAttackValue(IActorHub self, bool cancrit)
         {
 
             int baseStatFactor = self.MyStats.GetRuntimeAttributes().GetStatForCombat(CombatStatType.Damage);//current base stat value divide by 100
@@ -95,7 +95,9 @@ namespace GWLPXL.ARPGCore.Combat.com
 
             float result = ((baseWpnFactor) + baseStatFactor);
             int rounded = Mathf.FloorToInt(result);
-            return rounded;
+
+            PhysicalAttackResults phys = new PhysicalAttackResults(rounded, false, "Attack Value");
+            return phys;
         }
 
         /// <summary>

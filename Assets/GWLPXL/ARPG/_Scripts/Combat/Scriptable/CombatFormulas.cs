@@ -39,7 +39,7 @@ namespace GWLPXL.ARPGCore.Combat.com
         /// <param name="projectileOptions"></param>
         public override AttackValues GetProjectileDamage(AttackValues values, IActorHub owner, IDoDamage damageDealer, IActorHub damageTarget, IDoActorDamage damage, IProjectile projectileOptions)
         {
-         
+            values.PhysicalAttack.Add(GetPhysicalAttackValue(owner));
 
             if (damage.GetActorDamageData().DamageVar.DamageOptions.InflictPhysicalDmg)
             {
@@ -183,15 +183,15 @@ namespace GWLPXL.ARPGCore.Combat.com
 
         }
 
-        public override int GetPhysicalAttackValue(IActorHub self)
+        public override PhysicalAttackResults GetPhysicalAttackValue(IActorHub self, bool cancrit = true)
         {
             if (self.PlayerControlled != null)
             {
-                return PlayerCombat.GetAttackValue(self);
+                return PlayerCombat.GetAttackValue(self, cancrit);
             }
             else
             {
-                return EnemyCombat.GetAttackValue(self);
+                return EnemyCombat.GetAttackValue(self, cancrit);
             }
         }
 
@@ -206,7 +206,8 @@ namespace GWLPXL.ARPGCore.Combat.com
         /// <param name="meleeOptions"></param>
         public override AttackValues GetMeleeActorDamageLogic(AttackValues results, IActorHub owner, IDoDamage damager, IActorHub attacked, IDoActorDamage actorDmg, IMeleeWeapon meleeOptions)
         {
-           
+            results.PhysicalAttack.Add(GetPhysicalAttackValue(owner));
+
             if (actorDmg.GetActorDamageData().DamageVar.DamageOptions.InflictPhysicalDmg)
             {
 
@@ -439,7 +440,7 @@ namespace GWLPXL.ARPGCore.Combat.com
         /// </summary>
         /// <param name="self"></param>
         /// <returns></returns>
-        public abstract int GetPhysicalAttackValue(IActorHub self);
+        public abstract PhysicalAttackResults GetPhysicalAttackValue(IActorHub self, bool cancrit);
 /// <summary>
 /// calculate the melee damage formula, write the values on the attack values
 /// </summary>
@@ -493,19 +494,23 @@ namespace GWLPXL.ARPGCore.Combat.com
     /// <summary>
     /// used to track crits, the attacker and amount is the key
     /// </summary>
+    /// 
+    [System.Obsolete]
     public class CritLog
     {
         public IAttributeUser Attacker;
         public int Amount;
-        public CritLog(IAttributeUser attacker, int amount)
+        public CritLog(IActorHub attacker, int amount)
         {
             Amount = amount;
-            Attacker = attacker;
+           // Attacker = attacker;
         }
     }
     /// <summary>
     /// used to record critical hits to pass that info on to whoever needs it, such as the UI
     /// </summary>
+    /// 
+    [System.Obsolete]
     public static class CritHelper
     {
         public static List<CritLog> Crits = new List<CritLog>();
