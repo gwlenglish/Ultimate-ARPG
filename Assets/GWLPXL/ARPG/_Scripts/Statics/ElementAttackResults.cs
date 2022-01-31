@@ -7,13 +7,9 @@ namespace GWLPXL.ARPGCore.Statics.com
     public class ElementAttackResults
     {
         public string Source;
-        public ElementType Type;
+        public ElementType Type;//none is physical
         [Tooltip("Damage sent by attacker")]
         public int Damage;//initial damage
-        [Tooltip("Resist from defender")]
-        public int Resisted;//resist amount
-        [Tooltip("Damage - resisted")]
-        public int Reduced;//result of damage - resisted
         [Tooltip("Was a crit?")]
         public bool WasCrit = false;
         public ElementAttackResults(ElementType type, int dmg, string source)

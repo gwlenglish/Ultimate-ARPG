@@ -382,30 +382,7 @@ namespace GWLPXL.ARPGCore.Combat.com
             return true;
         }
 
-        public override List<ElementAttackResults> GetReducedResultsElemental(IActorHub attacker, List<ElementAttackResults> attackvalues, IActorHub self)
-        {
-            if (self.PlayerControlled != null)
-            {
-                return PlayerCombat.GetReducedElementalResults(attacker, attackvalues, self);
-            }
-            else
-            {
-                return EnemyCombat.GetReducedElementalResults(attacker, attackvalues, self);
-            }
-        }
-
-        public override List<PhysicalAttackResults> GetReducedResultsPhysical(IActorHub attacker, List<PhysicalAttackResults> results, IActorHub self)
-        {
-            if (self.PlayerControlled != null)
-            {
-                return PlayerCombat.GetReducedPhysical(attacker, results, self);
-            }
-            else
-            {
-                return EnemyCombat.GetReducedPhysical(attacker, results, self);
-            }
-        }
-
+       
 
 
         #endregion
@@ -466,9 +443,7 @@ namespace GWLPXL.ARPGCore.Combat.com
 
 
 
-        public abstract List<ElementAttackResults> GetReducedResultsElemental(IActorHub attacker, List<ElementAttackResults> attackvalues, IActorHub self);
 
-        public abstract List<PhysicalAttackResults> GetReducedResultsPhysical(IActorHub attacker, List<PhysicalAttackResults> results, IActorHub self);
 
 
 

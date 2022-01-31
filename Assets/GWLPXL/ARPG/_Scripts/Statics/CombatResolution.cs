@@ -62,7 +62,7 @@ namespace GWLPXL.ARPGCore.Statics.com
                     else
                     {
                         value.Damage += newDmg;
-                        value.Resisted += resistAmount;
+
                     }
                 }
 

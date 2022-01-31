@@ -1,6 +1,7 @@
 ﻿using GWLPXL.ARPGCore.com;
 using GWLPXL.ARPGCore.Statics.com;
 using GWLPXL.ARPGCore.Types.com;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,7 +16,8 @@ namespace GWLPXL.ARPGCore.Combat.com
         /// <param name="values"></param>
         /// <param name="self"></param>
         /// <returns></returns>
-        public abstract AttackValues TakeDamageFormula(AttackValues values, IActorHub self);
+        public abstract CombatResults TakeDamageFormula(AttackValues values, IActorHub self);
+
         /// <summary>
         /// get element resist value of the self
         /// </summary>
@@ -37,21 +39,6 @@ namespace GWLPXL.ARPGCore.Combat.com
         /// <param name="user"></param>
         /// <returns></returns>
         public abstract PhysicalAttackResults GetAttackValue(IActorHub user, bool cancrit);
-        /// <summary>
-        /// calcualte the reduced damage amount based on the element resists
-        /// </summary>
-        /// <param name="attacker"></param>
-        /// <param name="attackvalues"></param>
-        /// <param name="self"></param>
-        /// <returns></returns>
-        public abstract List<ElementAttackResults> GetReducedElementalResults(IActorHub attacker, List<ElementAttackResults> attackvalues, IActorHub self);
-        /// <summary>
-        /// calculate the reduced pyhsical amount based on the armor value
-        /// </summary>
-        /// <param name="attacker"></param>
-        /// <param name="results"></param>
-        /// <param name="self"></param>
-        /// <returns></returns>
-        public abstract List<PhysicalAttackResults> GetReducedPhysical(IActorHub attacker, List<PhysicalAttackResults> results, IActorHub self);
+
     }
 }

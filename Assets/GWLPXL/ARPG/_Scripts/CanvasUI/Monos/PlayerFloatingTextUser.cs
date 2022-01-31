@@ -35,7 +35,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         protected IActorHub hub;
 
         #region public interface
-        public void DamageResults(DamageResults args)
+        public void DamageResults(CombatResults args)
         {
             throw new System.NotImplementedException();
         }

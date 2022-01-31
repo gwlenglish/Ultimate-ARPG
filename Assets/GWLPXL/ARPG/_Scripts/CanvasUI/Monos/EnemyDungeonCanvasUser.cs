@@ -31,36 +31,30 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         #region public interface
 
       
-        public virtual void DamageResults(DamageResults args)
+        public virtual void DamageResults(CombatResults args)
         {
             if (combine)
             {
                 int dmg = 0;
-                for (int i = 0; i < args.ElementResults.Count; i++)
+                for (int i = 0; i < args.DamageValues.ReportElementalDmg.Count; i++)
                 {
-                    dmg += args.ElementResults[i].Reduced;
+                    dmg += args.DamageValues.ReportElementalDmg[i].ReducedDamage;
                 }
 
-                for (int i = 0; i < args.PhysicalResult.Count; i++)
-                {
-                    dmg += args.PhysicalResult[i].PhysicalReduced;
-                }
-              
+                dmg += args.DamageValues.ReportPhysDmg.ReducedDamage;
+               
                 CreateUIDamageText(dmg.ToString(), ElementType.None, false);
             }
             else
             {
-                for (int i = 0; i < args.ElementResults.Count; i++)
+                for (int i = 0; i < args.DamageValues.ReportElementalDmg.Count; i++)
                 {
                    
-                    CreateUIDamageText(args.ElementResults[i].Reduced.ToString(), args.ElementResults[i].Type, args.ElementResults[i].WasCrit);
+                    CreateUIDamageText(args.DamageValues.ReportElementalDmg[i].ReducedDamage.ToString(), args.DamageValues.ReportElementalDmg[i].Type, args.DamageValues.ReportElementalDmg[i].WasCrit);
                 }
 
-                for (int i = 0; i < args.PhysicalResult.Count; i++)
-                {
-                    CreateUIDamageText(args.PhysicalResult[i].PhysicalReduced.ToString(), ElementType.None, args.PhysicalResult[i].PhysicalCrit);
-
-                }
+                CreateUIDamageText(args.DamageValues.ReportPhysDmg.ReducedDamage.ToString(), ElementType.None, args.DamageValues.ReportPhysDmg.WasCrit);
+             
             }
         }
         public virtual Vector3 GetHPBarOffset()

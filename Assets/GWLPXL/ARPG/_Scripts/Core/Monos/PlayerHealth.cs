@@ -15,7 +15,7 @@ namespace GWLPXL.ARPGCore.com
 
     public class PlayerHealth : MonoBehaviour, IReceiveDamage
     {
-        public Action<DamageResults> OnTakeDamage;
+        public Action<CombatResults> OnTakeDamage;
         [SerializeField]
         protected PlayerDefault combatHandler = null;
         [SerializeField]
@@ -171,39 +171,35 @@ namespace GWLPXL.ARPGCore.com
             {
                 return;
             }
-
-            values = combatHandler.TakeDamageFormula(values, owner);
-
-
+            CombatResults results = combatHandler.TakeDamageFormula(values, owner);
             if (immortal == false)
             {
-                for (int i = 0; i < values.ElementAttacks.Count; i++)
+
+                for (int i = 0; i < results.DamageValues.ReportElementalDmg.Count; i++)
                 {
-                    if (values.ElementAttacks[i].Reduced > 0)//prevent dmg if immortal, but show everything else
+                    if (results.DamageValues.ReportElementalDmg[i].ReducedDamage > 0)//prevent dmg if immortal, but show everything else
                     {
-                        owner.MyStats.GetRuntimeAttributes().ModifyNowResource(healthResource, -values.ElementAttacks[i].Reduced);
+                        owner.MyStats.GetRuntimeAttributes().ModifyNowResource(healthResource, -results.DamageValues.ReportElementalDmg[i].ReducedDamage);
                     }
 
                 }
 
-                for (int i = 0; i < values.PhysicalAttack.Count; i++)
+                if (results.DamageValues.ReportPhysDmg.ReducedDamage > 0)
                 {
-                    if (values.PhysicalAttack[i].PhysicalReduced > 0)
-                    {
-                        owner.MyStats.GetRuntimeAttributes().ModifyNowResource(healthResource, -values.PhysicalAttack[i].PhysicalReduced);
-                    }
+                    owner.MyStats.GetRuntimeAttributes().ModifyNowResource(healthResource, -results.DamageValues.ReportPhysDmg.ReducedDamage);
                 }
 
             }
 
-            DamageResults d = new DamageResults(values.ElementAttacks, values.PhysicalAttack, this);
-            OnTakeDamage?.Invoke(d);
-            CombatLogger.AddResult(d);
-            NotifyUI(d);
+
+            CombatLogger.AddResult(results);
+            OnTakeDamage?.Invoke(results);
+            NotifyUI(results);
             CheckDeath();
             StartCoroutine(CanBeAttackedCooldown(iFrameTime));//we are invulnerable for a short time
+            SetCharacterThatHitMe(values.Attacker);
         }
-        protected virtual void NotifyUI(DamageResults results)
+        protected virtual void NotifyUI(CombatResults results)
         {
 
           //  if (can == null) return;

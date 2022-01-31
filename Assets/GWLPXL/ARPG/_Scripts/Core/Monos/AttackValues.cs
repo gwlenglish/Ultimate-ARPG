@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 namespace GWLPXL.ARPGCore.com
 {
+    [System.Serializable]
     public class AttackValues : EventArgs
     {
         public IActorHub Attacker = null;

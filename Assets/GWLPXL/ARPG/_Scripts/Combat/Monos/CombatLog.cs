@@ -10,10 +10,10 @@ namespace GWLPXL.ARPGCore.Combat.com
     /// </summary>
     public static class CombatLogger
     {
-        public static event Action<DamageResults> OnResultAdded;
+        public static event Action<CombatResults> OnResultAdded;
 
-        static List<DamageResults> log = new List<DamageResults>();
-        public static void AddResult(DamageResults results)
+        static List<CombatResults> log = new List<CombatResults>();
+        public static void AddResult(CombatResults results)
         {
             log.Add(results);
             OnResultAdded?.Invoke(results);
@@ -42,6 +42,6 @@ namespace GWLPXL.ARPGCore.Combat.com
 
         [Tooltip("Read only log of combat results.")]
         [SerializeField]
-        protected List<DamageResults> log;
+        protected List<CombatResults> log;
     }
 }
