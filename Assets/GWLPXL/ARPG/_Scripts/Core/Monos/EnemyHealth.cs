@@ -15,125 +15,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using System.Linq;
+
 namespace GWLPXL.ARPGCore.com
 {
-    [System.Serializable]
-    public class PhysicalAttackResults
-    {
-        public string Source;
-        [Tooltip("Damage sent")]
-        public int PhysicalDamage;
-        [Tooltip("was a crit?")]
-        public bool PhysicalCrit;
-        public PhysicalAttackResults(int damage, bool crit, string source)
-        {
-            Source = source;
-            PhysicalDamage = damage;
-            PhysicalCrit = crit;
-        }
 
-        public void AddDamage(int amount)
-        {
-            PhysicalDamage += amount;
-        }
-    }
 
-    [System.Serializable]
-    public class PhysicalDamageReport
-    {
-        public int TotalDamage;
-        public int Resisted;
-        public int ReducedDamage;
-        public List<string> Sources = new List<string>();
-        public bool WasCrit = false;
-        public PhysicalDamageReport(int total, int resisted, int reduced, List<string> sources, bool crit = false)
-        {
-            WasCrit = crit;
-            Sources = sources;
-            TotalDamage = total;
-            Resisted = resisted;
-            ReducedDamage = reduced;
-        }
-    }
-    [System.Serializable]
-    public class ElementalDamageReport
-    {
-        public ElementType Type;
-        public int TotalDamage;
-        public int Resisted;
-        public int ReducedDamage;
-        public List<string> Sources;
-        public bool WasCrit = false;
-        public ElementalDamageReport(ElementType type, int total, List<string> sources, bool crit = false)
-        {
-            Sources = sources;
-            TotalDamage = total;
-            Type = type;
-            WasCrit = crit;
-        }
-    }
-
-    [System.Serializable]
-    public class DamageValues
-    {
-        public List<ElementalDamageReport> ReportElementalDmg;
-        public PhysicalDamageReport ReportPhysDmg;
-        public IReceiveDamage Target;
-        public Transform TargetOwner;
-
-        public DamageValues(PhysicalDamageReport phys, List<ElementalDamageReport> eles, IReceiveDamage target)
-        {
-            ReportPhysDmg = phys;
-            ReportElementalDmg = eles;
-            Target = target;
-            TargetOwner = target.GetInstance();
-            if (Target.GetUser() != null)
-            {
-                TargetOwner = target.GetUser().MyTransform;
-            }
-        }
-    }
-    
-    [System.Serializable]
-    public class CombatResults : EventArgs
-    {
-        [Header("Totals")]
-        [Tooltip("All damage, regardless of type")]
-        public int TotalCombinedDamage;
-        [Tooltip("All resist, regardless of type")]
-        public int TotalCombinedResist;
-        [Tooltip("All damage - all resist, regardless of type")]
-        public int TotalReducedDamage;
-        [Header("Attack Results")]
-        public AttackValues AttackValues;
-        [Header("Damage Results")]
-        public DamageValues DamageValues;
-
-        public CombatResults(AttackValues attackvalues, DamageValues damagevalues)
-        {
-            AttackValues = attackvalues;
-            DamageValues = damagevalues;
-
-            for (int i = 0; i < attackvalues.PhysicalAttack.Count; i++)
-            {
-                TotalCombinedDamage += attackvalues.PhysicalAttack[i].PhysicalDamage;
-            }
-            for (int i = 0; i < attackvalues.ElementAttacks.Count; i++)
-            {
-                TotalCombinedDamage += attackvalues.ElementAttacks[i].Damage;
-            }
-
-            for (int i = 0; i < damagevalues.ReportElementalDmg.Count; i++)
-            {
-                TotalCombinedResist += damagevalues.ReportElementalDmg[i].Resisted;
-            }
-
-            TotalCombinedResist += damagevalues.ReportPhysDmg.Resisted;
-
-            TotalReducedDamage = TotalCombinedDamage - TotalCombinedResist;
-        }
-    }
     public class EnemyHealth : MonoBehaviour, IReceiveDamage
     {
         public Action<CombatResults> OnTakeDamage;
@@ -245,7 +131,7 @@ namespace GWLPXL.ARPGCore.com
         }
         public void TakeDamage(AttackValues values)
         {
-            if (canBeAttacked == false)
+            if (canBeAttacked == false && values.IgnoreIFrame == false)
             {
                 return;
             }
@@ -255,16 +141,16 @@ namespace GWLPXL.ARPGCore.com
 
                 for (int i = 0; i < results.DamageValues.ReportElementalDmg.Count; i++)
                 {
-                    if (results.DamageValues.ReportElementalDmg[i].ReducedDamage > 0)//prevent dmg if immortal, but show everything else
+                    if (results.DamageValues.ReportElementalDmg[i].Result > 0)//prevent dmg if immortal, but show everything else
                     {
-                        owner.MyStats.GetRuntimeAttributes().ModifyNowResource(healthResource, -results.DamageValues.ReportElementalDmg[i].ReducedDamage);
+                        owner.MyStats.GetRuntimeAttributes().ModifyNowResource(healthResource, -results.DamageValues.ReportElementalDmg[i].Result);
                     }
 
                 }
 
-                if (results.DamageValues.ReportPhysDmg.ReducedDamage > 0)
+                if (results.DamageValues.ReportPhysDmg.Result > 0)
                 {
-                    owner.MyStats.GetRuntimeAttributes().ModifyNowResource(healthResource, -results.DamageValues.ReportPhysDmg.ReducedDamage);
+                    owner.MyStats.GetRuntimeAttributes().ModifyNowResource(healthResource, -results.DamageValues.ReportPhysDmg.Result);
                 }
                
             }
@@ -272,6 +158,7 @@ namespace GWLPXL.ARPGCore.com
 
             CombatLogger.AddResult(results);
             OnTakeDamage?.Invoke(results);
+            OnDamagedMe?.Invoke(values.Attacker);
             NotifyUI(results);
             CheckDeath();
             StartCoroutine(CanBeAttackedCooldown(iFrameTime));//we are invulnerable for a short time

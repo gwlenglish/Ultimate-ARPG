@@ -24,6 +24,7 @@ namespace GWLPXL.ARPGCore.Items.com
         public void SetRuntimeInventory(ActorInventory newInv)
         {
             runtimeCopy_inv = newInv;
+            runtimeCopy_inv.InitialSetup();
         }
         public ActorInventory GetInventoryRuntime()
         {

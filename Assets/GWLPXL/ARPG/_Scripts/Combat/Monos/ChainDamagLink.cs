@@ -60,7 +60,7 @@ namespace GWLPXL.ARPGCore.Combat.com
             if (current.Damage.AdditionalDamage.PhysMultipler.PercentOfCasterAttack > 0 )
             {
                 int add = current.Damage.AdditionalDamage.PhysMultipler.GetPhysicalDamageAmount(chainstart.GetCaster());
-                values.PhysicalAttack.Add(new PhysicalAttackResults(add, false, "Chain Damage Link"));
+                values.PhysicalAttack.Add(new PhysicalAttackResults(add, "Chain Damage Link"));
                 if (add > 0)
                 {
                     ARPGDebugger.CombatDebugMessage(ARPGDebugger.GetColorForChain("Chain Damage: ") + ARPGDebugger.GetColorForDamage(add.ToString()) + " on " + dmgtarget.ToString(), this);

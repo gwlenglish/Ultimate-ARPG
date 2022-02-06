@@ -22,7 +22,7 @@ MonoBehaviour:
     descriptiveName: Axe
     damageOptions:
       physdmg: 1
-      elemdg: 1
+      elemdg: 0
       sotmod: 0
     damageMultipliers:
       physicalMultipler:
@@ -31,17 +31,9 @@ MonoBehaviour:
         percentOfCasterAttack: 0
       elementMultipliers: []
     statusOverTimeOptions:
-      applySOTAtEnter: 1
+      applySOTAtEnter: 0
       applySOTAtExit: 0
-      additionalSOTs:
-      - Type: 0
-        ElementDamage: 0
-        StatusEffects: []
-        AmountPerTick: 0
-        Duration: 0
-        ClampStatusEffectToDuration: 0
-        TickRate: 0
-        StackAmount: 0
+      additionalSOTs: []
       damageRate: 1
       friendlyFire: 0
     statusOverTimeMultiplers:

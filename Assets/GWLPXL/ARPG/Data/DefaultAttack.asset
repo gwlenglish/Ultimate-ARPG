@@ -15,5 +15,9 @@ MonoBehaviour:
   StateKey: Aggro
   Vars:
     AbilityStateName: DefaultAttack
+    AbilityBlendDuration: 0.02
+    AbilityAnimLayer: 0
     Ability: {fileID: 11400000, guid: 7679ac1935518e84a923eb4600656ec5, type: 2}
-    ChaseStateName: Walk
+    ChaseStateName: Locomotion
+    ChaseBlendDuration: 0.02
+    ChaseLayer: 0

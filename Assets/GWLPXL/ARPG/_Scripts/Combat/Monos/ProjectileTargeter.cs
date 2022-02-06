@@ -72,7 +72,7 @@ namespace GWLPXL.ARPGCore.Combat.com
            
                             if (hub == null) continue;
                             if (hub == owner) continue;
-                            if (DungeonMaster.Instance.CombatFormulas.GetCombatFormulas().DetermineAttackable(hub.MyHealth, owner.MyHealth, false))
+                            if (DungeonMaster.Instance.CombatFormulas.GetCombatFormulas().DetermineAttackable(hub, owner, false))
                             {
                                 valid.Add(hub);
                             }

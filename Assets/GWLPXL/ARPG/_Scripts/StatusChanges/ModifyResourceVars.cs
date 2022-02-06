@@ -39,20 +39,28 @@ namespace GWLPXL.ARPGCore.StatusEffects.com
     }
 
     /// <summary>
-    /// rethink the system, now we are applying mulitple times
+    /// 
     /// </summary>
     public class ModifyResourceDoTState : IDoT, ITick
     {
         public float CurrentTimer => timer;
-        protected ModifyResourceVars vars = null;
+        public ModifyResourceVars Runtime => runtime;
+        protected ModifyResourceVars runtime = null;
+        protected ModifyResourceVars key = null;
+
         protected IActorHub target = null;
         protected int currentStacks = 0;
         protected bool applied = false;
         protected float timer = 0;
-        public ModifyResourceDoTState(IActorHub target, ModifyResourceVars vars)
+        public ModifyResourceDoTState(IActorHub target, ModifyResourceVars key)
         {
             this.target = target;
-            this.vars = vars;
+            this.key = key;
+            runtime = new ModifyResourceVars(key.Type, key.AmountPerTick, key.TickRate, key.Duration, key.StackAmount);
+            runtime.ElementDamage = key.ElementDamage;
+            runtime.StatusEffects = key.StatusEffects;
+            runtime.ClampStatusEffectToDuration = key.ClampStatusEffectToDuration;
+
             AddTicker();
         }
 
@@ -65,13 +73,13 @@ namespace GWLPXL.ARPGCore.StatusEffects.com
         {
             timer = 0;
             currentStacks += 1;
-            if (currentStacks > vars.StackAmount)
+            if (currentStacks > runtime.StackAmount)
             {
-                currentStacks = vars.StackAmount;
+                currentStacks = runtime.StackAmount;
             }
         
             applied = true;
-            StatusEffectHelper.ApplyStatusEffects(target, vars.StatusEffects);
+            StatusEffectHelper.ApplyStatusEffects(target, runtime.StatusEffects);
         }
 
         public virtual void DoTick()
@@ -83,7 +91,7 @@ namespace GWLPXL.ARPGCore.StatusEffects.com
 
       
 
-        public virtual float GetTickDuration() => vars.TickRate;
+        public virtual float GetTickDuration() => runtime.TickRate;
 
       
 
@@ -91,11 +99,11 @@ namespace GWLPXL.ARPGCore.StatusEffects.com
         {
             applied = false;
             RemoveTicker();
-            SoTHelper.RemoveDot(target, vars);
+            SoTHelper.RemoveDot(target, key);
             //target.MyStatusEffects.RemoveDot(vars);
-            if (vars.ClampStatusEffectToDuration)
+            if (runtime.ClampStatusEffectToDuration)
             {
-                StatusEffectHelper.RemoveStatusEffects(target, vars.StatusEffects);
+                StatusEffectHelper.RemoveStatusEffects(target, runtime.StatusEffects);
             }
 
         }
@@ -108,26 +116,26 @@ namespace GWLPXL.ARPGCore.StatusEffects.com
         public virtual  void Tick()
         {
         
-            if (timer >= vars.Duration && vars.Duration > 0)
+            if (timer >= runtime.Duration && runtime.Duration > 0)
             {
                 RemoveDoT();
                 return;
             }
             if (applied == false) return;
 
-            if (vars.AmountPerTick < 0)
+            if (runtime.AmountPerTick < 0)
             {
-                SoTHelper.ReduceResource(target, vars.AmountPerTick * currentStacks, vars.Type, vars.ElementDamage);
+                SoTHelper.ReduceResource(target, runtime.AmountPerTick * currentStacks, runtime.Type, runtime.ElementDamage);
                 //target.MyStatusEffects.ReduceResource(vars.AmountPerTick * currentStacks, vars.Type, vars.ElementDamage);
             }
-            else if (vars.AmountPerTick > 0)
+            else if (runtime.AmountPerTick > 0)
             {
-                SoTHelper.RegenResource(target, vars.AmountPerTick * currentStacks, vars.Type, vars.ElementDamage);
+                SoTHelper.RegenResource(target, runtime.AmountPerTick * currentStacks, runtime.Type, runtime.ElementDamage);
 
                 //target.MyStatusEffects.RegenResource(vars.AmountPerTick * currentStacks, vars.Type, vars.ElementDamage);
             }
 
-            timer += vars.TickRate;
+            timer += runtime.TickRate;
              //ARPGDebugger.DebugMessage(ARPGDebugger.GetColorForSOTs("Modify Resource Duration " + timer), null);
               //ARPGDebugger.DebugMessage(ARPGDebugger.GetColorForSOTs("Modify Resource Stack Amount: " + currentStacks), null);
         }

@@ -1,7 +1,9 @@
 ﻿
 
 using GWLPXL.ARPGCore.com;
+using GWLPXL.ARPGCore.Combat.com;
 using GWLPXL.ARPGCore.Statics.com;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace GWLPXL.ARPGCore.StatusEffects.com
@@ -12,8 +14,12 @@ namespace GWLPXL.ARPGCore.StatusEffects.com
     /// </summary>
     public class RegenResource : MonoBehaviour
     {
+        public EnvironmentSotEvents SotEvents;
         public ModifyResourceVars Vars;
         protected IActorHub user = null;
+
+      
+
         protected virtual void Awake()
         {
             user = GetComponent<IActorHub>();
@@ -24,8 +30,9 @@ namespace GWLPXL.ARPGCore.StatusEffects.com
             if (user != null && user.MyStatusEffects != null)
             {
                 SoTHelper.AddDoT(user, Vars);
+
             }
-      
+     
         }
 
     }

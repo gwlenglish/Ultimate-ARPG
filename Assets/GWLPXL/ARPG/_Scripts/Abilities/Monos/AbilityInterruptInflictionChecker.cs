@@ -49,9 +49,9 @@ namespace GWLPXL.ARPGCore.Abilities.com
         {
             if (interrupted == true) return;
 
-            for (int i = 0; i < Hub.MyStatusEffects.GetCurrentApplied().Count; i++)
+            for (int i = 0; i < Hub.MyStatusEffects.GetCurrentAppliedStatuses().Count; i++)
             {
-                StatusEffectVars inflict = Hub.MyStatusEffects.GetCurrentApplied()[i];
+                StatusEffectVars inflict = Hub.MyStatusEffects.GetCurrentAppliedStatuses()[i];
                 for (int j = 0; j < Options.InterruptEffects.Length; j++)
                 {
                     if (inflict.EffectName == Options.InterruptEffects[j])

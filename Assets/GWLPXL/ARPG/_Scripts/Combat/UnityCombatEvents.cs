@@ -12,7 +12,7 @@ namespace GWLPXL.ARPGCore.Combat.com
 
 
     [System.Serializable]
-    public class UnityOnDamagedEvent : UnityEvent<int, IReceiveDamage> { }
+    public class UnityOnDamagedEvent : UnityEvent<AttackValues, IReceiveDamage> { }
 
     [System.Serializable]
     public class UnityOnDamageComponentEnabled : UnityEvent<IDoDamage> { }

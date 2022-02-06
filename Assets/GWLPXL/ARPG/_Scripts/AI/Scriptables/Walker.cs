@@ -11,12 +11,14 @@ namespace GWLPXL.ARPGCore.AI.com
     [System.Serializable]
     public class WalkerVars
     {
-        public string AnimatorStateName = "Walk";
+        public string AnimatorStateName = "Locomotion";
         public float BlendingTime = .02f;
         public int AnimatorLayer = 0;
         public float Speed = 1;
         public float Acceleration = 55;
         public float StoppingDistance = 1;
+        public string VelocityParam = "Velocity";
+   
     }
 
 
@@ -60,6 +62,7 @@ namespace GWLPXL.ARPGCore.AI.com
 
         public void Enter()
         {
+            Entity.GetActorHub().MyAnim.SetFloatParam(vars.VelocityParam, 1);
             Entity.GetActorHub().MyAnim.SetAnimatorState(vars.AnimatorStateName, vars.BlendingTime, vars.AnimatorLayer);
 
 

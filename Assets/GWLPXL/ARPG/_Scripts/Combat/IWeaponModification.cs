@@ -2,6 +2,7 @@
 
 
 using GWLPXL.ARPGCore.com;
+using GWLPXL.ARPGCore.Combat.com;
 using UnityEngine;
 
 namespace GWLPXL.ARPGCore.Abilities.Mods.com

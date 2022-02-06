@@ -38,7 +38,7 @@ namespace GWLPXL.ARPGCore.Combat.com
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public abstract PhysicalAttackResults GetAttackValue(IActorHub user, bool cancrit);
+        public abstract PhysicalAttackResults GetAttackValue(IActorHub user);
 
     }
 }

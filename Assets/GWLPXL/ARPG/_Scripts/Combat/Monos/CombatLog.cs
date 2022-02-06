@@ -5,6 +5,41 @@ using UnityEngine;
 using System;
 namespace GWLPXL.ARPGCore.Combat.com
 {
+   
+    /// <summary>
+    /// used to expose the log to the inspector for the time being
+    /// </summary>
+    public class CombatLog : MonoBehaviour
+    {
+        [Tooltip("Limit to combat results print")]
+        public int Limit = 100;
+        [Tooltip("Read only log of combat results.")]
+        [SerializeField]
+        protected List<CombatResults> log;
+        private void OnEnable()
+        {
+            CombatLogger.OnResultAdded += AddLog;
+        }
+
+        private void OnDisable()
+        {
+            CombatLogger.OnResultAdded -= AddLog;
+
+        }
+
+        void AddLog(CombatResults results)
+        {
+            if (log.Count > Limit && Limit > 0)
+            {
+                log.RemoveAt(0);
+            }
+            log.Add(results);
+        }
+
+      
+    }
+
+
     /// <summary>
     /// temp log for now to see results, eventually translate results into a string.
     /// </summary>
@@ -19,29 +54,9 @@ namespace GWLPXL.ARPGCore.Combat.com
             OnResultAdded?.Invoke(results);
         }
 
-       
-        
 
 
-    }
-    /// <summary>
-    /// used to expose the log to the inspector for the time being
-    /// </summary>
-    public class CombatLog : MonoBehaviour
-    {
-        private void OnEnable()
-        {
-            CombatLogger.OnResultAdded += log.Add;
-        }
 
-        private void OnDisable()
-        {
-            CombatLogger.OnResultAdded -= log.Add;
 
-        }
-
-        [Tooltip("Read only log of combat results.")]
-        [SerializeField]
-        protected List<CombatResults> log;
     }
 }

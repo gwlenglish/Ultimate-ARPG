@@ -19,9 +19,10 @@ namespace GWLPXL.ARPGCore.AI.com
         public float AggroSightAngle = 45;
         [Tooltip("Layers that will block sight completely.")]
         public LayerMask SightBlockingLayers;
-        [Header("State Keys")]
+
         [Tooltip("The state to start the game in")]
         public string DefaultKey = "Aggro";
+        [Header("State Keys")]
         [Tooltip("The key to indicate aggro")]
         public string AggroKey = "Aggro";
         [Tooltip("How long to remain aggro")]
@@ -174,6 +175,10 @@ namespace GWLPXL.ARPGCore.AI.com
                     if (bb.GetMoveTarget() != null)
                     {
                         Move();
+                    }
+                    else if (bb.GetAttackTarget() != null)
+                    {
+                        Aggro();
                     }
                   
                 }

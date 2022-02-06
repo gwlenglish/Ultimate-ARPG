@@ -1,6 +1,7 @@
 ﻿
 using GWLPXL.ARPGCore.Abilities.com;
 using GWLPXL.ARPGCore.com;
+using GWLPXL.ARPGCore.Combat.com;
 using GWLPXL.ARPGCore.DebugHelpers.com;
 using GWLPXL.ARPGCore.Statics.com;
 using UnityEngine;

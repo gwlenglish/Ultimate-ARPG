@@ -38,10 +38,10 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                 int dmg = 0;
                 for (int i = 0; i < args.DamageValues.ReportElementalDmg.Count; i++)
                 {
-                    dmg += args.DamageValues.ReportElementalDmg[i].ReducedDamage;
+                    dmg += args.DamageValues.ReportElementalDmg[i].Result;
                 }
 
-                dmg += args.DamageValues.ReportPhysDmg.ReducedDamage;
+                dmg += args.DamageValues.ReportPhysDmg.Result;
                
                 CreateUIDamageText(dmg.ToString(), ElementType.None, false);
             }
@@ -50,10 +50,10 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
                 for (int i = 0; i < args.DamageValues.ReportElementalDmg.Count; i++)
                 {
                    
-                    CreateUIDamageText(args.DamageValues.ReportElementalDmg[i].ReducedDamage.ToString(), args.DamageValues.ReportElementalDmg[i].Type, args.DamageValues.ReportElementalDmg[i].WasCrit);
+                    CreateUIDamageText(args.DamageValues.ReportElementalDmg[i].Result.ToString(), args.DamageValues.ReportElementalDmg[i].Type, args.DamageValues.ReportElementalDmg[i].WasCrit);
                 }
 
-                CreateUIDamageText(args.DamageValues.ReportPhysDmg.ReducedDamage.ToString(), ElementType.None, args.DamageValues.ReportPhysDmg.WasCrit);
+                CreateUIDamageText(args.DamageValues.ReportPhysDmg.Result.ToString(), ElementType.None, args.DamageValues.ReportPhysDmg.WasCrit);
              
             }
         }

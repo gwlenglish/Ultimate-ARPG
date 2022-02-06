@@ -1,6 +1,7 @@
 ﻿
 
 using GWLPXL.ARPGCore.com;
+using GWLPXL.ARPGCore.Combat.com;
 using GWLPXL.ARPGCore.Types.com;
 using UnityEngine;
 namespace GWLPXL.ARPGCore.CanvasUI.com

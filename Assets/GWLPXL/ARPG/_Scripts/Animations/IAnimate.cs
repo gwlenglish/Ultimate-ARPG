@@ -25,6 +25,7 @@ namespace GWLPXL.ARPGCore.Animations.com
         [System.Obsolete("Use State Machine instead")]
         void SetMovement(float movement);
 
+        void SetFloatParam(string param, float value);
         float GetCurrentAnimationLength();
         bool GetDelay();
         void DelayAnimation();

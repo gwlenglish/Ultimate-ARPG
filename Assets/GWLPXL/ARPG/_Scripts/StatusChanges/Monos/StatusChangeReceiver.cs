@@ -178,8 +178,9 @@ namespace GWLPXL.ARPGCore.StatusEffects.com
         }
 
 
-        public List<StatusEffectVars> GetCurrentApplied() => StatusEffectHelper.GetAllActiveEffects(GetActorHub());
+        public List<StatusEffectVars> GetCurrentAppliedStatuses() => StatusEffectHelper.GetAllActiveEffects(GetActorHub());
 
+        public List<ModifyResourceDoTState> GetCurrentlyAppliedDoTs() => SoTHelper.GetAllAppliedDots(GetActorHub());
        
     }
 }

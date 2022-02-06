@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StateKey: Idle
   Vars:
-    AnimatorStateName: Idle
+    AnimatorStateName: Locomotion
+    AnimBlendDuration: 0.02
+    AnimLayer: 0

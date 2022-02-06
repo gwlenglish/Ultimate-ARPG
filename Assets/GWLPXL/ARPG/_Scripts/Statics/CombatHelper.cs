@@ -4,6 +4,7 @@ using GWLPXL.ARPGCore.com;
 using GWLPXL.ARPGCore.Combat.com;
 using GWLPXL.ARPGCore.DebugHelpers.com;
 using GWLPXL.ARPGCore.StatusEffects.com;
+using GWLPXL.ARPGCore.Types.com;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,7 +25,7 @@ namespace GWLPXL.ARPGCore.Statics.com
         public static string AoEWeapon = "AoE Weapon";
         public static string AdditionalActor = "Additional Actor Source";
         public static string AdditionalNoActor = "Additional NO Actor Source";
-
+        public static string ElementDamageNoActor = "Element Damage NO Actor";
 
        
         /// <summary>
@@ -95,13 +96,27 @@ namespace GWLPXL.ARPGCore.Statics.com
            // target.MyStatusEffects.AddDoT(vars);
 
         }
+
+        public static AttackValues GetElementalDamageNoActor(AttackValues values, ElementDamageMultiplierNoActor[] damageArray)//move this, switch to do the damage like usual but just add elemental multiple. maybe add a bool to check? respec iframe? start iframe? shouldnt this just be add dot? yeah
+        {
+
+            for (int i = 0; i < damageArray.Length; i++)
+            {
+                int baseprojectile = damageArray[i].BaseElementDamage;
+                ElementType type = damageArray[i].DamageType;
+     
+                values.ElementAttacks.Add(new ElementAttackResults(type, baseprojectile, ElementDamageNoActor));
+            }
+
+            return values;
+        }
         /// <summary>
         /// additional damage, no actor
         /// </summary>
         /// <param name="other"></param>
         public static AttackValues GetAdditionalDamageSource(AttackValues values, DamageSourceVars_NoActor Vars)
         {
-            PhysicalAttackResults phys = new PhysicalAttackResults(Vars.DamageMultipliers.PhysicalMultipliers.BasePhysicalDamage, false, AdditionalNoActor);
+            PhysicalAttackResults phys = new PhysicalAttackResults(Vars.DamageMultipliers.PhysicalMultipliers.BasePhysicalDamage, AdditionalNoActor);
             values.PhysicalAttack.Add(phys);
             List<ElementAttackResults> ele = new List<ElementAttackResults>(Vars.DamageMultipliers.ElementMultipliers.Length);
             for (int i = 0; i < Vars.DamageMultipliers.ElementMultipliers.Length; i++)
@@ -125,7 +140,7 @@ namespace GWLPXL.ARPGCore.Statics.com
             if (Vars.AdditionalDamage.PhysMultipler.PercentOfCasterAttack > 0)
             {
                 int add = Vars.AdditionalDamage.PhysMultipler.GetPhysicalDamageAmount(values.Attacker);
-                values.PhysicalAttack.Add(new PhysicalAttackResults(add, false, AdditionalActor));
+                values.PhysicalAttack.Add(new PhysicalAttackResults(add, AdditionalActor));
                 
             }
 
@@ -344,7 +359,7 @@ namespace GWLPXL.ARPGCore.Statics.com
                             if (CombatHelper.HasSight(attacker, colliders[i].transform, Vars.PhysicsType, Vars.Angle))
                             {
                                 //do the damage.
-                                results.PhysicalAttack.Add(new PhysicalAttackResults(invDamage, false, AoEWeapon));
+                                results.PhysicalAttack.Add(new PhysicalAttackResults(invDamage, AoEWeapon));
 
                             }
 
@@ -365,7 +380,7 @@ namespace GWLPXL.ARPGCore.Statics.com
                             if (CombatHelper.HasSight(attacker, coll2d[i].transform, Vars.PhysicsType, Vars.Angle))
                             {
                                 //do the damage.
-                                results.PhysicalAttack.Add(new PhysicalAttackResults(invDamage, false, AoEWeapon));
+                                results.PhysicalAttack.Add(new PhysicalAttackResults(invDamage, AoEWeapon));
                             }
 
 

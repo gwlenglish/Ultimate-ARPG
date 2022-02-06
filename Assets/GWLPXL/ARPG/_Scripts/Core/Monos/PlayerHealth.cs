@@ -177,16 +177,16 @@ namespace GWLPXL.ARPGCore.com
 
                 for (int i = 0; i < results.DamageValues.ReportElementalDmg.Count; i++)
                 {
-                    if (results.DamageValues.ReportElementalDmg[i].ReducedDamage > 0)//prevent dmg if immortal, but show everything else
+                    if (results.DamageValues.ReportElementalDmg[i].Result > 0)//prevent dmg if immortal, but show everything else
                     {
-                        owner.MyStats.GetRuntimeAttributes().ModifyNowResource(healthResource, -results.DamageValues.ReportElementalDmg[i].ReducedDamage);
+                        owner.MyStats.GetRuntimeAttributes().ModifyNowResource(healthResource, -results.DamageValues.ReportElementalDmg[i].Result);
                     }
 
                 }
 
-                if (results.DamageValues.ReportPhysDmg.ReducedDamage > 0)
+                if (results.DamageValues.ReportPhysDmg.Result > 0)
                 {
-                    owner.MyStats.GetRuntimeAttributes().ModifyNowResource(healthResource, -results.DamageValues.ReportPhysDmg.ReducedDamage);
+                    owner.MyStats.GetRuntimeAttributes().ModifyNowResource(healthResource, -results.DamageValues.ReportPhysDmg.Result);
                 }
 
             }

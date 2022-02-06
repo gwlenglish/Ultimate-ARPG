@@ -61,7 +61,11 @@ namespace GWLPXL.ARPGCore.Statics.com
             vars.Dicvalue.TryGetValue(target, out bool value);
             if (value == true)
             {
-                target.MyMover.ModifySpeedMultiplier(vars.Savedspeed);
+                if (target.MyMover != null)
+                {
+                    target.MyMover.ModifySpeedMultiplier(vars.Savedspeed);
+                }
+               
                 value = false;
                 vars.Dicvalue[target] = value;
             }

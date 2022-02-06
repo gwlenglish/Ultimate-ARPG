@@ -1,6 +1,6 @@
 ﻿
 using GWLPXL.ARPGCore.com;
-
+using GWLPXL.ARPGCore.Combat.com;
 using UnityEngine;
 
 
@@ -24,7 +24,7 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
             float damageamount = 4 * self.MyStats.GetRuntimeAttributes().GetStatNowValue(Types.com.StatType.Strength) + 5;
             int rounded = Mathf.FloorToInt(damageamount);
             Debug.Log("Expected custom damage: " + rounded);
-            other.PhysicalAttack.Add(new PhysicalAttackResults(rounded, false, "Custom Example"));
+            other.PhysicalAttack.Add(new PhysicalAttackResults(rounded, "Custom Example"));
             //pass the damage to the other
 
         }

@@ -151,7 +151,7 @@ namespace GWLPXL.ARPGCore.Combat.com
         }
         private void OnExitSoTLogic(IActorHub other)
         {
-            damage.DamageVar.CombatHandler.OnExitSoTLogic(other, this, this);
+            damage.DamageVar.CombatHandler.OnExitSoTLogic(owner, other, this, this);
         }
        
         

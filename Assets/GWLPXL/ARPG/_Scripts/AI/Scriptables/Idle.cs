@@ -11,9 +11,10 @@ namespace GWLPXL.ARPGCore.AI.com
     [System.Serializable]
     public class IdleVars
     {
-        public string AnimatorStateName = "Idle";
+        public string AnimatorStateName = "Locomotion";
         public float AnimBlendDuration = .02f;
         public int AnimLayer = 0;
+        public string VelocityParam = "Velocity";
     }
 
 
@@ -54,6 +55,7 @@ namespace GWLPXL.ARPGCore.AI.com
         {
             Entity.GetActorHub().MyAnim.SetAnimatorState(vars.AnimatorStateName, vars.AnimBlendDuration, vars.AnimLayer);
             Entity.GetActorHub().MyMover.SetDesiredDestination(Entity.GetActorHub().MyTransform.position, 1f);
+            Entity.GetActorHub().MyAnim.SetFloatParam(vars.VelocityParam, 0f);
    
         }
 

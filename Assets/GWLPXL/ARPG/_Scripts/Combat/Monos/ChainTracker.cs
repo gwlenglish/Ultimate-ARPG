@@ -53,7 +53,7 @@ namespace GWLPXL.ARPGCore.Combat.com
                                 if (HasHitTarget(dmg) == true) continue;
                             }
 
-                            if (form.DetermineAttackable(dmg.MyHealth, originalcaster.MyHealth, false))
+                            if (form.DetermineAttackable(dmg, originalcaster, false))
                             {
                                 IChainTarget chainTarget = dmg.MyTransform.GetComponent<IChainTarget>();
                                 if (chainTarget != null)
@@ -79,7 +79,7 @@ namespace GWLPXL.ARPGCore.Combat.com
                                 if (HasHitTarget(dmg) == true) continue;
                             }
 
-                            if (form.DetermineAttackable(dmg.MyHealth, originalcaster.MyHealth, false))
+                            if (form.DetermineAttackable(dmg, originalcaster, false))
                             {
                                 IChainTarget chainTarget = dmg.MyTransform.GetComponent<IChainTarget>();
                                 if (chainTarget != null)

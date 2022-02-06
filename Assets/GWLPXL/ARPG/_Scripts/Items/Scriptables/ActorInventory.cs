@@ -68,6 +68,7 @@ namespace GWLPXL.ARPGCore.Items.com
         protected EquipmentType[] typesForDamage = new EquipmentType[] { EquipmentType.Weapon };
         protected EquipmentType[] typesForArmor = new EquipmentType[] { EquipmentType.Armor };
         protected EquipmentList[] sortedLists = new EquipmentList[0];
+        public Dictionary<Equipment, EquipmentTrait[]> AppliedTraits => appliedTraits;
         protected Dictionary<Equipment, EquipmentTrait[]> appliedTraits = new Dictionary<Equipment, EquipmentTrait[]>();
         protected IAttributeUser myActorStats;
         //clears out the inventory entirely, needed since SO's carry data over in the editor
@@ -674,6 +675,7 @@ namespace GWLPXL.ARPGCore.Items.com
         /// <returns></returns>
         public virtual bool CanWeAddItem(Item potentialItem)
         {
+            
             if (potentialItem.IsStacking())//if stacking
             {
                 foreach (var kvp in stackPerSlot)//we check for existing stack

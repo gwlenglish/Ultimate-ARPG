@@ -170,7 +170,7 @@ namespace GWLPXL.ARPGCore.Combat.com
                 return BasePhysicalDamage;
             }
 
-            PhysicalAttackResults baseUserAttack = DungeonMaster.Instance.CombatFormulas.GetCombatFormulas().GetPhysicalAttackValue(forUser, false);
+            PhysicalAttackResults baseUserAttack = DungeonMaster.Instance.CombatFormulas.GetCombatFormulas().GetPhysicalAttackValue(forUser);
             float v = baseUserAttack.PhysicalDamage;
             v *= (PercentOfCasterAttack);
             return Mathf.FloorToInt(v + (BasePhysicalDamage));

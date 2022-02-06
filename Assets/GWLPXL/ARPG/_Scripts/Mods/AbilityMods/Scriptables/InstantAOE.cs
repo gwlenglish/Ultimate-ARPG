@@ -6,6 +6,8 @@ using UnityEngine;
 using GWLPXL.ARPGCore.Abilities.com;
 using GWLPXL.ARPGCore.Statics.com;
 using System.Collections.Generic;
+using GWLPXL.ARPGCore.Combat.com;
+
 namespace GWLPXL.ARPGCore.Abilities.Mods.com
 {
 

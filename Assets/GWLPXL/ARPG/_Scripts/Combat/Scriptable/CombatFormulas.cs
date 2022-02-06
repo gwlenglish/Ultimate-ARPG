@@ -26,9 +26,7 @@ namespace GWLPXL.ARPGCore.Combat.com
         public EnemyDefault EnemyCombat = null;
 
 
-        #region public methods
- 
-        
+        #region public override methods
         /// <summary>
         /// performs the projectile damage
         /// </summary>
@@ -44,8 +42,8 @@ namespace GWLPXL.ARPGCore.Combat.com
             if (damage.GetActorDamageData().DamageVar.DamageOptions.InflictPhysicalDmg)
             {
                 int phys = damage.GetActorDamageData().DamageVar.DamageMultipliers.PhysMultipler.GetPhysicalDamageAmount(owner);
-                values.PhysicalAttack.Add(new PhysicalAttackResults(phys, false, "Projectile"));
-                damage.GetActorDamageEvents().SceneEvents.OnPhysicalDamagedOther.Invoke(phys, damageTarget.MyHealth);
+                values.PhysicalAttack.Add(new PhysicalAttackResults(phys, "Projectile"));
+                damage.GetActorDamageEvents().SceneEvents.OnPhysicalDamagedOther.Invoke(values, damageTarget.MyHealth);
 
             }
 
@@ -55,10 +53,10 @@ namespace GWLPXL.ARPGCore.Combat.com
                 {
                     ElementDamageMultiplierActor elev = damage.GetActorDamageData().DamageVar.DamageMultipliers.ElementMultiplers[i];
                     values.ElementAttacks.Add(new ElementAttackResults(elev.DamageType, elev.GetElementDamageAmount(owner), "Projectile"));
-                    damage.GetActorDamageEvents().SceneEvents.OnElementalDamageOther.Invoke(elev.GetElementDamageAmount(owner), damageTarget.MyHealth);
+                    damage.GetActorDamageEvents().SceneEvents.OnElementalDamageOther.Invoke(values, damageTarget.MyHealth);
                 }
-    
-             
+
+
 
             }
 
@@ -78,69 +76,75 @@ namespace GWLPXL.ARPGCore.Combat.com
             damageTarget.MyHealth.SetCharacterThatHitMe(owner);
             return values;
         }
+
         /// <summary>
-        /// performs the SoTs damage 
-        /// </summary>
-        /// <param name="target"></param>
-        /// <param name="damage"></param>
-        public override void SoTsDamageLogic(IActorHub target, IDoActorDamage damage)
-        {
-            int eleDmg = damage.GetActorDamageData().DamageVar.CombatHandler.DoElementalDamageOverTime(target.MyHealth, damage.GetActorDamageData().DamageVar.SoTOverTimeMultipliers.ElementalMultipliers);
-            damage.GetActorDamageEvents().SceneEvents.OnElementalDamageOther.Invoke(eleDmg, target.MyHealth);
-        }
-        /// <summary>
-        /// performs the sots apply logic
+        /// performs any SOT exit logic 
         /// </summary>
         /// <param name="target"></param>
         /// <param name="damage"></param>
         /// <param name="sots"></param>
-        public override void SoTsApplyLogic(IActorHub target, IDoActorDamage damage, IApplySOT sots)
+        public override void OnExitSoTLogic(IActorHub caster, IActorHub target, IDoActorDamage damage, IApplySOT sots)
         {
-            bool dotsadded = damage.GetActorDamageData().DamageVar.CombatHandler.AddDOTS(target, damage.GetActorDamageData().DamageVar.SoTOptions.AdditionalDOTs);
-            if (dotsadded)
-            {
-                sots.GetSOTEvents().SceneEvents.OnSoTApply.Invoke(target.MyStatusEffects);
-            }
-        }
-        /// <summary>
-        /// performs any exit logic
-        /// </summary>
-        /// <param name="target"></param>
-        /// <param name="damage"></param>
-        /// <param name="sots"></param>
-        public override void OnExitSoTLogic(IActorHub target, IDoActorDamage damage, IApplySOT sots)
-        {
+            //fail conditions
             if (target == null) return;
             if (damage.GetActorDamageData().DamageVar.DamageOptions.InflictSoT == false) return;
             if (damage.GetActorDamageData().DamageVar.SoTOptions.ApplyAtExit == false) return;
 
+            //removal and any final damage for the dot
+            //get all sots the applysot currently has applied, remove the ones that match our target
+
+            AttackValues values = new AttackValues(caster, target, true);
             for (int i = 0; i < sots.GetSOTS().Count; i++)
             {
                 if (sots.GetSOTS()[i].Attackable == target)
                 {
-                    //damage
-                    SoTsDamageLogic(target, damage);
-                    SoTsApplyLogic(target, damage, sots);
+
+                    values = CombatHelper.GetElementalDamageNoActor(values, damage.GetActorDamageData().DamageVar.SoTOverTimeMultipliers.ElementalMultipliers);
+
+                    damage.GetActorDamageEvents().SceneEvents.OnElementalDamageOther.Invoke(values, target.MyHealth);
+
+                    bool dotsadded = damage.GetActorDamageData().DamageVar.CombatHandler.AddDOTS(caster, target, damage.GetActorDamageData().DamageVar.SoTOptions.AdditionalDOTs);
+                    if (dotsadded)
+                    {
+                        sots.GetSOTEvents().SceneEvents.OnSoTApply.Invoke(target.MyStatusEffects);
+                    }
                     sots.GetSOTS().RemoveAt(i);
                     break;
                 }
             }
+
+            target.MyHealth.TakeDamage(values);
         }
         /// <summary>
-        /// performs enter logic
+        /// checks if valid target
         /// </summary>
         /// <param name="owner"></param>
         /// <param name="target"></param>
         /// <param name="damage"></param>
         /// <param name="sots"></param>
-        public override void OnEnterSotLogic(IActorHub owner, IActorHub target, IDoActorDamage damage, IApplySOT sots)
+        /// <returns></returns>
+        public override bool CanApplySoT(IActorHub owner, IActorHub target, IDoActorDamage damage, IApplySOT sots)
         {
-            if (target == null) return;
-            if (target.MyStatusEffects == null) return;
-            if (damage.GetActorDamageData().DamageVar.DamageOptions.InflictSoT == false) return;
-            if (damage.GetActorDamageData().DamageVar.CombatHandler.DetermineAttackable(target.MyHealth, owner.MyHealth, damage.GetActorDamageData().DamageVar.SoTOptions.FriendlyFIre) == false) return;//cant attack
-            if (sots.GetSoTAppliedList().Contains(target)) return;//only allow one application per active swing
+            if (target == null) return false;
+            if (target.MyStatusEffects == null) return false;
+            if (damage.GetActorDamageData().DamageVar.DamageOptions.InflictSoT == false) return false;
+            if (damage.GetActorDamageData().DamageVar.CombatHandler.DetermineAttackable(target, owner, damage.GetActorDamageData().DamageVar.SoTOptions.FriendlyFIre) == false) return false;//cant attack
+            if (sots.GetSoTAppliedList().Contains(target)) return false;//only allow one application per active swing
+            return true;
+        }
+        /// <summary>
+        /// performs enter logic
+        /// </summary>
+        /// <param name="caster"></param>
+        /// <param name="target"></param>
+        /// <param name="damage"></param>
+        /// <param name="sots"></param>
+        public override void OnEnterSotLogic(IActorHub caster, IActorHub target, IDoActorDamage damage, IApplySOT sots)
+        {
+            if (CanApplySoT(caster, target, damage, sots) == false) return;
 
+
+            ///check iapplysot, have we applied our sot already? if so, add dot (stack)
             bool foundonlist = false;
             for (int i = 0; i < sots.GetSOTS().Count; i++)
             {
@@ -148,7 +152,7 @@ namespace GWLPXL.ARPGCore.Combat.com
                 {
                     foundonlist = true;
                     //alraedy on the list, reapply?
-                    bool dotsadded = damage.GetActorDamageData().DamageVar.CombatHandler.AddDOTS(sots.GetSOTS()[i].ActorHub, damage.GetActorDamageData().DamageVar.SoTOptions.AdditionalDOTs);
+                    bool dotsadded = damage.GetActorDamageData().DamageVar.CombatHandler.AddDOTS(caster, sots.GetSOTS()[i].ActorHub, damage.GetActorDamageData().DamageVar.SoTOptions.AdditionalDOTs);
                     if (dotsadded)
                     {
                         sots.GetSOTEvents().SceneEvents.OnSoTApply.Invoke(sots.GetSOTS()[i].StatusChange);
@@ -157,41 +161,53 @@ namespace GWLPXL.ARPGCore.Combat.com
                 }
             }
 
+            //if not, create a new sot and add it
             if (foundonlist == false)
             {
-
+                AttackValues values = new AttackValues(caster, target, true);
                 SOT newDot = new SOT(target);
                 sots.GetSOTS().Add(newDot);
                 if (damage.GetActorDamageData().DamageVar.SoTOptions.ApplyAtEnter)
                 {
-                    int eleDmg = damage.GetActorDamageData().DamageVar.CombatHandler.DoElementalDamageOverTime(target.MyHealth, damage.GetActorDamageData().DamageVar.SoTOverTimeMultipliers.ElementalMultipliers);
 
-                    //int eleDmg = CombatResolution.DoElementalDamageOverTime(attacked, statusOverTimeMultiplers.ElementalMultipliers);
-                    damage.GetActorDamageEvents().SceneEvents.OnElementalDamageOther.Invoke(eleDmg, target.MyHealth);
+                    values = CombatHelper.GetElementalDamageNoActor(values, damage.GetActorDamageData().DamageVar.SoTOverTimeMultipliers.ElementalMultipliers);
+
+
+
+                    damage.GetActorDamageEvents().SceneEvents.OnElementalDamageOther.Invoke(values, target.MyHealth);//currently need to change
+
                 }
                 if (damage.GetActorDamageData().DamageVar.SoTOptions.ApplyDotAtEnter)
                 {
-                    bool dotsadded = damage.GetActorDamageData().DamageVar.CombatHandler.AddDOTS(target, damage.GetActorDamageData().DamageVar.SoTOptions.AdditionalDOTs);
+                    bool dotsadded = damage.GetActorDamageData().DamageVar.CombatHandler.AddDOTS(caster, target, damage.GetActorDamageData().DamageVar.SoTOptions.AdditionalDOTs);
                     if (dotsadded)
                     {
                         sots.GetSOTEvents().SceneEvents.OnSoTApply.Invoke(target.MyStatusEffects);
                     }
                 }
 
+                target.MyHealth.TakeDamage(values);
+
             }
             sots.GetSoTAppliedList().Add(target);
 
         }
 
-        public override PhysicalAttackResults GetPhysicalAttackValue(IActorHub self, bool cancrit = true)
+        /// <summary>
+        /// switches if player or enemy returns respective value from their formulas
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="cancrit"></param>
+        /// <returns></returns>
+        public override PhysicalAttackResults GetPhysicalAttackValue(IActorHub self)
         {
             if (self.PlayerControlled != null)
             {
-                return PlayerCombat.GetAttackValue(self, cancrit);
+                return PlayerCombat.GetAttackValue(self);
             }
             else
             {
-                return EnemyCombat.GetAttackValue(self, cancrit);
+                return EnemyCombat.GetAttackValue(self);
             }
         }
 
@@ -208,40 +224,41 @@ namespace GWLPXL.ARPGCore.Combat.com
         {
             results.PhysicalAttack.Add(GetPhysicalAttackValue(owner));
 
+            //get physical dmg
             if (actorDmg.GetActorDamageData().DamageVar.DamageOptions.InflictPhysicalDmg)
             {
 
                 int physdmg = actorDmg.GetActorDamageData().DamageVar.DamageMultipliers.PhysMultipler.GetPhysicalDamageAmount(owner);
-                results.PhysicalAttack.Add(new PhysicalAttackResults(physdmg, false, "Melee"));
-                actorDmg.GetActorDamageEvents().SceneEvents.OnPhysicalDamagedOther.Invoke(physdmg, attacked.MyHealth);
+                results.PhysicalAttack.Add(new PhysicalAttackResults(physdmg, CombatHelper.Melee));
+                actorDmg.GetActorDamageEvents().SceneEvents.OnPhysicalDamagedOther.Invoke(results, attacked.MyHealth);
 
             }
 
+            //get ele dmg
             if (actorDmg.GetActorDamageData().DamageVar.DamageOptions.InfictElementalDmg)
             {
                 for (int i = 0; i < actorDmg.GetActorDamageData().DamageVar.DamageMultipliers.ElementMultiplers.Length; i++)
                 {
-                    results.ElementAttacks.Add(new ElementAttackResults(actorDmg.GetActorDamageData().DamageVar.DamageMultipliers.ElementMultiplers[i].DamageType, 
-                        actorDmg.GetActorDamageData().DamageVar.DamageMultipliers.ElementMultiplers[i].GetElementDamageAmount(owner), 
-                        "Melee"));
-                    actorDmg.GetActorDamageEvents().SceneEvents.OnElementalDamageOther.Invoke(actorDmg.GetActorDamageData().DamageVar.DamageMultipliers.ElementMultiplers[i].GetElementDamageAmount(owner), attacked.MyHealth);
+                    results.ElementAttacks.Add(new ElementAttackResults(actorDmg.GetActorDamageData().DamageVar.DamageMultipliers.ElementMultiplers[i].DamageType,
+                        actorDmg.GetActorDamageData().DamageVar.DamageMultipliers.ElementMultiplers[i].GetElementDamageAmount(owner),
+                        CombatHelper.Melee));
+                    actorDmg.GetActorDamageEvents().SceneEvents.OnElementalDamageOther.Invoke(results, attacked.MyHealth);
                 }
-              
+
 
             }
 
-
+            //get mods
             int modlength = damager.GetWeaponMods().Length;
             for (int i = 0; i < modlength; i++)//try moving this to the damage logic. hmmm
             {
                 damager.GetWeaponMods()[i].DoModification(results);
             }
 
+            //add target to list
             damager.GetDamagedList().Add(attacked);
             return results;
-            actorDmg.GetActorDamageEvents().SceneEvents.OnDamagedOther.Invoke();
-            attacked.MyHealth.SetCharacterThatHitMe(owner);
-           // Debug.Log("Ran attack for " + owner.MyTransform.gameObject.name);
+
         }
         /// <summary>
         /// performs melee damage (defined by the melee damage box)
@@ -249,41 +266,15 @@ namespace GWLPXL.ARPGCore.Combat.com
         /// <param name="attacker"></param>
         /// <param name="damageTarget"></param>
         /// <returns></returns>
-      
-
-       
-        /// <summary>
-        /// performs melee element damage over time (defined by the melee damage box)
-        /// </summary>
-        /// <param name="damageTarget"></param>
-        /// <param name="damageArray"></param>
-        /// <returns></returns>
-        public override int DoElementalDamageOverTime(IReceiveDamage damageTarget, ElementDamageMultiplierNoActor[] damageArray)
-        {
-            int total = 0;
-            for (int i = 0; i < damageArray.Length; i++)
-            {
-                int baseprojectile = damageArray[i].BaseElementDamage;
-                ElementType type = damageArray[i].DamageType;
 
 
-                if (baseprojectile > 0)
-                {
-                    // damageTarget.TakeDamage(baseprojectile, type);
-                    total += baseprojectile;
-                }
-            }
-
-            return total;
-        }
-       
         /// <summary>
         /// applies DoTs to target
         /// </summary>
         /// <param name="target"></param>
         /// <param name="damageOverTimeOptions"></param>
-        /// <returns></returns>
-        public override bool AddDOTS(IActorHub target, ModifyResourceVars[] damageOverTimeOptions)
+        /// <returns></returns>, just a wrapper for the SotHelper.AddDot
+        public override bool AddDOTS(IActorHub caster, IActorHub target, ModifyResourceVars[] damageOverTimeOptions)
         {
             if (target == null) return false;
 
@@ -301,96 +292,70 @@ namespace GWLPXL.ARPGCore.Combat.com
         /// <param name="attacker"></param>
         /// <param name="friendlyFire"></param>
         /// <returns></returns>
-        public override bool DetermineAttackable(IReceiveDamage target, IReceiveDamage attacker, bool friendlyFire)
+        public override bool DetermineAttackable(IActorHub target, IActorHub attacker, bool friendlyFire)
         {
             if (attacker == null) return false;
             if (target == null) return false;
 
             if (friendlyFire == true) return true;
-            CombatGroupType[] attackedgroup = target.GetMyCombatGroup();
-            CombatGroupType[] attackergroup = attacker.GetMyCombatGroup();
+            CombatGroupType[] attackedgroup = target.MyHealth.GetMyCombatGroup();
+            CombatGroupType[] attackergroup = attacker.MyHealth.GetMyCombatGroup();
             if (attackergroup.Intersect(attackedgroup).Any()) return false;
-
             return true;
 
+
+
         }
+
+ 
+
+
         /// <summary>
-        /// determines if can attack
+        /// determines valid melee targets
         /// </summary>
-        /// <param name="attackerGroups"></param>
-        /// <param name="targetGroupTypes"></param>
+        /// <param name="owner"></param>
+        /// <param name="damager"></param>
+        /// <param name="actorDmg"></param>
+        /// <param name="attacked"></param>
+        /// <param name="meleeOptions"></param>
         /// <returns></returns>
-        public override bool DetermineAttackable(CombatGroupType[] attackerGroups, CombatGroupType[] targetGroupTypes)
-        {
-
-            if (attackerGroups.Intersect(targetGroupTypes).Any()) return false;
-
-            return true;
-        }
-
-
-        #endregion
-
-        #region protected
-     
-
-       
-      
-        protected virtual List<ElementAttackValues> GetActorElementAttackValues(IAttributeUser forUser)
-        {
-            List<ElementAttackValues> temp = new List<ElementAttackValues>();
-            if (forUser == null) return temp;
-            foreach (ElementType pieceType in System.Enum.GetValues(typeof(ElementType)))
-            {
-                if (pieceType == ElementType.None) continue;
-                int attack = GetActorElementDamage(forUser, pieceType);
-                temp.Add(new ElementAttackValues(pieceType, attack));
-            }
-            return temp;
-
-        }
-
-        protected virtual int GetActorElementDamage(IAttributeUser forUser, ElementType damageType)
-        {
-            return forUser.GetRuntimeAttributes().GetElementAttack(damageType);
-        }
-
-        
-       
-
-
-
         public override bool CanMeleeAttack(IActorHub owner, IDoDamage damager, IDoActorDamage actorDmg, IActorHub attacked, IMeleeWeapon meleeOptions)
         {
             if (owner == null) return false;
             if (attacked == null) return false;
             if (attacked == owner) return false;
             if (actorDmg.GetActorDamageData().DamageVar.DamageOptions.InfictElementalDmg == false && actorDmg.GetActorDamageData().DamageVar.DamageOptions.InflictPhysicalDmg == false) return false;
-            if (actorDmg.GetActorDamageData().DamageVar.CombatHandler.DetermineAttackable(attacked.MyHealth, owner.MyHealth, meleeOptions.GetMeleeOptions().MeleeVars.FriendlyFire) == false) return false;//cant attack
+            if (actorDmg.GetActorDamageData().DamageVar.CombatHandler.DetermineAttackable(attacked, owner, meleeOptions.GetMeleeOptions().MeleeVars.FriendlyFire) == false) return false;//cant attack
             if (damager.GetDamagedList().Contains(attacked) == true) return false;
             return true;
         }
 
+        /// <summary>
+        /// determines valid project targets
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="damageDealer"></param>
+        /// <param name="damageTarget"></param>
+        /// <param name="damage"></param>
+        /// <param name="projectileOptions"></param>
+        /// <returns></returns>
         public override bool CanProjectileAttack(IActorHub owner, IDoDamage damageDealer, IActorHub damageTarget, IDoActorDamage damage, IProjectile projectileOptions)
         {
             if (damage.GetActorDamageData().DamageVar.DamageOptions.InflictPhysicalDmg == false && damage.GetActorDamageData().DamageVar.DamageOptions.InfictElementalDmg == false) return false;//no dmg to do
             if (damageTarget == null) return false;
             if (damageTarget == owner) return false;
 
-            if (damage.GetActorDamageData().DamageVar.CombatHandler.DetermineAttackable(damageTarget.MyHealth, owner.MyHealth, projectileOptions.GetProjectileData().ProjectileVars.FriendlyFire) == false) return false; //can't attack
+            if (damage.GetActorDamageData().DamageVar.CombatHandler.DetermineAttackable(damageTarget, owner, projectileOptions.GetProjectileData().ProjectileVars.FriendlyFire) == false) return false; //can't attack
             if (damageDealer.GetDamagedList().Contains(damageTarget) == true) return false;
             return true;
         }
 
-       
-
-
         #endregion
     }
 
-    
 
-    public abstract class CommonCombatFormulas :ScriptableObject
+
+    public abstract class CommonCombatFormulas : ScriptableObject
     {
         /// <summary>
         /// determine if valid melee target
@@ -417,17 +382,17 @@ namespace GWLPXL.ARPGCore.Combat.com
         /// </summary>
         /// <param name="self"></param>
         /// <returns></returns>
-        public abstract PhysicalAttackResults GetPhysicalAttackValue(IActorHub self, bool cancrit);
-/// <summary>
-/// calculate the melee damage formula, write the values on the attack values
-/// </summary>
-/// <param name="results"></param>
-/// <param name="owner"></param>
-/// <param name="damager"></param>
-/// <param name="attacked"></param>
-/// <param name="actorDmg"></param>
-/// <param name="meleeOptions"></param>
-/// <returns></returns>
+        public abstract PhysicalAttackResults GetPhysicalAttackValue(IActorHub self);
+        /// <summary>
+        /// calculate the melee damage formula, write the values on the attack values
+        /// </summary>
+        /// <param name="results"></param>
+        /// <param name="owner"></param>
+        /// <param name="damager"></param>
+        /// <param name="attacked"></param>
+        /// <param name="actorDmg"></param>
+        /// <param name="meleeOptions"></param>
+        /// <returns></returns>
         public abstract AttackValues GetMeleeActorDamageLogic(AttackValues results, IActorHub owner, IDoDamage damager, IActorHub attacked, IDoActorDamage actorDmg, IMeleeWeapon meleeOptions);
         /// <summary>
         /// calculcate the projectile damage formula, write the values on the attack values
@@ -441,30 +406,55 @@ namespace GWLPXL.ARPGCore.Combat.com
         /// <returns></returns>
         public abstract AttackValues GetProjectileDamage(AttackValues results, IActorHub owner, IDoDamage damageDealer, IActorHub damageTarget, IDoActorDamage damage, IProjectile projectileOptions);
 
-
-
-
-
-
-
-        public abstract bool AddDOTS(IActorHub target, ModifyResourceVars[] damageOverTimeOptions);
-        public abstract void SoTsDamageLogic(IActorHub target, IDoActorDamage damage);
-        public abstract void SoTsApplyLogic(IActorHub target, IDoActorDamage damage, IApplySOT sots);
+        /// <summary>
+        /// wrapper for adding dots to targets
+        /// </summary>
+        /// <param name="caster"></param>
+        /// <param name="target"></param>
+        /// <param name="damageOverTimeOptions"></param>
+        /// <returns></returns>
+        public abstract bool AddDOTS(IActorHub caster, IActorHub target, ModifyResourceVars[] damageOverTimeOptions);
+        /// <summary>
+        /// if valid target
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="target"></param>
+        /// <param name="damage"></param>
+        /// <param name="sots"></param>
+        /// <returns></returns>
+        public abstract bool CanApplySoT(IActorHub owner, IActorHub target, IDoActorDamage damage, IApplySOT sots);
+        /// <summary>
+        /// logic for OnEnterTrigger for sots
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="target"></param>
+        /// <param name="damage"></param>
+        /// <param name="sots"></param>
         public abstract void OnEnterSotLogic(IActorHub owner, IActorHub target, IDoActorDamage damage, IApplySOT sots);
-        public abstract void OnExitSoTLogic(IActorHub target, IDoActorDamage damage, IApplySOT sots);
+        /// <summary>
+        /// logic for OnExitTrigger for sots
+        /// </summary>
+        /// <param name="caster"></param>
+        /// <param name="target"></param>
+        /// <param name="damage"></param>
+        /// <param name="sots"></param>
+        public abstract void OnExitSoTLogic(IActorHub caster, IActorHub target, IDoActorDamage damage, IApplySOT sots);
 
+        /// <summary>
+        /// if valid target
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="attacker"></param>
+        /// <param name="friendlyFire"></param>
+        /// <returns></returns>
+        public abstract bool DetermineAttackable(IActorHub target, IActorHub attacker, bool friendlyFire);
 
-        public abstract int DoElementalDamageOverTime(IReceiveDamage damageTarget, ElementDamageMultiplierNoActor[] damageArray);
-
-
-        public abstract bool DetermineAttackable(IReceiveDamage target, IReceiveDamage attacker, bool friendlyFire);
-        public abstract bool DetermineAttackable(CombatGroupType[] attackerGroups, CombatGroupType[] targetGroupTypes);
 
 
 
     }
 
-  
+
 
     /// <summary>
     /// used to track crits, the attacker and amount is the key
@@ -478,7 +468,7 @@ namespace GWLPXL.ARPGCore.Combat.com
         public CritLog(IActorHub attacker, int amount)
         {
             Amount = amount;
-           // Attacker = attacker;
+            // Attacker = attacker;
         }
     }
     /// <summary>
@@ -490,7 +480,7 @@ namespace GWLPXL.ARPGCore.Combat.com
     {
         public static List<CritLog> Crits = new List<CritLog>();
 
-       
+
         /// <summary>
         /// Removes crit from log if returned true.
         /// </summary>

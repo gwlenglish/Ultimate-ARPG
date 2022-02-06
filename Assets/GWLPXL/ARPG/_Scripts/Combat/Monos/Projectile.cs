@@ -130,7 +130,7 @@ namespace GWLPXL.ARPGCore.Combat.com
 
         protected virtual void OnExitSoTLogic(Collider other)
         {
-            damage.DamageVar.CombatHandler.OnExitSoTLogic(other.GetComponent<IActorHub>(), this, this);
+            damage.DamageVar.CombatHandler.OnExitSoTLogic(owner, other.GetComponent<IActorHub>(), this, this);
 
         }
 

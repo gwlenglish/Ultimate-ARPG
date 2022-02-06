@@ -20,7 +20,7 @@ MonoBehaviour:
     ID: 1
     SOReference: {fileID: 11400000}
   inventoryName: Inventory
-  ItemInventorySize: 0
+  ItemInventorySize: 30
   currentCurrency: 100
   startingEquipment: []
   startingItems: []

@@ -15,7 +15,6 @@ namespace GWLPXL.ARPGCore.Items.com
         [SerializeField]
         protected string potionName = "NULL";
         [SerializeField]
-        [Range(1, 5)]
         protected int stackingAmount = 1;
         public override string GetBaseItemName()
         {

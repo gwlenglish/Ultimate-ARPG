@@ -176,9 +176,14 @@ namespace GWLPXL.ARPGCore.Animations.com
             //delay = false;
         }
 
-      
+        public void SetFloatParam(string param, float value)
+        {
+            animator.SetFloat(param, value);
+        }
 
-      
+
+
+
 
 
         #endregion

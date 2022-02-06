@@ -125,13 +125,19 @@ namespace GWLPXL.ARPGCore.com
             MyAuraUser = AuraSystem.GetComponent<IUseAura>();
             MyAuraUser.SetActorHub(this);
             MyAuraTaker.SetActorHub(this);
-          
-           
+            MyInventory = ActorSystem.GetComponent<IInventoryUser>();
+
         }
 
 
         protected virtual void Start()
         {
+            if (MyInventory != null)
+            {
+                MyInventory.GetInventoryRuntime().SetMyUser(MyInventory);
+                MyInventory.GetInventoryRuntime().SetMyActorStats(MyStats);
+            }
+
 
             if (EnemyInfo != null)
             {

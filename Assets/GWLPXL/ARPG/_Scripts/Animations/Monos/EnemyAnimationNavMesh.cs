@@ -165,5 +165,10 @@ namespace GWLPXL.ARPGCore.Animations.com
 
             animator.CrossFadeInFixedTime(name, blendduration, layer);
         }
+
+        public void SetFloatParam(string param, float value)
+        {
+            animator.SetFloat(param, value);
+        }
     }
 }

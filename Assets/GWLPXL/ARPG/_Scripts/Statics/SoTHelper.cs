@@ -1,4 +1,5 @@
 ﻿using GWLPXL.ARPGCore.com;
+using GWLPXL.ARPGCore.Combat.com;
 using GWLPXL.ARPGCore.StatusEffects.com;
 using GWLPXL.ARPGCore.Types.com;
 using System.Collections;
@@ -18,6 +19,32 @@ namespace GWLPXL.ARPGCore.Statics.com
         public static Dictionary<IActorHub, Dictionary<ModifyResourceVars, ModifyResourceDoTState>> Dotdic => dotdic;
         static Dictionary<IActorHub, Dictionary<ModifyResourceVars, ModifyResourceDoTState>> dotdic = new Dictionary<IActorHub, Dictionary<ModifyResourceVars, ModifyResourceDoTState>>();
 
+        public static bool CanApplySoT(IActorHub owner, IActorHub target, IDoActorDamage damage, IApplySOT sots)
+        {
+            if (target == null) return false;
+            if (target.MyStatusEffects == null) return false;
+            if (damage.GetActorDamageData().DamageVar.DamageOptions.InflictSoT == false) return false;
+            if (damage.GetActorDamageData().DamageVar.CombatHandler.DetermineAttackable(target, owner, damage.GetActorDamageData().DamageVar.SoTOptions.FriendlyFIre) == false) return false;//cant attack
+            if (sots.GetSoTAppliedList().Contains(target)) return false;//only allow one application per active swing
+            return true;
+        }
+
+        public static List<ModifyResourceDoTState> GetAllAppliedDots(IActorHub self)
+        {
+            List<ModifyResourceDoTState> dots = new List<ModifyResourceDoTState>();
+            if (dotdic.ContainsKey(self))
+            {
+                foreach (var kvp in dotdic)
+                {
+                    Dictionary<ModifyResourceVars, ModifyResourceDoTState> _ = kvp.Value;
+                    foreach (var jvp in _)
+                    {
+                        dots.Add(jvp.Value);
+                    }
+                }
+            }
+            return dots;
+        }
         public static void ReduceResource(IActorHub target, int dmgamount, ResourceType type)
         {
             ReduceResource(target, dmgamount, type, ElementType.None);
@@ -63,6 +90,7 @@ namespace GWLPXL.ARPGCore.Statics.com
             Dictionary<ModifyResourceVars, ModifyResourceDoTState> value = dotdic[target];
             if (value.ContainsKey(vars) == false)
             {
+
                 ModifyResourceDoTState newone = new ModifyResourceDoTState(target, vars);
                 newone.ApplyDoT();
                 value[vars] = newone;

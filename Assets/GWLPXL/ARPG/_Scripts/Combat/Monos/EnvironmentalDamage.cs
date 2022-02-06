@@ -111,7 +111,7 @@ namespace GWLPXL.ARPGCore.Combat.com
         /// <param name="statusReceiver"></param>
         private void DotsLogic(IActorHub statusReceiver)
         {
-            bool dotsadded = damage.DamageVars.CombatHandler.AddDOTS(statusReceiver, damage.DamageVars.DamageOverTimeOptions.AdditionalDOTs);
+            bool dotsadded = damage.DamageVars.CombatHandler.AddDOTS(null, statusReceiver, damage.DamageVars.DamageOverTimeOptions.AdditionalDOTs);
             if (dotsadded)
             {
                 sotEvents.SceneEvents.OnSoTApply.Invoke(statusReceiver.MyStatusEffects);
@@ -148,8 +148,11 @@ namespace GWLPXL.ARPGCore.Combat.com
         {
             if (attacked == null) return;
 
-            int eleDmg = damage.DamageVars.CombatHandler.DoElementalDamageOverTime(attacked.MyHealth, damage.DamageVars.DamageMultiplers.ElementalMultipliers);
-            damageEvents.SceneEvents.OnElementalDamageOther.Invoke(eleDmg, attacked.MyHealth);
+            AttackValues values = new AttackValues(null, attacked, true);
+            values = CombatHelper.GetElementalDamageNoActor(values, damage.DamageVars.DamageMultiplers.ElementalMultipliers);
+            attacked.MyHealth.TakeDamage(values);
+
+           // damageEvents.SceneEvents.OnElementalDamageOther.Invoke(eleDmg, attacked.MyHealth);
 
             //on dots applied event here.
 

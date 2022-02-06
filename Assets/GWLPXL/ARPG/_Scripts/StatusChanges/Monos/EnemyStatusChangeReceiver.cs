@@ -146,11 +146,13 @@ namespace GWLPXL.ARPGCore.StatusEffects.com
         public virtual void SetActorHub(IActorHub newHub)
         {
             actorhub = newHub;
+           
         }
 
 
-        public virtual List<StatusEffectVars> GetCurrentApplied() => StatusEffectHelper.GetAllActiveEffects(GetActorHub());
+        public virtual List<StatusEffectVars> GetCurrentAppliedStatuses() => StatusEffectHelper.GetAllActiveEffects(GetActorHub());
 
-        
+        public List<ModifyResourceDoTState> GetCurrentlyAppliedDoTs() => SoTHelper.GetAllAppliedDots(GetActorHub());
+       
     }
 }

@@ -141,7 +141,7 @@ namespace GWLPXL.ARPGCore.StatusEffects.com
         }
 
 
-        public List<StatusEffectVars> GetCurrentApplied() => StatusEffectHelper.GetAllActiveEffects(GetActorHub());
+        public List<StatusEffectVars> GetCurrentAppliedStatuses() => StatusEffectHelper.GetAllActiveEffects(GetActorHub());
         public Transform AtLocation()
         {
             return this.transform;
@@ -155,5 +155,8 @@ namespace GWLPXL.ARPGCore.StatusEffects.com
         {
             actorhub = newHub;
         }
+
+        public List<ModifyResourceDoTState> GetCurrentlyAppliedDoTs() => SoTHelper.GetAllAppliedDots(GetActorHub());
+       
     }
 }

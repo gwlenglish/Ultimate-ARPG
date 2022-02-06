@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StateKey: Move
   Vars:
-    AnimatorStateName: Walk
+    AnimatorStateName: Locomotion
+    BlendingTime: 0.02
+    AnimatorLayer: 0
     Speed: 1.34
     Acceleration: 55
     StoppingDistance: 1.5

@@ -34,10 +34,10 @@ namespace GWLPXL.ARPGCore.States.com
         public float AbilityBlendDuration = .02f;
         public int AbilityAnimLayer = 0;
         public Ability Ability = null;
-        public string ChaseStateName = "Walk";
+        public string ChaseStateName = "Locomotion";
         public float ChaseBlendDuration = .02f;
         public int ChaseLayer = 0;
-
+        public string VelocityParam = "Velocity";
     }
 
    
@@ -45,7 +45,8 @@ namespace GWLPXL.ARPGCore.States.com
     {
         public IAIEntity Entity;
         protected AggroVars vars;
-
+        bool attacking = false;
+        bool walking = false;
         public GenericAggroState(IAIEntity entity, AggroVars vars)
         {
             this.vars = vars;
@@ -55,15 +56,17 @@ namespace GWLPXL.ARPGCore.States.com
 
         public void Enter()
         {
-          
 
+            walking = true;
+            attacking = false;
         }
 
        
         public void Exit()
         {
-    
-         
+
+            attacking = false;
+            walking = false;
 
 
         }
@@ -74,9 +77,13 @@ namespace GWLPXL.ARPGCore.States.com
             if (ability == vars.Ability)
             {
                 Entity.GetActorHub().MyAbilities.GetRuntimeController().OnAbilityEnd -= EndAbility;
-               
+                attacking = false;
+                walking = true;
+
             }
         }
+
+    
         public void Tick()
         {
             if (Entity.GetAttackTarget() == null)
@@ -85,27 +92,42 @@ namespace GWLPXL.ARPGCore.States.com
                 return;
             }
 
-            if (Entity.GetActorHub().MyAbilities.GetRuntimeController().GetAbilityActive(vars.Ability)) return;
+            if (attacking) return;
 
-            Vector3 direction = Entity.GetAttackTarget().transform.position - Entity.GetActorHub().MyTransform.position;
-            float sqrdmag = direction.sqrMagnitude;
+            Vector3 diff = Entity.GetActorHub().MyTransform.position - Entity.GetAttackTarget().transform.position;
+   
 
-            if (sqrdmag > vars.Ability.GetRangeSquaredWithBuffer() || //no range
-                vars.Ability.HasSight(Entity.GetActorHub(), Entity.GetAttackTarget().transform, EditorPhysicsType.Unity3D) == false)//no sight
+            if (walking)
             {
-                Entity.GetActorHub().MyAnim.SetAnimatorState(vars.ChaseStateName, vars.ChaseBlendDuration, vars.ChaseLayer);
+                Entity.GetActorHub().MyAnim.SetFloatParam(vars.VelocityParam, 1);
                 Entity.GetActorHub().MyMover.SetDesiredDestination(Entity.GetAttackTarget().transform.position, vars.Ability.GetRangeWithBuffer());
-            }
-            else
-            {
-                bool success = Entity.GetActorHub().MyAbilities.TryCastAbility(vars.Ability);
-                if (success)
+                Entity.GetActorHub().MyAnim.SetAnimatorState(vars.ChaseStateName, vars.ChaseBlendDuration, vars.ChaseLayer);
+
+                float dst = Vector3.Distance(Entity.GetActorHub().MyTransform.position, Entity.GetAttackTarget().transform.position);
+                if (dst <= vars.Ability.GetRange())
                 {
-                    
-                    Entity.GetActorHub().MyAnim.SetAnimatorState(vars.AbilityStateName, vars.AbilityBlendDuration, vars.AbilityAnimLayer);//used for nonlooping animation to restart the animation from the beginning
-                    Entity.GetActorHub().MyAbilities.GetRuntimeController().OnAbilityEnd += EndAbility;
+                    if (vars.Ability.HasSight(Entity.GetActorHub(), Entity.GetAttackTarget().transform, EditorPhysicsType.Unity3D) == false)
+                    {
+                        Entity.GetActorHub().MyMover.SetDesiredRotation(Entity.GetAttackTarget().transform.position, 1);
+                    }
+                    attacking = Entity.GetActorHub().MyAbilities.TryCastAbility(vars.Ability);
+                    if (attacking)
+                    {
+                        Entity.GetActorHub().MyAnim.SetFloatParam(vars.VelocityParam, 0);
+                        walking = false;
+                        Entity.GetActorHub().MyAnim.SetAnimatorState(vars.AbilityStateName, vars.AbilityBlendDuration, vars.AbilityAnimLayer);//used for nonlooping animation to restart the animation from the beginning
+                        Entity.GetActorHub().MyAbilities.GetRuntimeController().OnAbilityEnd += EndAbility;
+                        return;
+                    }
                 }
             }
+          
+           
+        
+          
+
+
+           
             
            
         }

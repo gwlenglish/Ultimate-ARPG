@@ -113,7 +113,7 @@ namespace GWLPXL.ARPGCore.Combat.com
 
         protected virtual void OnExitSoTLogic(IActorHub attackable)
         {
-            damage.DamageVar.CombatHandler.OnExitSoTLogic(attackable, this, this);
+            damage.DamageVar.CombatHandler.OnExitSoTLogic(owner, attackable, this, this);
 
            
         }

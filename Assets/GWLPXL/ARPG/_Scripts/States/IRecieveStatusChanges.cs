@@ -11,7 +11,8 @@ namespace GWLPXL.ARPGCore.StatusEffects.com
    
     public interface IRecieveStatusChanges
     {
-        List<StatusEffectVars> GetCurrentApplied();   
+        List<ModifyResourceDoTState> GetCurrentlyAppliedDoTs();
+        List<StatusEffectVars> GetCurrentAppliedStatuses();   
         //void AddDoT(ModifyResourceVars vars);
         //void RemoveDot(ModifyResourceVars vars);
         //void RegenResource(int healAmount, ResourceType type);

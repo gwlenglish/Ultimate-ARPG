@@ -94,7 +94,7 @@ namespace GWLPXL.ARPGCore.Statics.com
             sb.Clear();
 
             //overall attack and armor
-            sb.Append("Attack Value: " + DungeonMaster.Instance.CombatFormulas.GetCombatFormulas().PlayerCombat.GetAttackValue(user, false).PhysicalDamage);
+            sb.Append("Attack Value: " + DungeonMaster.Instance.CombatFormulas.GetCombatFormulas().PlayerCombat.GetAttackValue(user).PhysicalDamage);
             sb.Append(enter);
             sb.Append("Armor Value: " + DungeonMaster.Instance.CombatFormulas.GetCombatFormulas().PlayerCombat.GetArmorValue(null, user));
             sb.Append(enter);

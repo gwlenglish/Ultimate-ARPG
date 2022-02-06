@@ -45,7 +45,7 @@ namespace GWLPXL.ARPGCore.Combat.com
         /// </summary>
         /// <param name="self"></param>
         /// <returns></returns>
-        public override PhysicalAttackResults GetAttackValue(IActorHub self, bool cancrit)
+        public override PhysicalAttackResults GetAttackValue(IActorHub self)
         {
 
             int baseStatFactor = self.MyStats.GetRuntimeAttributes().GetStatForCombat(CombatStatType.Damage);//current base stat value divide by 100
@@ -60,7 +60,7 @@ namespace GWLPXL.ARPGCore.Combat.com
             float result = ((baseWpnFactor) + baseStatFactor);
             int rounded = Mathf.FloorToInt(result);
 
-            PhysicalAttackResults phys = new PhysicalAttackResults(rounded, false, "Attack Value");
+            PhysicalAttackResults phys = new PhysicalAttackResults(rounded, "Attack Value");
             return phys;
         }
 
@@ -98,10 +98,29 @@ namespace GWLPXL.ARPGCore.Combat.com
                 totald += phys[i].PhysicalDamage;
 
             }
+
+            int critRando = UnityEngine.Random.Range(0, 101);
+            float critFactor = 1;
+            int critChance = attacker.MyStats.GetRuntimeAttributes().GetOtherAttributeNowValue(OtherAttributeType.CriticalHitChance);
+            if (critRando <= (critChance))
+            {
+                //crit success
+                int critdamage = attacker.MyStats.GetRuntimeAttributes().GetOtherAttributeNowValue(OtherAttributeType.CriticalHitDamage);
+
+                critFactor = 1 + (((float)critChance * (float)critdamage)) / Formulas.Hundred;
+                totald *= Mathf.RoundToInt(critFactor);
+
+            }
+
+
             int resisted = GetArmorValue(attacker, self);
             int reduced = totald - resisted;
+            //clucalte crit
 
-            PhysicalDamageReport physreport = new PhysicalDamageReport(totald, resisted, reduced, sources);
+           
+            
+
+            PhysicalDamageReport physreport = new PhysicalDamageReport(totald, resisted, reduced, sources, critFactor > 1);
             List<ElementalDamageReport> elereport = new List<ElementalDamageReport>();
             foreach (ElementType pieceType in Enum.GetValues(typeof(ElementType)))
             {
@@ -136,7 +155,7 @@ namespace GWLPXL.ARPGCore.Combat.com
             for (int i = 0; i < elereport.Count; i++)
             {
                 elereport[i].Resisted = GetElementResistValue(attacker, self, elereport[i].Type);
-                elereport[i].ReducedDamage = elereport[i].TotalDamage - elereport[i].Resisted;
+                elereport[i].Result = elereport[i].TotalDamage - elereport[i].Resisted;
             }
 
             DamageValues damagevalues = new DamageValues(physreport, elereport, self.MyHealth);
