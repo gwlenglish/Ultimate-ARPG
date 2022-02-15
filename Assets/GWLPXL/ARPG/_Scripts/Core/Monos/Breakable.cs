@@ -206,7 +206,17 @@ namespace GWLPXL.ARPGCore.Looting.com
 
         public void TakeDamage(AttackValues values)
         {
-            throw new System.NotImplementedException();
+            for (int i = 0; i < values.PhysicalAttack.Count; i++)
+            {
+                MyStats.GetRuntimeAttributes().ModifyNowResource(MyHealth.GetHealthResource(), -values.PhysicalAttack[i].PhysicalDamage);
+
+            }
+            for (int i = 0; i < values.ElementAttacks.Count; i++)
+            {
+                MyStats.GetRuntimeAttributes().ModifyNowResource(MyHealth.GetHealthResource(), -values.ElementAttacks[i].Damage);
+            }
+
+            CheckDeath();
         }
 
         public IActorHub GetUser()

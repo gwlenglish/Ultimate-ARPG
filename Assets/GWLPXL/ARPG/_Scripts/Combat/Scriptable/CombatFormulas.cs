@@ -307,8 +307,6 @@ namespace GWLPXL.ARPGCore.Combat.com
 
         }
 
- 
-
 
         /// <summary>
         /// determines valid melee targets
@@ -448,9 +446,6 @@ namespace GWLPXL.ARPGCore.Combat.com
         /// <param name="friendlyFire"></param>
         /// <returns></returns>
         public abstract bool DetermineAttackable(IActorHub target, IActorHub attacker, bool friendlyFire);
-
-
-
 
     }
 

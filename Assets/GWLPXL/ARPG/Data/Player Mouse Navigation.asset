@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Player Mouse Navigation
   m_EditorClassIdentifier: 
   Moving:
+  - {fileID: 11400000, guid: 6dfa1f5b8fbed6a41a905fe2c354e65a, type: 2}
   - {fileID: 11400000, guid: 85260fd1e14c22146898a9ca49710b49, type: 2}
   Idle:
   - {fileID: 11400000, guid: 78dcfb873d2d4b3459682035b0f1a7c2, type: 2}

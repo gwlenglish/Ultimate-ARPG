@@ -17,7 +17,7 @@ namespace GWLPXL.ARPGCore.StatusEffects.com
         public EnvironmentSotEvents SotEvents;
         public ModifyResourceVars Vars;
         protected IActorHub user = null;
-
+        protected ModifyResourceDoTState runtime;
       
 
         protected virtual void Awake()
@@ -29,7 +29,7 @@ namespace GWLPXL.ARPGCore.StatusEffects.com
         {
             if (user != null && user.MyStatusEffects != null)
             {
-                SoTHelper.AddDoT(user, Vars);
+                runtime =  SoTHelper.AddDoT(user, Vars);
 
             }
      

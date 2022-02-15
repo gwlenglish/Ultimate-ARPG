@@ -5,16 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
-    path: Assets/GWLPXL/ARPG/Scenes/Additional_Demos/BuildScenes/Menu.unity
+  - enabled: 0
+    path: Assets/GWLPXL/ARPG/Scenes/BuildScenes/Menu.unity
     guid: 94e62d3c1afe3344fa7c2673de253b7a
-  - enabled: 1
-    path: Assets/GWLPXL/ARPG/Scenes/Additional_Demos/BuildScenes/LoadingScene.unity
-    guid: 34ab4a66c62a6c24c8238f8b89d5b1bf
-  - enabled: 1
-    path: Assets/GWLPXL/ARPG/Scenes/Demo2D_Room.unity
-    guid: 7ab10dbbb77beba4dbf1d2ca6732bfe1
   - enabled: 1
     path: Assets/GWLPXL/ARPG/Scenes/Demo_Room.unity
     guid: 57fdb8379f9c9dc4a86ee7632bf63011
+  - enabled: 1
+    path: Assets/GWLPXL/ARPG/Scenes/BuildScenes/LoadingScene.unity
+    guid: 34ab4a66c62a6c24c8238f8b89d5b1bf
+  - enabled: 0
+    path: Assets/GWLPXL/ARPG/Scenes/Demo2D_Room.unity
+    guid: 7ab10dbbb77beba4dbf1d2ca6732bfe1
   m_configObjects: {}

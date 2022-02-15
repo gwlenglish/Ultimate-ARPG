@@ -19,20 +19,34 @@ namespace GWLPXL.ARPGCore.Statics.com
         public static Dictionary<IActorHub, Dictionary<ModifyResourceVars, ModifyResourceDoTState>> Dotdic => dotdic;
         static Dictionary<IActorHub, Dictionary<ModifyResourceVars, ModifyResourceDoTState>> dotdic = new Dictionary<IActorHub, Dictionary<ModifyResourceVars, ModifyResourceDoTState>>();
 
-        public static bool CanApplySoT(IActorHub owner, IActorHub target, IDoActorDamage damage, IApplySOT sots)
+       
+        /// <summary>
+        /// get current state of an applied DoT. Returns null if none found.
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static ModifyResourceDoTState GetDoTState(IActorHub target, ModifyResourceVars key)
         {
-            if (target == null) return false;
-            if (target.MyStatusEffects == null) return false;
-            if (damage.GetActorDamageData().DamageVar.DamageOptions.InflictSoT == false) return false;
-            if (damage.GetActorDamageData().DamageVar.CombatHandler.DetermineAttackable(target, owner, damage.GetActorDamageData().DamageVar.SoTOptions.FriendlyFIre) == false) return false;//cant attack
-            if (sots.GetSoTAppliedList().Contains(target)) return false;//only allow one application per active swing
-            return true;
+            if (dotdic.ContainsKey(target))
+            {
+                Dictionary<ModifyResourceVars, ModifyResourceDoTState> dic = dotdic[target];
+                if (dic.ContainsKey(key))
+                {
+                    return dic[key];
+                }
+            }
+            return null;
         }
-
-        public static List<ModifyResourceDoTState> GetAllAppliedDots(IActorHub self)
+        /// <summary>
+        /// returns states of all dots applied to the target
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static List<ModifyResourceDoTState> GetAllAppliedDots(IActorHub target)
         {
             List<ModifyResourceDoTState> dots = new List<ModifyResourceDoTState>();
-            if (dotdic.ContainsKey(self))
+            if (dotdic.ContainsKey(target))
             {
                 foreach (var kvp in dotdic)
                 {
@@ -45,11 +59,25 @@ namespace GWLPXL.ARPGCore.Statics.com
             }
             return dots;
         }
+        /// <summary>
+        /// reduces resource directly on the actor
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="dmgamount"></param>
+        /// <param name="type"></param>
+        /// <param name="element"></param>
         public static void ReduceResource(IActorHub target, int dmgamount, ResourceType type)
         {
             ReduceResource(target, dmgamount, type, ElementType.None);
         }
-        public static void ReduceResource(IActorHub target, int dmgamount, ResourceType type, ElementType elementRegen)
+        /// <summary>
+        /// reduces resource directly on the actor
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="dmgamount"></param>
+        /// <param name="type"></param>
+        /// <param name="element"></param>
+        public static void ReduceResource(IActorHub target, int dmgamount, ResourceType type, ElementType element)
         {
             if (target.MyHealth.IsDead()) return;
 
@@ -61,14 +89,28 @@ namespace GWLPXL.ARPGCore.Statics.com
 
             target.MyStats.GetRuntimeAttributes().ModifyNowResource(type, dmgamount);
             target.MyHealth.CheckDeath();
-            OnReduceResource?.Invoke(target, dmgamount, type, elementRegen);
+            OnReduceResource?.Invoke(target, dmgamount, type, element);
 
 
         }
+        /// <summary>
+        /// regens resource directly on the actor
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="healAmount"></param>
+        /// <param name="type"></param>
+        /// <param name="elementRegen"></param>
         public static void RegenResource(IActorHub target, int healAmount, ResourceType type)
         {
             RegenResource(target, healAmount, type, ElementType.None);
         }
+        /// <summary>
+        /// regens resource directly on the actor
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="healAmount"></param>
+        /// <param name="type"></param>
+        /// <param name="elementRegen"></param>
         public static void RegenResource(IActorHub target, int healAmount, ResourceType type, ElementType elementRegen)
         {
             //do something with element type
@@ -80,7 +122,7 @@ namespace GWLPXL.ARPGCore.Statics.com
             OnRegenResource?.Invoke(target, healAmount, type, elementRegen);
 
         }
-        public static void AddDoT(IActorHub target, ModifyResourceVars vars)
+        public static ModifyResourceDoTState AddDoT(IActorHub target, ModifyResourceVars vars)
         {
             if (dotdic.ContainsKey(target) == false)
             {
@@ -101,11 +143,11 @@ namespace GWLPXL.ARPGCore.Statics.com
                 value[vars].ApplyDoT();
             }
             OnDotApplied?.Invoke(target, vars);
-
+            return value[vars];
 
         }
         /// <summary>
-        /// remove damage over time
+        /// remove dot. 
         /// </summary>
         /// <param name="vars"></param>
         public static void RemoveDot(IActorHub target, ModifyResourceVars vars)
@@ -115,6 +157,7 @@ namespace GWLPXL.ARPGCore.Statics.com
                 Debug.LogWarning("Trying to remove a dot when none are in the dictionary", target.MyTransform);
                 return;
             }
+
             Dictionary<ModifyResourceVars, ModifyResourceDoTState> value = dotdic[target];
             value.Remove(vars);
             dotdic[target] = value;

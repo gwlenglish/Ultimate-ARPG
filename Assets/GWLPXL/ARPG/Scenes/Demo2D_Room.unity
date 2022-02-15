@@ -7889,6 +7889,62 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &1827209402 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 904865916344019649, guid: 980f6ebf746584544a2a98ab43d67404,
+    type: 3}
+  m_PrefabInstance: {fileID: 201779045}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1827209409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1827209402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cda0d2de907d3a47865431d0f889975, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ActorHub: {fileID: 1827209402}
+  Abilities: []
+  MovementStates: {fileID: 11400000, guid: ec2b995178821194083c7f9b6f1bb622, type: 2}
+  animator: {fileID: 0}
+--- !u!114 &1827209410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1827209402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e5fe7aa2b2b15346ada80ff1d1c9c18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BlackboardObject: {fileID: 1827209402}
+  AggroRange: 10
+  TickRate: 0.02
+--- !u!114 &1827209411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1827209402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40630d3a783d4d248a4fe127b4843983, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ActorHub: {fileID: 0}
+  FacingDirection: {x: 0, y: 0, z: 0}
+  ActiveState: Idle
+  AttackTarget: {fileID: 0}
+  ActiveAbility: {fileID: 11400000, guid: 9f8d8ce755a624d4bbfcb35de51ba4d4, type: 2}
+  MoveTarget: {fileID: 0}
+  DefaultStoppingDistance: 3
 --- !u!1001 &1909131598
 PrefabInstance:
   m_ObjectHideFlags: 0

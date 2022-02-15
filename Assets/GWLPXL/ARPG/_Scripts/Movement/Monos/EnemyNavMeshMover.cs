@@ -29,9 +29,14 @@ namespace GWLPXL.ARPGCore.Movement.com
 
         protected virtual void Awake()
         {
+            if (Agent == null)
+            {
+                Agent = hub.NavMeshAgent.GetAgent();
+            }
             baseheight = Agent.baseOffset;
             originalAccel = Agent.acceleration;
             originalSpeed = Agent.speed;
+
 
         }
         protected virtual void OnDestroy()
@@ -41,6 +46,7 @@ namespace GWLPXL.ARPGCore.Movement.com
 
         protected virtual void Start()
         {
+           
             SetUpMover();
             hub.MyAbilities.SetIntendedAbility(0);
         }
@@ -171,6 +177,7 @@ namespace GWLPXL.ARPGCore.Movement.com
 
         public virtual void SetUpMover()
         {
+            
             AddTicker();
             startingPosition = transform.position;
 

@@ -22,7 +22,7 @@ namespace GWLPXL.ARPGCore.States.com
             mover.MyMover.SetDesiredDestination(obj.transform.position, 1f);
             mover.MyMover.SetVelocity(Vector3.zero);
             mover.MyMover.DisableMovement(true);
-            mover.MyAnimator.Play("Dead");
+            mover.MyAnim.SetAnimatorState("Dead");
             // myDamage.GetInstance().GetComponent<NavMeshAgent>().enabled = false;
 
 

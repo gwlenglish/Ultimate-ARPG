@@ -41,6 +41,8 @@ namespace GWLPXL.ARPGCore.StatusEffects.com
     /// <summary>
     /// 
     /// </summary>
+    /// 
+    [System.Serializable]
     public class ModifyResourceDoTState : IDoT, ITick
     {
         public float CurrentTimer => timer;
@@ -52,6 +54,7 @@ namespace GWLPXL.ARPGCore.StatusEffects.com
         protected int currentStacks = 0;
         protected bool applied = false;
         protected float timer = 0;
+        protected bool paused = false;
         public ModifyResourceDoTState(IActorHub target, ModifyResourceVars key)
         {
             this.target = target;
@@ -63,12 +66,22 @@ namespace GWLPXL.ARPGCore.StatusEffects.com
 
             AddTicker();
         }
-
+        /// <summary>
+        /// pauses the ticking of the dot but still keeps it applied
+        /// </summary>
+        /// <param name="isPaused"></param>
+        public virtual void SetPause(bool isPaused)
+        {
+            paused = isPaused;
+        }
+       
         public virtual void AddTicker()
         {
             TickManager.Instance.AddTicker(this);
         }
-
+        /// <summary>
+        /// apply dot. if dot already applied, add another stack of it
+        /// </summary>
         public virtual  void ApplyDoT()
         {
             timer = 0;
@@ -81,7 +94,17 @@ namespace GWLPXL.ARPGCore.StatusEffects.com
             applied = true;
             StatusEffectHelper.ApplyStatusEffects(target, runtime.StatusEffects);
         }
-
+        /// <summary>
+        /// remove a stack of the dot. If last stack, dot itself will be removed
+        /// </summary>
+        public virtual void RemoveStack()
+        {
+            currentStacks -= 1;
+            if (currentStacks <= 0)
+            {
+                RemoveDoT();
+            }
+        }
         public virtual void DoTick()
         {
             if (applied == false) return;
@@ -115,13 +138,19 @@ namespace GWLPXL.ARPGCore.StatusEffects.com
 
         public virtual  void Tick()
         {
-        
-            if (timer >= runtime.Duration && runtime.Duration > 0)
-            {
-                RemoveDoT();
-                return;
-            }
+
+            if (paused) return;
             if (applied == false) return;
+            if (runtime.Duration > 0)//if we are not infinite
+            {
+                timer += runtime.TickRate;//tick the timer
+                if (timer > runtime.Duration)//if last tick, remove
+                {
+
+                    RemoveDoT();
+                    return;
+                }
+            }
 
             if (runtime.AmountPerTick < 0)
             {
@@ -135,9 +164,11 @@ namespace GWLPXL.ARPGCore.StatusEffects.com
                 //target.MyStatusEffects.RegenResource(vars.AmountPerTick * currentStacks, vars.Type, vars.ElementDamage);
             }
 
-            timer += runtime.TickRate;
-             //ARPGDebugger.DebugMessage(ARPGDebugger.GetColorForSOTs("Modify Resource Duration " + timer), null);
-              //ARPGDebugger.DebugMessage(ARPGDebugger.GetColorForSOTs("Modify Resource Stack Amount: " + currentStacks), null);
+
+            //ARPGDebugger.DebugMessage(ARPGDebugger.GetColorForSOTs("Modify Resource Duration " + timer), null);
+            //ARPGDebugger.DebugMessage(ARPGDebugger.GetColorForSOTs("Modify Resource Stack Amount: " + currentStacks), null);
+
+           
         }
     }
 
