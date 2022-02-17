@@ -26,20 +26,30 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
 
         public override bool CheckLogicPreRequisites(IActorHub forUser)
         {
-            if (buffed.ContainsKey(forUser.MyTransform)) return false;
+            if (Contains(forUser.MyTransform)) return false;
             return true;
         }
 
         public override void EndCastLogic(IActorHub skillUser, Ability theSkill)
         {
-            ModHelper.RemoveGenerateResourceOnHitMod(skillUser, buffed);
+            if (Contains(skillUser.MyTransform))
+            {
+                Remove(skillUser.MyTransform);
+                ModHelper.RemoveGenerateResourceOnHitMod(skillUser, buffed);
+            }
+          
         }
 
 
 
         public override void StartCastLogic(IActorHub skillUser, Ability theSkill)
         {
-            ModHelper.ApplyGenerateResourceOnHitMod(skillUser, Vars, buffed);
+            if (Contains(skillUser.MyTransform) == false)
+            {
+                Add(skillUser.MyTransform);
+                ModHelper.ApplyGenerateResourceOnHitMod(skillUser, Vars, buffed);
+            }
+
         }
     }
 }

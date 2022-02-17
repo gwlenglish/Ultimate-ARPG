@@ -37,20 +37,30 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
 
         public override bool CheckLogicPreRequisites(IActorHub forUser)
         {
-            if (Buffed.ContainsKey(forUser)) return false;
+            if (Contains(forUser.MyTransform)) return false;
             return true;
         }
 
         public override void EndCastLogic(IActorHub skillUser, Ability theSkill)
         {
-            ModHelper.RemoveElementalWpnDmgBuff(skillUser, Vars, Buffed);
+            if (Contains(skillUser.MyTransform))
+            {
+                Remove(skillUser.MyTransform);
+                ModHelper.RemoveElementalWpnDmgBuff(skillUser, Vars, Buffed);
+            }
+   
 
         }
 
 
         public override void StartCastLogic(IActorHub skillUser, Ability theSkill)
         {
-            ModHelper.ApplyElementalWpnDmgBuff(skillUser, Vars, Buffed);
+            if (Contains(skillUser.MyTransform) == false)
+            {
+                Add(skillUser.MyTransform);
+                ModHelper.ApplyElementalWpnDmgBuff(skillUser, Vars, Buffed);
+            }
+
 
         }
     }

@@ -35,20 +35,30 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
 
         public override bool CheckLogicPreRequisites(IActorHub forUser)
         {
-            if (Buffed.ContainsKey(forUser.MyStats.GetRuntimeAttributes())) return false;
+            if (Contains(forUser.MyTransform)) return false;
             return true;
         }
 
         public override void EndCastLogic(IActorHub skillUser, Ability theSkill)
         {
-            ModHelper.RemoveStatFlatMod(skillUser, Vars, Buffed);
+            if (Contains(skillUser.MyTransform))
+            {
+                Remove(skillUser.MyTransform);
+                ModHelper.RemoveStatFlatMod(skillUser, Vars, Buffed);
+            }
+            
 
         }
 
 
         public override void StartCastLogic(IActorHub skillUser, Ability theSkill)
         {
-            ModHelper.ApplyStatFlatMod(skillUser, Vars, Buffed);
+            if (Contains(skillUser.MyTransform) == false)
+            {
+                Add(skillUser.MyTransform);
+                ModHelper.ApplyStatFlatMod(skillUser, Vars, Buffed);
+            }
+        
         }
     }
 }

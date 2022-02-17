@@ -38,19 +38,30 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
       
         public override bool CheckLogicPreRequisites(IActorHub forUser)
         {
+            if (Contains(forUser.MyTransform)) return false;
             return true;
         }
 
         public override void EndCastLogic(IActorHub skillUser, Ability theSkill)
         {
-            ModHelper.RemoveKnockbackAOEMod(skillUser, knockbacks);
+            if (Contains(skillUser.MyTransform))
+            {
+                Remove(skillUser.MyTransform);
+                ModHelper.RemoveKnockbackAOEMod(skillUser, knockbacks);
+            }
+
         }
 
       
 
         public override void StartCastLogic(IActorHub skillUser, Ability theSkill)
         {
-            ModHelper.ApplyKnockbackAOEMod(skillUser, Vars, knockbacks);
+            if (Contains(skillUser.MyTransform)== false)
+            {
+                Add(skillUser.MyTransform);
+                ModHelper.ApplyKnockbackAOEMod(skillUser, Vars, knockbacks);
+            }
+       
         }
     }
 }

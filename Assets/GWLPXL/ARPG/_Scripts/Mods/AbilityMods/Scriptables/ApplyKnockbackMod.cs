@@ -26,18 +26,28 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
 
         public override bool CheckLogicPreRequisites(IActorHub forUser)
         {
-            if (buffed.ContainsKey(forUser.MyTransform)) return false;
+            if (Contains(forUser.MyTransform)) return false;
             return true;
         }
 
         public override void EndCastLogic(IActorHub skillUser, Ability theSkill)
         {
-            ModHelper.RemoveKnockbackMod(skillUser, buffed);
+            if (Contains(skillUser.MyTransform))
+            {
+                Remove(skillUser.MyTransform);
+                ModHelper.RemoveKnockbackMod(skillUser, buffed);
+            }
+
         }
 
         public override void StartCastLogic(IActorHub skillUser, Ability theSkill)
         {
-            ModHelper.ApplyKnockbackMod(skillUser, Vars, buffed);
+            if (Contains(skillUser.MyTransform) == false)
+            {
+                Add(skillUser.MyTransform);
+                ModHelper.ApplyKnockbackMod(skillUser, Vars, buffed);
+            }
+
         }
     }
 }

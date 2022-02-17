@@ -94,26 +94,34 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
         Dictionary<IActorHub, DashState> dictionary = new Dictionary<IActorHub, DashState>();
         public override bool CheckLogicPreRequisites(IActorHub forUser)
         {
-            if (dictionary.ContainsKey(forUser)) return false;
+            if (Contains(forUser.MyTransform)) return false;
             return true;
         }
 
         public override void EndCastLogic(IActorHub skillUser, Ability theSkill)
         {
-            if (dictionary.ContainsKey(skillUser))
+            if (Contains(skillUser.MyTransform))
             {
-                dictionary.Remove(skillUser);
+                if (dictionary.ContainsKey(skillUser))
+                {
+                    dictionary.Remove(skillUser);
+                }
             }
+           
            
         }
 
         public override void StartCastLogic(IActorHub skillUser, Ability theSkill)
         {
-            if (dictionary.ContainsKey(skillUser) == false)
+            if (Contains(skillUser.MyTransform) == false)
             {
-                DashState vars = new DashState(skillUser, Vars);
-                dictionary[skillUser] = vars;
+                if (dictionary.ContainsKey(skillUser) == false)
+                {
+                    DashState vars = new DashState(skillUser, Vars);
+                    dictionary[skillUser] = vars;
+                }
             }
+          
            
           
         }

@@ -24,14 +24,20 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
         Dictionary<Ability, IActorHub> nextdic = new Dictionary<Ability, IActorHub>();
         public override bool CheckLogicPreRequisites(IActorHub forUser)
         {
-            if (chargedic.ContainsKey(forUser)) return false;
+            if (Contains(forUser.MyTransform)) return false;
+
             return true;
         }
 
         public override void EndCastLogic(IActorHub skillUser, Ability theSkill)
         {
-            if (EndChargeAbility == null) return;
-            skillUser.MyAbilities.SetChargedAbility(EndChargeAbility);//tells the user that the ability uses the charge.
+            if (Contains(skillUser.MyTransform))
+            {
+                Remove(skillUser.MyTransform);
+                if (EndChargeAbility == null) return;
+                skillUser.MyAbilities.SetChargedAbility(EndChargeAbility);//tells the user that the ability uses the charge.
+            }
+    
         }
 
         protected virtual void Next(IActorHub hub, Ability ability)//working on the timing
@@ -57,18 +63,23 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
 
         public override void StartCastLogic(IActorHub skillUser, Ability theSkill)
         {
-            if (chargedic.ContainsKey(skillUser) == false)
+            if (Contains(skillUser.MyTransform) == false)
             {
-                Debug.Log("Cast Success");
-                theSkill.CoolDownRate = 0;//charging should not have any cooldown rates.
-                AbilityDurationTimer duration = skillUser.MyAbilities.GetRuntimeController().GetTimer(theSkill);
-                Debug.Log("TIMER " + duration);
-                ChargeTimer timer = new ChargeTimer(skillUser, duration, theSkill);
-                chargedic.Add(skillUser, timer);
-                nextdic.Add(theSkill, skillUser);
-                skillUser.MyAbilities.GetRuntimeController().OnAbilityUserEnd += Next;
+                Add(skillUser.MyTransform);
+                if (chargedic.ContainsKey(skillUser) == false)
+                {
+                    Debug.Log("Cast Success");
+                    theSkill.CoolDownRate = 0;//charging should not have any cooldown rates.
+                    AbilityDurationTimer duration = skillUser.MyAbilities.GetRuntimeController().GetTimer(theSkill);
+                    Debug.Log("TIMER " + duration);
+                    ChargeTimer timer = new ChargeTimer(skillUser, duration, theSkill);
+                    chargedic.Add(skillUser, timer);
+                    nextdic.Add(theSkill, skillUser);
+                    skillUser.MyAbilities.GetRuntimeController().OnAbilityUserEnd += Next;
 
+                }
             }
+           
         }
 
 
