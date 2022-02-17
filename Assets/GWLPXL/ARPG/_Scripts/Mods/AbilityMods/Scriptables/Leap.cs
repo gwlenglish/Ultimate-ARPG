@@ -44,20 +44,27 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
         public Vector3 direction = new Vector3(0, 0, 1);
         public override bool CheckLogicPreRequisites(IActorHub forUser)
         {
+            if (Contains(forUser.MyTransform)) return false;
             return true;
         }
 
         public override void EndCastLogic(IActorHub skillUser, Ability theSkill)
         {
             //
+            Remove(skillUser.MyTransform);
         }
 
         public override void StartCastLogic(IActorHub skillUser, Ability theSkill)
         {
             //knock state
-            ChargeHelper.CheckCharge(skillUser, theSkill);
-                
-            CombatHelper.DoLeap(skillUser, skillUser.MyTransform.TransformDirection(direction), MotionVars);
+            if (Contains(skillUser.MyTransform) == false)
+            {
+                Add(skillUser.MyTransform);
+                ChargeHelper.CheckCharge(skillUser, theSkill);
+
+                CombatHelper.DoLeap(skillUser, skillUser.MyTransform.TransformDirection(direction), MotionVars);
+            }
+
         }
 
         

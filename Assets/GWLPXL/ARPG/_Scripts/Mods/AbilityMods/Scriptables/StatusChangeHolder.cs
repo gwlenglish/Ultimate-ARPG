@@ -14,6 +14,8 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
         public AbilityStatusChange[] StatusChanges = new AbilityStatusChange[0];
         public override bool CheckLogicPreRequisites(IActorHub forUser)
         {
+            if (Contains(forUser.MyTransform)) return false;
+
             if (StatusChanges == null || StatusChanges.Length == 0) return false;
             for (int i = 0; i < StatusChanges.Length; i++)
             {
@@ -23,18 +25,28 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
         }
         public override void StartCastLogic(IActorHub skillUser, Ability theSkill)
         {
-            for (int i = 0; i < StatusChanges.Length; i++)
+            if (Contains(skillUser.MyTransform) == false)
             {
-                StatusChanges[i].ApplyStatus(skillUser);
+                Add(skillUser.MyTransform);
+                for (int i = 0; i < StatusChanges.Length; i++)
+                {
+                    StatusChanges[i].ApplyStatus(skillUser);
+                }
             }
+            
         }
 
         public override void EndCastLogic(IActorHub skillUser, Ability theSkill)
         {
-            for (int i = 0; i < StatusChanges.Length; i++)
+            if (Contains(skillUser.MyTransform))
             {
-                StatusChanges[i].RemoveStatus(skillUser);
+                Remove(skillUser.MyTransform);
+                for (int i = 0; i < StatusChanges.Length; i++)
+                {
+                    StatusChanges[i].RemoveStatus(skillUser);
+                }
             }
+            
         }
 
        

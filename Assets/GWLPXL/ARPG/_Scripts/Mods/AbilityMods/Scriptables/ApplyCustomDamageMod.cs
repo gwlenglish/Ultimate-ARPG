@@ -16,38 +16,42 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
 
     public class ApplyCustomDamageMod : AbilityLogic
     {
-
+        [System.NonSerialized]
         Dictionary<Transform, ExampleCustomDamage> buffed = new Dictionary<Transform, ExampleCustomDamage>();
 
 
         public override bool CheckLogicPreRequisites(IActorHub forUser)
         {
+            if (Contains(forUser.MyTransform)) return false;
             return true;
         }
 
         public override void EndCastLogic(IActorHub skillUser, Ability theSkill)
         {
-
-            IMeleeCombatUser meleeT = skillUser.MyMelee;
-            if (meleeT == null)
+            if (Contains(skillUser.MyTransform))
             {
-                Debug.Log("No melee combat user");
-            }
-            Transform[] combatT = meleeT.GetMeleeTransforms();
-            if (combatT == null || combatT.Length == 0)
-            {
-                Debug.Log("No transform to remove from ability");
-            }
-            for (int i = 0; i < combatT.Length; i++)
-            {
-                Debug.Log(combatT[i].name);
-                buffed.TryGetValue(combatT[i], out ExampleCustomDamage value);
-                if (value != null)
+                IMeleeCombatUser meleeT = skillUser.MyMelee;
+                if (meleeT == null)
                 {
-                    Component.Destroy(value);
-                    buffed.Remove(combatT[i]);
+                    Debug.Log("No melee combat user");
+                }
+                Transform[] combatT = meleeT.GetMeleeTransforms();
+                if (combatT == null || combatT.Length == 0)
+                {
+                    Debug.Log("No transform to remove from ability");
+                }
+                for (int i = 0; i < combatT.Length; i++)
+                {
+                    Debug.Log(combatT[i].name);
+                    buffed.TryGetValue(combatT[i], out ExampleCustomDamage value);
+                    if (value != null)
+                    {
+                        Component.Destroy(value);
+                        buffed.Remove(combatT[i]);
+                    }
                 }
             }
+           
 
         }
 
@@ -55,25 +59,31 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
 
         public override void StartCastLogic(IActorHub skillUser, Ability theSkill)
         {
-            
-            Transform[] meleeT = skillUser.MyMelee.GetMeleeTransforms();
-            for (int i = 0; i < meleeT.Length; i++)
+            if (Contains(skillUser.MyTransform) == false)
             {
-
-                buffed.TryGetValue(meleeT[i], out ExampleCustomDamage value);
-                if (value == null)
+                Add(skillUser.MyTransform);
+                Transform[] meleeT = skillUser.MyMelee.GetMeleeTransforms();
+                for (int i = 0; i < meleeT.Length; i++)
                 {
-                    ExampleCustomDamage generate = meleeT[i].gameObject.AddComponent<ExampleCustomDamage>();
-                    IWeaponModification statusChange = generate as IWeaponModification;
-                    statusChange.SetActive(true);
-                    buffed[meleeT[i]] = generate;
-                    Debug.Log("Added custom", meleeT[i]);
-                }
-                else
-                {
-                    value.GetComponent<IWeaponModification>().SetActive(true);
+             
+                    buffed.TryGetValue(meleeT[i], out ExampleCustomDamage value);
+                    if (value == null)
+                    {
+                        ExampleCustomDamage generate = meleeT[i].gameObject.AddComponent<ExampleCustomDamage>();
+                        IWeaponModification statusChange = generate as IWeaponModification;
+                        statusChange.SetActive(true);
+                        buffed[meleeT[i]] = generate;
+                        Debug.Log("Added custom", meleeT[i]);
+                    }
+                    else
+                    {
+                        value.GetComponent<IWeaponModification>().SetActive(true);
+                    }
                 }
             }
+                    
+
+            
 
 
         }

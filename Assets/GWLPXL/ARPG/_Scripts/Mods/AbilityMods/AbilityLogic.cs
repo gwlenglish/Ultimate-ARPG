@@ -3,7 +3,7 @@ using GWLPXL.ARPGCore.Abilities.com;
 using GWLPXL.ARPGCore.com;
 using GWLPXL.ARPGCore.Statics.com;
 using UnityEngine;
-
+using System.Collections.Generic;
 namespace GWLPXL.ARPGCore.Abilities.Mods.com
 {
     /// <summary>
@@ -13,7 +13,26 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
     {
         [SerializeField]
         protected TextAsset config;
-
+        [System.NonSerialized]
+        protected HashSet<Transform> instances = new HashSet<Transform>();
+        protected virtual bool Contains(Transform t)
+        {
+            return instances.Contains(t);
+        }
+        protected virtual void Add(Transform t)
+        {
+            if (Contains(t) == false)
+            {
+                instances.Add(t);
+            }
+        }
+        protected virtual void Remove(Transform t)
+        {
+            if (Contains(t))
+            {
+                instances.Remove(t);
+            }
+        }
         /// <summary>
         /// checked before the ability is triggered
         /// </summary>

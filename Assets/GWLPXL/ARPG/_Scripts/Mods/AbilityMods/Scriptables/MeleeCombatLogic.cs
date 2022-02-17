@@ -42,6 +42,8 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
 
         public override bool CheckLogicPreRequisites(IActorHub forUser)
         {
+            if (Contains(forUser.MyTransform)) return false;
+
             for (int i = 0; i < Requirements.Length; i++)
             {
                 if (Requirements[i].HasRequirements(forUser) == false) return false;
@@ -52,26 +54,31 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
         }
         public override void StartCastLogic(IActorHub skillUser, Ability theSkill)
         {
-            //only allow melee users to use this
-            ChargeHelper.CheckCharge(skillUser, theSkill);
-            CombatHelper.EnableAndBuffMeleeDamageBoxes(skillUser, Vars);
-
-            //create vfx
-            IMeleeCombatUser melee = skillUser.MyMelee;
-            Transform[] transforms = melee.GetMeleeTransforms();//can be null
-            if (VFXPrefab != null && transforms != null)
+            if (Contains(skillUser.MyTransform) == false)
             {
-                for (int i = 0; i < transforms.Length; i++)
-                {
-                    if (transforms[i] == null) continue;
-                    GameObject instance = Instantiate(VFXPrefab, transforms[i].position, Quaternion.identity);
-                    if (ParentToMelee)
-                    {
-                        instance.transform.SetParent(transforms[i]);
-                    }
-                }
+                Add(skillUser.MyTransform);
+                //only allow melee users to use this
+                ChargeHelper.CheckCharge(skillUser, theSkill);
+                CombatHelper.EnableAndBuffMeleeDamageBoxes(skillUser, Vars);
 
+                //create vfx
+                IMeleeCombatUser melee = skillUser.MyMelee;
+                Transform[] transforms = melee.GetMeleeTransforms();//can be null
+                if (VFXPrefab != null && transforms != null)
+                {
+                    for (int i = 0; i < transforms.Length; i++)
+                    {
+                        if (transforms[i] == null) continue;
+                        GameObject instance = Instantiate(VFXPrefab, transforms[i].position, Quaternion.identity);
+                        if (ParentToMelee)
+                        {
+                            instance.transform.SetParent(transforms[i]);
+                        }
+                    }
+
+                }
             }
+            
 
 
         }
@@ -79,7 +86,12 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
 
         public override void EndCastLogic(IActorHub skillUser, Ability theSkill)
         {
-            CombatHelper.DisableMeleeWeapons(skillUser, Vars);
+            if (Contains(skillUser.MyTransform))
+            {
+                Remove(skillUser.MyTransform);
+                CombatHelper.DisableMeleeWeapons(skillUser, Vars);
+            }
+       
 
         }
 

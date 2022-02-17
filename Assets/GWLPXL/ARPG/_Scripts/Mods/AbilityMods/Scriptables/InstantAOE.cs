@@ -42,18 +42,29 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
         }
         public override bool CheckLogicPreRequisites(IActorHub forUser)
         {
+            if (Contains(forUser.MyTransform)) return false;
             return true;
         }
 
         public override void StartCastLogic(IActorHub skillUser, Ability theSkill)
         {
-            Apply(skillUser);
+            if (Contains(skillUser.MyTransform) == false)
+            {
+                Add(skillUser.MyTransform);
+                Apply(skillUser);
+            }
+    
         }
 
         public override void EndCastLogic(IActorHub skillUser, Ability theSkill)
         {
-            IGizmoDebug gizmo = skillUser.MyTransform.GetComponent<IGizmoDebug>();
-            RemoveGizmo(gizmo);
+            if (Contains(skillUser.MyTransform))
+            {
+                Remove(skillUser.MyTransform);
+                IGizmoDebug gizmo = skillUser.MyTransform.GetComponent<IGizmoDebug>();
+                RemoveGizmo(gizmo);
+            }
+        
         }
 
         private void ApplyGizmo(IActorHub obj, Vector3 origin)

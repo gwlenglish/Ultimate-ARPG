@@ -90,30 +90,31 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
     public class Dash : AbilityLogic
     {
         public DashVars Vars;
+        [System.NonSerialized]
         Dictionary<IActorHub, DashState> dictionary = new Dictionary<IActorHub, DashState>();
         public override bool CheckLogicPreRequisites(IActorHub forUser)
         {
+            if (dictionary.ContainsKey(forUser)) return false;
             return true;
         }
 
         public override void EndCastLogic(IActorHub skillUser, Ability theSkill)
         {
-            dictionary.TryGetValue(skillUser, out DashState value);
-            if (value != null)//if not null, destroy
+            if (dictionary.ContainsKey(skillUser))
             {
-                dictionary[skillUser] = null;
+                dictionary.Remove(skillUser);
             }
+           
         }
 
         public override void StartCastLogic(IActorHub skillUser, Ability theSkill)
         {
-            dictionary.TryGetValue(skillUser, out DashState value);
-            if (value == null)//if null means first time, make it
+            if (dictionary.ContainsKey(skillUser) == false)
             {
                 DashState vars = new DashState(skillUser, Vars);
                 dictionary[skillUser] = vars;
-
             }
+           
           
         }
     }

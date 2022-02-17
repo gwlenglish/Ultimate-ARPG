@@ -18,9 +18,13 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
     public class MouseRotate : AbilityLogic
     {
         public MouseRotateVars Vars;
-        Dictionary<IActorHub, PlayerMouseRotateOnly> rotatedic = new Dictionary<IActorHub, PlayerMouseRotateOnly>();
+
+        [System.NonSerialized]
+        protected Dictionary<IActorHub, PlayerMouseRotateOnly> rotatedic = new Dictionary<IActorHub, PlayerMouseRotateOnly>();
         public override bool CheckLogicPreRequisites(IActorHub forUser)
         {
+            if (rotatedic.ContainsKey(forUser)) return false;
+
             return forUser.InputHub != null && forUser.InputHub.MouseInputs != null;
         }
 

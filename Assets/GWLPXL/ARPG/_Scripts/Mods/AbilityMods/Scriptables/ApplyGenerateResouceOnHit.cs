@@ -26,6 +26,7 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
 
         public override bool CheckLogicPreRequisites(IActorHub forUser)
         {
+            if (buffed.ContainsKey(forUser.MyTransform)) return false;
             return true;
         }
 

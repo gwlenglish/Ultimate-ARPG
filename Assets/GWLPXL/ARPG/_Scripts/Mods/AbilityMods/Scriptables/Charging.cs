@@ -24,6 +24,7 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
         Dictionary<Ability, IActorHub> nextdic = new Dictionary<Ability, IActorHub>();
         public override bool CheckLogicPreRequisites(IActorHub forUser)
         {
+            if (chargedic.ContainsKey(forUser)) return false;
             return true;
         }
 
@@ -33,7 +34,7 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
             skillUser.MyAbilities.SetChargedAbility(EndChargeAbility);//tells the user that the ability uses the charge.
         }
 
-        void Next(IActorHub hub, Ability ability)//working on the timing
+        protected virtual void Next(IActorHub hub, Ability ability)//working on the timing
         {
             if (nextdic.ContainsKey(ability))
             {
@@ -45,7 +46,7 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
                 if (EndChargeAbility != null)
                 {
                     bool success = hub.MyAbilities.TryCastAbility(EndChargeAbility);
-                    Debug.Log("Charge success: " + success);//returning false, probably happening to fast.
+                    Debug.Log("Charge success: " + success);//if returning false, probably happening to fast.
                 }
                 chargedic.Remove(hub);
                 nextdic.Remove(ability);

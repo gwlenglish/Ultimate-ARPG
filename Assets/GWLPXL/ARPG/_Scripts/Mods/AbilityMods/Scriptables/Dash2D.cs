@@ -29,32 +29,31 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
     {
         [Header("2D Version of the Dash")]
         public DashVars2D Vars;
-
+        [System.NonSerialized]
         Dictionary<IActorHub, Dash2DState> dictionary = new Dictionary<IActorHub, Dash2DState>();
         public override bool CheckLogicPreRequisites(IActorHub forUser)
         {
+            if (dictionary.ContainsKey(forUser)) return false;
             return true;
         }
 
         public override void EndCastLogic(IActorHub skillUser, Ability theSkill)
         {
-            dictionary.TryGetValue(skillUser, out Dash2DState value);
-            if (value != null)//if not null, destroy
+            if (dictionary.ContainsKey(skillUser))
             {
-                dictionary[skillUser] = null;
+                dictionary.Remove(skillUser);
             }
+          
         }
 
         public override void StartCastLogic(IActorHub skillUser, Ability theSkill)
         {
-            dictionary.TryGetValue(skillUser, out Dash2DState value);
-            if (value == null)//if null means first time, make it
+            if (dictionary.ContainsKey(skillUser) == false)
             {
-               
                 Dash2DState vars = new Dash2DState(skillUser, Vars, theSkill);
                 dictionary[skillUser] = vars;
-
             }
+            
 
         }
 

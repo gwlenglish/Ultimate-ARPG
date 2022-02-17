@@ -43,9 +43,11 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
 
         [SerializeField]
         AbilityRequirement[] requirements = new AbilityRequirement[0];
-
+       
         public override bool CheckLogicPreRequisites(IActorHub forUser)
         {
+            if (Contains(forUser.MyTransform)) return false;
+
             for (int i = 0; i < requirements.Length; i++)//optional requirements, such as requires longbow or flamethrower
             {
                 bool meetsrequirements = requirements[i].HasRequirements(forUser);
@@ -60,19 +62,29 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
 
         public override void StartCastLogic(IActorHub skillUser, Ability theSkill)
         {
-            CombatHelper.DoFireShooterProjectile(skillUser, abilityStartProjectile);
-            for (int i = 0; i < additionalProjectiles.Length; i++)
+            if(Contains(skillUser.MyTransform) == false)
             {
-                float duration = theSkill.Duration * additionalProjectiles[i].Delay;
-                ShooterProjectileDelayVars delay = new ShooterProjectileDelayVars(duration, skillUser, additionalProjectiles[i].Vars);
+                Add(skillUser.MyTransform);
+                CombatHelper.DoFireShooterProjectile(skillUser, abilityStartProjectile);
+                for (int i = 0; i < additionalProjectiles.Length; i++)
+                {
+                    float duration = theSkill.Duration * additionalProjectiles[i].Delay;
+                    ShooterProjectileDelayVars delay = new ShooterProjectileDelayVars(duration, skillUser, additionalProjectiles[i].Vars);
+                }
             }
+           
         }
 
        
 
         public override void EndCastLogic(IActorHub skillUser, Ability theSkill)
         {
-            CombatHelper.DoFireShooterProjectile(skillUser, abilityEndProjectile);
+            if (Contains(skillUser.MyTransform))
+            {
+                Remove(skillUser.MyTransform);
+                CombatHelper.DoFireShooterProjectile(skillUser, abilityEndProjectile);
+            }
+
             //nothing really, no need to track projectiles they track themselves. 
         }
 

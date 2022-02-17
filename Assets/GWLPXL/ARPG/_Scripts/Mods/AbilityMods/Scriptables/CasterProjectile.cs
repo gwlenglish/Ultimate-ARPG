@@ -82,6 +82,7 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
 
         public override bool CheckLogicPreRequisites(IActorHub forUser)
         {
+            if (Contains(forUser.MyTransform)) return false;
             IProjectileCombatUser projectileUser = forUser.MyProjectiles;
             if (projectileUser == null) return false;
             if (projectileUser.GetProjectileFirePoint() == null) return false;
@@ -90,21 +91,29 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
 
         public override void StartCastLogic(IActorHub skillUser, Ability theSkill)
         {
-            ChargeHelper.CheckCharge(skillUser, theSkill);
-
-            CombatHelper.DoFireAndInIProjectile(skillUser, abilityStartProjectile);
-            for (int i = 0; i < additionalProjectiles.Length; i++)
+            if (Contains(skillUser.MyTransform) == false)
             {
-                float duration = theSkill.Duration * additionalProjectiles[i].Delay;
-                ProjectileDelayVars delay = new ProjectileDelayVars(duration, skillUser, additionalProjectiles[i].Vars);
+                Add(skillUser.MyTransform);
+                ChargeHelper.CheckCharge(skillUser, theSkill);
+                CombatHelper.DoFireAndInIProjectile(skillUser, abilityStartProjectile);
+                for (int i = 0; i < additionalProjectiles.Length; i++)
+                {
+                    float duration = theSkill.Duration * additionalProjectiles[i].Delay;
+                    ProjectileDelayVars delay = new ProjectileDelayVars(duration, skillUser, additionalProjectiles[i].Vars);
+                }
             }
+           
         }
 
 
         public override void EndCastLogic(IActorHub skillUser, Ability theSkill)
         {
-            
-            CombatHelper.DoFireAndInIProjectile(skillUser, abilityEndProjectile);
+            if (Contains(skillUser.MyTransform))
+            {
+                Remove(skillUser.MyTransform);
+                CombatHelper.DoFireAndInIProjectile(skillUser, abilityEndProjectile);
+            }
+   
 
            
         }

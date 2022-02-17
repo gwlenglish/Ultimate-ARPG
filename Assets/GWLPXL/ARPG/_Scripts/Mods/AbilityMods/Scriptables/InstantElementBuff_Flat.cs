@@ -37,6 +37,7 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
 
         public override bool CheckLogicPreRequisites(IActorHub forUser)
         {
+            if (Buffed.ContainsKey(forUser.MyStats.GetRuntimeAttributes())) return false;
             return true;
         }
 

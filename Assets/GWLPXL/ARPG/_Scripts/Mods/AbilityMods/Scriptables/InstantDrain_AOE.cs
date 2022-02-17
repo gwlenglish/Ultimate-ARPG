@@ -25,17 +25,24 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
 
         public override bool CheckLogicPreRequisites(IActorHub forUser)
         {
+            if (Contains(forUser.MyTransform)) return false;
             return true;
         }
 
         public override void EndCastLogic(IActorHub skillUser, Ability theSkill)
         {
+            Remove(skillUser.MyTransform);
         }
 
 
         public override void StartCastLogic(IActorHub skillUser, Ability theSkill)
         {
-            CombatHelper.DoAoEDoT(skillUser, skillUser.MyTransform.position, AoE_Vars, DoT_Vars);
+            if (Contains(skillUser.MyTransform) == false)
+            {
+                Add(skillUser.MyTransform);
+                CombatHelper.DoAoEDoT(skillUser, skillUser.MyTransform.position, AoE_Vars, DoT_Vars);
+            }
+  
 
         }
     }
