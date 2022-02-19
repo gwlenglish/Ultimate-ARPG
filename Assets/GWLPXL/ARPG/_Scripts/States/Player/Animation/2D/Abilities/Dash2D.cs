@@ -43,6 +43,7 @@ namespace GWLPXL.ARPGCore.States.com
     public class AbilityAnimatorState2D
     {
         public string AnimatorStateName = "Null";
+        public int Layer = 0;
         [Tooltip("Global facing direction")]
         public GlobalFacingDirection FacingDirection = GlobalFacingDirection.Down;
     }

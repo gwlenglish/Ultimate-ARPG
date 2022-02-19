@@ -143,23 +143,27 @@ namespace GWLPXL.ARPGCore.States.com
            
         }
 
-        bool Dead(GlobalFacingDirection direction)
+        protected virtual bool Dead(GlobalFacingDirection direction)
         {
             return hub.MyHealth.IsDead() == true && hub.MyStateMachine.Get2D().GetFacingDirection() == direction;
         }
-        bool Ability(Ability ability)
+
+        protected virtual bool Ability(Ability ability)
         {
+            
             return hub.MyAbilities.GetRuntimeController().GetAbilityActive(ability);
         }
-        bool Walking(GlobalMoveDirection movement)
+        protected virtual bool Walking(GlobalMoveDirection movement)
         {
 
             return walking == true && hub.MyStateMachine.Get2D().GetWalkingDirection() == movement;
         }
-        bool Idling(GlobalFacingDirection facing)
+        protected virtual  bool Idling(GlobalFacingDirection facing)
         {
             return walking == false && hub.MyStateMachine.Get2D().GetFacingDirection() == facing;
         }
+
+
         protected virtual void OnDestroy()
         {
             RemoveTicker();

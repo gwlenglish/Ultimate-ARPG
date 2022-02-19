@@ -46,8 +46,13 @@ namespace GWLPXL.ARPGCore.States.com
                 {
                     if (globaldir == vars.AnimatorStates[i].FacingDirection)
                     {
-                        animator.Play(vars.AnimatorStates[i].AnimatorStateName);
-                        break;
+                        AnimatorStateInfo info = animator.GetCurrentAnimatorStateInfo(vars.AnimatorStates[i].Layer);
+                        if (info.IsName(vars.AnimatorStates[i].AnimatorStateName) == false)
+                        {
+                            animator.Play(vars.AnimatorStates[i].AnimatorStateName);
+                            break;
+                        }
+             
                     }
                 }
             }
