@@ -32,6 +32,7 @@ namespace GWLPXL.ARPGCore.Abilities.com
     [System.Serializable]
     public class AbilityCooldownVars
     {
+
         public float Duration = 1;
         public AbilityController Holder = null;
         public Ability skill = null;
@@ -43,7 +44,10 @@ namespace GWLPXL.ARPGCore.Abilities.com
             Holder = forSkill;
             skill = _skill;
             User = _user;
+
         }
+
+       
     }
     /// <summary>
     /// duration for the abilities.
@@ -66,7 +70,7 @@ namespace GWLPXL.ARPGCore.Abilities.com
             Cooldown.timer += GetTickDuration();
             if (Cooldown.timer >= Cooldown.CooldownRate)
             {
-     
+
                 RemoveTicker();
             }
         }

@@ -24,9 +24,10 @@ namespace GWLPXL.ARPGCore.Abilities.com
             if (Options.OnCasterDamaged)
             {
 
-                if (Hub != null && Hub.MyStats != null)
+                if (Hub != null && Hub.MyHealth != null)
                 {
-                    Hub.MyStats.GetRuntimeAttributes().OnResourceChanged += ResourceChanged;
+                    Hub.MyHealth.OnTakeDamage += TookDamage;
+                    Hub.MyHealth.OnDied += Died;
                 }
             }
         }
@@ -36,33 +37,33 @@ namespace GWLPXL.ARPGCore.Abilities.com
             interrupted = true;
         }
 
-        void ResourceChanged(int resource)
+        void Died(CombatResults results)
         {
-            if (resource == (int)Hub.MyHealth.GetHealthResource())
+            if (Options.OnCasterDied)
             {
-                if (Options.OnCasterDamaged)
-                {
-                    OnInterrupt.Invoke(ToInterrupt);
-                }
-
-                if (Options.OnCasterDied)
-                {
-                    if (Hub.MyHealth.IsDead())
-                    {
-                        OnInterrupt.Invoke(ToInterrupt);
-                    }
-                }
+                OnInterrupt.Invoke(ToInterrupt);
                
             }
+        }
+        void TookDamage(CombatResults resource)
+        {
+            if (Options.OnCasterDamaged)
+            {
+                OnInterrupt.Invoke(ToInterrupt);
+            }
+
+           
+           
         }
        
 
         public void Remove()
         {
             OnInterrupt -= Interrupted;
-            if (Hub != null && Hub.MyStats != null)
+            if (Hub != null && Hub.MyHealth != null)
             {
-                Hub.MyStats.GetRuntimeAttributes().OnResourceChanged -= ResourceChanged;
+                Hub.MyHealth.OnTakeDamage -= TookDamage;
+                Hub.MyHealth.OnDied -= Died;
             }
             Destroy(this);
         }

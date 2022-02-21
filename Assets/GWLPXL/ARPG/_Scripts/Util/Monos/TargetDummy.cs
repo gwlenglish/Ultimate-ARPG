@@ -7,6 +7,7 @@ using GWLPXL.ARPGCore.DebugHelpers.com;
 using GWLPXL.ARPGCore.Leveling.com;
 using GWLPXL.ARPGCore.Statics.com;
 using GWLPXL.ARPGCore.Types.com;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,6 +28,11 @@ namespace GWLPXL.ARPGCore.Demo.com
         IActorHub owner = null;
         IUseFloatingText dungeoncanvas = null;
         bool immortal = true;
+
+        public event Action<CombatResults> OnTakeDamage;
+        public event Action<CombatResults> OnDied;
+        protected CombatResults last;
+
         private void Awake()
         {
             MyStats = GetComponent<IAttributeUser>();
@@ -38,7 +44,7 @@ namespace GWLPXL.ARPGCore.Demo.com
             canhit = true;
             MyStats.GetRuntimeAttributes().LevelUp(Level);
         }
-        public void Die()
+        public void DeathSequence()
         {
             //never die
         }
@@ -53,36 +59,24 @@ namespace GWLPXL.ARPGCore.Demo.com
             return false;
         }
 
-
-        public void TakeDamage(int damageAmount, IActorHub damageDealer)
+        public void TakeDamage(AttackValues values)
         {
-            int wpndmg = EnemyCombatResolution.DoEnemyPhysicalReducedChecks(MyStats, damageAmount, healthResource);
-            NotifyUI(ElementType.None, wpndmg);
-
-            Dictionary<ElementType, ElementAttackResults> results = EnemyCombatResolution.GetEnemyElementalDamageResistChecks(MyStats, damageDealer.MyStats, healthResource);
-            foreach (var kvp in results)
+            for (int i = 0; i < values.PhysicalAttack.Count; i++)
             {
-                TakeDamage(kvp.Value.Damage, kvp.Key);
+                MyStats.GetRuntimeAttributes().ModifyNowResource(this.GetHealthResource(), -values.PhysicalAttack[i].PhysicalDamage);
+
+            }
+            for (int i = 0; i < values.ElementAttacks.Count; i++)
+            {
+                MyStats.GetRuntimeAttributes().ModifyNowResource(this.GetHealthResource(), -values.ElementAttacks[i].Damage);
             }
 
-            CheckDeath();
-
+            last = new CombatResults(values, null);
+            OnTakeDamage?.Invoke(last);
         }
+
+        
      
-        public void TakeDamage(int damageAmount, ElementType type)
-        {
-            int damage = EnemyCombatResolution.DoEnemyElementalDamageWithResistChecks(MyStats, type, damageAmount, healthResource);
-            NotifyUI(type, damage);
-            CheckDeath();
-
-        }
-
-        private void NotifyUI(ElementType type, int damage)
-        {
-            if (dungeoncanvas == null) return;
-            dungeoncanvas.CreateUIDamageText("-" + damage.ToString(), type);
-
-        }
 
         public int GetScaledLevel()
         {
@@ -109,11 +103,7 @@ namespace GWLPXL.ARPGCore.Demo.com
             return healthResource;
         }
 
-        public void TakeDamage(int damageAmount, ElementType type, IAttributeUser owner)
-        {
-            TakeDamage(damageAmount, type);
-        }
-
+       
         public CombatGroupType[] GetMyCombatGroup()
         {
             return combatGroups;
@@ -138,10 +128,7 @@ namespace GWLPXL.ARPGCore.Demo.com
 
         public void SetInvincible(bool isImmoratal) => immortal = isImmoratal;
 
-        public void TakeDamage(AttackValues values)
-        {
-            throw new System.NotImplementedException();
-        }
+     
 
         public IActorHub GetUser()
         {

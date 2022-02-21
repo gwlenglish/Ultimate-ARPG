@@ -17,11 +17,8 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
     public class Charging : AbilityLogic
     {
 
-        public Ability EndChargeAbility;
-        [System.NonSerialized]
-        Dictionary<IActorHub, ChargeTimer> chargedic = new Dictionary<IActorHub, ChargeTimer>();
-        [System.NonSerialized]
-        Dictionary<Ability, IActorHub> nextdic = new Dictionary<Ability, IActorHub>();
+        public ChargingVars ChargingVars = new ChargingVars(null, ChargeType.None,  2f, 1f);
+
         public override bool CheckLogicPreRequisites(IActorHub forUser)
         {
             if (Contains(forUser.MyTransform)) return false;
@@ -34,31 +31,13 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
             if (Contains(skillUser.MyTransform))
             {
                 Remove(skillUser.MyTransform);
-                if (EndChargeAbility == null) return;
-                skillUser.MyAbilities.SetChargedAbility(EndChargeAbility);//tells the user that the ability uses the charge.
+                if (ChargingVars.AbilityToCharge == null) return;
+                skillUser.MyAbilities.SetChargedAbility(ChargingVars.AbilityToCharge);//tells the user that the ability uses the charge.
             }
     
         }
 
-        protected virtual void Next(IActorHub hub, Ability ability)//working on the timing
-        {
-            if (nextdic.ContainsKey(ability))
-            {
-                AbilityDurationTimer duration = hub.MyAbilities.GetRuntimeController().GetTimer(ability);
-                if (duration != null)
-                {
-                    duration.RemoveTicker();
-                }
-                if (EndChargeAbility != null)
-                {
-                    bool success = hub.MyAbilities.TryCastAbility(EndChargeAbility);
-                    Debug.Log("Charge success: " + success);//if returning false, probably happening to fast.
-                }
-                chargedic.Remove(hub);
-                nextdic.Remove(ability);
-                hub.MyAbilities.GetRuntimeController().OnAbilityUserEnd -= Next;
-            }
-        }
+       
 
 
         public override void StartCastLogic(IActorHub skillUser, Ability theSkill)
@@ -66,18 +45,10 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
             if (Contains(skillUser.MyTransform) == false)
             {
                 Add(skillUser.MyTransform);
-                if (chargedic.ContainsKey(skillUser) == false)
-                {
-                    Debug.Log("Cast Success");
-                    theSkill.CoolDownRate = 0;//charging should not have any cooldown rates.
-                    AbilityDurationTimer duration = skillUser.MyAbilities.GetRuntimeController().GetTimer(theSkill);
-                    Debug.Log("TIMER " + duration);
-                    ChargeTimer timer = new ChargeTimer(skillUser, duration, theSkill);
-                    chargedic.Add(skillUser, timer);
-                    nextdic.Add(theSkill, skillUser);
-                    skillUser.MyAbilities.GetRuntimeController().OnAbilityUserEnd += Next;
 
-                }
+                theSkill.CoolDownRate = 0;//charging should not have any cooldown rates.
+                ChargeTimer timer = new ChargeTimer(skillUser, theSkill, new ChargingVars(ChargingVars.AbilityToCharge, ChargingVars.Type, ChargingVars.MaxCharge, ChargingVars.TimeToMaxCharge));
+              
             }
            
         }
@@ -85,18 +56,50 @@ namespace GWLPXL.ARPGCore.Abilities.Mods.com
 
     }
 }
+
+
+public enum ChargeType
+{
+    None = 0,
+    InstantOnRelease = 1,
+    FollowThroughOnRelease = 2
+}
+[System.Serializable]
+public class ChargingVars
+{
+    [Tooltip("The Ability that we are charging up")]
+    public Ability AbilityToCharge;
+    public ChargeType Type;
+    [Tooltip("1 is default damage, 2 is 200% damage.")]
+    public float MaxCharge = 2;
+    public float TimeToMaxCharge;
+    public ChargingVars(Ability next, ChargeType type, float maxCharge, float timeToMax)
+    {
+        MaxCharge = maxCharge;
+        AbilityToCharge = next;
+        Type = type;
+
+        TimeToMaxCharge = timeToMax;
+    }
+}
 public class ChargeTimer : ITick
 {
+    public ChargingVars Vars => vars;
+    public Ability Current => current;
+    public AbilityDurationTimer Timer => dtimer;
     IActorHub user;
-    AbilityDurationTimer timer;
-    Ability ability;
-    float chargetimer = 0;
-    public ChargeTimer(IActorHub user, AbilityDurationTimer duration, Ability ability)
+    protected ChargingVars vars;
+    protected Ability current;
+    protected AbilityDurationTimer dtimer;
+    protected float chargetimer = 0;
+    protected bool ended;
+    public ChargeTimer(IActorHub user, Ability current, ChargingVars vars)
     {
-        this.ability = ability;
         this.user = user;
-        this.timer = duration;
-        timer.Cooldown.Pause = true;
+        dtimer = user.MyAbilities.GetRuntimeController().GetTimer(current);
+        dtimer.Cooldown.Pause = true;
+        this.current = current;
+        this.vars = vars;
         user.MyAbilities.GetRuntimeController().SetChargeAmount(0);
         AddTicker();
     }
@@ -108,24 +111,26 @@ public class ChargeTimer : ITick
 
     public void DoTick()
     {
-        bool held = user.InputHub.AbilityInputs.GetAbilityInput(ability);
+        bool held = user.InputHub.AbilityInputs.GetAbilityInput(current);
         Debug.Log("Holding " + held);
         chargetimer += GetTickDuration();
-        float percent = chargetimer / ability.Duration;//using duration as the max charge length
-        percent = Mathf.Clamp01(percent);//clamping to max, so can't over charge. May want to reconsider this later
+        float percent = chargetimer / vars.TimeToMaxCharge;//using duration as the max charge length
+        percent = Mathf.Clamp(0, vars.MaxCharge, percent);//clamping to max, so can't over charge. May want to reconsider this later
         user.MyAbilities.GetRuntimeController().SetChargeAmount(percent);
-        if (held == ability)
+
+
+        if (held == true)
         {
 
             //holding
-            timer.Cooldown.Pause = true;
+            dtimer.Cooldown.Pause = true;
            
         }
         else
         {
 
 
-            RemoveTicker();
+            EndCharge();
         }
     }
 
@@ -134,10 +139,43 @@ public class ChargeTimer : ITick
         return Time.deltaTime;
     }
 
+    void EndCharge()
+    {
+        if (ended) return;
+        switch (vars.Type)
+        {
+            case ChargeType.InstantOnRelease:
+                //
+                user.MyAbilities.GetRuntimeController().InterruptAbility(current);
+                dtimer.RemoveTicker();
+                user.MyAbilities.TryCastAbility(vars.AbilityToCharge);
+                RemoveTicker();
+                break;
+            case ChargeType.FollowThroughOnRelease:
+
+                dtimer.Cooldown.Pause = false;
+                user.MyAbilities.GetRuntimeController().OnAbilityEnd += QueueNext;
+                break;
+            default:
+                //
+                dtimer.Cooldown.Pause = false;
+                RemoveTicker();
+                break;
+        }
+        ended = true;
+    }
+
+    void QueueNext(Ability ability)
+    {
+        user.MyAbilities.GetRuntimeController().OnAbilityEnd -= QueueNext;
+        user.MyAbilities.TryCastAbility(vars.AbilityToCharge);
+        RemoveTicker();
+    }
     public void RemoveTicker()
     {
-        timer.Cooldown.Pause = false;
-        user.MyAbilities.GetRuntimeController().InterruptAbility(ability);
         TickManager.Instance.RemoveTicker(this);
+
+       
+
     }
 }

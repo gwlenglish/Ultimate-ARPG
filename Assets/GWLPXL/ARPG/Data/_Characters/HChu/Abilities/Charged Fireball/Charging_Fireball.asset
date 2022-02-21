@@ -10,7 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cfe39bfcd8828374795be239d3605fef, type: 3}
-  m_Name: Charging
+  m_Name: Charging_Fireball
   m_EditorClassIdentifier: 
   config: {fileID: 0}
-  EndChargeAbility: {fileID: 11400000, guid: 5e4137af16a7f1341b3a1bfdd275854a, type: 2}
+  ChargingVars:
+    AbilityToCharge: {fileID: 11400000, guid: 5e4137af16a7f1341b3a1bfdd275854a, type: 2}
+    Type: 2
+    MaxCharge: 2
+    TimeToMaxCharge: 1

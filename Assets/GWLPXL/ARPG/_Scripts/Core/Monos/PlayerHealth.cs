@@ -11,11 +11,12 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace GWLPXL.ARPGCore.com
 {
-
+   
 
     public class PlayerHealth : MonoBehaviour, IReceiveDamage
     {
-        public Action<CombatResults> OnTakeDamage;
+        public event Action<CombatResults> OnTakeDamage;
+        public event Action<CombatResults> OnDied;
         [SerializeField]
         protected PlayerDefault combatHandler = null;
         [SerializeField]
@@ -30,7 +31,7 @@ namespace GWLPXL.ARPGCore.com
         protected IActorHub owner = null;
         protected IActorHub lastCharacterToHitMe;
         protected bool immortal = false;
-
+        protected CombatResults last;
         #region unity calls
         protected virtual void Awake()
         {
@@ -77,36 +78,24 @@ namespace GWLPXL.ARPGCore.com
             return isDead;
         }
 
-        public void Die()
+        public void DeathSequence()
         {
-            DefaultDie();
+            if (isDead) return;
+
+            isDead = true;
+            OnDied?.Invoke(last);
+            NotifyCustomDeathEvent();
 
         }
 
 
-        /// <summary>
-        /// not effected by iframes, only takes into account ele type damage and resist
-        /// </summary>
-        /// <param name="damageAmount"></param>
-        /// <param name="type"></param>
-        public void TakeDamage(int damageAmount, ElementType type)
+        
+        public virtual void CheckDeath()
         {
-           // DefaultTakeDamage(damageAmount, type);
-
-        }
-        /// <summary>
-        /// effected by iframes, checks physical and ele damage
-        /// </summary>
-        /// <param name="damageAmount"></param>
-        /// <param name="damageDealer"></param>
-        public void TakeDamage(int damageAmount, IActorHub damageDealer)
-        {
-          //  DefaultTakeActorDamage(damageAmount, damageDealer);
-
-        }
-        public void CheckDeath()
-        {
-            DefautlCheckDeath();
+            if (owner.MyStats.GetRuntimeAttributes().GetResourceNowValue(healthResource) <= 0)
+            {
+                DeathSequence();
+            }
         }
         #endregion
 
@@ -119,16 +108,11 @@ namespace GWLPXL.ARPGCore.com
 
        
 
-        protected virtual void DefaultDie()
-        {
-            if (isDead) return;
-
-            isDead = true;
-            NotifyCustomDeathEvent();
-        }
+      
 
         protected virtual void NotifyCustomDeathEvent()
         {
+
             healthEvents.SceneEvents.OnDie.Invoke();
             if (healthEvents.GameEvents.DeathEvent == null) return;
 
@@ -150,13 +134,7 @@ namespace GWLPXL.ARPGCore.com
 
        
 
-        protected virtual void DefautlCheckDeath()
-        {
-            if (owner.MyStats.GetRuntimeAttributes().GetResourceNowValue(ResourceType.Health) <= 0)
-            {
-                Die();
-            }
-        }
+      
 
         protected virtual IEnumerator CanBeAttackedCooldown(float duration)
         {
@@ -167,7 +145,7 @@ namespace GWLPXL.ARPGCore.com
 
         public void TakeDamage(AttackValues values)
         {
-            if (canBeAttacked == false)
+            if (canBeAttacked == false || isDead)
             {
                 return;
             }
@@ -191,10 +169,11 @@ namespace GWLPXL.ARPGCore.com
 
             }
 
-
+            last = results;
             CombatLogger.AddResult(results);
             OnTakeDamage?.Invoke(results);
             NotifyUI(results);
+
             CheckDeath();
             StartCoroutine(CanBeAttackedCooldown(iFrameTime));//we are invulnerable for a short time
             SetCharacterThatHitMe(values.Attacker);

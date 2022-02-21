@@ -22,7 +22,8 @@ namespace GWLPXL.ARPGCore.com
 
     public class EnemyHealth : MonoBehaviour, IReceiveDamage
     {
-        public Action<CombatResults> OnTakeDamage;
+        public event Action<CombatResults> OnTakeDamage;
+        public event Action<CombatResults> OnDied;
         public System.Action OnDeath;
         public System.Action<GameObject> OnDeathAttacker;
         public System.Action<IActorHub> OnDamagedMe;
@@ -59,130 +60,7 @@ namespace GWLPXL.ARPGCore.com
         #endregion
 
         #region public interfaces
-        public virtual void Die()
-        {
-            DefaultDie();
-
-        }
-        public virtual CombatGroupType[] GetMyCombatGroup()
-        {
-            return combatGroups;
-        }
-
-        public virtual void SetCharacterThatHitMe(IActorHub user)
-        {
-            lastcharacterHitMe = user;
-            if (user != null)
-            {
-                lastCharacterThatHitMeT = user.MyTransform;
-            }
-     
-
-        }
-
-        public virtual void SetUser(IActorHub forUser)
-        {
-            owner = forUser;
-
-
-        }
-        public virtual Transform GetInstance()
-        {
-            return transform;
-        }
-
-        public virtual bool IsDead()
-        {
-            return isDead;
-        }
-        public virtual bool IsHurt()
-        {
-            return !canBeAttacked;
-        }
-
-        public virtual ResourceType GetHealthResource()
-        {
-            return healthResource;
-        }
-        public virtual void SetInvincible(bool isImmoratal) => immortal = isImmoratal;
-        /// <summary>
-        /// doesn't respect the iframe timer
-        /// </summary>
-        /// <param name="damageAmount"></param>
-        /// <param name="type"></param>
-        /// 
-        [System.Obsolete]
-        public virtual void TakeDamage(int damageAmount, ElementType type)
-        {
-          //  DefaultTakeDamage(damageAmount, type);
-        }
-        /// <summary>
-        /// override to remember who hit last, respects the iframe timer
-        /// </summary>
-        /// <param name="damageAmount"></param>
-        /// <param name="type"></param>
-        /// <param name="owner"></param>
-        //this one has an iframe timer. I wonder if we need that on enemy tho.
-        [System.Obsolete]
-        public virtual void TakeDamage(int damageAmount, IActorHub damageDealer)
-        {
-           // DefaultTakeActorDamage(damageAmount, damageDealer);
-
-        }
-        public void TakeDamage(AttackValues values)
-        {
-            if (canBeAttacked == false && values.IgnoreIFrame == false)
-            {
-                return;
-            }
-            CombatResults results = combatHandler.TakeDamageFormula(values, owner);
-            if (immortal == false)
-            {
-
-                for (int i = 0; i < results.DamageValues.ReportElementalDmg.Count; i++)
-                {
-                    if (results.DamageValues.ReportElementalDmg[i].Result > 0)//prevent dmg if immortal, but show everything else
-                    {
-                        owner.MyStats.GetRuntimeAttributes().ModifyNowResource(healthResource, -results.DamageValues.ReportElementalDmg[i].Result);
-                    }
-
-                }
-
-                if (results.DamageValues.ReportPhysDmg.Result > 0)
-                {
-                    owner.MyStats.GetRuntimeAttributes().ModifyNowResource(healthResource, -results.DamageValues.ReportPhysDmg.Result);
-                }
-               
-            }
-
-
-            CombatLogger.AddResult(results);
-            OnTakeDamage?.Invoke(results);
-            OnDamagedMe?.Invoke(values.Attacker);
-            NotifyUI(results);
-            CheckDeath();
-            StartCoroutine(CanBeAttackedCooldown(iFrameTime));//we are invulnerable for a short time
-            SetCharacterThatHitMe(values.Attacker);
-        }
-
-
-        public virtual void CheckDeath()
-        {
-            DefaultCheckDeath();
-
-        }
-        #endregion
-
-        #region protected virtuals
-
-        protected virtual void Setup()
-        {
-            giveXp = GetComponent<IGiveXP>();
-            killedTracked = GetComponents<IKillTracked>();
-            dungeoncanvas = GetComponent<IUseFloatingText>();
-            if (combatHandler == null) combatHandler = ScriptableObject.CreateInstance<EnemyDefault>();
-        }
-        protected virtual void DefaultDie()
+        public virtual void DeathSequence()
         {
             if (isDead) return;
 
@@ -232,10 +110,112 @@ namespace GWLPXL.ARPGCore.com
                 }
             }
 
+
             OnDeath?.Invoke();
             OnDeathAttacker?.Invoke(lastcharacterHitMe.MyTransform.gameObject);
             healthEvents.OnDie.Invoke();
+
         }
+        public virtual CombatGroupType[] GetMyCombatGroup()
+        {
+            return combatGroups;
+        }
+
+        public virtual void SetCharacterThatHitMe(IActorHub user)
+        {
+            lastcharacterHitMe = user;
+            if (user != null)
+            {
+                lastCharacterThatHitMeT = user.MyTransform;
+            }
+     
+
+        }
+
+        public virtual void SetUser(IActorHub forUser)
+        {
+            owner = forUser;
+
+
+        }
+        public virtual Transform GetInstance()
+        {
+            return transform;
+        }
+
+        public virtual bool IsDead()
+        {
+            return isDead;
+        }
+        public virtual bool IsHurt()
+        {
+            return !canBeAttacked;
+        }
+
+        public virtual ResourceType GetHealthResource()
+        {
+            return healthResource;
+        }
+        public virtual void SetInvincible(bool isImmoratal) => immortal = isImmoratal;
+
+       
+        public void TakeDamage(AttackValues values)
+        {
+            if (canBeAttacked == false && values.IgnoreIFrame == false || isDead)
+            {
+                return;
+            }
+            CombatResults results = combatHandler.TakeDamageFormula(values, owner);
+            if (immortal == false)
+            {
+
+                for (int i = 0; i < results.DamageValues.ReportElementalDmg.Count; i++)
+                {
+                    if (results.DamageValues.ReportElementalDmg[i].Result > 0)//prevent dmg if immortal, but show everything else
+                    {
+                        owner.MyStats.GetRuntimeAttributes().ModifyNowResource(healthResource, -results.DamageValues.ReportElementalDmg[i].Result);
+                    }
+
+                }
+
+                if (results.DamageValues.ReportPhysDmg.Result > 0)
+                {
+                    owner.MyStats.GetRuntimeAttributes().ModifyNowResource(healthResource, -results.DamageValues.ReportPhysDmg.Result);
+                }
+               
+            }
+
+
+            CombatLogger.AddResult(results);
+            OnTakeDamage?.Invoke(results);
+            OnDamagedMe?.Invoke(values.Attacker);
+            NotifyUI(results);
+            CheckDeath();
+            StartCoroutine(CanBeAttackedCooldown(iFrameTime));//we are invulnerable for a short time
+            SetCharacterThatHitMe(values.Attacker);
+        }
+
+
+        public virtual void CheckDeath()
+        {
+            if (owner.MyStats.GetRuntimeAttributes().GetResourceNowValue(healthResource) <= 0)
+            {
+                DeathSequence();
+            }
+
+        }
+        #endregion
+
+        #region protected virtuals
+
+        protected virtual void Setup()
+        {
+            giveXp = GetComponent<IGiveXP>();
+            killedTracked = GetComponents<IKillTracked>();
+            dungeoncanvas = GetComponent<IUseFloatingText>();
+            if (combatHandler == null) combatHandler = ScriptableObject.CreateInstance<EnemyDefault>();
+        }
+       
 
         protected virtual IEnumerator DropLootSequence(float delay, IDropLoot[] lootdropper)
         {
@@ -258,10 +238,7 @@ namespace GWLPXL.ARPGCore.com
 
         protected virtual void DefaultCheckDeath()
         {
-            if (owner.MyStats.GetRuntimeAttributes().GetResourceNowValue(healthResource) <= 0)
-            {
-                Die();
-            }
+           
         }
 
         protected virtual void RaiseUnityDamageEvent(int dmg)

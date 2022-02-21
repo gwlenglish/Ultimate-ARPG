@@ -17,6 +17,7 @@ using GWLPXL.ARPGCore.Statics.com;
 using GWLPXL.ARPGCore.StatusEffects.com;
 using GWLPXL.ARPGCore.Types.com;
 using GWLPXL.ARPGCore.Wearables.com;
+using System;
 using UnityEngine;
 
 namespace GWLPXL.ARPGCore.Looting.com
@@ -52,6 +53,10 @@ namespace GWLPXL.ARPGCore.Looting.com
         IDropLoot dropLoot = null;
 
         bool immortal = false;
+
+        public event Action<CombatResults> OnTakeDamage;
+        public event Action<CombatResults> OnDied;
+        CombatResults last;
         //player
         public IPlayerControlled PlayerControlled { get; set; }
         public IPlayerInputHub InputHub { get; set; }
@@ -105,7 +110,7 @@ namespace GWLPXL.ARPGCore.Looting.com
         {
             vars = newVars;
         }
-        public void Die()
+        public void DeathSequence()
         {
             if (isBroken) return;
             isBroken = true;
@@ -116,6 +121,7 @@ namespace GWLPXL.ARPGCore.Looting.com
             }
             breakableEvents.SceneEvents.OnDie.Invoke();
             dropLoot.DropLoot();
+            OnDied?.Invoke(last);
         }
 
         public ResourceType GetHealthResource()
@@ -138,54 +144,18 @@ namespace GWLPXL.ARPGCore.Looting.com
             return false;
         }
 
-        public void TakeDamage(int damageAmount, ElementType type)
-        {
-            if (IsDead()) return;
-            int dmg = 0;
-            if (immortal == false)
-            {
-                 dmg = CombatResolution.DoBreakableDamage(MyStats, Mathf.Abs(damageAmount), vars.HpType);
-            }
-            breakableEvents.SceneEvents.OnDamageTaken.Invoke(dmg);
-
-            CheckDeath();
-        }
-
-        public void TakeDamage(int damageAmount, IActorHub damageDealer)
-        {
-            if (IsDead()) return;
-            int dmg = 0;
-            if (immortal == false)
-            {
-                dmg = CombatResolution.DoBreakableDamage(MyStats, Mathf.Abs(damageAmount), vars.HpType);
-            }
-            breakableEvents.SceneEvents.OnDamageTaken.Invoke(dmg);
-            CheckDeath();
-        }
-
+     
 
         public void CheckDeath()
         {
             if (MyStats.GetRuntimeAttributes().GetResourceNowValue(vars.HpType) <= 0)
             {
-                Die();
+                DeathSequence();
             }
 
         }
 
-        public void TakeDamage(int damageAmount, ElementType type, IActorHub owner)
-        {
-
-            if (owner == null)
-            {
-                TakeDamage(damageAmount, type);
-            }
-            else
-            {
-                TakeDamage(damageAmount, owner);
-
-            }
-        }
+   
 
         public CombatGroupType[] GetMyCombatGroup()
         {
@@ -216,6 +186,8 @@ namespace GWLPXL.ARPGCore.Looting.com
                 MyStats.GetRuntimeAttributes().ModifyNowResource(MyHealth.GetHealthResource(), -values.ElementAttacks[i].Damage);
             }
 
+            last = new CombatResults(values, null);
+            OnTakeDamage?.Invoke(last);
             CheckDeath();
         }
 

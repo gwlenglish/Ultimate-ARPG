@@ -2,6 +2,7 @@
 using GWLPXL.ARPGCore.Attributes.com;
 using GWLPXL.ARPGCore.com;
 using GWLPXL.ARPGCore.Types.com;
+using System;
 using UnityEngine;
 
 namespace GWLPXL.ARPGCore.Combat.com
@@ -9,6 +10,8 @@ namespace GWLPXL.ARPGCore.Combat.com
 
     public interface IReceiveDamage
     {
+        event Action<CombatResults> OnTakeDamage;
+        event Action<CombatResults> OnDied;
         void SetCharacterThatHitMe(IActorHub user);
         CombatGroupType[] GetMyCombatGroup();
         void CheckDeath();
@@ -34,7 +37,7 @@ namespace GWLPXL.ARPGCore.Combat.com
         //void TakeDamage(int damageAmount, IActorHub damageDealer);
 
         void TakeDamage(AttackValues values);
-        void Die();
+        void DeathSequence();
         bool IsHurt();
         ResourceType GetHealthResource();
         void SetUser(IActorHub forUser);
