@@ -7,8 +7,13 @@ namespace GWLPXL.ARPGCore.com
     {
         public System.Action OnComplete;
         float duration;
-        public GenericTimer(float duration)
+        public GenericTimer(float duration, System.Action onComplete = null)
         {
+            if (onComplete != null)
+            {
+                OnComplete += onComplete;
+            }
+      
             this.duration = duration;
             AddTicker();
         }

@@ -58,16 +58,17 @@ namespace GWLPXL.ARPGCore.Movement.com
         {
             if (hub.MyHealth.IsDead())
             {
-                Body.isKinematic = true;
+                Body.velocity = new Vector2(0, 0);
                 return;
             }
-            Body.MovePosition(newDestination);
+          
             target = (Vector2)newDestination;
             stoppingD = stoppingDistance;
             Vector3 nextpos = newDestination - hub.MyTransform.position;
             float sqrdmag = nextpos.sqrMagnitude;
             if (sqrdmag > stoppingDistance * stoppingDistance)
             {
+                Body.MovePosition(Vector3.MoveTowards(transform.position, newDestination, Speed * Time.deltaTime));
             }
        
             Debug.Log("Desired Ran");

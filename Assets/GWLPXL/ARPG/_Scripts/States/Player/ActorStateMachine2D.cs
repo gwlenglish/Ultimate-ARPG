@@ -77,7 +77,15 @@ namespace GWLPXL.ARPGCore.States.com
         protected virtual void Awake()
         {
             state2d = this as I2DStateMachine;
-            hub = PlayerHub.GetComponent<IActorHub>();
+            if (hub != null)
+            {
+                hub = PlayerHub.GetComponent<IActorHub>();
+            }
+            else
+            {
+                hub = GetComponent<IActorHub>();
+            }
+        
 
 
             machine = new IStateMachine();

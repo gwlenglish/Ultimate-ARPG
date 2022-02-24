@@ -6,6 +6,7 @@ using System;
 using GWLPXL.ARPGCore.com;
 using GWLPXL.ARPGCore.Abilities.com;
 using GWLPXL.ARPGCore.AI.com;
+using GWLPXL.ARPGCore.Combat.com;
 
 namespace GWLPXL.ARPGCore.States.com
 {
@@ -34,7 +35,15 @@ namespace GWLPXL.ARPGCore.States.com
         protected virtual void Awake()
         {
             state2d = this as I2DStateMachine;
-            hub = ActorHub.GetComponent<IActorHub>();
+            if (ActorHub != null)
+            {
+                hub = ActorHub.GetComponent<IActorHub>();
+            }
+            else
+            {
+                hub = GetComponent<IActorHub>();
+            }
+
             ai = GetComponent<IAIEntity>();
 
             if (animator == null)
@@ -80,12 +89,18 @@ namespace GWLPXL.ARPGCore.States.com
                 MovementStates.Idle[i].SetState(machine, this);
             }
 
+            hub.MyHealth.OnDied += Died;
+
             AddTicker();
 
            
         }
 
+        void Died(CombatResults results)
+        {
+            moving = false;
 
+        }
 
 
         public void AddTicker()
@@ -95,13 +110,18 @@ namespace GWLPXL.ARPGCore.States.com
 
         public void DoTick()
         {
-            machine.Tick();
+            if (moving)
+            {
+                machine.Tick();
+            }
+           
             // Debug.Log(machine.GetCurrentlyRunnnig());
         }
 
 
         protected virtual void OnDestroy()
         {
+            hub.MyHealth.OnDied -= Died;
             RemoveTicker();
         }
 

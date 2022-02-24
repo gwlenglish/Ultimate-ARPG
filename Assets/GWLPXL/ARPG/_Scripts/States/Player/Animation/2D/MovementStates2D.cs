@@ -11,6 +11,7 @@ namespace GWLPXL.ARPGCore.States.com
     {
         public PlayerMovementState2D[] Moving = new PlayerMovementState2D[0];
         public PlayerMovementState2D[] Idle = new PlayerMovementState2D[0];
+
     }
 
 

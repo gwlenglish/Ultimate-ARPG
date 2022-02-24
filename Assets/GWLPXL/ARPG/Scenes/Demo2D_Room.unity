@@ -491,6 +491,26 @@ PrefabInstance:
       propertyPath: MoveTarget
       value: 
       objectReference: {fileID: 784869381}
+    - target: {fileID: 3117248855872005443, guid: 980f6ebf746584544a2a98ab43d67404,
+        type: 3}
+      propertyPath: m_Offset.x
+      value: 0.016805649
+      objectReference: {fileID: 0}
+    - target: {fileID: 3117248855872005443, guid: 980f6ebf746584544a2a98ab43d67404,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 0.41710663
+      objectReference: {fileID: 0}
+    - target: {fileID: 3117248855872005443, guid: 980f6ebf746584544a2a98ab43d67404,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: -0.09678078
+      objectReference: {fileID: 0}
+    - target: {fileID: 3117248855872005443, guid: 980f6ebf746584544a2a98ab43d67404,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 0.80643845
+      objectReference: {fileID: 0}
     - target: {fileID: 6240705585337307024, guid: 980f6ebf746584544a2a98ab43d67404,
         type: 3}
       propertyPath: defaultMeleeDD.Array.size
@@ -509,7 +529,7 @@ PrefabInstance:
     - target: {fileID: 6872409458218893850, guid: 980f6ebf746584544a2a98ab43d67404,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 2.25
       objectReference: {fileID: 0}
     - target: {fileID: 6872409458218893850, guid: 980f6ebf746584544a2a98ab43d67404,
         type: 3}
@@ -559,12 +579,7 @@ PrefabInstance:
     - target: {fileID: 8087414270112254933, guid: 980f6ebf746584544a2a98ab43d67404,
         type: 3}
       propertyPath: DefaultKey
-      value: Idle
-      objectReference: {fileID: 0}
-    - target: {fileID: 8087414270112254933, guid: 980f6ebf746584544a2a98ab43d67404,
-        type: 3}
-      propertyPath: AggroKey
-      value: Idle
+      value: Move
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 980f6ebf746584544a2a98ab43d67404, type: 3}
@@ -7395,6 +7410,7 @@ GameObject:
   - component: {fileID: 1724715483}
   - component: {fileID: 1724715482}
   - component: {fileID: 1724715485}
+  - component: {fileID: 1724715486}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -7483,6 +7499,29 @@ MonoBehaviour:
   CameraSpeed: 1
   Sensitivity: 0.1
   FowardLook: 1
+--- !u!114 &1724715486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1724715481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 653068f7368006d4ebb7d651c09ba382, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Show: 1
+  m_Title: Controls
+  m_Description: "Find the Skull, Book, and Scroll to level up and spawn new weapons
+    and enemies! \r\n\r\nControls\r\n\r\n    Left click to move, interact, and perform
+    an Ability.\r\n    Right Click to use the Ability in the first slot.\r\n    Middle
+    Click to use the Ability in the second slot.\r\n    Holding Left Shift while
+    using an Ability will prevent your player from moving.\r\n    The \"1\" key will
+    toggle an aura. \r\n\r\n    The \"I\" key opens the inventory.\r\n    The \"O\"
+    key opens the save menu.\r\n    The \"S\" key opens the Ability Tree (Demo).\r\n   
+    The \"E\" key opens the Ability Inventory (where you can click and drag the ability
+    in the bottom slot).\r\n    The \"ESC\" key quits the application. "
 --- !u!1 &1734623302
 GameObject:
   m_ObjectHideFlags: 0
@@ -7889,62 +7928,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!1 &1827209402 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 904865916344019649, guid: 980f6ebf746584544a2a98ab43d67404,
-    type: 3}
-  m_PrefabInstance: {fileID: 201779045}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1827209409
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1827209402}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cda0d2de907d3a47865431d0f889975, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ActorHub: {fileID: 1827209402}
-  Abilities: []
-  MovementStates: {fileID: 11400000, guid: ec2b995178821194083c7f9b6f1bb622, type: 2}
-  animator: {fileID: 0}
---- !u!114 &1827209410
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1827209402}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e5fe7aa2b2b15346ada80ff1d1c9c18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BlackboardObject: {fileID: 1827209402}
-  AggroRange: 10
-  TickRate: 0.02
---- !u!114 &1827209411
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1827209402}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40630d3a783d4d248a4fe127b4843983, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ActorHub: {fileID: 0}
-  FacingDirection: {x: 0, y: 0, z: 0}
-  ActiveState: Idle
-  AttackTarget: {fileID: 0}
-  ActiveAbility: {fileID: 11400000, guid: 9f8d8ce755a624d4bbfcb35de51ba4d4, type: 2}
-  MoveTarget: {fileID: 0}
-  DefaultStoppingDistance: 3
 --- !u!1001 &1909131598
 PrefabInstance:
   m_ObjectHideFlags: 0

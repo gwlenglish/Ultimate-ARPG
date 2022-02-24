@@ -2,6 +2,7 @@
 using UnityEngine;
 using GWLPXL.ARPGCore.States.com;
 using GWLPXL.ARPGCore.com;
+using GWLPXL.ARPGCore.Combat.com;
 
 namespace GWLPXL.ARPGCore.AI.com
 {
@@ -19,7 +20,7 @@ namespace GWLPXL.ARPGCore.AI.com
         protected IAIEntity ai;
         protected I2DStateMachine state2d = null;
         public I2DStateMachine Machine2D { get; set; }
-
+        bool moving;
         protected virtual void Awake()
         {
             state2d = GetComponent<I2DStateMachine>();
@@ -33,14 +34,14 @@ namespace GWLPXL.ARPGCore.AI.com
             {
                 States[i].SetState(machine, ai);
             }
-         
-           
+       
             AddTicker();
         }
 
-
+      
         protected virtual void OnDestroy()
         {
+      
             RemoveTicker();
         }
         public virtual void AddTicker()
@@ -50,9 +51,13 @@ namespace GWLPXL.ARPGCore.AI.com
 
         public virtual void DoTick()
         {
-           
-           // Debug.Log("Enemy" + machine.GetCurrentlyRunnnig());
             machine.Tick();
+            if (moving)
+            {
+               
+            }
+           // Debug.Log("Enemy" + machine.GetCurrentlyRunnnig());
+          
         }
 
         public virtual float GetTickDuration()

@@ -689,6 +689,7 @@ GameObject:
   - component: {fileID: 534669903}
   - component: {fileID: 534669906}
   - component: {fileID: 534669907}
+  - component: {fileID: 534669908}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -798,6 +799,28 @@ MonoBehaviour:
   height: 5
   heightDamping: 2
   rotationDamping: 3
+--- !u!114 &534669908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534669902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 653068f7368006d4ebb7d651c09ba382, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Title: Controls
+  m_Description: "Find the Skull, Book, and Scroll to level up and spawn new weapons
+    and enemies! \r\n\r\nControls\r\n\r\n    Left click to move, interact, and perform
+    an Ability.\r\n    Right Click to use the Ability in the first slot.\r\n    Middle
+    Click to use the Ability in the second slot.\r\n    Holding Left Shift while
+    using an Ability will prevent your player from moving.\r\n    The \"1\" key will
+    toggle an aura. \r\n\r\n    The \"I\" key opens the inventory.\r\n    The \"O\"
+    key opens the save menu.\r\n    The \"S\" key opens the Ability Tree (Demo).\r\n   
+    The \"E\" key opens the Ability Inventory (where you can click and drag the ability
+    in the bottom slot).\r\n    The \"ESC\" key quits the application. "
 --- !u!1 &545671246
 GameObject:
   m_ObjectHideFlags: 0
@@ -5872,6 +5895,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5becf2570730bc4bb6826dd4bb9b6f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SotEvents:
+    SceneEvents:
+      OnSoTApply:
+        m_PersistentCalls:
+          m_Calls: []
   Vars:
     Type: 0
     ElementDamage: 0
