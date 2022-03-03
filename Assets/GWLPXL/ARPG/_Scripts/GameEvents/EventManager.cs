@@ -12,50 +12,9 @@ using GWLPXL.ARPGCore.Quests.com;
 
 namespace GWLPXL.ARPGCore.GameEvents.com
 {
-   
-    public class EventManager : MonoBehaviour
+   public static class QuestEventManager
     {
-        public static EventManager Instance => instance;
-        static EventManager instance;
-
-        private void Awake()
-        {
-            instance = this;
-        }
-
-        public void PlayerExploreEvent(ExploreEventVars exploreEvent)
-        {
-            QuestLog runtime = exploreEvent.ForQuester.GetQuestLogRuntime();
-            PlayerPersistant[] players = DungeonMaster.Instance.GetPlayerPersist();
-            for (int i = 0; i < players.Length; i++)
-            {
-                QuestLog questLog = players[i].PersistantQuestLog;
-                if (questLog == runtime && questLog != null)
-                {
-                    questLog.QuestStats.ExploreAreasTracker.TryGetValue(exploreEvent.Quest, out Dictionary<ExploreArea, bool> value);
-                    if (value == null)
-                    {
-                        value = new Dictionary<ExploreArea, bool>();
-                    }
-                    value.TryGetValue(exploreEvent.Area, out bool discovered);
-                    discovered = true;
-                    value[exploreEvent.Area] = discovered;
-                    questLog.QuestStats.ExploreAreasTracker[exploreEvent.Quest] = value;
-
-                    if (exploreEvent.Quest != null)
-                    {
-                        exploreEvent.Quest.UpdateQuestProgress(exploreEvent.ForQuester);
-                    }
-                    break;
-                }
-
-            }
-
-          
-  
-        }
-
-        public void EnemyDeathEvent(IAttributeUser enemy, Quest myQuest, IQuestUser forUser)
+        public static void EnemyDeathEvent(IAttributeUser enemy, Quest myQuest, IQuestUser forUser)
         {
             Debug.Log("Death Event called");
             if (enemy == null) return;
@@ -85,6 +44,61 @@ namespace GWLPXL.ARPGCore.GameEvents.com
                 questLog.OnQuestLogUpdated?.Invoke();
 
             }
+        }
+
+        public static void PlayerExploreEvent(ExploreEventVars exploreEvent)
+        {
+            QuestLog runtime = exploreEvent.ForQuester.GetQuestLogRuntime();
+            PlayerPersistant[] players = DungeonMaster.Instance.GetPlayerPersist();
+            for (int i = 0; i < players.Length; i++)
+            {
+                QuestLog questLog = players[i].PersistantQuestLog;
+                if (questLog == runtime && questLog != null)
+                {
+                    questLog.QuestStats.ExploreAreasTracker.TryGetValue(exploreEvent.Quest, out Dictionary<ExploreArea, bool> value);
+                    if (value == null)
+                    {
+                        value = new Dictionary<ExploreArea, bool>();
+                    }
+                    value.TryGetValue(exploreEvent.Area, out bool discovered);
+                    discovered = true;
+                    value[exploreEvent.Area] = discovered;
+                    questLog.QuestStats.ExploreAreasTracker[exploreEvent.Quest] = value;
+
+                    if (exploreEvent.Quest != null)
+                    {
+                        exploreEvent.Quest.UpdateQuestProgress(exploreEvent.ForQuester);
+                    }
+                    break;
+                }
+
+            }
+
+
+
+        }
+    }
+    public class EventManager : MonoBehaviour
+    {
+        public static EventManager Instance => instance;
+        static EventManager instance;
+
+        protected virtual void Awake()
+        {
+            instance = this;
+        }
+
+        public virtual void PlayerExploreEvent(ExploreEventVars exploreEvent)
+        {
+            QuestEventManager.PlayerExploreEvent(exploreEvent);
+           
+  
+        }
+
+        public virtual void EnemyDeathEvent(IAttributeUser enemy, Quest myQuest, IQuestUser forUser)
+        {
+            QuestEventManager.EnemyDeathEvent(enemy, myQuest, forUser);
+           
         }
       
         public void TestPlayerDeath(DeathEvent deathEvent)

@@ -127,6 +127,12 @@ namespace GWLPXL.ARPGCore.com
             MyAuraTaker.SetActorHub(this);
             MyInventory = ActorSystem.GetComponent<IInventoryUser>();
 
+            IKillTracked[] killtracked = GetComponentsInChildren<IKillTracked>();
+            for (int i = 0; i < killtracked.Length; i++)
+            {
+                killtracked[i].SetActorHub(this);
+            }
+
         }
 
 

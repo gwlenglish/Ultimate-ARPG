@@ -40,6 +40,8 @@ namespace GWLPXL.ARPGCore.Quests.com
                     {
                         ExploreEventVars newEvent = new ExploreEventVars(myArea, questUser, myQuests[i]);
                         EventManager.Instance.PlayerExploreEvent(newEvent);
+
+
                     }
 
                 }
@@ -47,6 +49,8 @@ namespace GWLPXL.ARPGCore.Quests.com
                 {
                     ExploreEventVars newEvent = new ExploreEventVars(myArea, questUser, myQuests[i]);
                     EventManager.Instance.PlayerExploreEvent(newEvent);
+
+
                 }
             }
            

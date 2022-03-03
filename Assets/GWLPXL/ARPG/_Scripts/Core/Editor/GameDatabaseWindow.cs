@@ -113,6 +113,8 @@ namespace GWLPXL.ARPGCore.com
         TypeOptions socketItemtypeOptions = new TypeOptions();
         TypeOptions traits = new TypeOptions();
         int typeselection = 0;
+
+        Editor eqeditor;
         protected virtual void ReloadMessage()
         {
             EditorUtility.DisplayDialog("Reloaded", "Database reloaded", "Okay");
@@ -924,9 +926,21 @@ namespace GWLPXL.ARPGCore.com
                             bool click = GUILayout.Button("Generate Random", EditorStyles.toolbarButton);
                             if (click)
                             {
+                                GenerateOptions eqgenerateoptions = gamedatabase.Settings.GeneratedTemp;
+                                //clean up
+                                for (int i = 0; i < gamedatabase.Settings.GeneratedTemp.Equipment.CurvedEq.Length; i++)
+                                {
+                                    DestroyImmediate(eqgenerateoptions.Equipment.CurvedEq[i]);
+                                }
+                                
+                                if (eqgenerateoptions.Equipment.Equipment != null)
+                                {
+                                    DestroyImmediate(eqgenerateoptions.Equipment.Equipment);
+                                }
+
                                 traits.Selected = 0;//reset selection
                                 //reset generated temp
-                                GenerateOptions eqgenerateoptions = gamedatabase.Settings.GeneratedTemp;
+                               
                                 eqgenerateoptions.Equipment.PowerCurves = new List<PowerCurves>();
                                 eqgenerateoptions.Equipment.CurvedEq = new Equipment[gamedatabase.Settings.GeneratedTemp.Equipment.MaxILevelCurve];
                                 eqgenerateoptions.Equipment.ScollableEq = Vector2.zero;
@@ -936,10 +950,11 @@ namespace GWLPXL.ARPGCore.com
                                 eqgenerateoptions.Equipment.Equipment.AssignEquipmentTraits(eqgenerateoptions.Equipment.ILevel);
 
                                 //create copy at each level
+                              
                                 for (int i = 0; i < gamedatabase.Settings.GeneratedTemp.Equipment.CurvedEq.Length; i++)
                                 {
 
-                                    eqgenerateoptions.Equipment.CurvedEq[i] = Instantiate(gamedatabase.Settings.InspectObjects.Equipment.Equipment);
+                                    eqgenerateoptions.Equipment.CurvedEq[i] = ScriptableObject.Instantiate(gamedatabase.Settings.InspectObjects.Equipment.Equipment);
                                     eqgenerateoptions.Equipment.CurvedEq[i].AssignEquipmentTraits(i);
 
                                 }
@@ -971,8 +986,9 @@ namespace GWLPXL.ARPGCore.com
                             }
 
                             GUILayout.Space(25);
-                            Editor editor = Editor.CreateEditor(equipmentfocus);
-                            editor.DrawDefaultInspector();
+                            eqeditor = Editor.CreateEditor(equipmentfocus);
+                          
+                            eqeditor.DrawDefaultInspector();
                         }
 
 

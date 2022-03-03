@@ -99,7 +99,7 @@ namespace GWLPXL.ARPG._Scripts.Editor.ObjectEditors.GameDatabase.com
                 EditorGUILayout.BeginFoldoutHeaderGroup(model.GeneratedViewExpanded, "Generated View");
             if (model.GeneratedViewExpanded)
             {
-                if (gamedatabase.Settings.GeneratedTemp.Equipment.Equipment != null && gamedatabase.Settings.InspectObjects.Equipment != null)
+                if (gamedatabase.Settings.GeneratedTemp.Equipment.Equipment != null && gamedatabase.Settings.InspectObjects.Equipment != null && gamedatabase.Settings.GeneratedTemp.Equipment.PowerCurves.Count > 0)
                 {
                     Equipment generated = gamedatabase.Settings.GeneratedTemp.Equipment.Equipment;
                     EditorGUILayout.LabelField("User Description", EditorStyles.boldLabel);

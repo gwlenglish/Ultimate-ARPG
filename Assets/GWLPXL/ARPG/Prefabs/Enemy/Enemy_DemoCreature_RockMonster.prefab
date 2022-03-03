@@ -250,7 +250,9 @@ MonoBehaviour:
   IdleKey: Idle
   DeathKey: Death
   HurtKey: Hurt
+  MoveKey: Move
   RandomizedHurtChance: 0.1
+  hurtduration: 1
 --- !u!1 &1329585666169073269
 GameObject:
   m_ObjectHideFlags: 0
@@ -1344,12 +1346,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
-  additionalCooldown: 1
-  isHurt: IsHurt
-  IsDead: IsDead
-  abilityIndex: AbilityIndex
-  basicattackIndex: BasicAttackIndex
-  Movement: Movement
 --- !u!1 &2812022943147759810
 GameObject:
   m_ObjectHideFlags: 0
@@ -2992,6 +2988,7 @@ MonoBehaviour:
       MaxQueued: 3
       ScaleMulti: 1
   floatingTextOffset: {x: 0, y: 2, z: 0}
+  combine: 0
 --- !u!114 &4186270880124485640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3097,7 +3094,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BaseXP: 40
-  UseScaledAmount: 1
+  UseDungeonScaling: 1
+  UseDiminishingReturns: 1
+  NoXPDelta: 2
+  DiminishCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &4186270880165242148
 GameObject:
   m_ObjectHideFlags: 0

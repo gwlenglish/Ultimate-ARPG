@@ -9,26 +9,26 @@ namespace GWLPXL.ARPGCore.Quests.com
 {
    
 
-    [RequireComponent(typeof(IAttributeUser))]
+
     public class QuestchainGiver : MonoBehaviour, IInteract, IQuestGiver
     {
         [SerializeField]
-        QuestGiverEvents questGiverEvents = new QuestGiverEvents();
+        protected QuestGiverEvents questGiverEvents = new QuestGiverEvents();
         [SerializeField]
-        GameObject questGiverCanvasPrefab = null;
-        GameObject canvasInstance = null;
+        protected GameObject questGiverCanvasPrefab = null;
+        protected GameObject canvasInstance = null;
         [SerializeField]
-        Questchain[] questchains = new Questchain[0];
+        protected Questchain[] questchains = new Questchain[0];
         [SerializeField]
-        float interactRange = 1f;
+        protected float interactRange = 1f;
         [SerializeField]
-        bool openQuesterCanvasUponAccept = true;
+        protected bool openQuesterCanvasUponAccept = true;
 
-        int questChainIndex = 0;
-        IActorHub currentQuester = null;
-        IQuestGiverCanvas canvas = null;
-        IAttributeUser user = null;
-        private void Awake()
+        protected int questChainIndex = 0;
+        protected IActorHub currentQuester = null;
+        protected IQuestGiverCanvas canvas = null;
+        protected IAttributeUser user = null;
+        protected virtual void Awake()
         {
             canvasInstance = Instantiate(questGiverCanvasPrefab);
             canvas = canvasInstance.GetComponent<IQuestGiverCanvas>();
@@ -38,29 +38,39 @@ namespace GWLPXL.ARPGCore.Quests.com
 
         }
         //this is broke, sigh
-        public void StartQuest()
+        public virtual void StartQuest()
         {
             currentQuester.MyQuests.GetQuestLogRuntime().UpdateChain(GetCurrentQuestchain(), QuestStatusType.InProgress);
             int chainIndex = GetCurrentQuestchainIndex(currentQuester.MyQuests);
             Quest template = GetCurrentQuestchain().GetQuests()[chainIndex];
             currentQuester.MyQuests.GetQuestLogRuntime().UpdateQuest(template, QuestStatusType.InProgress);
 
+            if (openQuesterCanvasUponAccept)
+            {
+                if (currentQuester.PlayerControlled.CanvasHub.QuestCanvas.GetQuesterUI().GetCanvasEnabled() == false)
+                {
+                    currentQuester.PlayerControlled.CanvasHub.QuestCanvas.ToggleCanvas();
+                }
+
+            }
+
             OpenQuestDialogue(false, currentQuester);
 
             questGiverEvents.OnQuestchainStarted.Invoke(GetCurrentQuestchain());
+           
 
            
         }
-        public void SetCanvasPrefab(GameObject newPrefab) => questGiverCanvasPrefab = newPrefab;
+        public virtual void SetCanvasPrefab(GameObject newPrefab) => questGiverCanvasPrefab = newPrefab;
 
-        public void DeclineQuest()
+        public virtual void DeclineQuest()
         {
             OpenQuestDialogue(false, currentQuester);
 
 
         }
 
-        public void Return()
+        public virtual void Return()
         {
             OpenQuestDialogue(false, currentQuester);
 
@@ -68,7 +78,7 @@ namespace GWLPXL.ARPGCore.Quests.com
         }
       
 
-        public void CollectRewards()
+        public virtual void CollectRewards()
         {
 
             int questIndex = currentQuester.MyQuests.GetQuestLogRuntime().GetQuestIndexInChain(GetCurrentQuestchain());
@@ -100,7 +110,7 @@ namespace GWLPXL.ARPGCore.Quests.com
 
         }
 
-        void OpenQuestDialogue(bool isOpen, IActorHub forUser)
+       protected virtual void OpenQuestDialogue(bool isOpen, IActorHub forUser)
         {
             if (isOpen)
             {
@@ -119,7 +129,7 @@ namespace GWLPXL.ARPGCore.Quests.com
             canvas.EnableCanvas(isOpen);
 
         }
-        public bool DoInteraction(GameObject interactor)
+        public virtual bool DoInteraction(GameObject interactor)
         {
             IActorHub questUser = CheckPreconditions(interactor);
             if (questUser == null) return false;
@@ -130,7 +140,7 @@ namespace GWLPXL.ARPGCore.Quests.com
             SetupQuest();
             return true;
         }
-        public bool IsInRange(GameObject interactor)
+        public virtual bool IsInRange(GameObject interactor)
         {
             Vector3 dir = interactor.transform.position - this.transform.position;
             float sqrdMag = dir.sqrMagnitude;
@@ -138,7 +148,7 @@ namespace GWLPXL.ARPGCore.Quests.com
         }
 
 
-        public void IncrementQuests()
+        public virtual void IncrementQuests()
         {
             questChainIndex += 1;
             if (questChainIndex > questchains.Length - 1)
@@ -147,7 +157,7 @@ namespace GWLPXL.ARPGCore.Quests.com
             }
             SetupQuest();
         }
-        public void DecrementQuests()
+        public virtual void DecrementQuests()
         {
             questChainIndex -= 1;
             if (questChainIndex < 0)
@@ -159,7 +169,7 @@ namespace GWLPXL.ARPGCore.Quests.com
 
 
 
-        IActorHub CheckPreconditions(GameObject interactor)
+       protected virtual IActorHub CheckPreconditions(GameObject interactor)
         {
             if (interactor == null) return null;
             IActorHub questUser = interactor.GetComponent<IActorHub>();
@@ -169,7 +179,7 @@ namespace GWLPXL.ARPGCore.Quests.com
         }
 
 
-        public void AbandonQuest()
+        public virtual void AbandonQuest()
         {
             currentQuester.MyQuests.GetQuestLogRuntime().UpdateChain(GetCurrentQuestchain(), QuestStatusType.UnAvailable);
             OpenQuestDialogue(false, currentQuester);
@@ -178,7 +188,7 @@ namespace GWLPXL.ARPGCore.Quests.com
       
      
 
-        void SetupQuest()
+        protected virtual void SetupQuest()
         {
             //reset canvas
             canvas.EnableAcceptQuestButtons(false);
@@ -277,23 +287,23 @@ namespace GWLPXL.ARPGCore.Quests.com
             canvas.EnableCanvas(true);
         }
 
-        void ReseetQuestChainState()
+        protected virtual void ReseetQuestChainState()
         {
             canvas.EnableResetQuestchainPanel(true);
         }
-        void TurnInState()
+       protected virtual void TurnInState()
         {
             canvas.EnableTurnInButton(true);
         }
-        void AcceptState()
+       protected virtual void AcceptState()
         {
             canvas.EnableAcceptQuestButtons(true);
         }
-        void InProgressState()
+     protected virtual void InProgressState()
         {
             canvas.EnableInProgressButton(true);
         }
-        private void SetUIState(Quest template, QuestStatusType statusQuest)
+        protected virtual void SetUIState(Quest template, QuestStatusType statusQuest)
         {
             switch (statusQuest)
             {
@@ -327,26 +337,26 @@ namespace GWLPXL.ARPGCore.Quests.com
 
 
       
-        public Questchain GetCurrentQuestchain()
+        public virtual Questchain GetCurrentQuestchain()
         {
             return questchains[questChainIndex];
 
         }
-        public int GetCurrentQuestchainIndex(IQuestUser questUser)
+        public virtual int GetCurrentQuestchainIndex(IQuestUser questUser)
         {
             return questUser.GetQuestLogRuntime().GetQuestIndexInChain(GetCurrentQuestchain());
      
 
         }
 
-        public void ResetQuestChain()
+        public virtual void ResetQuestChain()
         {
             currentQuester.MyQuests.GetQuestLogRuntime().ResetQuestChain(GetCurrentQuestchain());
 
             OpenQuestDialogue(false, currentQuester);
         }
 
-        public Transform GetInstance() => this.transform;
+        public virtual Transform GetInstance() => this.transform;
      
     }
 }

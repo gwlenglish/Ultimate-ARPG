@@ -29,22 +29,24 @@ namespace GWLPXL.ARPGCore.Combat.com
         {
             AttackValues = attackvalues;
             DamageValues = damagevalues;
+            if (DamageValues == null) DamageValues = new DamageValues(new PhysicalDamageReport(0, 0, 0, new List<string>(1) { "Null Damage Values" }, false), new List<ElementalDamageReport>(), null);
 
-            for (int i = 0; i < attackvalues.PhysicalAttack.Count; i++)
+            for (int i = 0; i < AttackValues.PhysicalAttack.Count; i++)
             {
-                TotalCombinedDamage += attackvalues.PhysicalAttack[i].PhysicalDamage;
+                TotalCombinedDamage += AttackValues.PhysicalAttack[i].PhysicalDamage;
             }
             for (int i = 0; i < attackvalues.ElementAttacks.Count; i++)
             {
-                TotalCombinedDamage += attackvalues.ElementAttacks[i].Damage;
+                TotalCombinedDamage += AttackValues.ElementAttacks[i].Damage;
             }
 
-            for (int i = 0; i < damagevalues.ReportElementalDmg.Count; i++)
+            
+            for (int i = 0; i < DamageValues.ReportElementalDmg.Count; i++)
             {
-                TotalCombinedResist += damagevalues.ReportElementalDmg[i].Resisted;
+                TotalCombinedResist += DamageValues.ReportElementalDmg[i].Resisted;
             }
 
-            TotalCombinedResist += damagevalues.ReportPhysDmg.Resisted;
+            TotalCombinedResist += DamageValues.ReportPhysDmg.Resisted;
 
             TotalReducedDamage = TotalCombinedDamage - TotalCombinedResist;
         }
@@ -141,11 +143,16 @@ namespace GWLPXL.ARPGCore.Combat.com
             ReportPhysDmg = phys;
             ReportElementalDmg = eles;
             Target = target;
-            TargetOwner = target.GetInstance();
-            if (Target.GetUser() != null)
+            if (target != null)
             {
-                TargetOwner = target.GetUser().MyTransform;
+                TargetOwner = target.GetInstance();
+                if (Target.GetUser() != null)
+                {
+                    TargetOwner = target.GetUser().MyTransform;
+                }
             }
+ 
+           
         }
     }
 

@@ -35,12 +35,15 @@ namespace GWLPXL.ARPGCore.Quests.com
                     {
                         EventManager.Instance.EnemyDeathEvent(hub.MyStats, myQuests[i], forUser);
 
+
+
                     }
 
                 }
                 else
                 {
                     EventManager.Instance.EnemyDeathEvent(hub.MyStats, myQuests[i], forUser);
+
 
                 }
             }
