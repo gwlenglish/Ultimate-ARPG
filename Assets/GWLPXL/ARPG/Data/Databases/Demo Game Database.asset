@@ -29,6 +29,7 @@ MonoBehaviour:
   QuestLog: {fileID: 11400000, guid: ba6461f01bfd9c742b5e0b8e311e21c6, type: 2}
   Traits: {fileID: 11400000, guid: 4bdd43718cec8b54aa69c4758b1100c8, type: 2}
   Settings: {fileID: 11400000, guid: 5cc2e8087b033bd488b9a2824f0b949d, type: 2}
+  AffixReader: {fileID: 11400000, guid: 3e4efdf6488b65849a561f01bd339f43, type: 2}
   databaseFolders:
   - Assets/GWLPXL/ARPG/Data/Databases
   allPossibledatabaseTypes: 0000000001000000050000000a0000000b0000000f00000014000000190000001a0000001e000000230000002400000028000000290000002a0000002b00000064000000

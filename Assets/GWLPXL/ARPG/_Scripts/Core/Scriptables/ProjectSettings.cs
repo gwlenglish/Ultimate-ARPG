@@ -90,6 +90,7 @@ namespace GWLPXL.ARPGCore.com
     [System.Serializable]
     public class EquipmentGenerateOptions
     {
+
         [HideInInspector]
         public int MinILevelCurve = 1;
         [HideInInspector]

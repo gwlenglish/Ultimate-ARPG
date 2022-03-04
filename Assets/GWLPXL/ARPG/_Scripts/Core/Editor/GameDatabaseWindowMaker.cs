@@ -14,6 +14,7 @@ using GWLPXL.ARPGCore.Creation.com;
 
 public static class GameDatabaseWindowMaker 
 {
+    static Editor AbilityControllerDatabaseWindowMakerEditor;
     public static TypeOptions AbilityControllerDatabase(Rect rect, TypeOptions typeoption, GameDatabase gamedatabase, int index, string header)
     {
         GUILayout.BeginArea(rect);
@@ -26,13 +27,15 @@ public static class GameDatabaseWindowMaker
         EditorGUILayout.ObjectField(lootdbobj, typeof(AbilityControllerDatabase), false);
         if (lootdbobj != null)
         {
-            Editor editor = Editor.CreateEditor(lootdbobj);
-            editor.OnInspectorGUI();
+            AbilityControllerDatabaseWindowMakerEditor = Editor.CreateEditor(lootdbobj);
+            AbilityControllerDatabaseWindowMakerEditor.OnInspectorGUI();
         }
         GUILayout.EndScrollView();
         GUILayout.EndArea();
         return typeoption;
     }
+
+    static Editor AuraControllerDatabaseWindowMakerEditor;
     public static TypeOptions AuraControllerDatabase(Rect rect, TypeOptions typeoption, GameDatabase gamedatabase, int index, string header)
     {
         GUILayout.BeginArea(rect);
@@ -45,13 +48,15 @@ public static class GameDatabaseWindowMaker
         EditorGUILayout.ObjectField(lootdbobj, typeof(AuraControllersDatabase), false);
         if (lootdbobj != null)
         {
-            Editor editor = Editor.CreateEditor(lootdbobj);
-            editor.OnInspectorGUI();
+            AuraControllerDatabaseWindowMakerEditor = Editor.CreateEditor(lootdbobj);
+            AuraControllerDatabaseWindowMakerEditor.OnInspectorGUI();
         }
         GUILayout.EndScrollView();
         GUILayout.EndArea();
         return typeoption;
     }
+
+    static Editor InventoryDatabaseWindowMakerEditor;
     public static TypeOptions InventoryDatabaseWindowMaker(Rect rect, TypeOptions typeoption, GameDatabase gamedatabase, int index, string header)
     {
         GUILayout.BeginArea(rect);
@@ -64,8 +69,8 @@ public static class GameDatabaseWindowMaker
         EditorGUILayout.ObjectField(lootdbobj, typeof(InventoryDatabase), false);
         if (lootdbobj != null)
         {
-            Editor editor = Editor.CreateEditor(lootdbobj);
-            editor.OnInspectorGUI();
+            InventoryDatabaseWindowMakerEditor = Editor.CreateEditor(lootdbobj);
+            InventoryDatabaseWindowMakerEditor.OnInspectorGUI();
         }
         GUILayout.EndScrollView();
         GUILayout.EndArea();
@@ -153,6 +158,8 @@ public static class GameDatabaseWindowMaker
         EditorGUILayout.EndHorizontal();
         return toggle;
     }
+
+    static Editor ClassDatabaseWindowMakerEditor;
     public static TypeOptions ClassDatabaseWindowMaker(Rect rect, TypeOptions typeoption, GameDatabase gamedatabase, int index, string header)
     {
         GUILayout.BeginArea(rect);
@@ -165,8 +172,8 @@ public static class GameDatabaseWindowMaker
         EditorGUILayout.ObjectField(lootdbobj, typeof(ActorClassDatabase), false);
         if (lootdbobj != null)
         {
-            Editor editor = Editor.CreateEditor(lootdbobj);
-            editor.OnInspectorGUI();
+            ClassDatabaseWindowMakerEditor = Editor.CreateEditor(lootdbobj);
+            ClassDatabaseWindowMakerEditor.OnInspectorGUI();
         }
         GUILayout.EndScrollView();
         GUILayout.EndArea();
@@ -273,6 +280,10 @@ public static class GameDatabaseWindowMaker
         if (viewoptions != null && viewoptions.Attributes != null)
         {
             AttribtueGenerateOptions generate = gamedatabase.Settings.GeneratedTemp.Attributes;
+            if (generate.Attributes != null)
+            {
+                UnityEngine.ScriptableObject.DestroyImmediate(generate.Attributes);
+            }
             generate.Attributes = ScriptableObject.Instantiate(viewoptions.Attributes);
             gamedatabase.Settings.GeneratedTemp.Attributes.Level = EditorGUILayout.IntSlider(gamedatabase.Settings.GeneratedTemp.Attributes.Level, gamedatabase.Settings.GeneratedTemp.Attributes.MinILevelCurve, gamedatabase.Settings.InspectObjects.Player.Attributes.MaxLevel - 1);
 
@@ -287,6 +298,8 @@ public static class GameDatabaseWindowMaker
 
         return typeoption;
     }
+
+    static Editor AttributesDatabaseWindowMakerEditor;
     public static TypeOptions AttributesDatabaseWindowMaker(Rect rect, TypeOptions typeoption, GameDatabase gamedatabase, int index, string header)
     {
         GUILayout.BeginArea(rect);
@@ -300,8 +313,8 @@ public static class GameDatabaseWindowMaker
         if (lootdbobj != null)
         {
 
-            Editor editor = Editor.CreateEditor(lootdbobj);
-            editor.OnInspectorGUI();
+            AttributesDatabaseWindowMakerEditor = Editor.CreateEditor(lootdbobj);
+            AttributesDatabaseWindowMakerEditor.OnInspectorGUI();
         }
 
         
@@ -311,6 +324,7 @@ public static class GameDatabaseWindowMaker
 
         return typeoption;
     }
+    static Editor LootDatabaseWindowMakerEditor;
     public static TypeOptions LootDatabaseWindowMaker(Rect rect, TypeOptions typeoption, GameDatabase gamedatabase, int index, string header)
     {
         GUILayout.BeginArea(rect);
@@ -323,8 +337,8 @@ public static class GameDatabaseWindowMaker
         EditorGUILayout.ObjectField(lootdbobj, typeof(LootDrops), false);
         if (lootdbobj != null)
         {
-            Editor editor = Editor.CreateEditor(lootdbobj);
-            editor.OnInspectorGUI();
+            LootDatabaseWindowMakerEditor = Editor.CreateEditor(lootdbobj);
+            LootDatabaseWindowMakerEditor.OnInspectorGUI();
         }
         GUILayout.EndScrollView();
         GUILayout.EndArea();

@@ -927,14 +927,20 @@ namespace GWLPXL.ARPGCore.com
                             if (click)
                             {
                                 GenerateOptions eqgenerateoptions = gamedatabase.Settings.GeneratedTemp;
+
                                 //clean up
                                 for (int i = 0; i < gamedatabase.Settings.GeneratedTemp.Equipment.CurvedEq.Length; i++)
                                 {
                                     DestroyImmediate(eqgenerateoptions.Equipment.CurvedEq[i]);
                                 }
+
                                 
                                 if (eqgenerateoptions.Equipment.Equipment != null)
                                 {
+                                    for (int i = 0; i < eqgenerateoptions.Equipment.Equipment.GetStats().GetAllTraits().Length; i++)
+                                    {
+                                        DestroyImmediate(eqgenerateoptions.Equipment.Equipment.GetStats().GetAllTraits()[i]);
+                                    }
                                     DestroyImmediate(eqgenerateoptions.Equipment.Equipment);
                                 }
 
@@ -956,11 +962,14 @@ namespace GWLPXL.ARPGCore.com
 
                                     eqgenerateoptions.Equipment.CurvedEq[i] = ScriptableObject.Instantiate(gamedatabase.Settings.InspectObjects.Equipment.Equipment);
                                     eqgenerateoptions.Equipment.CurvedEq[i].AssignEquipmentTraits(i);
-
+                            
                                 }
 
+                                string genname = EquipmentDescription.GenerateNewNameForItem(eqgenerateoptions.Equipment.Equipment, gamedatabase.AffixReader);
+                                eqgenerateoptions.Equipment.Equipment.GetStats().SetGeneratedName(genname);
+          
                                 //for display graphs
-                               
+
                                 string description = "Base Stat";
                                 AnimationCurve curve = new AnimationCurve();                             
                                 for (int i = 0; i < 100; i++)
@@ -982,13 +991,13 @@ namespace GWLPXL.ARPGCore.com
                                 }
                                 PowerCurves traitpowercurve = new PowerCurves(traitcurve, traitd);
                                 eqgenerateoptions.Equipment.AddPowerCurve(traitpowercurve);
+                                eqeditor = Editor.CreateEditor(equipmentfocus);
 
+                                eqeditor.DrawDefaultInspector();
                             }
 
                             GUILayout.Space(25);
-                            eqeditor = Editor.CreateEditor(equipmentfocus);
-                          
-                            eqeditor.DrawDefaultInspector();
+          
                         }
 
 
@@ -1008,7 +1017,7 @@ namespace GWLPXL.ARPGCore.com
                             EditorGUILayout.LabelField("User Description", EditorStyles.boldLabel);
                             EditorGUILayout.TextArea(generated.GetUserDescription(), EditorStyles.wordWrappedLabel);
                             EditorGUILayout.LabelField("Equipment Name", EditorStyles.boldLabel);
-                            EditorGUILayout.TextArea(generated.GetGeneratedItemName(), EditorStyles.wordWrappedLabel);
+                            EditorGUILayout.TextArea(generated.GetStats().GetGeneratedName(), EditorStyles.wordWrappedLabel);
                             EditorGUILayout.LabelField("Equipment Base Description", EditorStyles.boldLabel);
                             EditorGUILayout.TextArea(generated.GetBaseTypeDescription(), EditorStyles.wordWrappedLabel);
                             EditorGUILayout.LabelField("Equipment Rarity", EditorStyles.boldLabel);

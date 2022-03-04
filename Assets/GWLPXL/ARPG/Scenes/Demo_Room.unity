@@ -582,6 +582,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: QuestGiver2_Need To Revisit for demo
       objectReference: {fileID: 0}
+    - target: {fileID: 8492506663664613345, guid: 030ada6f172ee9146b4aa1d93053787b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8492506663664613350, guid: 030ada6f172ee9146b4aa1d93053787b,
         type: 3}
       propertyPath: m_RootOrder
@@ -994,11 +999,11 @@ MonoBehaviour:
     and enemies! \r\n\r\nControls\r\n\r\n    Left click to move, interact, and perform
     an Ability.\r\n    Right Click to use the Ability in the first slot.\r\n    Middle
     Click to use the Ability in the second slot.\r\n    Holding Left Shift while
-    using an Ability will prevent your player from moving.\r\n    The \"1\" key will
-    toggle an aura. \r\n\r\n    The \"I\" key opens the inventory.\r\n    The \"O\"
-    key opens the save menu.\r\n    The \"S\" key opens the Ability Tree (Demo).\r\n   
-    The \"E\" key opens the Ability Inventory (where you can click and drag the ability
-    in the bottom slot).\r\n    The \"ESC\" key quits the application. "
+    using an Ability will prevent your player from moving.\r\n    The \"1\", \"2\",
+    and \"3\" keys will toggle auras. \r\n\r\n    The \"I\" key opens the inventory.\r\n   
+    The \"O\" key opens the save menu.\r\n    The \"S\" key opens the Ability Tree
+    (Demo).\r\n    The \"E\" key opens the Ability Inventory (where you can click
+    and drag the ability in the bottom slot).\r\n    The \"ESC\" key quits the application. "
 --- !u!1 &545671246
 GameObject:
   m_ObjectHideFlags: 0
@@ -7074,6 +7079,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: QuestGiver1_Need To Revisit for demo
       objectReference: {fileID: 0}
+    - target: {fileID: 8492506663664613345, guid: 030ada6f172ee9146b4aa1d93053787b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8492506663664613350, guid: 030ada6f172ee9146b4aa1d93053787b,
         type: 3}
       propertyPath: m_RootOrder
@@ -7143,6 +7153,12 @@ PrefabInstance:
     - target: {fileID: 8492506663664613359, guid: 030ada6f172ee9146b4aa1d93053787b,
         type: 3}
       propertyPath: questchains.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 720a30a427aba9248afbc95a9c3d010e,
+        type: 2}
+    - target: {fileID: 8492506663664613359, guid: 030ada6f172ee9146b4aa1d93053787b,
+        type: 3}
+      propertyPath: questchains.Array.data[0]
       value: 
       objectReference: {fileID: 11400000, guid: 720a30a427aba9248afbc95a9c3d010e,
         type: 2}

@@ -17,7 +17,44 @@ namespace GWLPXL.ARPGCore.Statics.com
     public static class EquipmentDescription
     {
         static StringBuilder sb = new StringBuilder();
+        /// <summary>
+        /// doesnt use preloaded dictionary, used for edit time
+        /// </summary>
+        /// <param name="equipment"></param>
+        /// <param name="reader"></param>
+        /// <returns></returns>
+        public static string GenerateNewNameForItem(Equipment equipment, AffixReaderSO reader)
+        {
+            sb.Clear();
+            string origin = equipment.GetBaseItemName();
 
+            List<string> prefixes = equipment.GetStats().GetAllTraitPrefixes();
+
+                string front = reader.GetNameWithAffixes(prefixes, origin);
+                sb.Append(front);
+ 
+            List<string> postnouns = equipment.GetStats().GetAllTraitNouns();
+            if (postnouns.Count > 0)
+            {
+                int rando = Random.Range(0, postnouns.Count - 1);
+                string postnoun = equipment.GetStats().GetAllTraitNouns()[rando];
+                List<string> suffixes = equipment.GetStats().GetAllTraitSuffixes();
+
+                    string back = reader.GetNameWithAffixes(suffixes, postnoun);
+                    sb.Append(" of ");
+                    sb.Append(back);
+                
+
+            }
+
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// uses preloaded dictionary and dungeonmaster instance, runtime
+        /// </summary>
+        /// <param name="equipment"></param>
+        /// <returns></returns>
         public static string GenerateNewNameForItem(Equipment equipment)
         {
             sb.Clear();

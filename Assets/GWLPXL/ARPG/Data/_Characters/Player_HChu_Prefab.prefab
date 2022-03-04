@@ -683,12 +683,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ee22c20686a08248a8fc85859fa3084, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isHurt: IsHurt
-  IsDead: IsDead
-  abilityIndex: AbilityIndex
-  basicattackIndex: BasicAttackIndex
-  isLooping: IsLooping
-  Movement: Movement
 --- !u!1 &593984170604785571
 GameObject:
   m_ObjectHideFlags: 0
@@ -3813,6 +3807,12 @@ MonoBehaviour:
   - AuraButton: 
     KeyCode: 49
     AuraSlot: 0
+  - AuraButton: 
+    KeyCode: 50
+    AuraSlot: 1
+  - AuraButton: 
+    KeyCode: 51
+    AuraSlot: 2
 --- !u!1 &5710349178314558518
 GameObject:
   m_ObjectHideFlags: 0

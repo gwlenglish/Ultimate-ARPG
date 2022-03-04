@@ -38,7 +38,7 @@ namespace GWLPXL.ARPGCore.com
         public EquipmentTraitDatabase Traits;
         public string[] GetDatabaseFolders => databaseFolders;
         public ProjectSettings Settings;
-
+        public AffixReaderSO AffixReader;
 
         [SerializeField]
         string[] databaseFolders = new string[1] { "Assets/GWLPXL/ARPG/Data/Databases" };

@@ -28,7 +28,6 @@ namespace GWLPXL.ARPGCore.Statics.com
             sb.Append(fullprefix);
             sb.Append(noun);
             string fullprefixandname = sb.ToString();
-            sb.Clear();
             return fullprefixandname;
 
         }
