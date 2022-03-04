@@ -5,12 +5,15 @@ using UnityEditor;
 namespace GWLPXL.ARPGCore.com
 {
 
-
+    /// <summary>
+    /// used to display runtime scriptable object data while in playmode
+    /// </summary>
     public abstract class FlippedEditor : Editor
     {
+        protected EditorInspectorDraw runtimeed;
+
         public override void OnInspectorGUI()
         {
-            serializedObject.Update();
             if (Application.isPlaying)
             {
                 ShowRuntimeVersion();
@@ -19,11 +22,22 @@ namespace GWLPXL.ARPGCore.com
             {
                 ShowEditorVersion();
             }
-
-            serializedObject.ApplyModifiedProperties();
+        }
+        protected virtual void ShowEditorVersion()
+        {
+            base.DrawDefaultInspector();
         }
 
-        protected abstract void ShowEditorVersion();
-        protected abstract void ShowRuntimeVersion();
+        protected abstract UnityEngine.Object GetRuntimeObject();
+
+        protected virtual void ShowRuntimeVersion()
+        {
+            if (runtimeed == null)
+            {
+                runtimeed = EditorHelper.CreateEditor();
+            }
+
+            runtimeed.Draw(GetRuntimeObject());
+        }
     }
 }
