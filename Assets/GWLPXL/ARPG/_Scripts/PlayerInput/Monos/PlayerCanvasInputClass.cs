@@ -1,7 +1,7 @@
 ﻿
 
 using GWLPXL.ARPGCore.com;
-
+using GWLPXL.ARPGCore.DebugHelpers.com;
 using GWLPXL.ARPGCore.Types.com;
 using UnityEngine;
 
@@ -9,6 +9,8 @@ namespace GWLPXL.ARPGCore.PlayerInput.com
 {
     public class PlayerCanvasInputClass : MonoBehaviour, IPlayerCanvasInputToggle, IGameplayInput
     {
+        [SerializeField]
+        protected bool savingCanvasBlockOtherCanvases = true;
         [SerializeField]
         [Tooltip("Buttons will have preference. To not check buttons, leave the button field empty.")]
         protected PlayerCanvasInput[] canvasToggleInputs = new PlayerCanvasInput[5]
@@ -43,6 +45,7 @@ namespace GWLPXL.ARPGCore.PlayerInput.com
 
         public virtual void CheckForCanvasInputs()
         {
+            
             for (int i = 0; i < canvasToggleInputs.Length; i++)
             {
                 string inputbutton = canvasToggleInputs[i].CanvasToggleButton;
@@ -69,6 +72,23 @@ namespace GWLPXL.ARPGCore.PlayerInput.com
 
         public virtual void ToggleCanvas(CanvasType type)
         {
+            if (savingCanvasBlockOtherCanvases)
+            {
+
+                if (hub.PlayerControlled.CanvasHub.SaveCanvas != null)
+                {
+                    if (hub.PlayerControlled.CanvasHub.SaveCanvas.GetUI().GetCanvasEnabled() == true)
+                    {
+                        //block other inputs
+         
+                        if (type != CanvasType.Save)
+                        {
+                            ARPGDebugger.DebugMessage("SAVE CANVAS BLOCKING OTHER CANVAS INPUTS", this);
+                            return;
+                        }
+                    }
+                }
+            }
             switch (type)
             {
                 case CanvasType.Inventory:

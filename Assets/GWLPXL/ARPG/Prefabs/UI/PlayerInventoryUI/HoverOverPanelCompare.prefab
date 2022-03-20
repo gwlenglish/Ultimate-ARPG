@@ -323,12 +323,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55313e0fbdda5894e9e037c8730458cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  highlightedText: {fileID: 3787735356915867031}
-  comparison: {fileID: 7291600611812970526}
-  equipmentImage: {fileID: 3787735357591740890}
+  equippedPanel: {fileID: 7352704305224975736}
+  equippedImage: {fileID: 7227290719535860916}
+  equippedText: {fileID: 7291600611812970526}
   comparisonImage: {fileID: 361922816852273293}
-  mine: {fileID: 7227290719535860916}
+  highlightedPanel: {fileID: 6419493050113137749}
+  highlightedEquipmentImage: {fileID: 6972383474398032025}
+  highlightedText: {fileID: 3787735356915867031}
   highlighted: {fileID: 6972383474398032025}
+  neutral: {r: 1, g: 1, b: 1, a: 1}
+  transparent: {r: 255, g: 255, b: 255, a: 0}
 --- !u!1 &1885546839332839292
 GameObject:
   m_ObjectHideFlags: 0

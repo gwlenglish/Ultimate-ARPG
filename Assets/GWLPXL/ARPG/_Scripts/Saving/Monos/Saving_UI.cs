@@ -186,6 +186,10 @@ namespace GWLPXL.ARPGCore.Saving.com
         public void TogglePlayerSaveCanvas()
         {
             EnableMainPanel(!mainPanel.activeInHierarchy);
+            if (mainPanel.activeInHierarchy == true)
+            {
+               
+            }
         }
     }
 }

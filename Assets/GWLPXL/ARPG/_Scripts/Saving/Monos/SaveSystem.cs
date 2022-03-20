@@ -134,7 +134,7 @@ namespace GWLPXL.ARPGCore.Saving.com
                     ActorClass actorClass = Instantiate(gameDatabase.Classes.FindClassByID(currentPlayer.DatabaseIDs.ActorClassID));
                     AbilityController actorAbilityController = Instantiate(gameDatabase.AbilityControllers.FindAbilityControllerByID(currentPlayer.DatabaseIDs.AbilityControllerID));
                     AuraController actorAuras = Instantiate(gameDatabase.AuraControllers.FindAuraControllerByID(currentPlayer.DatabaseIDs.AuraControllerID));
-                    QuestLog questlog = Instantiate(gameDatabase.QuestLog.FindQuestLogByID(currentPlayer.DatabaseIDs.AuraControllerID));
+                    QuestLog questlog = Instantiate(gameDatabase.QuestLog.FindQuestLogByID(currentPlayer.DatabaseIDs.QuestLogID));
 
                     inv.InitialSetup();
                     #region stat load
@@ -270,7 +270,12 @@ namespace GWLPXL.ARPGCore.Saving.com
 
             for (int j = 0; j < skills.Count; j++)
             {
-                Aura copy = Instantiate(gameDatabase.Auras.FindAuraByID(skills[j].DatabaseID));
+                Aura aura = gameDatabase.Auras.FindAuraByID(skills[j].DatabaseID);
+                if (aura != null)
+                {
+                    Aura copy = Instantiate(aura);
+                }
+             
                 //  actorauras.AddAura(copy);
 
             }

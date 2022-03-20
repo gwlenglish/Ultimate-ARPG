@@ -15,7 +15,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
         protected bool freezeMover = true;
         [SerializeField]
         protected GameObject SaveCanvasPrefab = null;
-
+  
         protected ISaveCanvas saveC = null;
         protected IActorHub actorhub = null;
         public virtual void SetUserToCanvas()

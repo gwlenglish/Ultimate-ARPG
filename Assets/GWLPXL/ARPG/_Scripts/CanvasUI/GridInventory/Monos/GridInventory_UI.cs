@@ -350,7 +350,7 @@ namespace GWLPXL.ARPGCore.CanvasUI.com
 
             Vector3 screenPoint = GetScreenPosition();
             screenPoint.z = canvas.planeDistance;
-            dragginginstance.Instance.transform.position = main.ScreenToWorldPoint(screenPoint);// + new Vector3(xoffset, 0)) ;
+            dragginginstance.Instance.transform.position = Camera.main.ScreenToWorldPoint(screenPoint);// + new Vector3(xoffset, 0)) ;
         }
 
 

@@ -66,7 +66,7 @@ namespace GWLPXL.ARPGCore.Shopping.com
            
         }
         public bool GetCanvasEnabled()
-        {
+        {if (mainPanel == null) return false;
             return mainPanel.activeInHierarchy;
         }
         public void SetUser(IShopKeeper newUser)
