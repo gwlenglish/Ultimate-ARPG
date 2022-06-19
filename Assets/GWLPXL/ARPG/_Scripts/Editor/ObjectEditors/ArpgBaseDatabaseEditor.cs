@@ -15,6 +15,7 @@ namespace GWLPXL.ARPG._Scripts.Editor.ObjectEditors.com
             {
                 DatabaseHandler.ReloadDatabase(database.GetMyObject());
             }
+
         }
     }
 }

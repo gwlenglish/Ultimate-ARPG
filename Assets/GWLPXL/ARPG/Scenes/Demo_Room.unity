@@ -7082,7 +7082,7 @@ PrefabInstance:
     - target: {fileID: 8492506663664613345, guid: 030ada6f172ee9146b4aa1d93053787b,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8492506663664613350, guid: 030ada6f172ee9146b4aa1d93053787b,
         type: 3}
@@ -7262,6 +7262,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 4fecaaa2e1857194da1d5ae412c87751,
         type: 2}
+    - target: {fileID: 5710349178950200352, guid: 3265ee1c6ac2d4a46801109d947df153,
+        type: 3}
+      propertyPath: freezeMover
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5710349178950200367, guid: 3265ee1c6ac2d4a46801109d947df153,
         type: 3}
       propertyPath: freezeMover
@@ -7799,6 +7804,21 @@ PrefabInstance:
         type: 3}
       propertyPath: shopEvents.OnShopClosed.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7178999053924585382, guid: ad7bb88b50347664bab66af3af0f1856,
+        type: 3}
+      propertyPath: interactRange
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7178999053924585385, guid: ad7bb88b50347664bab66af3af0f1856,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7178999053924585385, guid: ad7bb88b50347664bab66af3af0f1856,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad7bb88b50347664bab66af3af0f1856, type: 3}
